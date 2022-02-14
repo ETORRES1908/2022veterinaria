@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -29,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -50,9 +48,25 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name' => 'required|string|between:3,20|unique:users',
+            'nombre' => 'required|string|between:3,20|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'apellido' => 'required|string|between:3,20|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'discapacidad' => 'required|string',
+            'dni' => 'required|numeric|digits:7|unique:users',
+            'galpon' => 'required|string',
+            'prepa' => 'required|string',
+            'email' => 'required|string|string|email|max:255|unique:users',
+            'company' => 'required|string',
+            'celular' => 'required|unique:users',
+            'country' => 'required|string',
+            'state' => 'required|string',
+            'district' => 'required|string',
+            'direction' => 'required|string',
+            'job' => 'required|string',
+            'password' => 'required|string|confirmed|regex:[^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$]',
+            'question' => 'required|string',
+            'answer' => 'required|string',
+            'captcha' => 'required|captcha'
         ]);
     }
 
@@ -60,14 +74,29 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\Models\User
+     * @return \App\User
      */
     protected function create(array $data)
     {
         return User::create([
             'name' => $data['name'],
+            'nombre' => $data['nombre'],
+            'apellido' => $data['apellido'],
+            'discapacidad' => $data['discapacidad'],
+            'dni' => $data['dni'],
+            'galpon' => $data['galpon'],
+            'prepa' => $data['prepa'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+            'company' => $data['company'],
+            'celular' => $data['celular'],
+            'country' => $data['country'],
+            'state' => $data['state'],
+            'district' => $data['district'],
+            'direction' => $data['direction'],
+            'job' => $data['job'],
+            'password' => bcrypt($data['password']),
+            'question' => $data['question'],
+            'answer' => bcrypt($data['answer'])
+        ])->assignRole('user');
     }
 }
