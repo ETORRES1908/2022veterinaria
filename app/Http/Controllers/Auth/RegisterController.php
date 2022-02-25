@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Mfotos;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -51,11 +52,12 @@ class RegisterController extends Controller
             'name' => 'required|string|between:3,20|unique:users',
             'nombre' => 'required|string|between:3,20|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
             'apellido' => 'required|string|between:3,20|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'foto' => 'required|image|max:2048',
             'discapacidad' => 'required|string',
             'dni' => 'required|numeric|digits:7|unique:users',
             'galpon' => 'required|string',
             'prepa' => 'required|string',
-            'email' => 'required|string|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
             'company' => 'required|string',
             'celular' => 'required|unique:users',
             'country' => 'required|string',
@@ -63,7 +65,7 @@ class RegisterController extends Controller
             'district' => 'required|string',
             'direction' => 'required|string',
             'job' => 'required|string',
-            'password' => 'required|string|confirmed|regex:[^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$]',
+            'password' => 'required|string|confirmed',
             'question' => 'required|string',
             'answer' => 'required|string',
             'captcha' => 'required|captcha'
@@ -78,10 +80,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+        $file = $data['foto'];
+        $nombre = $data['name'] . $data['dni'] . "." . $file->guessExtension();
+        $ruta = 'images/users/' . $nombre;
+        copy($file, $ruta);
+
         return User::create([
             'name' => $data['name'],
             'nombre' => $data['nombre'],
             'apellido' => $data['apellido'],
+            'foto' => $ruta,
             'discapacidad' => $data['discapacidad'],
             'dni' => $data['dni'],
             'galpon' => $data['galpon'],

@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name', 20);
             $table->string('nombre', 20);
             $table->string('apellido', 40);
+            $table->string('foto')->default('user.png');
             $table->string('dni', 8);
             $table->string('discapacidad');
             $table->string('galpon');

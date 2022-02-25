@@ -23,5 +23,7 @@ class PermissionsTableSeeder extends Seeder
     Permission::create(['name' => 'MEventos']);
     //Mantenimiento de Eventos
     Permission::create(['name' => 'OtroP']);
+    //Mantenimiento de MyPets
+    Permission::create(['name' => 'MyPets']);
   }
 }

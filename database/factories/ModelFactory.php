@@ -14,6 +14,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
+    static $answer;
 
     $gender = $faker->randomElement(['male', 'female']);
 
@@ -22,7 +23,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'nombre' => $faker->firstName($gender),
         'apellido' => $faker->Lastname,
         'dni' => $faker->randomNumber(8),
-        'discapacidad' => $faker->randomElement(['0', '1']),
+        'discapacidad' => $faker->randomElement(['No', 'Visual', 'Fisica', 'Auditiva', 'Verbal', 'Mental']),
         'galpon' => $faker->firstName(),
         'prepa' => $faker->firstName(),
         'email' => $faker->unique()->safeEmail,
@@ -35,7 +36,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'job' => $faker->jobTitle(),
         'password' => $password ?: $password = bcrypt('asa'),
         'question' => $faker->randomElement(['0', '1']),
-        'answer' => $password ?: $password = bcrypt('asa'),
+        'answer' => $answer ?: $answer = bcrypt('asa'),
         'remember_token' => str_random(10),
     ];
 });

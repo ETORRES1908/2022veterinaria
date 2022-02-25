@@ -13,14 +13,25 @@
 
 Auth::routes();
 
-Route::get('/welcome', 'HomeController@welcome')->name('welcome');
+Route::get('/', 'HomeController@welcome')->name('welcome');
 
-Route::get('/about', 'HomeController@about')->name('about');
+Route::get('/About', 'HomeController@about')->name('about');
 
-Route::get('/contact', 'HomeController@contact')->name('contact');
+Route::get('/Contact', 'HomeController@contact')->name('contact');
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::resource('/Events', 'Evento\EventoController');
+Route::resource('/Participants', 'Evento\LParticipantesController');
+Route::resource('/Duels', 'Evento\DuelosController');
 
-Route::resource('/Usuarios', 'Administrador\UsersController');
+//USER CONTROLLER
+Route::group(['middleware' => ['can:MyPets']], function () {
+    Route::resource('/Mascotas', 'Usuario\MascotasController');
+    Route::resource('/MFotos', 'Usuario\MFotosController');
+    Route::resource('/MVideos', 'Usuario\MVideosController');
+});
 
-Route::resource('/Mascotas', 'Administrador\MascotasController');
+//ADMIN CONTROLLER
+Route::group(['middleware' => ['can:Mantenimientos']], function () {
+    Route::resource('/Usuarios', 'Administrador\UsersController');
+    Route::resource('/MMascotas', 'Administrador\MascotasController');
+});

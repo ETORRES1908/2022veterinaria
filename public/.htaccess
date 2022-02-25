@@ -17,4 +17,9 @@
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # PHP VERSION
+    <FilesMatch "\.(php4|php5|php3|php2|php|phtml)$">
+    SetHandler application/x-lsphp74
+    </FilesMatch>
 </IfModule>

@@ -4,10 +4,13 @@ return [
     'characters' => ['2', '3', '4', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'm', 'n', 'p', 'q', 'r', 't', 'u', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'M', 'N', 'P', 'Q', 'R', 'T', 'U', 'X', 'Y', 'Z'],
     'default' => [
         'length' => 9,
-        'width' => 120,
-        'height' => 36,
-        'quality' => 90,
+        'width' => 235,
+        'height' => 80,
+        'quality' => 100,
+        'lines' => -1,
         'math' => true,
+        'contrast' => -20,
+        'fontColors' => ['#F06424', '#FA3440', '#CF3BE3', '#6734FA', '#3276F0', '#FA3440', '#3276F0', '#FA3440'],
     ],
     'math' => [
         'length' => 9,

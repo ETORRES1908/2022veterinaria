@@ -16,6 +16,6 @@ class RolesTableSeeder extends Seeder
         $role->givePermissionTo('Mantenimientos');
 
         $role = Role::create(['name' => 'user']);
-        /* $role->givePermissionTo('comment_create'); */
+        $role->givePermissionTo('MyPets');
     }
 }
