@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Mascota;
 use App\Mfotos;
+use Illuminate\Validation\Rule;
 
 class LParticipantesController extends Controller
 {
@@ -48,9 +49,14 @@ class LParticipantesController extends Controller
      */
     public function store(Request $request)
     {
+        $evento_id = $request->evento_id;
+        $mascota_id = $request->mascota_id;
         $this->validate($request, [
             'evento_id' => 'required',
-            'mascota_id' => 'required|unique:LParticipantes,mascota_id,except,id',
+            'mascota_id' => ['required', Rule::unique('lparticipantes')->where(function ($query) use ($mascota_id, $evento_id) {
+                return $query->where('mascota_id', $mascota_id)
+                    ->where('evento_id', $evento_id);
+            }),],
             'foto' => 'required|image',
             'peso' => 'required',
         ]);

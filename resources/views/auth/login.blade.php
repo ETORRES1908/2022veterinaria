@@ -3,6 +3,7 @@
 @section('content')
     <div class="card bg-black p-0 m-0 border-danger">
         <div class="row">
+            {{-- BANNER --}}
             <div class="card-body col-sm-7 my-auto">
                 <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -23,8 +24,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+            {{-- FORM LOGIN --}}
             <div class="card-body col-sm-5 my-auto">
                 <div class="card bg-black border border-danger">
                     <div class="card-header fw-bold fs-4">
@@ -79,8 +80,8 @@
                                 </label>
 
                                 <div class="mt-1 col-sm-7">
-                                    <input id="captcha" type="text" class="form-control fs-3 text-danger" name="captcha"
-                                        required autofocus>
+                                    <input id="captcha" type="text" class="form-control text-danger fs-3 fw-bold"
+                                        name="captcha" required autofocus>
 
                                     @if ($errors->has('captcha'))
                                         <span class="fs-6 text-danger">

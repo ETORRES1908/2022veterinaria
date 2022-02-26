@@ -7,6 +7,7 @@ use App\Eventos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Lparticipantes;
+use Illuminate\Validation\Rule;
 
 class DuelosController extends Controller
 {
@@ -47,10 +48,26 @@ class DuelosController extends Controller
      */
     public function store(Request $request)
     {
+        /*  return $request->all(); */
+        $pmascota_id = $request->pmascota_id;
+        $smascota_id = $request->smascota_id;
+        $this->validate($request, [
+            'lparticipante_id' => 'required',
+            'pmascota_id' => 'required|different:smascota_id',
+            'smascota_id' => 'required|different:pmascota_id',
+            'fcc' => 'required|different:scc',
+            'scc' => 'required|different:fcc',
+            'cch' => 'required',
+            'npelea' => 'required',
+        ]);
+
         Duelos::create([
             'lparticipante_id' => $request->lparticipante_id,
             'pmascota_id' => $request->pmascota_id,
+            'fcc' => $request->fcc,
             'smascota_id' => $request->smascota_id,
+            'scc' => $request->scc,
+            'cch' => $request->cch,
             'npelea' => $request->npelea,
         ]);
         return redirect()->route('Duels.show', $request->lparticipante_id)->with('mensaje', 'ok');
@@ -64,11 +81,12 @@ class DuelosController extends Controller
      */
     public function show($id)
     {
+        $evento = Eventos::find($id);
         if (Lparticipantes::where('evento_id', $id)->first()) {
             $lparticipante = Lparticipantes::where('evento_id', $id)->first()->id;
             $participantes = Lparticipantes::where('evento_id', $id)->get();
             $duelos = Duelos::where('lparticipante_id', $lparticipante)->get();
-            return view('Events.Duels.index', compact('lparticipante', 'participantes', 'duelos'));
+            return view('Events.Duels.index', compact('lparticipante', 'participantes', 'duelos', 'evento'));
         } else {
             return redirect()->route('Events.index');
         }

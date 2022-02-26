@@ -21,9 +21,12 @@ class CreateDuelsTable extends Migration
             //FOREIGN USER
             $table->integer('pmascota_id')->unsigned();
             $table->foreign('pmascota_id')->references('id')->on('mascotas');
+            $table->string('fcc');
             //FOREIGN USER
             $table->integer('smascota_id')->unsigned();
             $table->foreign('smascota_id')->references('id')->on('mascotas');
+            $table->string('scc');
+            $table->string('cch');
             $table->string('npelea');
             $table->timestamps();
         });

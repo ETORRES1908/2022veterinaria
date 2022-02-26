@@ -16,6 +16,6 @@ class RolesTableSeeder extends Seeder
         $role->givePermissionTo('Mantenimientos');
 
         $role = Role::create(['name' => 'user']);
-        $role->givePermissionTo('MyPets');
+        $role->givePermissionTo('MyPets', 'events.create');
     }
 }

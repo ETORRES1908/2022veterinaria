@@ -29,7 +29,7 @@ class EventoController extends Controller
     public function index()
     {
         $eventos = Eventos::all();
-        return view('events.index', compact('eventos'));
+        return view('Events.index', compact('eventos'));
     }
 
     /**
@@ -39,8 +39,8 @@ class EventoController extends Controller
      */
     public function create()
     {
-        $judges = Role::find(1)->users;
-        return view('events.create', compact('judges'));
+        $users = Role::where('name', 'user')->first()->users;
+        return view('Events.create', compact('users'));
     }
 
     /**
@@ -53,21 +53,47 @@ class EventoController extends Controller
     {
         $this->validate($request, [
             'organizador_id' => 'required',
-            'jueza_id' => 'required',
-            'juezb_id' => 'required',
-            'coliseum' => 'required',
-            'title' => 'required',
+            'fechas' => 'required',
+            'fechas.*' => 'required|distinct',
+            'cls' => 'required',
             'tevent' => 'required',
-            'trule' => 'required',
-            'fstart' => 'required',
-            'fend' => 'required|after_or_equal:fstart',
-            'hstart' => 'required|',
-            'hend' => 'required|after:hstart',
+            'trl' => 'required',
+            'spl' => 'required',
+            'spl.*' => 'required|distinct',
+            'sz' => 'required',
+            'time' => 'required',
+            'miw' => 'required',
+            'maw' => 'required|after_or_equal:miw',
+            'ftw' => 'required',
+            'ctr' => 'required',
+            'stt' => 'required',
+            'drc' => 'required',
+            'ftw' => 'required',
+            'stw' => 'required',
+            'hstart' => 'required',
+            'mcontrol_id' => 'required',
+            'judge_id' => 'required',
+            'assistent_id' => 'required',
+            'awards' => 'required',
+            'trophys' => 'required',
             'rooster' => 'required',
-            'trophy' => 'required',
-            'trule' => 'required',
-            'trule' => 'required',
-            'trule' => 'required',
+            'trooster' => 'required',
+            'rten' => 'required',
+            'fft' => 'required',
+            'sft' => 'required',
+            'tft' => 'required',
+            'fcd' => 'required',
+            'pvs' => 'required',
+            'lch' => 'required',
+            'cnt' => 'required',
+            'skg' => 'required',
+            'egn' => 'required',
+            'evp' => 'required',
+            'pct' => 'required',
+            'bs' => 'required',
+            'ift' => 'required',
+            'gll' => 'required',
+            'glp' => 'required',
         ]);
         $nevento = Eventos::create($request->all());
         return redirect()->route('Events.index')->with('mensaje', 'ok');
@@ -83,7 +109,7 @@ class EventoController extends Controller
     {
         $listps = Lparticipantes::where('evento_id', '=', $evento_id)->get();
         $evento = Eventos::find($evento_id);
-        return view('events.show', compact('listps','evento'));
+        return view('events.show', compact('listps', 'evento'));
     }
 
     /**

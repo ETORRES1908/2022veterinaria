@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card mx-auto text-dark">
-        <div class="card-header fs-4">
+    <div class="card mx-auto bg-black border border-danger">
+        <div class="card-header fs-4 border border-danger">
             Añadir Mascota
         </div>
-        <div class="card-body">
+        <div class="card-body border border-danger">
             <form class="form-horizontal" method="POST" action="{{ route('Mascotas.store') }}"
                 enctype="multipart/form-data">
                 {{ csrf_field() }}
@@ -15,8 +15,8 @@
                 <input id="obs" type="text" name="obs" value="OBS" hidden>
                 {{-- REGGAL --}}
                 <input id="REGGAL" type="text" name="REGGAL" value="
-                                                                {{ Auth::user()->country }}{{ Auth::user()->district }}{{ Auth::user()->id }}
-                                                                " hidden>
+                                                                    {{ Auth::user()->country }}{{ Auth::user()->district }}{{ Auth::user()->id }}
+                                                                    " hidden>
                 {{-- NOMBRE, FNAC Y SSS --}}
                 <div class="row">
                     {{-- NOMBRE --}}
@@ -143,8 +143,8 @@
                                 {{ __('Disability') }}
                             </label>
                             <div class="col-auto">
-                                <select class="form-select" id="des" name="des"
-                                    value="{{ old('des') }}" required>
+                                <select class="form-select text-danger" id="des" name="des" value="{{ old('des') }}"
+                                    required>
                                     <option selected value="No">No</option>
                                     <option value="Visual">Visual</option>
                                     <option value="Fisica">Fisica</option>

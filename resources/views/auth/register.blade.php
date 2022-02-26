@@ -1,17 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <div class="card col-xl-8 mx-auto">
-
-        @if (count($errors) > 0)
-            @foreach ($errors->all() as $error)
-                <div class="alert alert-danger">
-                    {{ $error }}
-                </div>
-            @endforeach
-        @endif
-
+    <div class="card col-xl-8 mx-auto text-black">
         <div class="card-header fw-bold fs-3">{{ __('Register') }}</div>
         <div class="card-body ">
             <form class="form-horizontal" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
@@ -27,8 +17,8 @@
                             </label>
 
                             <div class="col-auto">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}"
-                                    required autofocus>
+                                <input id="name" type="text" class="form-control text-danger" name="name"
+                                    value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="text-da nger fs-6">
@@ -45,7 +35,7 @@
                                 {{ __('Name') }}
                             </label>
                             <div class="col-auto">
-                                <input id="nombre" type="text" class="form-control" name="nombre"
+                                <input id="nombre" type="text" class="form-control text-danger" name="nombre"
                                     value="{{ old('nombre') }}" required autofocus pattern="[A-zÀ-ú\S]+">
 
                                 @if ($errors->has('nombre'))
@@ -62,7 +52,7 @@
                             </label>
 
                             <div class="col-auto">
-                                <input id="apellido" type="text" class="form-control" name="apellido"
+                                <input id="apellido" type="text" class="form-control  text-danger" name="apellido"
                                     value="{{ old('apellido') }}" required autofocus pattern="[A-zÀ-ú\S]+">
 
                                 @if ($errors->has('apellido'))
@@ -99,7 +89,7 @@
                         <label for="discapacidad" class="col-form-label fw-bold">
                             {{ __('Disability') }}
                         </label>
-                        <select class="form-select" id="discapacidad" name="discapacidad"
+                        <select class="form-select text-danger" id="discapacidad" name="discapacidad"
                             value="{{ old('discapacidad') }}" required>
                             <option selected value="No">No</option>
                             <option value="Visual">Visual</option>
@@ -122,8 +112,8 @@
                         </label>
 
                         <div class="col-auto">
-                            <input id="dni" type="number" class="form-control" name="dni" value="{{ old('dni') }}"
-                                required autofocus maxlength="7">
+                            <input id="dni" type="number" class="form-control  text-danger" name="dni"
+                                value="{{ old('dni') }}" required autofocus maxlength="7">
 
                             @if ($errors->has('dni'))
                                 <span class="text-danger text-fs6">
@@ -141,7 +131,7 @@
                             {{ __('Galpon') }}
                         </label>
                         <div class="col-auto">
-                            <input id="galpon" type="text" class="form-control" name="galpon"
+                            <input id="galpon" type="text" class="form-control  text-danger" name="galpon"
                                 value="{{ old('galpon') }}" required autofocus>
 
                             @if ($errors->has('galpon'))
@@ -158,8 +148,8 @@
                         </label>
 
                         <div class="col-auto">
-                            <input id="prepa" type="text" class="form-control" name="prepa" value="{{ old('prepa') }}"
-                                required autofocus>
+                            <input id="prepa" type="text" class="form-control  text-danger" name="prepa"
+                                value="{{ old('prepa') }}" required autofocus>
 
                             @if ($errors->has('prepa'))
                                 <span class="text-danger text-fs6">
@@ -178,8 +168,8 @@
                         </label>
 
                         <div class="col">
-                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}"
-                                required>
+                            <input id="email" type="email" class="form-control  text-danger" name="email"
+                                value="{{ old('email') }}" required>
 
                             @if ($errors->has('email'))
                                 <span class="text-danger text-fs6">
@@ -195,7 +185,7 @@
                         </label>
 
                         <div class="col-auto">
-                            <input id="company" type="text" class="form-control" name="company"
+                            <input id="company" type="text" class="form-control  text-danger" name="company"
                                 value="{{ old('company') }}" required autofocus>
 
                             @if ($errors->has('company'))
@@ -211,7 +201,7 @@
                             N°{{ __('Phone') }}
                         </label>
                         <div class="col-auto">
-                            <input id="celular" type="text" class="form-control" name="celular"
+                            <input id="celular" type="text" class="form-control  text-danger" name="celular"
                                 value="{{ old('celular') }}" required autofocus>
 
                             @if ($errors->has('celular'))
@@ -231,7 +221,7 @@
                         </label>
 
                         <div class="col">
-                            <input id="country" type="text" class="form-control" name="country"
+                            <input id="country" type="text" class="form-control  text-danger" name="country"
                                 value="{{ old('email') }}" required>
 
                             @if ($errors->has('country'))
@@ -248,8 +238,8 @@
                         </label>
 
                         <div class="col-auto">
-                            <input id="state" type="text" class="form-control" name="state" value="{{ old('state') }}"
-                                required autofocus>
+                            <input id="state" type="text" class="form-control  text-danger" name="state"
+                                value="{{ old('state') }}" required autofocus>
 
                             @if ($errors->has('state'))
                                 <span class="text-danger text-fs6">
@@ -264,7 +254,7 @@
                             {{ __('District') }}
                         </label>
                         <div class="col-auto">
-                            <input id="district" type="text" class="form-control" name="district"
+                            <input id="district" type="text" class="form-control  text-danger" name="district"
                                 value="{{ old('district') }}" required autofocus>
 
                             @if ($errors->has('district'))
@@ -283,7 +273,7 @@
                             {{ __('Direction') }}
                         </label>
                         <div class="col-auto">
-                            <input id="direction" type="text" class="form-control" name="direction"
+                            <input id="direction" type="text" class="form-control  text-danger" name="direction"
                                 value="{{ old('direction') }}" required autofocus>
 
                             @if ($errors->has('direction'))
@@ -299,8 +289,8 @@
                             {{ __('Job') }}
                         </label>
                         <div class="col-auto">
-                            <input id="job" type="text" class="form-control" name="job" value="{{ old('job') }}"
-                                required autofocus>
+                            <input id="job" type="text" class="form-control  text-danger" name="job"
+                                value="{{ old('job') }}" required autofocus>
 
                             @if ($errors->has('job'))
                                 <span class="text-danger text-fs6">
@@ -319,7 +309,7 @@
                         </label>
 
                         <div class="col-auto">
-                            <input id="password" type="password" class="form-control" name="password" required>
+                            <input id="password" type="password" class="form-control  text-danger" name="password" required>
 
                             @if ($errors->has('password'))
                                 <span class="text-danger text-fs6">
@@ -339,7 +329,7 @@
                             <button class="btn btn-primary py-0" type="button" disabled>?</button>
                         </span>
                         <div class="col-auto">
-                            <input id="password-confirm" type="password" class="form-control"
+                            <input id="password-confirm" type="password" class="form-control  text-danger"
                                 name="password_confirmation" required>
                         </div>
                     </div>
@@ -351,7 +341,7 @@
                     </label>
                     <div class="row">
                         <div class="col-sm-12 col-form-label fw-bold">
-                            <select class="form-control col-sm-12" id="question" name="question"
+                            <select class="form-control text-danger col-sm-12" id="question" name="question"
                                 value="{{ old('question') }}" required>
                                 <option selected disabled value="">Opciones...</option>
                                 <option value="0">¿Nombre de la Primera mascota?</option>
@@ -360,8 +350,8 @@
                             </select>
                         </div>
                         <div class="col-sm-12 col-form-label fw-bold">
-                            <input id="answer" type="text" class="form-control" name="answer" placeholder="Respuesta..."
-                                value="{{ old('answer') }}" required autofocus>
+                            <input id="answer" type="text" class="form-control  text-danger" name="answer"
+                                placeholder="Respuesta..." value="{{ old('answer') }}" required autofocus>
 
                             @if ($errors->has('answer'))
                                 <span class="text-danger text-fs6">
@@ -380,8 +370,9 @@
                         </span>
                     </div>
                     {{-- INPUT CAPTCHAT --}}
-                    <div class="col-sm-10 col-form-label">
-                        <input id="captcha" type="text" class="form-control fw-bold" name="captcha" required>
+                    <div class="col-sm-7 col-form-label">
+                        <input id="captcha" type="text" class="form-control text-danger fs-3 fw-bold" name="captcha"
+                            required>
 
                         @if ($errors->has('captcha'))
                             <span class="fs-6 text-danger">
@@ -421,5 +412,4 @@
             }
         }
     </script>
-
 @endsection
