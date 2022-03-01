@@ -25,6 +25,8 @@ class MascotasController extends Controller
      */
     public function index()
     {
+        $currentLocale = session('locale');
+        if ($currentLocale) app()->setLocale($currentLocale);
         $mascotas = Mascota::all();
         return  view('Administrador.MMascotas.index', compact('mascotas'));
     }

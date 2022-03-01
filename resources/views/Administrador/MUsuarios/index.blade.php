@@ -53,11 +53,23 @@
     {{-- SCRIPTS --}}
     <script type="text/javascript">
         $(document).ready(function() {
+            function getLanguage() {
+                var lang = $('html').attr('lang');
+                if (lang == 'es') {
+                    lng = "es-ES";
+                } else if (lang == 'en') {
+                    lng = "en-GB";
+                }
+                var result = null;
+                var path = 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/';
+                result = path + lng + ".json";
+                return result;
+            }
+            // Build Datatable
             $('#datatable').DataTable({
-                responsive: true,
-                "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/1.11.4/i18n/es_es.json"
-                },
+                language: {
+                    "url": getLanguage()
+                }
             });
         });
     </script>

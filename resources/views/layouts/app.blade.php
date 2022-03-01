@@ -39,12 +39,25 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- Izquierdo Side Of Navbar -->
-                        <ul class="navbar-nav bg-black me-auto mb-2 mb-lg-0">
-                            &nbsp;
+                        <ul class="navbar-nav bg-black me-auto mb-2 fs-5">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown"
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ app()->getLocale() }}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('language', 'es') }}">Español</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('language', 'en') }}">English</a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
 
                         <!-- Derecho Side Of Navbar -->
-                        <ul class="navbar-nav bg-black ms-auto mb-2 mb-lg-0 fs-5">
+                        <ul class="navbar-nav bg-black ms-auto mb-2 fs-5">
                             <!-- Authentication Links -->
                             @if (Auth::guest())
                                 <li class="nav-item">

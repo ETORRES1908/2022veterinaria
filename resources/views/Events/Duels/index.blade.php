@@ -59,7 +59,7 @@
                                                         {{ __('Cancha') }}: {{ $duel->cch }}
                                                     </label>
                                                 </div>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body row">
@@ -289,7 +289,7 @@
             <div class="modal-content bg-black border border-danger">
                 <div class="modal-header border border-danger">
                     <div class="modal-title fw-bold">{{ __('CHOOSE PET') }}</div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form class="form-horizontal" method="POST" action="{{ route('Duels.store') }}">
                     {{ csrf_field() }}

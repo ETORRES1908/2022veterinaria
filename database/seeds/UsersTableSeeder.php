@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 
 use App\User;
 use App\Mascota;
+use App\Coliseos;
 use App\Eventos;
 use App\LParticipantes;
 
@@ -28,15 +29,23 @@ class UsersTableSeeder extends Seeder
             });
         //ADMIN
         factory(User::class)->create([
-            'name' => 'Admin',
-            'password' => bcrypt('password'),
+            'name' => 'admin',
+            'nombre' => 'admin',
+            'apellido' => '',
+            'password' => bcrypt('123'),
         ])->assignRole('administrator');
         //USER
         $user = factory(User::class)->create([
-            'name' => 'User',
-            'password' => bcrypt('password')
+            'name' => 'user',
+            'nombre' => 'user',
+            'apellido' => '',
+            'password' => bcrypt('123'),
         ])->assignRole('user');
+        //MASCOTAS DE PRUEBAS PARA USER
         factory(Mascota::class, 5)->create(['user_id' => $user->id]);
+        //COLISEOS
+        factory(Coliseos::class, 5)->create();
+
         //EVENTO
         /* factory(Eventos::class, 1)->create(['organizador_id' => 1, 'jueza_id' => 2, 'juezb_id' => 3]);
         factory(LParticipantes::class, 1)->create(['evento_id' => 1, 'mascota_id' => 1]); */

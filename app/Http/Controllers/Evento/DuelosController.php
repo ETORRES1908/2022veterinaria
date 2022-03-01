@@ -81,6 +81,9 @@ class DuelosController extends Controller
      */
     public function show($id)
     {
+        $currentLocale = session('locale');
+        if ($currentLocale) app()->setLocale($currentLocale);
+        
         $evento = Eventos::find($id);
         if (Lparticipantes::where('evento_id', $id)->first()) {
             $lparticipante = Lparticipantes::where('evento_id', $id)->first()->id;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Evento;
 
+use App\Coliseos;
 use App\Eventos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,6 +29,9 @@ class EventoController extends Controller
      */
     public function index()
     {
+        $currentLocale = session('locale');
+        if ($currentLocale) app()->setLocale($currentLocale);
+
         $eventos = Eventos::all();
         return view('Events.index', compact('eventos'));
     }
@@ -39,8 +43,12 @@ class EventoController extends Controller
      */
     public function create()
     {
+        $currentLocale = session('locale');
+        if ($currentLocale) app()->setLocale($currentLocale);
+
         $users = Role::where('name', 'user')->first()->users;
-        return view('Events.create', compact('users'));
+        $coliseos = Coliseos::all();
+        return view('Events.create', compact('users', 'coliseos'));
     }
 
     /**
@@ -51,11 +59,13 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {
+        $currentLocale = session('locale');
+        if ($currentLocale) app()->setLocale($currentLocale);
         $this->validate($request, [
             'organizador_id' => 'required',
             'fechas' => 'required',
             'fechas.*' => 'required|distinct',
-            'cls' => 'required',
+            'coliseo_id' => 'required',
             'tevent' => 'required',
             'trl' => 'required',
             'spl' => 'required',
@@ -107,6 +117,9 @@ class EventoController extends Controller
      */
     public function show($evento_id)
     {
+        $currentLocale = session('locale');
+        if ($currentLocale) app()->setLocale($currentLocale);
+
         $listps = Lparticipantes::where('evento_id', '=', $evento_id)->get();
         $evento = Eventos::find($evento_id);
         return view('events.show', compact('listps', 'evento'));

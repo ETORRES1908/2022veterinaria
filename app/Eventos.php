@@ -43,4 +43,9 @@ class Eventos extends Model
     {
         return $this->hasMany(Lparticipantes::class, 'evento_id');
     }
+    // A MASCOTA BELONGS_TO USER
+    public function coliseum()
+    {
+        return $this->hasOne(Coliseos::class,'id');
+    }
 }

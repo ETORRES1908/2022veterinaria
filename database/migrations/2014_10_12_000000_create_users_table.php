@@ -32,6 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('direction');
             $table->string('job');
             $table->string('password');
+            $table->string('active')->default('1'); //estado
             $table->string('question');
             $table->string('answer');
             $table->rememberToken();

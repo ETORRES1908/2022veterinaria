@@ -28,6 +28,9 @@ class MascotasController extends Controller
      */
     public function index()
     {
+        $currentLocale = session('locale');
+        if ($currentLocale) app()->setLocale($currentLocale);
+
         $user = Auth::user();
         $mascotas = Mascota::where('user_id', '=', $user->id)->get();
         return view('Usuario.Mascotas.index', compact('mascotas'));
@@ -40,6 +43,9 @@ class MascotasController extends Controller
      */
     public function create()
     {
+        $currentLocale = session('locale');
+        if ($currentLocale) app()->setLocale($currentLocale);
+        
         return view('Usuario.Mascotas.create');
     }
 
@@ -105,6 +111,9 @@ class MascotasController extends Controller
      */
     public function show($id)
     {
+        $currentLocale = session('locale');
+        if ($currentLocale) app()->setLocale($currentLocale);
+
         $mascota = Mascota::find($id);
         return view('Usuario.Mascotas.show', compact('mascota'));
     }

@@ -7,19 +7,19 @@
         @can('events.create')
             <div class="card-header border border-danger">
                 <a href="{{ route('Events.create') }}" class="btn btn-success" style="font-size: 95%">
-                    Añadir Nuevo Evento</a>
+                    {{ __('Add Event') }}</a>
             </div>
         @endcan
         <div class="card-body table-responsive border border-danger">
             <table id="datatable" class="table table-dark table-hover" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Fecha</th>
-                        <th>Organizador</th>
-                        <th>Mesa de Control</th>
-                        <th>Juez</th>
-                        <th>Asistente</th>
-                        <th class="nowrap">Lugar</th>
+                        <th>{{ __('Date') }}</th>
+                        <th>{{ __('Organizer') }}</th>
+                        <th>{{ __('Control desk') }}</th>
+                        <th>{{ __('Judge') }}</th>
+                        <th>{{ __('Assistant') }}</th>
+                        <th class="nowrap">{{ __('Place') }}</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -39,7 +39,7 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body mx-auto">
@@ -82,7 +82,7 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body mx-auto">
@@ -125,7 +125,7 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body mx-auto">
@@ -164,7 +164,7 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body mx-auto">
@@ -194,9 +194,24 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>
-                                <h6 class="nowrap">{{ $evento->ctr }},
-                                    {{ $evento->stt }}<br>{{ $evento->drc }}</h6>
+                            <td class="nowrap">
+                                <h6 class="nowrap">
+                                    <?php switch ($evento->ctr) {
+                                        case 'PE':
+                                            echo 'Perú';
+                                            break;
+                                        case 'ARG':
+                                            echo 'Argentina';
+                                            break;
+                                        case 'EC':
+                                            echo 'Ecuador';
+                                            break;
+                                        case 'CL':
+                                            echo 'Chile';
+                                            break;
+                                    } ?>,
+                                    {{ $evento->stt }}<br>{{ $evento->drc }}
+                                </h6>
                             </td>
                             <td>
                                 <a href="{{ route('Events.show', $evento->id) }}" class="btn btn-warning">
@@ -208,12 +223,12 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>Fecha</th>
-                        <th>Organizador</th>
-                        <th>Mesa de Control</th>
-                        <th>Juez</th>
-                        <th>Asistente</th>
-                        <th class="nowrap">Lugar</th>
+                        <th>{{ __('Date') }}</th>
+                        <th>{{ __('Organizer') }}</th>
+                        <th>{{ __('Control desk') }}</th>
+                        <th>{{ __('Judge') }}</th>
+                        <th>{{ __('Assistant') }}</th>
+                        <th class="nowrap">{{ __('Place') }}</th>
                         <th></th>
                     </tr>
                 </tfoot>
@@ -224,10 +239,22 @@
     {{-- SCRIPTS --}}
     <script type="text/javascript">
         $(document).ready(function() {
+            function getLanguage() {
+                var lang = $('html').attr('lang');
+                if (lang == 'es') {
+                    lng = "es-ES";
+                } else if (lang == 'en') {
+                    lng = "en-GB";
+                }
+                var result = null;
+                var path = 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/';
+                result = path + lng + ".json";
+                return result;
+            }
+            // Build Datatable
             $('#datatable').DataTable({
-                responsive: true,
-                "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/1.11.4/i18n/es_es.json"
+                language: {
+                    "url": getLanguage()
                 },
                 "columnDefs": [{
                     "targets": 0,

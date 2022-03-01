@@ -21,7 +21,9 @@ class CreateEventosTable extends Migration
             //DATES
             $table->json('fechas');
             //COLISEUM
-            $table->string('cls');
+            //FOREIGN USER
+            $table->integer('coliseo_id')->unsigned();
+            $table->foreign('coliseo_id')->references('id')->on('coliseos');
             //TYPE EVENT
             $table->string('tevent');
             //REGULATION
@@ -81,8 +83,10 @@ class CreateEventosTable extends Migration
             $table->string('lch');
             //CANASTAS
             $table->string('cnt');
-            //SACO 20 KILOS
+            //SACO
             $table->string('skg');
+            //SACO KILOS
+            $table->string('ws');
             //ENTRADA GENERAL
             $table->string('egn');
             //ENTRADA VIP

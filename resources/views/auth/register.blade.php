@@ -64,12 +64,12 @@
                         </div>
                     </div>
                     {{-- FOTO DE PERFIL --}}
-                    <div class="col-sm mb-3 form-group{{ $errors->has('foto') ? ' has-error' : '' }}">
+                    <div class="col-sm-4 mb-3 form-group{{ $errors->has('foto') ? ' has-error' : '' }}">
                         <label for="foto" class="col-form-label fw-bold">
                             {{ __('Photo') }}
                         </label>
                         <div class="col-auto m-1 bg-black rounded">
-                            <img id="preview" src="" class="mx-auto d-block " height="100vh" />
+                            <img id="preview" class="mx-auto d-block" height="200" width="180" />
                             <input id="foto" type="file" class="form-control form-control-sm" name="foto"
                                 value="{{ old('foto') }}" required autofocus accept="image/*">
                         </div>
@@ -392,9 +392,8 @@
     </div>
 
     {{-- SCRIPTS --}}
-
-    {{-- POPOVER --}}
     <script>
+        /*  POPOVER  */
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
         var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
             return new bootstrap.Popover(popoverTriggerEl)
@@ -403,8 +402,8 @@
             trigger: 'focus'
         })
     </script>
-    {{-- PREVIEW --}}
     <script>
+        /*  PREVIEW */
         foto.onchange = evt => {
             const [file] = foto.files
             if (file) {

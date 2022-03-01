@@ -25,6 +25,9 @@ class UsersController extends Controller
      */
     public function index()
     {
+        $currentLocale = session('locale');
+        if ($currentLocale) app()->setLocale($currentLocale);
+
         $users = User::all();
         return  view('Administrador.MUsuarios.index', compact('users'));
     }

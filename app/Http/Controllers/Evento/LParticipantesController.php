@@ -38,6 +38,9 @@ class LParticipantesController extends Controller
      */
     public function create()
     {
+        $currentLocale = session('locale');
+        if ($currentLocale) app()->setLocale($currentLocale);
+        
         return view('LParticipants.create');
     }
 

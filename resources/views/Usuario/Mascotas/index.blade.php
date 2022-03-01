@@ -4,7 +4,7 @@
     <div class="mx-auto w-75">
         <div class="mb-5">
             <a href="{{ route('Mascotas.create') }}" class="fw-bold text-uppercase btn btn-outline-danger px-5">
-                Añadir Mascota
+                {{ __('Add Pet') }}
             </a>
         </div>
 
@@ -29,19 +29,14 @@
                                     <div class="card-text">
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item">
-                                                <div>Nombre: {{ $mascota->nombre }}</div>
+                                                <div>{{ __('Name') }}: {{ $mascota->nombre }}</div>
                                             </li>
                                             <li class="list-group-item">
-                                                <div>Nacimiento: {{ $mascota->fnac }}</div>
+                                                <div>{{ __('Birthday') }}: {{ $mascota->fnac }}</div>
                                             </li>
                                             <li class="list-group-item">
-                                                <div>Peso: {{ $mascota->sss }}</div>
+                                                <div>{{ __('Weight') }}: {{ $mascota->sss }}</div>
                                             </li>
-                                            {{-- <li class="list-group-item">PLU: {{$mascota->plu}}</li>
-                                    <li class="list-group-item">PAD: {{$mascota->pad}}</li>
-                                    <li class="list-group-item">MAD: {{$mascota->mad}}</li>
-                                    <li class="list-group-item">DES: {{$mascota->des}}</li>
-                                    <li class="list-group-item">OBS: {{$mascota->obs}}</li> --}}
                                         </ul>
                                     </div>
                                 </div>

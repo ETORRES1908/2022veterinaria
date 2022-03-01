@@ -1,142 +1,175 @@
 @extends('layouts.app')
+@extends('layouts.datatable')
 
 @section('content')
-    <div class="card col-md-8 col-sm-12 border-dark mb-3 mx-auto">
-        <div class="row g-0">
-            <div class="col-sm-5">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold text-uppercase pe-none text-danger">
-                        {{ $mascota->REGGAL }}
-                    </h5>
+    <div class="card col-md-8 col-sm-12 bg-black border border-danger mb-3 mx-auto">
+        <div class="card-body border border-danger">
+            <h5 class="card-title fw-bold text-uppercase pe-none text-danger">
+                {{ $mascota->REGGAL }}
+            </h5>
+            <div class="row">
+                <div class="col-xl-5 mb-3">
                     <div class="card-text">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <div>Nombre: {{ $mascota->nombre }}</div>
+                                <div>{{ __('Name') }}: {{ $mascota->nombre }}</div>
                             </li>
                             <li class="list-group-item">
-                                <div>Nacimiento: {{ $mascota->fnac }}</div>
+                                <div>{{ __('Birthday') }}: {{ $mascota->fnac }}</div>
                             </li>
                             <li class="list-group-item">
-                                <div>SSS: {{ $mascota->sss }}</div>
+                                <div>{{ __('Weight') }}: {{ $mascota->sss }}</div>
                             </li>
                             <li class="list-group-item">
-                                <div>PLC: {{ $mascota->plc }}</div>
+                                <div>{{ __('Seal') }}: {{ $mascota->plc }}</div>
                             </li>
                             <li class="list-group-item">
-                                <div>PLU: {{ $mascota->plu }}</div>
+                                <div>{{ __('Colour') }}: {{ $mascota->plu }}</div>
                             </li>
                             <li class="list-group-item">
-                                <div>PAD: {{ $mascota->pad }}</div>
+                                <div>{{ __('Father') }}: {{ $mascota->pad }}</div>
                             </li>
                             <li class="list-group-item">
-                                <div>MAD: {{ $mascota->mad }}</div>
+                                <div>{{ __('Mother') }}: {{ $mascota->mad }}</div>
                             </li>
                             <li class="list-group-item">
-                                <div>DES: {{ $mascota->des }}</div>
+                                <div>{{ __('Disability') }}: {{ $mascota->des }}</div>
                             </li>
                             <li class="list-group-item">
-                                <div>OBS: {{ $mascota->obs }}</div>
+                                <div>{{ __('Observation') }}: {{ $mascota->obs }}</div>
                             </li>
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-7 my-auto">
-                <div class="row">
-                    <!-- Button Modal -->
-                    <div class="col-4 mt-3">
-                        <button type="button" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalToggle">
-                            <img src="@if (!empty($mascota->fotos->where('nfoto', 1)->first())) {{ asset($mascota->fotos->where('nfoto', 1)->first()->ruta) }}
+                <div class="col-xl-7 my-auto">
+                    <div class="row">
+                        <!-- Button Modal -->
+                        <div class="col-4 border border-danger">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalToggle">
+                                <img src="@if (!empty($mascota->fotos->where('nfoto', 1)->first())) {{ asset($mascota->fotos->where('nfoto', 1)->first()->ruta) }}
                             @else
-                            {{ asset('storage/img/pata.jpg') }} @endif
-                                                    " class="rounded img-fluid border border-danger" alt="...">
-                        </button>
-                    </div>
+                            {{ asset('storage/img/pata.jpg') }} @endif"
+                                    class="rounded img-fluid" alt="...">
+                            </button>
+                        </div>
 
-                    <div class="col-4 mt-3">
-                        <button type="button" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalToggle2">
-                            <img src="@if (!empty($mascota->fotos->where('nfoto', 2)->first())) {{ asset($mascota->fotos->where('nfoto', 2)->first()->ruta) }}
+                        <div class="col-4">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalToggle2">
+                                <img src="@if (!empty($mascota->fotos->where('nfoto', 2)->first())) {{ asset($mascota->fotos->where('nfoto', 2)->first()->ruta) }}
                         @else
-                        {{ asset('storage/img/pata.jpg') }} @endif
-                                                " class="rounded img-fluid" alt="...">
-                        </button>
-                    </div>
-                    <div class="col-4 mt-3">
-                        <button type="button" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalToggle3">
-                            <img src="@if (!empty($mascota->fotos->where('nfoto', 3)->first())) {{ asset($mascota->fotos->where('nfoto', 3)->first()->ruta) }}
+                        {{ asset('storage/img/pata.jpg') }} @endif"
+                                    class="rounded img-fluid" alt="...">
+                            </button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalToggle3">
+                                <img src="@if (!empty($mascota->fotos->where('nfoto', 3)->first())) {{ asset($mascota->fotos->where('nfoto', 3)->first()->ruta) }}
                         @else
-                        {{ asset('storage/img/pata.jpg') }} @endif
-                                                " class="rounded img-fluid" alt="...">
-                        </button>
-                    </div>
-                    <div class="col-4 mt-3">
-                        <button type="button" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalToggle4">
-                            <img src="@if (!empty($mascota->fotos->where('nfoto', 4)->first())) {{ asset($mascota->fotos->where('nfoto', 4)->first()->ruta) }}
+                        {{ asset('storage/img/pata.jpg') }} @endif"
+                                    class="rounded img-fluid" alt="...">
+                            </button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalToggle4">
+                                <img src="@if (!empty($mascota->fotos->where('nfoto', 4)->first())) {{ asset($mascota->fotos->where('nfoto', 4)->first()->ruta) }}
                         @else
-                        {{ asset('storage/img/pata.jpg') }} @endif
-                                                " class="rounded img-fluid" alt="...">
-                        </button>
-                    </div>
-                    <div class="col-4 mt-3">
-                        <button type="button" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalToggle5">
-                            <img src="@if (!empty($mascota->fotos->where('nfoto', 5)->first())) {{ asset($mascota->fotos->where('nfoto', 5)->first()->ruta) }}
+                        {{ asset('storage/img/pata.jpg') }} @endif"
+                                    class="rounded img-fluid" alt="...">
+                            </button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalToggle5">
+                                <img src="@if (!empty($mascota->fotos->where('nfoto', 5)->first())) {{ asset($mascota->fotos->where('nfoto', 5)->first()->ruta) }}
                         @else
-                        {{ asset('storage/img/pata.jpg') }} @endif
-                                                " class="rounded img-fluid" alt="...">
-                        </button>
-                    </div>
-                    <div class="col-4 mt-3">
-                        <button type="button" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalToggle6">
-                            <img src="@if (!empty($mascota->fotos->where('nfoto', 6)->first()->ruta)) {{ asset($mascota->fotos->where('nfoto', 6)->first()->ruta) }}
+                        {{ asset('storage/img/pata.jpg') }} @endif"
+                                    class="rounded img-fluid" alt="...">
+                            </button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalToggle6">
+                                <img src="@if (!empty($mascota->fotos->where('nfoto', 6)->first()->ruta)) {{ asset($mascota->fotos->where('nfoto', 6)->first()->ruta) }}
                         @else
-                        {{ asset('storage/img/pata.jpg') }} @endif
-                                                " class="rounded img-fluid" alt="...">
-                        </button>
-                    </div>
-                    <div class="col-4 mt-3">
-                        <button type="button" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalToggle7">
-                            <img src="@if (!empty($mascota->fotos->where('nfoto', 7)->first())) {{ asset($mascota->fotos->where('nfoto', 7)->first()->ruta) }}
+                        {{ asset('storage/img/pata.jpg') }} @endif"
+                                    class="rounded img-fluid" alt="...">
+                            </button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalToggle7">
+                                <img src="@if (!empty($mascota->fotos->where('nfoto', 7)->first())) {{ asset($mascota->fotos->where('nfoto', 7)->first()->ruta) }}
                         @else
-                        {{ asset('storage/img/pata.jpg') }} @endif
-                                                " class="rounded img-fluid" alt="...">
-                        </button>
-                    </div>
-                    <div class="col-4 mt-3">
-                        <button type="button" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalToggle8">
-                            @if (!empty($mascota->videos->where('nvideo', 1)->first()))
-                                <video class="rounded img-fluid">
-                                    <source src="{{ asset($mascota->videos->where('nvideo', 1)->first()->ruta) }}"
-                                        type="video/mp4">
-                                </video>
-                            @else
-                                <img src="{{ asset('storage/img/pata.jpg') }}" class="rounded img-fluid" alt="...">
-                            @endif
-                        </button>
-                    </div>
-                    <div class="col-4 mt-3">
-                        <button type="button" class="btn" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalToggle9">
-                            @if (!empty($mascota->videos->where('nvideo', 2)->first()->ruta))
-                                <video class="rounded img-fluid">
-                                    <source src="{{ asset($mascota->videos->where('nvideo', 2)->first()->ruta) }}"
-                                        type="video/mp4">
-                                </video>
-                            @else
-                                <img src="{{ asset('storage/img/pata.jpg') }}" class="rounded img-fluid" alt="...">
-                            @endif
-                        </button>
+                        {{ asset('storage/img/pata.jpg') }} @endif"
+                                    class="rounded img-fluid" alt="...">
+                            </button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalToggle8">
+                                @if (!empty($mascota->videos->where('nvideo', 1)->first()))
+                                    <video class="rounded img-fluid">
+                                        <source src="{{ asset($mascota->videos->where('nvideo', 1)->first()->ruta) }}"
+                                            type="video/mp4">
+                                    </video>
+                                @else
+                                    <img src="{{ asset('storage/img/pata.jpg') }}" class="rounded img-fluid" alt="...">
+                                @endif
+                            </button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalToggle9">
+                                @if (!empty($mascota->videos->where('nvideo', 2)->first()->ruta))
+                                    <video class="rounded img-fluid">
+                                        <source src="{{ asset($mascota->videos->where('nvideo', 2)->first()->ruta) }}"
+                                            type="video/mp4">
+                                    </video>
+                                @else
+                                    <img src="{{ asset('storage/img/pata.jpg') }}" class="rounded img-fluid" alt="...">
+                                @endif
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="card-footer border border-danger table-responsive">
+            <table class="table table-sm table-dark table-hover" id="datatable">
+                <thead>
+                    <tr>
+                        <th>{{ __('Shed') }}</th>
+                        <th>{{ __('Shed') }}</th>
+                        <th>{{ __('Coliseum') }}</th>
+                        <th>{{ __('Time') }}</th>
+                        <th>{{ __('Result') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>{{ __('Shed') }}</th>
+                        <th>{{ __('Shed') }}</th>
+                        <th>{{ __('Coliseum') }}</th>
+                        <th>{{ __('Time') }}</th>
+                        <th>{{ __('Result') }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
     </div>
 
 
@@ -155,14 +188,14 @@
                         </form>
                     @else
                         {{-- AÑADIR FOTO --}}
-                        <form class="d-flex justify-content-between" method="POST" action="{{ route('MFotos.store') }}"
-                            enctype="multipart/form-data">
+                        <form class="d-flex justify-content-between mt-3 w-75" method="POST"
+                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="1" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
                             <input id="text" type="text" name="text" value="xd" hidden>
                             <input id="mascota_id" type="text" name="mascota_id" value="{{ $mascota->id }}" hidden>
-                            <input id="foto" type="file" class="form-control form-control-sm" name="foto"
+                            <input id="foto" type="file" class=" form-control form-control-sm" name="foto"
                                 value="{{ old('foto') }}" required autofocus accept="image/*">
                             @if ($errors->has('foto'))
                                 <span class="text-danger fs-6">
@@ -172,14 +205,16 @@
                             <button type="submit" class="btn btn-danger">Editar</button>
                         </form>
                     @endif
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body mx-auto">
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 1)->first())) {{ asset($mascota->fotos->where('nfoto', 1)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                    " class="figure-img" width="100%" height="250vh">
+                                                                                                                                                                                                                                                                "
+                            class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
                 </div>
@@ -207,8 +242,8 @@
                         </form>
                     @else
                         {{-- AÑADIR FOTO --}}
-                        <form class="d-flex justify-content-between" method="POST" action="{{ route('MFotos.store') }}"
-                            enctype="multipart/form-data">
+                        <form class="d-flex justify-content-between mt-3 w-75" method="POST"
+                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="2" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -224,14 +259,16 @@
                             <button type="submit" class="btn btn-danger">Editar</button>
                         </form>
                     @endif
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body mx-auto">
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 2)->first())) {{ asset($mascota->fotos->where('nfoto', 2)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                    " class="figure-img" width="100%" height="250vh">
+                                                                                                                                                                                                                                                                "
+                            class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
                 </div>
@@ -259,8 +296,8 @@
                         </form>
                     @else
                         {{-- AÑADIR FOTO --}}
-                        <form class="d-flex justify-content-between" method="POST" action="{{ route('MFotos.store') }}"
-                            enctype="multipart/form-data">
+                        <form class="d-flex justify-content-between mt-3 w-75" method="POST"
+                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="3" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -276,14 +313,16 @@
                             <button type="submit" class="btn btn-danger">Editar</button>
                         </form>
                     @endif
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body mx-auto">
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 3)->first())) {{ asset($mascota->fotos->where('nfoto', 3)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                    " class="figure-img" width="100%" height="250vh">
+                                                                                                                                                                                                                                                                "
+                            class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
                 </div>
@@ -311,8 +350,8 @@
                         </form>
                     @else
                         {{-- AÑADIR FOTO --}}
-                        <form class="d-flex justify-content-between" method="POST" action="{{ route('MFotos.store') }}"
-                            enctype="multipart/form-data">
+                        <form class="d-flex justify-content-between mt-3 w-75" method="POST"
+                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="4" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -328,14 +367,16 @@
                             <button type="submit" class="btn btn-danger">Editar</button>
                         </form>
                     @endif
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body mx-auto">
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 4)->first())) {{ asset($mascota->fotos->where('nfoto', 4)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                    " class="figure-img" width="100%" height="250vh">
+                                                                                                                                                                                                                                                                "
+                            class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
                 </div>
@@ -363,8 +404,8 @@
                         </form>
                     @else
                         {{-- AÑADIR FOTO --}}
-                        <form class="d-flex justify-content-between" method="POST" action="{{ route('MFotos.store') }}"
-                            enctype="multipart/form-data">
+                        <form class="d-flex justify-content-between mt-3 w-75" method="POST"
+                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="5" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -380,14 +421,16 @@
                             <button type="submit" class="btn btn-danger">Editar</button>
                         </form>
                     @endif
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body mx-auto">
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 5)->first())) {{ asset($mascota->fotos->where('nfoto', 5)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                    " class="figure-img" width="100%" height="250vh">
+                                                                                                                                                                                                                                                                "
+                            class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
                 </div>
@@ -415,8 +458,8 @@
                         </form>
                     @else
                         {{-- AÑADIR FOTO --}}
-                        <form class="d-flex justify-content-between" method="POST" action="{{ route('MFotos.store') }}"
-                            enctype="multipart/form-data">
+                        <form class="d-flex justify-content-between mt-3 w-75" method="POST"
+                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="6" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -432,14 +475,16 @@
                             <button type="submit" class="btn btn-danger">Editar</button>
                         </form>
                     @endif
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body mx-auto">
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 6)->first())) {{ asset($mascota->fotos->where('nfoto', 6)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                    " class="figure-img" width="100%" height="250vh">
+                                                                                                                                                                                                                                                                "
+                            class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
                 </div>
@@ -467,8 +512,8 @@
                         </form>
                     @else
                         {{-- AÑADIR FOTO --}}
-                        <form class="d-flex justify-content-between" method="POST" action="{{ route('MFotos.store') }}"
-                            enctype="multipart/form-data">
+                        <form class="d-flex justify-content-between mt-3 w-75" method="POST"
+                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="7" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -484,14 +529,16 @@
                             <button type="submit" class="btn btn-danger">Editar</button>
                         </form>
                     @endif
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body mx-auto">
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 7)->first())) {{ asset($mascota->fotos->where('nfoto', 7)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                    " class="figure-img" width="100%" height="250vh">
+                                                                                                                                                                                                                                                                "
+                            class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
                 </div>
@@ -519,8 +566,8 @@
                         </form>
                     @else
                         {{-- AÑADIR VIDEO --}}
-                        <form class="d-flex justify-content-between" method="POST" action="{{ route('MVideos.store') }}"
-                            enctype="multipart/form-data">
+                        <form class="d-flex justify-content-between mt-3 w-75" method="POST"
+                            action="{{ route('MVideos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nvideo" type="text" name="nvideo" value="1" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -536,7 +583,8 @@
                             <button type="submit" class="btn btn-danger">Editar</button>
                         </form>
                     @endif
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body mx-auto">
                     <figure class="figure">
@@ -577,7 +625,7 @@
                         </form>
                     @else
                         {{-- AÑADIR VIDEO --}}
-                        <form class="d-flex justify-content-between" method="POST"
+                        <form class="d-flex justify-content-between mt-3 w-75" method="POST"
                             action="{{ route('MVideos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nvideo" type="text" name="nvideo" value="2" hidden>
@@ -594,7 +642,8 @@
                             <button type="submit" class="btn btn-danger">Editar</button>
                         </form>
                     @endif
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body mx-auto">
                     <figure class="figure">
@@ -621,4 +670,27 @@
         </div>
     </div>
 
+    {{-- SCRIPTS --}}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            function getLanguage() {
+                var lang = $('html').attr('lang');
+                if (lang == 'es') {
+                    lng = "es-ES";
+                } else if (lang == 'en') {
+                    lng = "en-GB";
+                }
+                var result = null;
+                var path = 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/';
+                result = path + lng + ".json";
+                return result;
+            }
+            // Build Datatable
+            $('#datatable').DataTable({
+                language: {
+                    "url": getLanguage()
+                }
+            });
+        });
+    </script>
 @endsection
