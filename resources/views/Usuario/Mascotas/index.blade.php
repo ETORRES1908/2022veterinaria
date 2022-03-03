@@ -3,7 +3,7 @@
 @section('content')
     <div class="mx-auto w-75">
         <div class="mb-5">
-            <a href="{{ route('Mascotas.create') }}" class="fw-bold text-uppercase btn btn-outline-danger px-5">
+            <a href="{{ route('mascotas.create') }}" class="fw-bold text-uppercase btn btn-outline-danger px-5">
                 {{ __('Add Pet') }}
             </a>
         </div>
@@ -22,7 +22,7 @@
                             <div class="col-md-8">
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                        <a href="{{ route('Mascotas.show', $mascota->id) }}"
+                                        <a href="{{ route('mascotas.show', $mascota->id) }}"
                                             class="fw-bold nav-link link-danger text-uppercase">{{ $mascota->REGGAL }}
                                         </a>
                                     </h5>

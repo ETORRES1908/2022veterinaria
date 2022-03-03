@@ -6,7 +6,7 @@
     <div class="card bg-black border border-danger">
         @can('events.create')
             <div class="card-header border border-danger">
-                <a href="{{ route('Events.create') }}" class="btn btn-success" style="font-size: 95%">
+                <a href="{{ route('events.create') }}" class="btn btn-success" style="font-size: 95%">
                     {{ __('Add Event') }}</a>
             </div>
         @endcan
@@ -214,7 +214,7 @@
                                 </h6>
                             </td>
                             <td>
-                                <a href="{{ route('Events.show', $evento->id) }}" class="btn btn-warning">
+                                <a href="{{ route('events.show', $evento->id) }}" class="btn btn-warning">
                                     {{ __('View') }}
                                 </a>
                             </td>

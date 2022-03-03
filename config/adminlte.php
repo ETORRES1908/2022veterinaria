@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Veterianaria</b>Vega',
 
-    'logo_mini' => '<b>A</b>LT',
+    'logo_mini' => '<b>VV</b>',
 
     /*
     |--------------------------------------------------------------------------
@@ -107,44 +107,33 @@ return [
     */
 
     'menu' => [
-        /*         [
-            'text' => 'search',
-            'search' => true,
-        ],
-        ['header' => 'main_navigation'],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ], */
-        ['header' => 'Mantenimientos'],
-        [
-            'text' => 'Usuarios',
-            'route'  => 'Usuarios.index',
-            'icon' => 'fas fa-fw fa-users',
+            'text' => 'Language',
+            'topnav' => true,
             'submenu' => [
                 [
-                    'text' => 'Lista',
-                    'route'  => 'Usuarios.index',
-                ],
-                [
-                    'text' => 'Agregar',
-                    'route'  => 'Usuarios.create',
+                    'text' => 'English',
+                    'icon' => 'flag-icon flag-icon-us',
+                    'url' => 'language/en'
 
                 ],
-            ],
+                [
+                    'text' => 'Español',
+                    'icon' => 'flag-icon flag-icon-kh',
+                    'url' => 'language/es'
+                ]
+            ]
+        ],
+        ['header' => 'Mantenimientos'],
+        [
+            'text' => 'Users',
+            'route'  => 'usuarios.index',
+            'icon' => 'fas fa-fw fa-users',
         ],
         [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Events',
+            'route'  => 'MEventos.index',
+            'icon' => 'fas fa-fw fa-users',
         ],
         [
             'text'    => 'multilevel',

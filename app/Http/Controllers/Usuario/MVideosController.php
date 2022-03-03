@@ -60,7 +60,7 @@ class MVideosController extends Controller
             ]);
 
             return redirect()
-                ->route('Mascotas.show', $nmvideos->mascota_id)
+                ->route('mascotas.show', $nmvideos->mascota_id)
                 ->with('mensaje', 'ok');
         }
     }
@@ -114,6 +114,6 @@ class MVideosController extends Controller
 
         $mvideo->delete();
 
-        return redirect()->route('Mascotas.show', $mvideo->mascota_id);
+        return redirect()->route('mascotas.show', $mvideo->mascota_id);
     }
 }

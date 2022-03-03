@@ -35,8 +35,8 @@
                                 {{ __('Name') }}
                             </label>
                             <div class="col-auto">
-                                <input id="nombre" type="text" class="form-control text-danger" name="nombre"
-                                    value="{{ old('nombre') }}" required autofocus pattern="[A-zÀ-ú\S]+">
+                                <input type="text" class="form-control text-danger" name="nombre"
+                                    value="{{ old('nombre') }}" required pattern="[A-zÀ-ú\S]+" maxlength="10">
 
                                 @if ($errors->has('nombre'))
                                     <span class="text-danger text-fs6">
@@ -53,7 +53,7 @@
 
                             <div class="col-auto">
                                 <input id="apellido" type="text" class="form-control  text-danger" name="apellido"
-                                    value="{{ old('apellido') }}" required autofocus pattern="[A-zÀ-ú\S]+">
+                                    value="{{ old('apellido') }}" required pattern="[A-zÀ-ú\S]+" maxlength="10">
 
                                 @if ($errors->has('apellido'))
                                     <span class="text-danger text-fs6">
@@ -91,12 +91,18 @@
                         </label>
                         <select class="form-select text-danger" id="discapacidad" name="discapacidad"
                             value="{{ old('discapacidad') }}" required>
-                            <option selected value="No">No</option>
-                            <option value="Visual">Visual</option>
-                            <option value="Fisica">Fisica</option>
-                            <option value="Auditiva">Auditiva</option>
-                            <option value="Verbal">Verbal</option>
-                            <option value="Mental">Mental</option>
+                            <option value="No" @if (old('discapacidad') == 'No') selected @endif>{{ __('No') }}
+                            </option>
+                            <option value="Visual" @if (old('discapacidad') == 'Visual') selected @endif>{{ __('Visual') }}
+                            </option>
+                            <option value="Fisica" @if (old('discapacidad') == 'Fisica') selected @endif>{{ __('Physical') }}
+                            </option>
+                            <option value="Auditiva" @if (old('discapacidad') == 'Auditiva') selected @endif>
+                                {{ __('Auditory') }}</option>
+                            <option value="Verbal" @if (old('discapacidad') == 'Verbal') selected @endif>{{ __('Verbal') }}
+                            </option>
+                            <option value="Mental" @if (old('discapacidad') == 'Mental') selected @endif>{{ __('Mental') }}
+                            </option>
                         </select>
 
                         @if ($errors->has('discapacidad'))
@@ -309,7 +315,8 @@
                         </label>
 
                         <div class="col-auto">
-                            <input id="password" type="password" class="form-control  text-danger" name="password" required>
+                            <input value="{{ old('password') }}" type="password" class="form-control text-danger"
+                                name="password" required>
 
                             @if ($errors->has('password'))
                                 <span class="text-danger text-fs6">
@@ -329,9 +336,14 @@
                             <button class="btn btn-primary py-0" type="button" disabled>?</button>
                         </span>
                         <div class="col-auto">
-                            <input id="password-confirm" type="password" class="form-control  text-danger"
-                                name="password_confirmation" required>
+                            <input value="{{ old('password_confirmation') }}" type="password"
+                                class="form-control  text-danger" name="password_confirmation" required>
                         </div>
+                        @if ($errors->has('password_confirmation'))
+                            <span class="text-danger text-fs6">
+                                {{ $errors->first('password_confirmation') }}
+                            </span>
+                        @endif
                     </div>
                 </div>
                 {{-- ELEGIR PREGUNTA --}}
@@ -344,9 +356,12 @@
                             <select class="form-control text-danger col-sm-12" id="question" name="question"
                                 value="{{ old('question') }}" required>
                                 <option selected disabled value="">Opciones...</option>
-                                <option value="0">¿Nombre de la Primera mascota?</option>
-                                <option value="1">¿Nombre de la ciudad natal?</option>
-                                <option value="2">¿Nombre del mejor amigo de la infancia?</option>
+                                <option value="0" @if (old('question') == '0') selected @endif>
+                                    ¿Nombre de la Primera mascota?</option>
+                                <option value="1" @if (old('question') == '1') selected @endif>
+                                    ¿Nombre de la ciudad natal?</option>
+                                <option value="2" @if (old('question') == '2') selected @endif>
+                                    ¿Nombre del mejor amigo de la infancia?</option>
                             </select>
                         </div>
                         <div class="col-sm-12 col-form-label fw-bold">

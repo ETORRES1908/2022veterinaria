@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <form class="form-horizontal" method="POST" action="{{ route('Events.store') }}" enctype="multipart/form-data"
+    <form class="form-horizontal" method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data"
         autocomplete="off">
         {{ csrf_field() }}
         <div class="card mx-auto bg-black text-white border border-danger mb-3">
@@ -244,13 +244,13 @@
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             Min
-                                            <input type="number" class="form-control text-danger" min="1" id="miw"
-                                                name="miw" onKeyPress="if(this.value.length==3) return false;"
+                                            <input type="number" class="form-control text-danger" min="300" max="505"
+                                                id="miw" name="miw" onKeyPress="if(this.value.length==3) return false;"
                                                 onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
                                                 value="{{ old('miw') }}" required autofocus />
                                             Max
-                                            <input type="number" class="form-control text-danger" min="1" id="maw"
-                                                name="maw" onKeyPress="if(this.value.length==3) return false;"
+                                            <input type="number" class="form-control text-danger" min="300" max="505"
+                                                id="maw" name="maw" onKeyPress="if(this.value.length==3) return false;"
                                                 onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
                                                 value="{{ old('maw') }}" required autofocus />
                                         </span>
@@ -269,16 +269,16 @@
                                 </label>
                                 <div class="col-auto">
                                     <div class="input-group">
-                                        <select class="form-control form-select text-danger fw-bold" id="ctr" name="ctr"
-                                            value="{{ old('ctr') }}" required autofocus>
-                                            <option class="text-danger fw-bold" value="PE"
-                                                @if (old('ctr') == 'PE') selected @endif>Perú</option>
-                                            <option class="text-danger fw-bold" value="ARG"
+                                        <select class="select2 form-control form-select text-danger fw-bold" id="ctr"
+                                            name="ctr" value="{{ old('ctr') }}" required autofocus>
+                                            <option class="text-danger fw-bold" value="PER"
+                                                @if (old('ctr') == 'PER') selected @endif>Perú</option>
+                                            {{-- <option class="text-danger fw-bold" value="ARG"
                                                 @if (old('ctr') == 'ARG') selected @endif>Argentina</option>
-                                            <option class="text-danger fw-bold" value="EC"
-                                                @if (old('ctr') == 'EC') selected @endif>Ecuador</option>
-                                            <option class="text-danger fw-bold" value="CL"
-                                                @if (old('ctr') == 'CL') selected @endif>Chile</option>
+                                            <option class="text-danger fw-bold" value="ECU"
+                                                @if (old('ctr') == 'ECU') selected @endif>Ecuador</option> --}}
+                                            <option class="text-danger fw-bold" value="CHL"
+                                                @if (old('ctr') == 'CHL') selected @endif>Chile</option>
                                         </select>
                                     </div>
                                     @if ($errors->has('ctr'))
@@ -295,8 +295,92 @@
                                 </label>
                                 <div class="col-auto">
                                     <div class="input-group">
-                                        <input id="stt" type="text" class="form-control text-danger fw-bold" name="stt"
-                                            value="{{ old('stt') }}" minlength="4" maxlength="10" required autofocus>
+                                        <select class="select2 form-control form-select text-danger fw-bold" id="stt"
+                                            name="stt" value="{{ old('stt') }}" required autofocus>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-AMA"
+                                                @if (old('stt') == 'PE-AMA') selected @endif>Amazonas</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-ANC"
+                                                @if (old('stt') == 'PE-ANC') selected @endif>Ancash</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-APU"
+                                                @if (old('stt') == 'PE-APU') selected @endif>Apurímac</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-ARE"
+                                                @if (old('stt') == 'PE-ARE') selected @endif>Arequipa</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-AYA"
+                                                @if (old('stt') == 'PE-AYA') selected @endif>Ayacucho</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-CAJ"
+                                                @if (old('stt') == 'PE-CAJ') selected @endif>Cajamarca</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-CUS"
+                                                @if (old('stt') == 'PE-CUS') selected @endif>Cuzco</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-HUV"
+                                                @if (old('stt') == 'PE-HUV') selected @endif>Huancavelica</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-HUC"
+                                                @if (old('stt') == 'PE-HUC') selected @endif>Huánuco</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-ICA"
+                                                @if (old('stt') == 'PE-ICA') selected @endif>ICA</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-JUN"
+                                                @if (old('stt') == 'PE-JUN') selected @endif>Junín</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-LAL"
+                                                @if (old('stt') == 'PE-LAL') selected @endif>La Libertad</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-LAM"
+                                                @if (old('stt') == 'PE-LAM') selected @endif>Lambayeque</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-LIM"
+                                                @if (old('stt') == 'PE-LIM') selected @endif>Lima</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-LOR"
+                                                @if (old('stt') == 'PE-LOR') selected @endif>Loreto</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-MDD"
+                                                @if (old('stt') == 'PE-MDD') selected @endif>Madre de Dios</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-MOQ"
+                                                @if (old('stt') == 'PE-MOQ') selected @endif>Moquegua</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-PAS"
+                                                @if (old('stt') == 'PE-PAS') selected @endif>Pasco</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-PIU"
+                                                @if (old('stt') == 'PE-PIU') selected @endif>Piura</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-PUN"
+                                                @if (old('stt') == 'PE-PUN') selected @endif>Puno</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-SAM"
+                                                @if (old('stt') == 'PE-SAM') selected @endif>San Martín</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-TAC"
+                                                @if (old('stt') == 'PE-TAC') selected @endif>Tacna</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PE-TUM"
+                                                @if (old('stt') == 'PE-TUM') selected @endif>Tumbes</option>
+                                            <option data="PER" class="text-danger fw-bold" value="UCA"
+                                                @if (old('stt') == 'PE-UCA') selected @endif>Ucayali</option>
+                                            {{-- CHILE --}}
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-AI"
+                                                @if (old('stt') == 'CL-AI') selected @endif>Aysén</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-AN"
+                                                @if (old('stt') == 'CL-AN') selected @endif>Antofagasta</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-AP"
+                                                @if (old('stt') == 'CL-AP') selected @endif>Arica y Parinacota
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-AR"
+                                                @if (old('stt') == 'CL-AR') selected @endif>Araucanía</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-AT"
+                                                @if (old('stt') == 'CL-AT') selected @endif>Atacama</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-BI"
+                                                @if (old('stt') == 'CL-BI') selected @endif>Biobío</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-CO"
+                                                @if (old('stt') == 'CL-CO') selected @endif>Coquimbo</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-LI"
+                                                @if (old('stt') == 'CL-LI') selected @endif>O'Higgins</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-LL"
+                                                @if (old('stt') == 'CL-LL') selected @endif>Los Lagos</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-LR"
+                                                @if (old('stt') == 'CL-LR') selected @endif>Los Ríos</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-MA"
+                                                @if (old('stt') == 'CL-MA') selected @endif>Magallanes y Antártica
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-ML"
+                                                @if (old('stt') == 'CL-ML') selected @endif>Maule</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-NB"
+                                                @if (old('stt') == 'CL-NB') selected @endif>Ñuble</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-RM"
+                                                @if (old('stt') == 'CL-RM') selected @endif>Santiago</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-TA"
+                                                @if (old('stt') == 'CL-TA') selected @endif>Tarapacá</option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CL-VS"
+                                                @if (old('stt') == 'CL-VS') selected @endif>Valparaíso</option>
+                                        </select>
                                     </div>
                                     @if ($errors->has('stt'))
                                         <span class="text-danger text-fs6">
@@ -326,7 +410,7 @@
                     {{-- 1 TIME WEIGHT PESO --}}
                     <div class="col-4 form-group{{ $errors->has('ftw') ? ' has-error' : '' }}">
                         <label for="ftw" class="col-form-label fw-bold">
-                            {{ __('First Time Weight') }}
+                            {{ __('1st WEIGH') }}
                         </label>
                         <div class="col-auto">
                             <select class="form-control form-select text-danger fw-bold" id="ftw" name="ftw"
@@ -368,7 +452,7 @@
                     {{-- 2 TIME WEIGHT --}}
                     <div class="col-4 form-group{{ $errors->has('stw') ? ' has-error' : '' }}">
                         <label for="stw" class="col-form-label fw-bold">
-                            {{ __('Second Time Weight') }}
+                            {{ __('2nd WEIGH') }}
                         </label>
                         <div class="col-auto">
                             <select class="form-control form-select text-danger fw-bold" id="stw" name="stw"
@@ -415,8 +499,8 @@
                     </div>
                     {{-- HORA INICIO --}}
                     <div class="col-4 form-group{{ $errors->has('hstart') ? ' has-error' : '' }}">
-                        <label for="hstart" class="col-form-label fw-bold">
-                            {{ __('Time Start') }}
+                        <label for="hstart" class="col-form-label fw-bold text-uppercase">
+                            {{ __('Start') }}
                         </label>
                         <div class="col-auto">
                             <input id="hstart" type="time" step='1' class="form-control text-danger fw-bold" name="hstart"
@@ -752,28 +836,15 @@
                             {{ __('Bags') }}
                         </label>
                         <div class="row">
-                            <div class="input-group">
-                                <div class="input-group-text">N°</div>
-                                <input id="skg" type="number" class="col form-control text-danger fw-bold" name="skg"
-                                    value="{{ old('skg') }}" required autofocus min="0"
-                                    onKeyPress="if(this.value.length==1) return false;"
-                                    onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
-                                @if ($errors->has('skg'))
-                                    <span class="text-danger text-fs6">
-                                        {{ $errors->first('skg') }}
-                                    </span>
-                                @endif
-                                <div class="input-group-text">KG</div>
-                                <input id="ws" type="number" class="form-control text-danger fw-bold" name="ws"
-                                    value="{{ old('ws') }}" required autofocus min="0"
-                                    onKeyPress="if(this.value.length==2) return false;"
-                                    onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
-                                @if ($errors->has('ws'))
-                                    <span class="text-danger text-fs6">
-                                        {{ $errors->first('ws') }}
-                                    </span>
-                                @endif
-                            </div>
+                            <input id="skg" type="number" class="col form-control text-danger fw-bold" name="skg"
+                                value="{{ old('skg') }}" required autofocus min="1"
+                                onKeyPress="if(this.value.length==1) return false;"
+                                onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
+                            @if ($errors->has('skg'))
+                                <span class="text-danger text-fs6">
+                                    {{ $errors->first('skg') }}
+                                </span>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -958,25 +1029,14 @@
         $("#removedate").click(function() {
             $('#dfechas').last().remove();
         });
-        /* AWARDS */
-        /* function Sum() {
-            var rtr = $('#rooster').val();
-            var rten = $('#rten').val();
-            var fft = $('#fft').val();
-            var sft = $('#sft').val();
-            var tft = $('#tft').val();
-            var fcd = $('#fcd').val();
-            var sum = parseInt(rtr) + parseInt(rten) + parseInt(fft) + parseInt(sft) + parseInt(tft) + parseInt(fcd);
-            console.log(sum);
-            $('#awards').val(sum);
-        }
-        $("#rooster").change(Sum);
-        $("#rten").change(Sum);
-        $("#1ft").change(Sum);
-        $("#2ft").change(Sum);
-        $("#3ft").change(Sum);
-        $("#fcd").change(Sum);
-        Sum(); */
+        /* STATE -  */
+        var $select1 = $('#ctr'),
+            $select2 = $('#stt'),
+            $options = $select2.find('option');
+
+        $select1.on('change', function() {
+            $select2.html($options.filter('[data="' + this.value + '"]'));
+        }).trigger('change');
         /*  SOLO NUMEROS */
         $(document).ready(function() {
             $('input').bind('copy paste', function(e) {

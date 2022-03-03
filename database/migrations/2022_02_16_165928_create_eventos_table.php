@@ -85,8 +85,6 @@ class CreateEventosTable extends Migration
             $table->string('cnt');
             //SACO
             $table->string('skg');
-            //SACO KILOS
-            $table->string('ws');
             //ENTRADA GENERAL
             $table->string('egn');
             //ENTRADA VIP
@@ -102,6 +100,8 @@ class CreateEventosTable extends Migration
             $table->string('gll');
             //GALPON
             $table->string('glp');
+            //STATUS
+            $table->string('status')->default('0'); //estado
             $table->timestamps();
         });
     }

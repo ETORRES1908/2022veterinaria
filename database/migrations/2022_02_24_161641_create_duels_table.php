@@ -28,6 +28,7 @@ class CreateDuelsTable extends Migration
             $table->string('scc');
             $table->string('cch');
             $table->string('npelea');
+            $table->string('result')->nullable();
             $table->timestamps();
         });
     }

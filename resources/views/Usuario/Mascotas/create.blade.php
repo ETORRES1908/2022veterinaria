@@ -6,7 +6,7 @@
             {{ __('Add Pet') }}
         </div>
         <div class="card-body border border-danger">
-            <form class="form-horizontal" method="POST" action="{{ route('Mascotas.store') }}"
+            <form class="form-horizontal" method="POST" action="{{ route('mascotas.store') }}"
                 enctype="multipart/form-data" autocomplete="off">
                 {{ csrf_field() }}
                 {{-- USER ID --}}
@@ -55,7 +55,7 @@
                                 </label>
                                 <div class="col-auto">
                                     <input id="sss" type="number" class="form-control text-danger" name="sss"
-                                        value="{{ old('sss') }}" onKeyPress="if(this.value.length==4) return false;"
+                                        value="{{ old('sss') }}" onKeyPress="if(this.value.length==3) return false;"
                                         onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required autofocus
                                         min="300" max="505">
 
@@ -78,7 +78,7 @@
                                     <div class="col-auto">
                                         <input id="plc" type="number" class="form-control text-danger" name="plc"
                                             value="{{ old('plc') }}" required autofocus
-                                            onKeyPress="if(this.value.length==4) return false;"
+                                            onKeyPress="if(this.value.length==6) return false;"
                                             onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" min="0">
 
                                         @if ($errors->has('plc'))
@@ -148,9 +148,7 @@
                                             <option selected value="No">{{ __('No') }}</option>
                                             <option value="Visual">{{ __('Visual') }}</option>
                                             <option value="Fisica">{{ __('Physical') }}</option>
-                                            <option value="Auditiva">{{ __('Auditory') }}</option>
-                                            <option value="Verbal">{{ __('Verbal') }}</option>
-                                            <option value="Mental">{{ __('Mental') }}</option>
+                                            <option value="Auditiva">{{ __('Other') }}</option>
                                         </select>
 
                                         @if ($errors->has('des'))

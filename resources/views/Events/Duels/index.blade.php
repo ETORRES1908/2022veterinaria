@@ -6,7 +6,7 @@
 
     <div class="card bg-black border border-danger">
         <div class="card-header border border-danger">
-            @if (count($duelos) <= 150 && $evento->organizador_id == Auth::user()->id)
+            @if (count($duelos) <= 150 || $evento->organizador_id == Auth::user()->id || $evento->mcontrol_id == Auth::user()->id)
                 <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#AddPet">
                     {{ __('Add Duel') }}
                 </button>
@@ -24,16 +24,17 @@
         </div>
         <div class="card-body table-responsive border border-danger">
             <table id="datatable" class="table table-dark table-hover nowrap" style="width:100%">
-                <thead>
+                <thead class="text-center">
                     <tr>
-                        <th>DUEÑO 1</th>
-                        <th>MASCOTA 1</th>
+                        <th class="text-uppercase">{{ __('Owner') }}</th>
+                        <th class="text-uppercase">{{ __('Pet') }} 1</th>
                         <th>VS</th>
-                        <th>MASCOTA 2</th>
-                        <th>DUEÑO 2</th>
+                        <th class="text-uppercase">{{ __('Pet') }} 2</th>
+                        <th class="text-uppercase">{{ __('Owner') }}</th>
+                        <th class="text-uppercase">{{ __('Winner') }}</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                     @foreach ($duelos as $duel)
                         <tr>
                             <td>{{ $duel->pmascota->user->nombre . ' ' . $duel->pmascota->user->apellido }}</td>
@@ -43,8 +44,7 @@
                                     VS
                                 </button>
                                 <!-- Modal VS-->
-                                <div class="modal fade" id="VS{{ $duel->id }}" aria-hidden="true"
-                                    aria-labelledby="VS{{ $duel->id }}" tabindex="-1">
+                                <div class="modal fade" id="VS{{ $duel->id }}" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered modal-xl">
                                         <div class="modal-content bg-black border border-danger text-white">
                                             <div class="modal-header border-danger">
@@ -59,204 +59,215 @@
                                                         {{ __('Cancha') }}: {{ $duel->cch }}
                                                     </label>
                                                 </div>
-                                                <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                                <button type="button" class="btn btn-danger bg-danger btn-close"
+                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body row">
-                                                {{-- MASCOTA 1 --}}
-                                                <div
-                                                    class="col-sm-5 m-1 mx-auto form-group card bg-black border border-danger">
-                                                    <div class="col-sm-6 mx-auto my-2">
-                                                        <figure class="figure">
-                                                            <img src="@if (!empty($duel->pmascota->fotos->where('nfoto', 1)->first())) {{ asset($duel->pmascota->fotos->where('nfoto', 1)->first()->ruta) }} @else{{ asset('storage/img/pata.jpg') }} @endif"
-                                                                class="figure-img d-block mx-auto" width="120" height="140">
-                                                        </figure>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('REGGAL') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->pmascota->REGGAL }}"
-                                                                    class="form-control text-danger" readonly>
+                                            <div class="modal-body">
+                                                <div class="row row-cols-2 g-2">
+                                                    {{-- MASCOTA 1 --}}
+                                                    <div class="col-6">
+                                                        <div class="card-body card bg-black border border-danger">
+                                                            <div class="col-sm-6 mx-auto my-2">
+                                                                <figure class="figure">
+                                                                    <img src="@if (!empty($duel->pmascota->fotos->where('nfoto', 1)->first())) {{ asset($duel->pmascota->fotos->where('nfoto', 1)->first()->ruta) }} @else{{ asset('storage/img/pata.jpg') }} @endif"
+                                                                        class="figure-img d-block mx-auto" width="120"
+                                                                        height="140">
+                                                                </figure>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('Galpon') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->pmascota->user->galpon }}"
-                                                                    class="form-control text-danger" readonly>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('REGGAL') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->pmascota->REGGAL }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Galpon') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input
+                                                                            value="{{ $duel->pmascota->user->galpon }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('Color') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->pmascota->plu }}"
-                                                                    class="form-control text-danger" readonly>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Color') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->pmascota->plu }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Weight') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->pmascota->sss }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Cinta') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->fcc }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('Weight') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->pmascota->sss }}"
-                                                                    class="form-control text-danger" readonly>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Country') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input
+                                                                            value="{{ $duel->pmascota->user->country }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('State') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->pmascota->user->state }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('Country') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->pmascota->user->country }}"
-                                                                    class="form-control text-danger" readonly>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('State') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->pmascota->user->state }}"
-                                                                    class="form-control text-danger" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('Disability') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->pmascota->des }}"
-                                                                    class="form-control text-danger" readonly>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('Stamp') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->pmascota->plc }}"
-                                                                    class="form-control text-danger" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6 mb-3">
-                                                        <label class="form-label fw-bold">
-                                                            {{ __('Cinta') }}
-                                                        </label>
-                                                        <div class="col-auto">
-                                                            <input value="{{ $duel->fcc }}"
-                                                                class="form-control text-danger" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {{-- MASCOTA 2 --}}
-                                                <div class="col-sm-5 m-1 mx-auto form-group bg-black border border-danger">
-                                                    <div class="col-sm-6 mx-auto my-2">
-                                                        <figure class="figure">
-                                                            <img src="@if (!empty($duel->smascota->fotos->where('nfoto', 1)->first())) {{ asset($duel->smascota->fotos->where('nfoto', 1)->first()->ruta) }} @else{{ asset('storage/img/pata.jpg') }} @endif"
-                                                                class="figure-img d-block mx-auto" width="120" height="140">
-                                                        </figure>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('REGGAL') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->smascota->REGGAL }}"
-                                                                    class="form-control text-danger" readonly>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('Galpon') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->smascota->user->galpon }}"
-                                                                    class="form-control text-danger" readonly>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Disability') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->pmascota->des }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Stamp') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->pmascota->plc }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('Color') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->smascota->plu }}"
-                                                                    class="form-control text-danger" readonly>
+                                                    {{-- MASCOTA 2 --}}
+                                                    <div class="col-6">
+                                                        <div class="card-body bg-black border border-danger">
+                                                            <div class="col-sm-6 mx-auto my-2">
+                                                                <figure class="figure">
+                                                                    <img src="@if (!empty($duel->smascota->fotos->where('nfoto', 1)->first())) {{ asset($duel->smascota->fotos->where('nfoto', 1)->first()->ruta) }} @else{{ asset('storage/img/pata.jpg') }} @endif"
+                                                                        class="figure-img d-block mx-auto" width="120"
+                                                                        height="140">
+                                                                </figure>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('Weight') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->smascota->sss }}"
-                                                                    class="form-control text-danger" readonly>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('REGGAL') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->smascota->REGGAL }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Galpon') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input
+                                                                            value="{{ $duel->smascota->user->galpon }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('Country') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->smascota->user->country }}"
-                                                                    class="form-control text-danger" readonly>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Colour') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->smascota->plu }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Weight') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->smascota->sss }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Cinta') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->scc }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('State') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->smascota->user->state }}"
-                                                                    class="form-control text-danger" readonly>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Country') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input
+                                                                            value="{{ $duel->smascota->user->country }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('State') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->smascota->user->state }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('Disability') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->smascota->des }}"
-                                                                    class="form-control text-danger" readonly>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Disability') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->smascota->des }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 mb-3">
+                                                                    <label class="form-label fw-bold">
+                                                                        {{ __('Stamp') }}
+                                                                    </label>
+                                                                    <div class="col-auto">
+                                                                        <input value="{{ $duel->smascota->plc }}"
+                                                                            class="form-control text-danger" readonly>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-sm-6 mb-3">
-                                                            <label class="form-label fw-bold">
-                                                                {{ __('Stamp') }}
-                                                            </label>
-                                                            <div class="col-auto">
-                                                                <input value="{{ $duel->smascota->plc }}"
-                                                                    class="form-control text-danger" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6 mb-3">
-                                                        <label class="form-label fw-bold">
-                                                            {{ __('Cinta') }}
-                                                        </label>
-                                                        <div class="col-auto">
-                                                            <input value="{{ $duel->scc }}"
-                                                                class="form-control text-danger" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -267,18 +278,16 @@
                             </td>
                             <td>{{ $duel->smascota->nombre }}</td>
                             <td>{{ $duel->smascota->user->nombre . ' ' . $duel->smascota->user->apellido }}</td>
+                            <td class="text-black fs-5 fw-bolder">
+                                @if (empty($duel->result))
+                                    <div class="bg-warning p-1">{{ __('Waiting') }}</div>
+                                @else
+                                    <div class="bg-success  p-1">{{ $duel->result }}</div>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <th>DUEÑO 1</th>
-                        <th>MASCOTA 1</th>
-                        <th>VS</th>
-                        <th>MASCOTA 2</th>
-                        <th>DUEÑO 2</th>
-                    </tr>
-                </tfoot>
             </table>
         </div>
     </div>
@@ -289,9 +298,10 @@
             <div class="modal-content bg-black border border-danger">
                 <div class="modal-header border border-danger">
                     <div class="modal-title fw-bold">{{ __('CHOOSE PET') }}</div>
-                    <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <form class="form-horizontal" method="POST" action="{{ route('Duels.store') }}">
+                <form class="form-horizontal" method="POST" action="{{ route('duels.store') }}">
                     {{ csrf_field() }}
                     {{-- LPARTICIPANTE_ID --}}
                     <input type="text" id="lparticipante_id" name="lparticipante_id" value="{{ $lparticipante }}" hidden>
@@ -585,7 +595,7 @@
             var id = $('#pmascota_id').val();
             $.ajax({
                 type: 'GET', //THIS NEEDS TO BE GET
-                url: '/Participants/' + id,
+                url: '/participants/' + id,
                 dataType: 'json',
                 success: function(data) {
                     console.log(data);
@@ -615,7 +625,7 @@
             var id = $('#smascota_id').val();
             $.ajax({
                 type: 'GET', //THIS NEEDS TO BE GET
-                url: '/Participants/' + id,
+                url: '/participants/' + id,
                 dataType: 'json',
                 success: function(data) {
                     console.log(data);

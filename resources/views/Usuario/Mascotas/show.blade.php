@@ -2,13 +2,13 @@
 @extends('layouts.datatable')
 
 @section('content')
-    <div class="card col-md-8 col-sm-12 bg-black border border-danger mb-3 mx-auto">
+    <div class="card col-md-8 col-12 bg-black border border-danger mb-3 mx-auto">
         <div class="card-body border border-danger">
             <h5 class="card-title fw-bold text-uppercase pe-none text-danger">
                 {{ $mascota->REGGAL }}
             </h5>
             <div class="row">
-                <div class="col-xl-5 mb-3">
+                <div class="col-lg-5  mb-3">
                     <div class="card-text">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
@@ -41,7 +41,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-xl-7 my-auto">
+                <div class="col-lg-7 my-auto">
                     <div class="row">
                         <!-- Button Modal -->
                         <div class="col-4 border border-danger">
@@ -138,11 +138,13 @@
                 </div>
             </div>
         </div>
+        {{-- TABLE --}}
         <div class="card-footer border border-danger table-responsive">
+            <label class="form-label fw-bold text-uppercase text-danger">{{ __('Last 10 participantions') }}</label>
             <table class="table table-sm table-dark table-hover" id="datatable">
                 <thead>
                     <tr>
-                        <th>{{ __('Shed') }}</th>
+                        <th>{{ __('Opponent') }}</th>
                         <th>{{ __('Shed') }}</th>
                         <th>{{ __('Coliseum') }}</th>
                         <th>{{ __('Time') }}</th>
@@ -150,37 +152,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    @foreach ($duelos as $duelo)
+                        <tr>
+                            <td>
+                                @if ($duelo->pmascota_id == $mascota->id)
+                                    {{ $duelo->smascota->nombre }}
+                                @elseif ($duelo->smascota_id == $mascota->id)
+                                    {{ $duelo->pmascota->nombre }}
+                                @endif
+                            </td>
+                            <td>{{ $duelo->cch }}</td>
+                            <td>{{ $duelo->lparticipante->evento->coliseum->nombre }}</td>
+                            <td>{{ $duelo->npelea }}</td>
+                            <td class="table-active text-center">
+                                @if ($duelo->result != $mascota->id)
+                                    <div class="bg-danger">{{ __('Lose') }}</div>
+                                @else
+                                    <div class="bg-success">{{ __('Win') }}</div>
+                                @endif
+
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <th>{{ __('Shed') }}</th>
-                        <th>{{ __('Shed') }}</th>
-                        <th>{{ __('Coliseum') }}</th>
-                        <th>{{ __('Time') }}</th>
-                        <th>{{ __('Result') }}</th>
-                    </tr>
-                </tfoot>
             </table>
         </div>
-
     </div>
 
 
     <!-- Modal 1-->
-    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-        tabindex="-1">
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     @if (!empty($mascota->fotos->where('nfoto', 1)->first()))
-                        <form action="{{ route('MFotos.destroy', $mascota->fotos->where('nfoto', 1)->first()) }}"
+                        <form action="{{ route('mfotos.destroy', $mascota->fotos->where('nfoto', 1)->first()) }}"
                             method="post">
                             {!! method_field('delete') !!}
                             {!! csrf_field() !!}
@@ -189,7 +195,7 @@
                     @else
                         {{-- AÑADIR FOTO --}}
                         <form class="d-flex justify-content-between mt-3 w-75" method="POST"
-                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
+                            action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="1" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -213,7 +219,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 1)->first())) {{ asset($mascota->fotos->where('nfoto', 1)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                "
+                                                                                                                                                                                                                                                                                                                                                                                                    "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -228,13 +234,12 @@
         </div>
     </div>
     <!-- Modal 2 -->
-    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-        tabindex="-1">
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     @if (!empty($mascota->fotos->where('nfoto', 2)->first()))
-                        <form action="{{ route('MFotos.destroy', $mascota->fotos->where('nfoto', 2)->first()) }}"
+                        <form action="{{ route('mfotos.destroy', $mascota->fotos->where('nfoto', 2)->first()) }}"
                             method="post">
                             {!! method_field('delete') !!}
                             {!! csrf_field() !!}
@@ -243,7 +248,7 @@
                     @else
                         {{-- AÑADIR FOTO --}}
                         <form class="d-flex justify-content-between mt-3 w-75" method="POST"
-                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
+                            action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="2" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -267,7 +272,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 2)->first())) {{ asset($mascota->fotos->where('nfoto', 2)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                "
+                                                                                                                                                                                                                                                                                                                                                                                                    "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -282,13 +287,12 @@
         </div>
     </div>
     <!-- Modal 3 -->
-    <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-        tabindex="-1">
+    <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     @if (!empty($mascota->fotos->where('nfoto', 3)->first()))
-                        <form action="{{ route('MFotos.destroy', $mascota->fotos->where('nfoto', 3)->first()) }}"
+                        <form action="{{ route('mfotos.destroy', $mascota->fotos->where('nfoto', 3)->first()) }}"
                             method="post">
                             {!! method_field('delete') !!}
                             {!! csrf_field() !!}
@@ -297,7 +301,7 @@
                     @else
                         {{-- AÑADIR FOTO --}}
                         <form class="d-flex justify-content-between mt-3 w-75" method="POST"
-                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
+                            action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="3" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -321,7 +325,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 3)->first())) {{ asset($mascota->fotos->where('nfoto', 3)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                "
+                                                                                                                                                                                                                                                                                                                                                                                                    "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -335,14 +339,13 @@
             </div>
         </div>
     </div>
-    {{-- Modal 3 --}}
-    <div class="modal fade" id="exampleModalToggle4" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-        tabindex="-1">
+    {{-- Modal 4 --}}
+    <div class="modal fade" id="exampleModalToggle4" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     @if (!empty($mascota->fotos->where('nfoto', 4)->first()))
-                        <form action="{{ route('MFotos.destroy', $mascota->fotos->where('nfoto', 4)->first()) }}"
+                        <form action="{{ route('mfotos.destroy', $mascota->fotos->where('nfoto', 4)->first()) }}"
                             method="post">
                             {!! method_field('delete') !!}
                             {!! csrf_field() !!}
@@ -351,7 +354,7 @@
                     @else
                         {{-- AÑADIR FOTO --}}
                         <form class="d-flex justify-content-between mt-3 w-75" method="POST"
-                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
+                            action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="4" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -375,7 +378,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 4)->first())) {{ asset($mascota->fotos->where('nfoto', 4)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                "
+                                                                                                                                                                                                                                                                                                                                                                                                    "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -390,13 +393,12 @@
         </div>
     </div>
     {{-- MODAL 5 --}}
-    <div class="modal fade" id="exampleModalToggle5" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-        tabindex="-1">
+    <div class="modal fade" id="exampleModalToggle5" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     @if (!empty($mascota->fotos->where('nfoto', 5)->first()))
-                        <form action="{{ route('MFotos.destroy', $mascota->fotos->where('nfoto', 5)->first()) }}"
+                        <form action="{{ route('mfotos.destroy', $mascota->fotos->where('nfoto', 5)->first()) }}"
                             method="post">
                             {!! method_field('delete') !!}
                             {!! csrf_field() !!}
@@ -405,7 +407,7 @@
                     @else
                         {{-- AÑADIR FOTO --}}
                         <form class="d-flex justify-content-between mt-3 w-75" method="POST"
-                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
+                            action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="5" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -429,7 +431,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 5)->first())) {{ asset($mascota->fotos->where('nfoto', 5)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                "
+                                                                                                                                                                                                                                                                                                                                                                                                    "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -444,13 +446,12 @@
         </div>
     </div>
     {{-- MODAL 6 --}}
-    <div class="modal fade" id="exampleModalToggle6" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-        tabindex="-1">
+    <div class="modal fade" id="exampleModalToggle6" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     @if (!empty($mascota->fotos->where('nfoto', 6)->first()))
-                        <form action="{{ route('MFotos.destroy', $mascota->fotos->where('nfoto', 6)->first()) }}"
+                        <form action="{{ route('mfotos.destroy', $mascota->fotos->where('nfoto', 6)->first()) }}"
                             method="post">
                             {!! method_field('delete') !!}
                             {!! csrf_field() !!}
@@ -459,7 +460,7 @@
                     @else
                         {{-- AÑADIR FOTO --}}
                         <form class="d-flex justify-content-between mt-3 w-75" method="POST"
-                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
+                            action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="6" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -483,7 +484,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 6)->first())) {{ asset($mascota->fotos->where('nfoto', 6)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                "
+                                                                                                                                                                                                                                                                                                                                                                                                    "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -498,13 +499,12 @@
         </div>
     </div>
     {{-- MODAL 7 --}}
-    <div class="modal fade" id="exampleModalToggle7" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-        tabindex="-1">
+    <div class="modal fade" id="exampleModalToggle7" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     @if (!empty($mascota->fotos->where('nfoto', 7)->first()))
-                        <form action="{{ route('MFotos.destroy', $mascota->fotos->where('nfoto', 7)->first()) }}"
+                        <form action="{{ route('mfotos.destroy', $mascota->fotos->where('nfoto', 7)->first()) }}"
                             method="post">
                             {!! method_field('delete') !!}
                             {!! csrf_field() !!}
@@ -513,7 +513,7 @@
                     @else
                         {{-- AÑADIR FOTO --}}
                         <form class="d-flex justify-content-between mt-3 w-75" method="POST"
-                            action="{{ route('MFotos.store') }}" enctype="multipart/form-data">
+                            action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nfoto" type="text" name="nfoto" value="7" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -537,7 +537,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 7)->first())) {{ asset($mascota->fotos->where('nfoto', 7)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                "
+                                                                                                                                                                                                                                                                                                                                                                                                    "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -552,13 +552,12 @@
         </div>
     </div>
     {{-- MODAL 8 --}}
-    <div class="modal fade" id="exampleModalToggle8" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-        tabindex="-1">
+    <div class="modal fade" id="exampleModalToggle8" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     @if (!empty($mascota->videos->where('nvideo', 1)->first()))
-                        <form action="{{ route('MVideos.destroy', $mascota->videos->where('nvideo', 1)->first()) }}"
+                        <form action="{{ route('mvideos.destroy', $mascota->videos->where('nvideo', 1)->first()) }}"
                             method="post">
                             {!! method_field('delete') !!}
                             {!! csrf_field() !!}
@@ -567,7 +566,7 @@
                     @else
                         {{-- AÑADIR VIDEO --}}
                         <form class="d-flex justify-content-between mt-3 w-75" method="POST"
-                            action="{{ route('MVideos.store') }}" enctype="multipart/form-data">
+                            action="{{ route('mvideos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nvideo" type="text" name="nvideo" value="1" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -611,13 +610,12 @@
         </div>
     </div>
     {{-- MODAL-9 --}}
-    <div class="modal fade" id="exampleModalToggle9" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-        tabindex="-1">
+    <div class="modal fade" id="exampleModalToggle9" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     @if (!empty($mascota->videos->where('nvideo', 2)->first()))
-                        <form action="{{ route('MVideos.destroy', $mascota->videos->where('nvideo', 2)->first()) }}"
+                        <form action="{{ route('mvideos.destroy', $mascota->videos->where('nvideo', 2)->first()) }}"
                             method="post">
                             {!! method_field('delete') !!}
                             {!! csrf_field() !!}
@@ -626,7 +624,7 @@
                     @else
                         {{-- AÑADIR VIDEO --}}
                         <form class="d-flex justify-content-between mt-3 w-75" method="POST"
-                            action="{{ route('MVideos.store') }}" enctype="multipart/form-data">
+                            action="{{ route('mvideos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="nvideo" type="text" name="nvideo" value="2" hidden>
                             <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
@@ -687,6 +685,8 @@
             }
             // Build Datatable
             $('#datatable').DataTable({
+                paging: false,
+                info: false,
                 language: {
                     "url": getLanguage()
                 }

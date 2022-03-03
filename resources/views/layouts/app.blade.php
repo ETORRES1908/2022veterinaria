@@ -86,8 +86,8 @@
                                 </li>
                                 {{-- EVENETOS --}}
                                 <li class="nav-item">
-                                    <a class="nav-link link-light @if (Route::is('Events.index')) fw-bolder @endif"
-                                        href="{{ route('Events.index') }}">
+                                    <a class="nav-link link-light @if (Route::is('events.index')) fw-bolder @endif"
+                                        href="{{ route('events.index') }}">
                                         {{ __('Events') }}</a>
                                 </li>
                                 {{-- USERMENU --}}
@@ -109,14 +109,14 @@
                                         </li>
                                         @can('MyPets')
                                             <li>
-                                                <a class="dropdown-item link-dark " href="{{ route('Mascotas.index') }}">
+                                                <a class="dropdown-item link-dark " href="{{ route('mascotas.index') }}">
                                                     {{ __('My Pets') }}
                                                 </a>
                                             </li>
                                         @endcan
                                         @can('Mantenimientos')
                                             <li>
-                                                <a class="dropdown-item link-dark" href="{{ route('Usuarios.index') }}">
+                                                <a class="dropdown-item link-dark" href="{{ route('usuarios.index') }}">
                                                     {{ __('Mantenimientos') }}
                                                 </a>
                                             </li>

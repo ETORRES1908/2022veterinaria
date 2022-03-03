@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
+@if (session('error'))
+   <div class="alert alert-danger">
+        {{ session('error') }}
+   </div>
+@endif
     <div class="card bg-black p-0 m-0 border-danger">
         <div class="row">
             {{-- BANNER --}}

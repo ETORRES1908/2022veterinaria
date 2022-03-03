@@ -10,9 +10,9 @@ class Duelos extends Model
     protected $fillable = ['lparticipante_id', 'pmascota_id', 'fcc', 'smascota_id', 'scc', 'cch', 'npelea'];
 
     // A DUELOS BELONGS_TO LPARTICIPANTES
-    public function lparticiante()
+    public function lparticipante()
     {
-        return $this->hasMany(Lparticipantes::class);
+        return $this->belongsTo(Lparticipantes::class, 'lparticipante_id');
     }
     // A MASCOTA BELONGS_TO DUEL.PMASTOA_ID
     public function pmascota()

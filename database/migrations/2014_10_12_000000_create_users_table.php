@@ -15,26 +15,26 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 20);
-            $table->string('nombre', 20);
-            $table->string('apellido', 40);
-            $table->string('foto')->default('user.png');
-            $table->string('dni', 8);
-            $table->string('discapacidad');
-            $table->string('galpon');
-            $table->string('prepa');
-            $table->string('email')->unique();
-            $table->string('company');
-            $table->string('celular')->unique();
-            $table->string('country');
-            $table->string('state');
-            $table->string('district');
-            $table->string('direction');
-            $table->string('job');
-            $table->string('password');
-            $table->string('active')->default('1'); //estado
-            $table->string('question');
-            $table->string('answer');
+            $table->string('name', 20); //USERNAME
+            $table->string('nombre', 20); //NOMBRE
+            $table->string('apellido', 40); //APELLIDO
+            $table->string('foto')->default('user.png'); //FOTO
+            $table->string('dni', 8); //DNI
+            $table->string('discapacidad'); //DISABILITY
+            $table->string('galpon'); //GALPON
+            $table->string('prepa'); //TRAINER
+            $table->string('email')->unique(); //EMAIL
+            $table->string('company'); //COMPAÑIA
+            $table->string('celular')->unique(); //PHONE
+            $table->string('country'); //COUNTRY
+            $table->string('state'); //STATE - ESTADO
+            $table->string('district'); //DISTRITO
+            $table->string('direction'); //DIRECTION
+            $table->string('job'); //TRABAJO
+            $table->string('password'); //CONTRASEÑA
+            $table->string('status')->default('0'); //estado
+            $table->string('question'); //QUESTIOM
+            $table->string('answer'); //ANSWER
             $table->rememberToken();
             $table->timestamps();
         });

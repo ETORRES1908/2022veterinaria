@@ -23,4 +23,9 @@ class Mascota extends Model
     {
         return $this->hasMany(MVideos::class);
     }
+    // A MASCOTA BELONGS_TO LPARTICIPANTES
+    public function lparticiante()
+    {
+        return $this->belongsToMany(Lparticipantes::class, 'mascota_id');
+    }
 }

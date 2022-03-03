@@ -38,9 +38,6 @@ class LParticipantesController extends Controller
      */
     public function create()
     {
-        $currentLocale = session('locale');
-        if ($currentLocale) app()->setLocale($currentLocale);
-        
         return view('LParticipants.create');
     }
 
@@ -90,7 +87,7 @@ class LParticipantesController extends Controller
             LParticipantes::create(['evento_id' => $request->evento_id, 'mascota_id' => $mascota->id]);
 
             $listps = Lparticipantes::where('evento_id',)->get();
-            return redirect()->route('Events.show', $request->evento_id)->with('mensaje', 'ok');
+            return redirect()->route('events.show', $request->evento_id)->with('mensaje', 'ok');
         }
     }
 

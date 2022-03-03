@@ -6,6 +6,7 @@ use App\Mfotos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class MFotosController extends Controller
 {
@@ -51,7 +52,10 @@ class MFotosController extends Controller
                 $file->guessExtension();
 
             $ruta = 'images/mascotas/' . $nombre;
-            copy($file, $ruta);
+            Image::make($file->getRealPath())
+                ->resize(null, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($ruta, 40);
             $nmfotos = MFotos::Create([
                 'nfoto' => $request->nfoto,
                 'ruta' => $ruta,
@@ -60,7 +64,7 @@ class MFotosController extends Controller
             ]);
 
             return redirect()
-                ->route('Mascotas.show', $nmfotos->mascota_id)
+                ->route('mascotas.show', $nmfotos->mascota_id)
                 ->with('mensaje', 'ok');
         }
     }
@@ -113,6 +117,6 @@ class MFotosController extends Controller
         unlink($mfoto->ruta);
         $mfoto->delete();
 
-        return redirect()->route('Mascotas.show', $mfoto->mascota_id);
+        return redirect()->route('mascotas.show', $mfoto->mascota_id);
     }
 }

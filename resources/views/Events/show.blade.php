@@ -16,7 +16,7 @@
                 </span>
             @endif
             @if (count($evento->participants) >= 2)
-                <a type="button" class="btn btn-dark" href="{{ route('Duels.show', $evento->id) }}">
+                <a type="button" class="btn btn-dark" href="{{ route('duels.show', $evento->id) }}">
                     {{ __('Duels') }}
                 </a>
             @endif
@@ -106,7 +106,7 @@
                     <div class="modal-title text-black fw-bold">{{ __('CHOOSE PET') }}</div>
                     <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form class="form-horizontal" method="POST" action="{{ route('Participants.store') }}"
+                <form class="form-horizontal" method="POST" action="{{ route('participants.store') }}"
                     enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="modal-body bg-black">
@@ -320,16 +320,8 @@
                                         </div>
                                         <div class="col-7 mb-3">
                                             <label for="skg" class="form-label">{{ __('Bags') }}</label>
-                                            <div class="row">
-                                                <div class="input-group">
-                                                    <div class="input-group-text">N°</div>
-                                                    <input id="skg" type="number" class="form-control text-danger fw-bold"
-                                                        value="{{ $evento->skg }}" readonly>
-                                                    <div class="input-group-text">KG</div>
-                                                    <input id="ws" type="number" class="form-control text-danger fw-bold"
-                                                        value="{{ $evento->ws }}" readonly>
-                                                </div>
-                                            </div>
+                                            <input id="skg" type="number" class="form-control text-danger"
+                                                value="{{ $evento->skg }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -441,7 +433,7 @@
             var id = $('#mascota_id').val();
             $.ajax({
                 type: 'GET', //THIS NEEDS TO BE GET
-                url: '/Participants/' + id,
+                url: '/participants/' + id,
                 dataType: 'json',
                 success: function(data) {
                     console.log(data);

@@ -32,6 +32,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'admin',
             'nombre' => 'admin',
             'apellido' => '',
+            'status' => 1,
             'password' => bcrypt('123'),
         ])->assignRole('administrator');
         //USER
@@ -39,6 +40,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'user',
             'nombre' => 'user',
             'apellido' => '',
+            'status' => 1,
             'password' => bcrypt('123'),
         ])->assignRole('user');
         //MASCOTAS DE PRUEBAS PARA USER

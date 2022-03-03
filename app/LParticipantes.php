@@ -18,4 +18,9 @@ class Lparticipantes extends Model
     {
         return $this->belongsTo(Mascota::class);
     }
+    // A LPARTICIPANTES BELONGS_TO EVENTO
+    public function duelos()
+    {
+        return $this->hasMany(Duelos::class,'lparticipante_id');
+    }
 }

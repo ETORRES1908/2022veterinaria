@@ -70,7 +70,7 @@ class DuelosController extends Controller
             'cch' => $request->cch,
             'npelea' => $request->npelea,
         ]);
-        return redirect()->route('Duels.show', $request->lparticipante_id)->with('mensaje', 'ok');
+        return redirect()->route('duels.show', $request->lparticipante_id)->with('mensaje', 'ok');
     }
 
     /**
@@ -81,9 +81,6 @@ class DuelosController extends Controller
      */
     public function show($id)
     {
-        $currentLocale = session('locale');
-        if ($currentLocale) app()->setLocale($currentLocale);
-        
         $evento = Eventos::find($id);
         if (Lparticipantes::where('evento_id', $id)->first()) {
             $lparticipante = Lparticipantes::where('evento_id', $id)->first()->id;
@@ -91,7 +88,7 @@ class DuelosController extends Controller
             $duelos = Duelos::where('lparticipante_id', $lparticipante)->get();
             return view('Events.Duels.index', compact('lparticipante', 'participantes', 'duelos', 'evento'));
         } else {
-            return redirect()->route('Events.index');
+            return redirect()->route('events.index');
         }
     }
 

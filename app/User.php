@@ -26,7 +26,7 @@ class User extends Authenticatable
         'country', 'state', 'district',
         'password',
         'direction', 'job',
-        'question', 'answer',
+        'question', 'answer', 'status'
     ];
 
     /**

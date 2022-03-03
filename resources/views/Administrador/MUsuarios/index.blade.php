@@ -20,7 +20,8 @@
                     <th>{{ __('DNI') }}</th>
                     <th>{{ __('E-Mail Address') }}</th>
                     <th>{{ __('Country') }},&nbsp{{ __('State') }}&nbsp-&nbsp{{ __('District') }}</th>
-                    {{-- <th>{{ __('Direction')}}</th> --}}
+                    <th>{{ __('Status') }}</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -32,7 +33,16 @@
                         <td>{{ $user->dni }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->country }},&nbsp{{ $user->state }}&nbsp-&nbsp{{ $user->district }}</td>
-                        {{-- <td>{{$user->direction}}</td> --}}
+                        <td>
+                            @if ($user->status == 0)
+                                <span class="btn btn-primary">{{ __('Inactived') }}</span>
+                            @elseif($user->status == 1)
+                                <span class="btn btn-success">{{ __('Actived') }}</span>
+                            @elseif ($user->status == 2)
+                                <span class="btn btn-warning">{{ __('Suspended') }}</span>
+                            @endif
+                        </td>
+                        <td><a href="{{ route('Usuarios.edit', $user->id) }}">Ver</a></td>
                     </tr>
                 @endforeach
             </tbody>
@@ -44,7 +54,8 @@
                     <th>{{ __('DNI') }}</th>
                     <th>{{ __('E-Mail Address') }}</th>
                     <th>{{ __('Country') }},&nbsp{{ __('State') }}&nbsp-&nbsp{{ __('District') }}</th>
-                    {{-- <th>{{ __('Direction')}}</th> --}}
+                    <th>{{ __('Status') }}</th>
+                    <th></th>
                 </tr>
             </tfoot>
         </table>

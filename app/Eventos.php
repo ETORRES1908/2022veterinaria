@@ -46,6 +46,6 @@ class Eventos extends Model
     // A MASCOTA BELONGS_TO USER
     public function coliseum()
     {
-        return $this->hasOne(Coliseos::class,'id');
+        return $this->hasOne(Coliseos::class, 'id');
     }
 }

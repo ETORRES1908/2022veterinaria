@@ -16,22 +16,16 @@ class HomeController extends Controller
 
     public function welcome()
     {
-        $currentLocale = session('locale');
-        if ($currentLocale) app()->setLocale($currentLocale);
         return view('welcome');
     }
 
     public function contact()
     {
-        $currentLocale = session('locale');
-        if ($currentLocale) app()->setLocale($currentLocale);
         return view('contact');
     }
 
     public function about()
     {
-        $currentLocale = session('locale');
-        if ($currentLocale) app()->setLocale($currentLocale);
         return view('about');
     }
 }

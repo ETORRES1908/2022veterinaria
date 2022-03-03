@@ -5,14 +5,10 @@ namespace App\Http\Controllers\Administrador;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -25,10 +21,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $currentLocale = session('locale');
-        if ($currentLocale) app()->setLocale($currentLocale);
-
-        $users = User::all();
+        $users = Role::where('name', 'user')->first()->users;
         return  view('Administrador.MUsuarios.index', compact('users'));
     }
 
@@ -59,7 +52,7 @@ class UsersController extends Controller
      * @param  \App\User  $User
      * @return \Illuminate\Http\Response
      */
-    public function show(User $User)
+    public function show($id)
     {
         //
     }
@@ -70,9 +63,10 @@ class UsersController extends Controller
      * @param  \App\User  $User
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $User)
+    public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return  view('Administrador.MUsuarios.edit', compact('user'));
     }
 
     /**
@@ -82,9 +76,11 @@ class UsersController extends Controller
      * @param  \App\User  $User
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $User)
+    public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->update(['status' => $request->status]);
+        return redirect()->route('Usuarios.edit', $id);
     }
 
     /**
