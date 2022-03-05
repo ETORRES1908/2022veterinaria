@@ -117,7 +117,7 @@
                                         @can('Mantenimientos')
                                             <li>
                                                 <a class="dropdown-item link-dark" href="{{ route('usuarios.index') }}">
-                                                    {{ __('Mantenimientos') }}
+                                                    {{ __('CMS') }}
                                                 </a>
                                             </li>
                                         @endcan

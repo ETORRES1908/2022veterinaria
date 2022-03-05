@@ -185,7 +185,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    @if (!empty($mascota->fotos->where('nfoto', 1)->first()))
+                    {{-- @if (!empty($mascota->fotos->where('nfoto', 1)->first()))
                         <form action="{{ route('mfotos.destroy', $mascota->fotos->where('nfoto', 1)->first()) }}"
                             method="post">
                             {!! method_field('delete') !!}
@@ -193,7 +193,7 @@
                             <button type="submit" class="btn btn-danger">Eliminar</button>
                         </form>
                     @else
-                        {{-- AÑADIR FOTO --}}
+
                         <form class="d-flex justify-content-between mt-3 w-75" method="POST"
                             action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
@@ -210,7 +210,7 @@
                             @endif
                             <button type="submit" class="btn btn-danger">Editar</button>
                         </form>
-                    @endif
+                    @endif --}}
                     <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -219,7 +219,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 1)->first())) {{ asset($mascota->fotos->where('nfoto', 1)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                    "
+                                                                                                                                                                                                                                                                                                                                                                                                                "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -272,7 +272,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 2)->first())) {{ asset($mascota->fotos->where('nfoto', 2)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                    "
+                                                                                                                                                                                                                                                                                                                                                                                                                "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -325,7 +325,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 3)->first())) {{ asset($mascota->fotos->where('nfoto', 3)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                    "
+                                                                                                                                                                                                                                                                                                                                                                                                                "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -378,7 +378,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 4)->first())) {{ asset($mascota->fotos->where('nfoto', 4)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                    "
+                                                                                                                                                                                                                                                                                                                                                                                                                "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -431,7 +431,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 5)->first())) {{ asset($mascota->fotos->where('nfoto', 5)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                    "
+                                                                                                                                                                                                                                                                                                                                                                                                                "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -484,7 +484,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 6)->first())) {{ asset($mascota->fotos->where('nfoto', 6)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                    "
+                                                                                                                                                                                                                                                                                                                                                                                                                "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -537,7 +537,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 7)->first())) {{ asset($mascota->fotos->where('nfoto', 7)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                    "
+                                                                                                                                                                                                                                                                                                                                                                                                                "
                             class="figure-img" width="100%" height="250vh">
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
@@ -685,6 +685,7 @@
             }
             // Build Datatable
             $('#datatable').DataTable({
+                bFilter: false,
                 paging: false,
                 info: false,
                 language: {
