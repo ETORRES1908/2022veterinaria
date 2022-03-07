@@ -10,15 +10,17 @@
     <div class="row bg-black" style="padding:5vh 0 10vh 0;font-size: 1.3em">
         <div class="col-md-5">
             <div class="text-center">
-                <img width="200" src="{{ asset($user->foto) }}" class="mb">
+                <img width="200" src="{{ asset($user->foto) }}" class="mb"><br>
                 <div class="mb">{{ $user->name }}</div>
                 <div class="mb">{{ $user->email }}</div>
                 <div class="mb">
-                    <form method="POST" action="{{ route('Usuarios.update', ['id' => $user->id]) }}">
+                    <form method="POST" action="{{ route('usuarios.update', ['id' => $user->id]) }}">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
-                        <label>{{ __('Status') }}</label>
-                        <select class="form-control text-danger" name="status" style="width: 40%;margin:auto">
+                        <div class="col-xs-6 mb">
+                            <label>{{ __('Status') . ' ' . __('Account') }}:</label>
+                        </div>
+                        <select class="col-xs-6 mb form-control text-danger" name="status" style="width: 40%;margin:auto;">
                             <option value="0" @if ($user->status == '0') selected @endif>
                                 {{ __('Inactived') }}
                             </option>
@@ -28,13 +30,16 @@
                             <option value="2" @if ($user->status == '2') selected @endif>
                                 {{ __('Suspended') }}
                             </option>
-                        </select><br>
+                            <option value="3" @if ($user->status == '3') selected @endif>
+                                {{ __('Cancelled') }}
+                            </option>
+                        </select><br><br>
                         <button type="submit" class="btn btn-primary">{{ __('Change status') }}</button>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
             <div class="row">
                 <div class="col-xs-6 mb">
                     <label>{{ __('Name') }}</label>
@@ -44,24 +49,40 @@
                     <label>{{ __('Surname') }}</label>
                     <input type="text" class="form-control" value="{{ $user->apellido }}" readonly>
                 </div>
-                <div class="col-xs-6"><label>{{ __('Disability') }}</label>
-                    <select class="form-control" disabled>
-                        <option value="No" @if ($user->discapacidad == 'No') selected @endif>{{ __('No') }}
-                        </option>
-                        <option value="Visual" @if ($user->discapacidad == 'Visual') selected @endif>{{ __('Visual') }}
-                        </option>
-                        <option value="Fisica" @if ($user->discapacidad == 'Fisica') selected @endif>{{ __('Physical') }}
-                        </option>
-                        <option value="Auditiva" @if ($user->discapacidad == 'Auditiva') selected @endif>
-                            {{ __('Auditory') }}</option>
-                        <option value="Verbal" @if ($user->discapacidad == 'Verbal') selected @endif>{{ __('Verbal') }}
-                        </option>
-                        <option value="Mental" @if ($user->discapacidad == 'Mental') selected @endif>{{ __('Mental') }}
-                        </option>
-                    </select>
-                </div>
-                <div class="col-xs-6 mb"><label>{{ __('N°DNI') }}</label>
-                    <input type="text" class="form-control" value="{{ $user->dni }}" readonly>
+                <div class="col-xs-12">
+                    <div class="row mb">
+                        <div class="col-xs-6">
+                            <label>{{ __('Disability') }}</label>
+                            <select class="form-control mb" disabled style="-webkit-appearance: none;">
+                                <option value="No" @if ($user->discapacidad == 'No') selected @endif>{{ __('No') }}
+                                </option>
+                                <option value="Visual" @if ($user->discapacidad == 'Visual') selected @endif>
+                                    {{ __('Visual') }}
+                                </option>
+                                <option value="Fisica" @if ($user->discapacidad == 'Fisica') selected @endif>
+                                    {{ __('Physical') }}
+                                </option>
+                                <option value="Auditiva" @if ($user->discapacidad == 'Auditiva') selected @endif>
+                                    {{ __('Auditory') }}</option>
+                                <option value="Verbal" @if ($user->discapacidad == 'Verbal') selected @endif>
+                                    {{ __('Verbal') }}
+                                </option>
+                                <option value="Mental" @if ($user->discapacidad == 'Mental') selected @endif>
+                                    {{ __('Mental') }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 mb"><label>{{ __('N°DNI') }}</label>
+                            <input type="text" class="form-control" value="{{ $user->dni }}" readonly>
+                        </div>
+
+                        <div class="col-xs-6 text-center">
+                            <img class="img-responsive center-block" src="{{ asset($user->fdpt) }}" style="height:200px">
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            <img class="img-responsive center-block" src="{{ asset($user->sdpt) }}" style="height:200px">
+                        </div>
+                    </div>
                 </div>
                 <div class="col-xs-6 mb"><label>{{ __('Galpon') }}</label>
                     <input type="text" class="form-control" value="{{ $user->galpon }}" readonly>

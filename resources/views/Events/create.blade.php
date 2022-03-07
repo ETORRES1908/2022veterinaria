@@ -24,19 +24,37 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-6 col-md-3 my-auto">
-                    <img src="@if (!empty(
-    Auth::user()->mascotas[0]->fotos->where('nfoto', 1)->first()
-)) {{ asset(Auth::user()->mascotas[0]->fotos->where('nfoto', 1)->first()->ruta) }}
-                    @else{{ asset('storage/img/pata.jpg') }} @endif"
-                        class="img-fluid d-block mx-auto">
+                <div class="col-6 col-lg-3 m-auto">
+                    <div class="form-control">
+                        <label class="form-label">{{ __('My exemplar') }}</label>
+                        <select class="select2 form-select form-control" name="mascota1_id" required autofocus>
+                            @foreach (Auth::user()->mascotas as $mascota)
+                                <option value="{{ $mascota->id }}" @if (old('mascota1_id') == $mascota->id) selected @endif>
+                                    {{ $mascota->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <label class="form-label">{{ __('Challenge') }}:</label>
+                        <input class="form-control" type="number" name="chll" value="{{ old('chll') }}"
+                            onKeyPress="if(this.value.length==4) return false;"
+                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required>
+                    </div>
                 </div>
-                <div class="col-6 col-sm-3 my-auto">
-                    <img src="@if (!empty(
-    Auth::user()->mascotas[1]->fotos->where('nfoto', 1)->first()
-)) {{ asset(Auth::user()->mascotas[1]->fotos->where('nfoto', 1)->first()->ruta) }}
-                    @else{{ asset('storage/img/pata.jpg') }} @endif"
-                        class="img-fluid d-block mx-auto">
+                <div class="col-6 col-lg-3 m-auto">
+                    <div class="form-control">
+                        <label class="form-label">{{ __('My exemplar') }}</label>
+                        <select class="select2 form-select form-control" name="mascota2_id" required autofocus>
+                            @foreach (Auth::user()->mascotas as $mascota)
+                                <option value="{{ $mascota->id }}" @if (old('mascota2_id') == $mascota->id) selected @endif>
+                                    {{ $mascota->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <label class="form-label">{{ __('Challenge') }}:</label>
+                        <input class="form-control" type="number" name="chll2" value="{{ old('chll2') }}"
+                            onKeyPress="if(this.value.length==4) return false;"
+                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required>
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,8 +72,8 @@
                     <div class="col-sm-12 mb-3">
                         <label for="jueza_id" class="col-form-label fw-bold">
                             {{ __('Add dates') }}
-                            <a class="btn btn-success" id="adddates">+</a>
-                            <a class="btn btn-danger" id="removedate">-</a>
+                            <button class="btn btn-success" id="adddates">+</button>
+                            <button class="btn btn-danger" id="removedate">-</button>
 
                             @if ($errors->has('fechas.*') || $errors->has('fechas'))
                                 <span class="text-danger text-fs6">
@@ -64,6 +82,8 @@
                             @endif
                         </label>
                         <div class="form_dates row g-3">
+                            <div class="col-6 col-md"><input id="fechas" type="date"
+                                    class="form-control text-danger fw-bold" name="fechas[]" required autofocus></div>
                         </div>
                     </div>
                     {{-- COLISEO --}}
@@ -75,7 +95,8 @@
                             <select class="select2 form-select" name="coliseo_id" placeholder="{{ __('Coliseum') }}"
                                 required autofocus>
                                 @foreach ($coliseos as $coliseo)
-                                    <option value="{{ $coliseo->id }}">{{ $coliseo->nombre }}
+                                    <option value="{{ $coliseo->id }}" @if (old('coliseo_id') == $coliseo->id) selected @endif>
+                                        {{ $coliseo->nombre }}
                                     </option>
                                 @endforeach
                             </select>
@@ -95,22 +116,22 @@
                         <div class="col-auto">
                             <select class="form-select text-danger fw-bold" id="tevent" name="tevent"
                                 value="{{ old('tevent') }}" required autofocus>
-                                <option value="cmp">
+                                <option value="cmp" @if (old('tevent') == 'cmp') selected @endif>
                                     {{ __('Championship') }}
                                 </option>
-                                <option value="cct">
+                                <option value="cct" @if (old('tevent') == 'cct') selected @endif>
                                     {{ __('Concentration') }}
                                 </option>
-                                <option value="chk">
-                                    {{ __('Chuzbk') }}
+                                <option value="chk" @if (old('tevent') == 'chk') selected @endif>
+                                    {{ __('Chuzk') }}
                                 </option>
-                                <option value="drb">
+                                <option value="drb" @if (old('tevent') == 'drb') selected @endif>
                                     {{ __('Derby') }}
                                 </option>
-                                <option value="prt">
+                                <option value="prt" @if (old('tevent') == 'prt') selected @endif>
                                     {{ __('Party') }}
                                 </option>
-                                <option value="thr">
+                                <option value="thr" @if (old('tevent') == 'thr') selected @endif>
                                     {{ __('Other') }}
                                 </option>
                             </select>
@@ -137,7 +158,8 @@
                                 <option class="text-danger fw-bold" value="nac"
                                     @if (old('trl') == 'nac') selected @endif>{{ __('National') }} </option>
                                 <option class="text-danger fw-bold" value="inc"
-                                    @if (old('trl') == 'inc') selected @endif>{{ __('International') }} </option>
+                                    @if (old('trl') == 'inc') selected @endif>{{ __('International') }}
+                                </option>
                             </select>
                             @if ($errors->has('trl'))
                                 <span class="text-danger text-fs6">
@@ -153,33 +175,33 @@
                         </label>
                         <div class="col-auto">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="lbr" name="spl[]"
+                                <input class="checkboxes form-check-input" type="checkbox" value="lbr" name="spl[]" required
                                     @if (is_array(old('spl')) && in_array('lbr', old('spl'))) checked @endif>
                                 <label class="form-check-label" for="switch">{{ __('Free') }}</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="fbr" name="spl[]"
+                                <input class="checkboxes form-check-input" type="checkbox" value="fbr" name="spl[]" required
                                     @if (is_array(old('spl')) && in_array('fbr', old('spl'))) checked @endif>
                                 <label class="form-check-label" for="switch">{{ __('Fiber') }}</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="plt" name="spl[]"
+                                <input class="checkboxes form-check-input" type="checkbox" value="plt" name="spl[]" required
                                     @if (is_array(old('spl')) && in_array('plt', old('spl'))) checked @endif>
                                 <label class="form-check-label" for="switch">{{ __('Plastic') }}</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="cry" name="spl[]"
+                                <input class="checkboxes form-check-input" type="checkbox" value="cry" name="spl[]" required
                                     @if (is_array(old('spl')) && in_array('cry', old('spl'))) checked @endif>
                                 <label class="form-check-label" for="switch">{{ __('Shell') }}</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="spn" name="spl[]"
+                                <input class="checkboxes form-check-input" type="checkbox" value="spn" name="spl[]" required
                                     @if (is_array(old('spl')) && in_array('spn', old('spl'))) checked @endif>
                                 <label class="form-check-label" for="switch">{{ __('Thorn') }}</label>
                             </div>
                             @if ($errors->has('spl'))
                                 <span class="text-danger text-fs6">
-                                    {{ $errors->first('spl') }}
+                                    {{ __('This field is required.') }}
                                 </span>
                             @endif
                         </div>
@@ -244,12 +266,12 @@
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             Min
-                                            <input type="number" class="form-control text-danger" min="300" max="505"
+                                            <input type="number" class="form-control text-danger" min="300" max="500"
                                                 id="miw" name="miw" onKeyPress="if(this.value.length==3) return false;"
                                                 onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
                                                 value="{{ old('miw') }}" required autofocus />
                                             Max
-                                            <input type="number" class="form-control text-danger" min="300" max="505"
+                                            <input type="number" class="form-control text-danger" min="305" max="505"
                                                 id="maw" name="maw" onKeyPress="if(this.value.length==3) return false;"
                                                 onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
                                                 value="{{ old('maw') }}" required autofocus />
@@ -416,31 +438,31 @@
                             <select class="form-control form-select text-danger fw-bold" id="ftw" name="ftw"
                                 value="{{ old('ftw') }}" required autofocus>
                                 <option class="text-danger fw-bold" value="10:00"
-                                    @if (old('ftw') == '10:00') selected @endif>10:00 a.m</option>
+                                    @if (old('ftw') == '10:00') selected @endif>10:00</option>
                                 <option class="text-danger fw-bold" value="11:00"
-                                    @if (old('ftw') == '11:00') selected @endif>11:00 a.m</option>
+                                    @if (old('ftw') == '11:00') selected @endif>11:00</option>
                                 <option class="text-danger fw-bold" value="12:00"
-                                    @if (old('ftw') == '12:00') selected @endif>12:00 p.m</option>
+                                    @if (old('ftw') == '12:00') selected @endif>12:00</option>
                                 <option class="text-danger fw-bold" value="13:00"
-                                    @if (old('ftw') == '13:00') selected @endif>1:00 p.m</option>
+                                    @if (old('ftw') == '13:00') selected @endif>13:00</option>
                                 <option class="text-danger fw-bold" value="14:00"
-                                    @if (old('ftw') == '14:00') selected @endif>2:00 p.m</option>
+                                    @if (old('ftw') == '14:00') selected @endif>14:00</option>
                                 <option class="text-danger fw-bold" value="15:00"
-                                    @if (old('ftw') == '15:00') selected @endif>3:00 p.m</option>
+                                    @if (old('ftw') == '15:00') selected @endif>15:00</option>
                                 <option class="text-danger fw-bold" value="16:00"
-                                    @if (old('ftw') == '16:00') selected @endif>4:00 p.m</option>
+                                    @if (old('ftw') == '16:00') selected @endif>16:00</option>
                                 <option class="text-danger fw-bold" value="17:00"
-                                    @if (old('ftw') == '17:00') selected @endif>5:00 p.m</option>
+                                    @if (old('ftw') == '17:00') selected @endif>17:00</option>
                                 <option class="text-danger fw-bold" value="18:00"
-                                    @if (old('ftw') == '18:00') selected @endif>6:00 p.m</option>
-                                <option class="text-danger fw-bold" value="18:00"
-                                    @if (old('ftw') == '19:00') selected @endif>7:00 p.m</option>
-                                <option class="text-danger fw-bold" value="18:00"
-                                    @if (old('ftw') == '20:00') selected @endif>8:00 p.m</option>
-                                <option class="text-danger fw-bold" value="18:00"
-                                    @if (old('ftw') == '21:00') selected @endif>9:00 p.m</option>
-                                <option class="text-danger fw-bold" value="18:00"
-                                    @if (old('ftw') == '22:00') selected @endif>10:00 p.m</option>
+                                    @if (old('ftw') == '18:00') selected @endif>18:00</option>
+                                <option class="text-danger fw-bold" value="19:00"
+                                    @if (old('ftw') == '19:00') selected @endif>19:00</option>
+                                <option class="text-danger fw-bold" value="20:00"
+                                    @if (old('ftw') == '20:00') selected @endif>20:00</option>
+                                <option class="text-danger fw-bold" value="21:00"
+                                    @if (old('ftw') == '21:00') selected @endif>21:00</option>
+                                <option class="text-danger fw-bold" value="22:00"
+                                    @if (old('ftw') == '22:00') selected @endif>22:00</option>
                             </select>
                             @if ($errors->has('ftw'))
                                 <span class="text-danger text-fs6">
@@ -458,31 +480,31 @@
                             <select class="form-control form-select text-danger fw-bold" id="stw" name="stw"
                                 value="{{ old('stw') }}" required autofocus>
                                 <option class="text-danger fw-bold" value="10:00"
-                                    @if (old('stw') == '10:00') selected @endif>10:00 a.m</option>
+                                    @if (old('stw') == '10:00') selected @endif>10:00</option>
                                 <option class="text-danger fw-bold" value="11:00"
-                                    @if (old('stw') == '11:00') selected @endif>11:00 a.m</option>
+                                    @if (old('stw') == '11:00') selected @endif>11:00</option>
                                 <option class="text-danger fw-bold" value="12:00"
-                                    @if (old('stw') == '12:00') selected @endif>12:00 p.m</option>
+                                    @if (old('stw') == '12:00') selected @endif>12:00</option>
                                 <option class="text-danger fw-bold" value="13:00"
-                                    @if (old('stw') == '13:00') selected @endif>1:00 p.m</option>
+                                    @if (old('stw') == '13:00') selected @endif>13:00</option>
                                 <option class="text-danger fw-bold" value="14:00"
-                                    @if (old('stw') == '14:00') selected @endif>2:00 p.m</option>
+                                    @if (old('stw') == '14:00') selected @endif>14:00</option>
                                 <option class="text-danger fw-bold" value="15:00"
-                                    @if (old('stw') == '15:00') selected @endif>3:00 p.m</option>
+                                    @if (old('stw') == '15:00') selected @endif>15:00</option>
                                 <option class="text-danger fw-bold" value="16:00"
-                                    @if (old('stw') == '16:00') selected @endif>4:00 p.m</option>
+                                    @if (old('stw') == '16:00') selected @endif>16:00</option>
                                 <option class="text-danger fw-bold" value="17:00"
-                                    @if (old('stw') == '17:00') selected @endif>5:00 p.m</option>
+                                    @if (old('stw') == '17:00') selected @endif>17:00</option>
                                 <option class="text-danger fw-bold" value="18:00"
-                                    @if (old('stw') == '18:00') selected @endif>6:00 p.m</option>
+                                    @if (old('stw') == '18:00') selected @endif>18:00</option>
                                 <option class="text-danger fw-bold" value="18:00"
-                                    @if (old('stw') == '19:00') selected @endif>7:00 p.m</option>
+                                    @if (old('stw') == '19:00') selected @endif>19:00</option>
                                 <option class="text-danger fw-bold" value="18:00"
-                                    @if (old('stw') == '20:00') selected @endif>8:00 p.m</option>
+                                    @if (old('stw') == '20:00') selected @endif>20:00</option>
                                 <option class="text-danger fw-bold" value="18:00"
-                                    @if (old('stw') == '21:00') selected @endif>9:00 p.m</option>
+                                    @if (old('stw') == '21:00') selected @endif>21:00</option>
                                 <option class="text-danger fw-bold" value="18:00"
-                                    @if (old('stw') == '22:00') selected @endif>10:00 p.m</option>
+                                    @if (old('stw') == '22:00') selected @endif>22:00</option>
                             </select>
 
                             @if ($errors->has('stw'))
@@ -503,8 +525,9 @@
                             {{ __('Start') }}
                         </label>
                         <div class="col-auto">
-                            <input id="hstart" type="time" step='1' class="form-control text-danger fw-bold" name="hstart"
-                                value="{{ old('hstart') }}" required autofocus>
+                            <input id="hstart" type="time" class="form-control text-danger fw-bold" name="hstart"
+                                value="@if (!empty(old('hstart'))) {{ old('hstart') }} @else 00:00:00 @endif"
+                                required autofocus>
 
                             @if ($errors->has('hstart'))
                                 <span class="text-danger text-fs6">
@@ -585,27 +608,19 @@
                 </div>
             </div>
         </div>
-        <div class="card mx-auto text-dark border border-danger mb-3">
+        <div class="card mx-auto bg-black border border-danger mb-3">
             <div class="card-body border border-danger">
                 {{-- BANNER --}}
                 <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active" data-bs-interval="2000">
-                            <a href="http://www.google.com">
-                                <img src="{{ url('storage/img/shampoo.jpg') }}" class="d-block mx-auto" height="380vh">
-                            </a>
-                        </div>
-                        <div class="carousel-item" data-bs-interval="2000">
-                            <a href="http://www.google.com">
-                                <img src="{{ url('storage/img/pata.jpg') }}" class="d-block mx-auto" height="380vh">
-                            </a>
-                        </div>
-                        <div class="carousel-item" data-bs-interval="2000">
-                            <a href="http://www.google.com">
-                                <img src="{{ url('storage/img/dogcorrea.jpg') }}" class="d-block mx-auto"
-                                    height="380vh">
-                            </a>
-                        </div>
+                        @foreach ($banners as $banner)
+                            <div class="carousel-item @if ($banner->nombre = 'bcreate1.png') active @endif"
+                                data-bs-interval="1000">
+                                <a href="{{ $banner->url }}">
+                                    <img src="{{ asset($banner->ruta) }}" class="img-fluid mx-auto d-block">
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -623,7 +638,7 @@
                                 <div class="input-group-text">S/.</div>
                                 <input id="awards" type="number" class="form-control text-danger fw-bold" name="awards"
                                     value="{{ old('awards') }}" required autofocus min="0"
-                                    onKeyPress="if(this.value.length==3) return false;"
+                                    onKeyPress="if(this.value.length==5) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
                                 @if ($errors->has('awards'))
                                     <span class="text-danger text-fs6">
@@ -641,7 +656,7 @@
                         <div class="col-auto">
                             <input id="trophys" type="number" class="form-control text-danger fw-bold" name="trophys"
                                 value="{{ old('trophys') }}" required autofocus min="0"
-                                onKeyPress="if(this.value.length==3) return false;"
+                                onKeyPress="if(this.value.length==1) return false;"
                                 onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
                             @if ($errors->has('trophys'))
@@ -660,7 +675,8 @@
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
                                 <input id="rooster" type="number" class="form-control text-danger fw-bold" name="rooster"
-                                    value="0" required autofocus min="0" onKeyPress="if(this.value.length==4) return false;"
+                                    value="{{ old('rooster') }}" required autofocus min="0"
+                                    onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
                                 <select class="form-select text-danger fw-bold" id="trooster" name="trooster"
                                     value="{{ old('trooster') }}" required autofocus>
@@ -679,13 +695,14 @@
                     {{-- ROOSTER 10 --}}
                     <div class="col-6 col-md-3 my-auto mb-3 form-group{{ $errors->has('rten') ? ' has-error' : '' }}">
                         <label for="rten" class="col-form-label fw-bold">
-                            {{ __('Rooster') }} 10 {{ __('seconds') }}
+                            Super {{ __('Rooster') }}
                         </label>
                         <div class="col-auto">
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
                                 <input id="rten" type="number" class="form-control text-danger fw-bold" name="rten"
-                                    value="0" required autofocus min="0" onKeyPress="if(this.value.length==4) return false;"
+                                    value="{{ old('rten') }}" required autofocus min="0"
+                                    onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189">
 
                                 @if ($errors->has('rten'))
@@ -704,8 +721,9 @@
                         <div class="col-auto">
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
-                                <input id="fft" type="number" class="form-control text-danger fw-bold" name="fft" value="0"
-                                    required autofocus min="0" onKeyPress="if(this.value.length==4) return false;"
+                                <input id="fft" type="number" class="form-control text-danger fw-bold" name="fft"
+                                    value="{{ old('fft') }}" required autofocus min="0"
+                                    onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
                                 @if ($errors->has('fft'))
@@ -724,8 +742,9 @@
                         <div class="col-auto">
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
-                                <input id="sft" type="number" class="form-control text-danger fw-bold" name="sft" value="0"
-                                    required autofocus min="0" onKeyPress="if(this.value.length==4) return false;"
+                                <input id="sft" type="number" class="form-control text-danger fw-bold" name="sft"
+                                    value="{{ old('sft') }}" required autofocus min="0"
+                                    onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
                                 @if ($errors->has('sft'))
@@ -744,8 +763,9 @@
                         <div class="col-auto">
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
-                                <input id="tft" type="number" class="form-control text-danger fw-bold" name="tft" value="0"
-                                    required autofocus min="0" onKeyPress="if(this.value.length==4) return false;"
+                                <input id="tft" type="number" class="form-control text-danger fw-bold" name="tft"
+                                    value="{{ old('tft') }}" required autofocus min="0"
+                                    onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
                                 @if ($errors->has('tft'))
@@ -764,8 +784,9 @@
                         <div class="col-auto">
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
-                                <input id="fcd" type="number" class="form-control text-danger fw-bold" name="fcd" value="0"
-                                    required autofocus min="0" onKeyPress="if(this.value.length==4) return false;"
+                                <input id="fcd" type="number" class="form-control text-danger fw-bold" name="fcd"
+                                    value="{{ old('fcd') }}" required autofocus min="0"
+                                    onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
                                 @if ($errors->has('fcd'))
@@ -837,7 +858,7 @@
                         </label>
                         <div class="row">
                             <input id="skg" type="number" class="col form-control text-danger fw-bold" name="skg"
-                                value="{{ old('skg') }}" required autofocus min="1"
+                                value="{{ old('skg') }}" required autofocus min="0"
                                 onKeyPress="if(this.value.length==1) return false;"
                                 onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
                             @if ($errors->has('skg'))
@@ -1007,7 +1028,7 @@
                     {{-- BOTON DE REGISTRO --}}
                     <div class="col-md-12 ">
                         <div class="mx-auto">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" id="submit">
                                 {{ __('Add Event') }}
                             </button>
                         </div>
@@ -1024,11 +1045,32 @@
             $(".form_dates").append(
                 '<div id="dfechas" class="col-6 col-md"><input id="fechas" type="date" class="form-control text-danger fw-bold" name="fechas[]" required autofocus ></div>'
             );
+            var n = $("div[id='dfechas']").length;
+            if (n == 9) {
+                $('#adddates').attr("disabled", true);
+                $('#adddates').hide(500);
+            }
+            if (n == 1) {
+                $('#removedate').attr("disabled", false);
+                $('#removedate').show(500);
+            }
+
         });
+        $('#removedate').hide(400); //HIDE DEFAULT
         /* DELETE DATE */
         $("#removedate").click(function() {
             $('#dfechas').last().remove();
+            var n = $("div[id='dfechas']").length;
+            if (n <= 8) {
+                $('#adddates').attr("disabled", false);
+                $('#adddates').show(500);
+            }
+            if (n < 1) {
+                $('#removedate').attr("disabled", true);
+                $('#removedate').hide(500);
+            }
         });
+
         /* STATE -  */
         var $select1 = $('#ctr'),
             $select2 = $('#stt'),
@@ -1053,7 +1095,20 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $('.select2').select2({
-            theme: 'bootstrap-5'
+            theme: 'bootstrap-5',
+            width: "resolve"
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var checkboxes = $('.checkboxes');
+            checkboxes.change(function() {
+                if ($('.checkboxes:checked').length > 0) {
+                    checkboxes.removeAttr('required');
+                } else {
+                    checkboxes.attr('required', 'required');
+                }
+            });
         });
     </script>
     <style>

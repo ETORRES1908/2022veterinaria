@@ -1,23 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mx-auto w-75">
+    <div class="mx-auto">
         <div class="mb-5">
             <a href="{{ route('mascotas.create') }}" class="fw-bold text-uppercase btn btn-outline-danger px-5">
                 {{ __('Add Pet') }}
             </a>
         </div>
 
-        <div class="row row-cols-1 row-cols-sm-2 g-4">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
             @foreach ($mascotas as $mascota)
                 <div class="col">
-                    <div class="card border-dark mb-3">
+                    <div class="card border-dark mb-3 h-100">
                         <div class="row g-0">
                             <div class="col-md-4 my-auto">
-                                <img src="@if (!empty($mascota->fotos->where('nfoto', 1)->first())) {{ asset($mascota->fotos->where('nfoto', 1)->first()->ruta) }}
+                                <a href="{{ route('mascotas.show', $mascota->id) }}"
+                                    class="fw-bold nav-link link-danger text-uppercase">
+                                    <img src="@if (!empty($mascota->fotos->where('nfoto', 1)->first())) {{ asset($mascota->fotos->where('nfoto', 1)->first()->ruta) }}
                                 @else
                                 {{ asset('storage/img/pata.jpg') }} @endif"
-                                    class="img-fluid rounded-start" alt="...">
+                                        class="img-fluid rounded-start d-block mx-auto" alt="...">
+                                </a>
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">

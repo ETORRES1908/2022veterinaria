@@ -35,6 +35,8 @@ class CreateUsersTable extends Migration
             $table->string('status')->default('0'); //estado
             $table->string('question'); //QUESTIOM
             $table->string('answer'); //ANSWER
+            $table->string('fdpt')->default('user.png'); //FOTO
+            $table->string('sdpt')->default('user.png'); //FOTO
             $table->rememberToken();
             $table->timestamps();
         });

@@ -18,12 +18,12 @@ class CreateMascotasTable extends Migration
             $table->string('REGGAL')->nullable();
 
             $table->string('fnac');
-            $table->string('sss');
+            $table->string('sss')->nullable();
             $table->string('nombre');
             $table->string('plc');
             $table->string('plu');
-            $table->string('pad');
-            $table->string('mad');
+            $table->string('pad')->default(1);
+            $table->string('mad')->default(1);
             $table->string('des');
             $table->string('obs');
 

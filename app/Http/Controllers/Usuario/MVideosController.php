@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Usuario;
 use App\MVideos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class MVideosController extends Controller
 {

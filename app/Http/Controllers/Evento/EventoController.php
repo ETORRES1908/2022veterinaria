@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Evento;
 
+use App\Banners;
 use App\Coliseos;
 use App\Eventos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Lparticipantes;
-use App\User;
+use App\LParticipantes;
 use Spatie\Permission\Models\Role;
 
 class EventoController extends Controller
@@ -42,7 +42,8 @@ class EventoController extends Controller
     {
         $users = Role::where('name', 'user')->first()->users;
         $coliseos = Coliseos::all();
-        return view('Events.create', compact('users', 'coliseos'));
+        $banners = Banners::where('type', 'bcreate')->get();
+        return view('Events.create', compact('users', 'coliseos', 'banners'));
     }
 
     /**
@@ -75,7 +76,7 @@ class EventoController extends Controller
             'hstart' => 'required',
             'mcontrol_id' => 'required',
             'judge_id' => 'required',
-            'assistent_id' => 'required',
+            'assistent_id' => '',
             'awards' => 'required',
             'trophys' => 'required',
             'rooster' => 'required',
@@ -98,7 +99,7 @@ class EventoController extends Controller
             'glp' => 'required',
         ]);
         $nevento = Eventos::create($request->all());
-        return redirect()->route('events.index')->with('mensaje', 'ok');
+        return redirect()->route('events.index')->with('mensaje', true);
     }
 
     /**
@@ -111,7 +112,7 @@ class EventoController extends Controller
     {
         $listps = Lparticipantes::where('evento_id', '=', $evento_id)->get();
         $evento = Eventos::find($evento_id);
-        return view('events.show', compact('listps', 'evento'));
+        return view('Events.show', compact('listps', 'evento'));
     }
 
     /**

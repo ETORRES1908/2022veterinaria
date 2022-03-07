@@ -26,7 +26,7 @@ class CheckBanned
 
             return redirect()->route('login')->with('error', __('Your account is awaiting approval. Please try again later.'));
         }
-        if (auth()->check() && (auth()->user()->status === 2)) {
+        if (auth()->check() && (auth()->user()->status == 2)) {
             Auth::logout();
 
             $request->session()->invalidate();
@@ -34,6 +34,15 @@ class CheckBanned
             $request->session()->regenerateToken();
 
             return redirect()->route('login')->with('error', __('Your account is suspended. Contact with the administrator.'));
+        }
+        if (auth()->check() && (auth()->user()->status == 3)) {
+            Auth::logout();
+
+            $request->session()->invalidate();
+
+            $request->session()->regenerateToken();
+
+            return redirect()->route('login')->with('error', __('Your account is banned.'));
         }
 
         return $next($request);

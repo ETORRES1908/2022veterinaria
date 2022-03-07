@@ -1,6 +1,11 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title')
+
+@section('content_header')
+
+@stop
 
 @section('content')
-
-
-@endsection
+    aaaaaaaaaaa
+@stop

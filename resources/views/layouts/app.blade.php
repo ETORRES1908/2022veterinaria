@@ -15,6 +15,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
 </head>
 
 <body class="bg-black m-auto p-auto text-light">

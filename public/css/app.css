@@ -6,6 +6,22 @@ input[type=number]::-webkit-outer-spin-button {
     margin            : 0;
 }
 
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+::-webkit-datetime-edit-second-field {
+    background : white;
+    color      : transparent;
+    margin-left: -3px;
+    position   : absolute;
+    width      : 1px;
+}
+
+input[type=time] {
+    -moz-appearance: textfield;
+}
+
 /*!
  * Bootstrap v5.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors

@@ -1,13 +1,19 @@
 @extends('layouts.app')
-
 @extends('layouts.datatable')
 
 @section('content')
+    @if (session('mensaje'))
+        <div class="alert btn alert-warning" id="mensaje">
+            {{ __('YOUR EVENT IS WAITING FOR APPROVAL FROM THE ADMINISTRATOR, YOU WILL BE SENT AN EMAIL.') }}
+        </div>
+    @endif
+
     <div class="card bg-black border border-danger">
         @can('events.create')
             <div class="card-header border border-danger">
                 <a href="{{ route('events.create') }}" class="btn btn-success" style="font-size: 95%">
                     {{ __('Add Event') }}</a>
+
             </div>
         @endcan
         <div class="card-body table-responsive border border-danger">
@@ -15,204 +21,81 @@
                 <thead>
                     <tr>
                         <th>{{ __('Date') }}</th>
-                        <th>{{ __('Organizer') }}</th>
-                        <th>{{ __('Control desk') }}</th>
-                        <th>{{ __('Judge') }}</th>
-                        <th>{{ __('Assistant') }}</th>
-                        <th class="nowrap">{{ __('Place') }}</th>
+                        <th>{{ __('City') }}</th>
+                        <th>{{ __('State') }}</th>
+                        <th>{{ __('Country') }}</th>
+                        <th class="nowrap">{{ __('Direction') }}</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($eventos as $evento)
                         <tr>
-                            <td>{{ str_replace('-', '/', $evento->fechas[0]) }}
-                            </td>
+                            <td>{{ $evento->fechas[0] }}</td>
+                            <td>{{ $evento->drc }}</td>
+                            <td><select disabled class="text-white"
+                                    style="-webkit-appearance: none;background:none;border:none;">
+                                    <option @if ($evento->stt == 'PE-AMA') selected @endif>Amazonas</option>
+                                    <option @if ($evento->stt == 'PE-ANC') selected @endif>Ancash</option>
+                                    <option @if ($evento->stt == 'PE-APU') selected @endif>Apurímac</option>
+                                    <option @if ($evento->stt == 'PE-ARE') selected @endif>Arequipa</option>
+                                    <option @if ($evento->stt == 'PE-AYA') selected @endif>Ayacucho</option>
+                                    <option @if ($evento->stt == 'PE-CAJ') selected @endif>Cajamarca</option>
+                                    <option @if ($evento->stt == 'PE-CUS') selected @endif>Cuzco</option>
+                                    <option @if ($evento->stt == 'PE-HUV') selected @endif>Huancavelica</option>
+                                    <option @if ($evento->stt == 'PE-HUC') selected @endif>Huánuco</option>
+                                    <option @if ($evento->stt == 'PE-ICA') selected @endif>ICA</option>
+                                    <option @if ($evento->stt == 'PE-JUN') selected @endif>Junín</option>
+                                    <option @if ($evento->stt == 'PE-LAL') selected @endif>La Libertad</option>
+                                    <option @if ($evento->stt == 'PE-LAM') selected @endif>Lambayeque</option>
+                                    <option @if ($evento->stt == 'PE-LIM') selected @endif>Lima</option>
+                                    <option @if ($evento->stt == 'PE-LOR') selected @endif>Loreto</option>
+                                    <option @if ($evento->stt == 'PE-MDD') selected @endif>Madre de Dios</option>
+                                    <option @if ($evento->stt == 'PE-MOQ') selected @endif>Moquegua</option>
+                                    <option @if ($evento->stt == 'PE-PAS') selected @endif>Pasco</option>
+                                    <option @if ($evento->stt == 'PE-PIU') selected @endif>Piura</option>
+                                    <option @if ($evento->stt == 'PE-PUN') selected @endif>Puno</option>
+                                    <option @if ($evento->stt == 'PE-SAM') selected @endif>San Martín</option>
+                                    <option @if ($evento->stt == 'PE-TAC') selected @endif>Tacna</option>
+                                    <option @if ($evento->stt == 'PE-TUM') selected @endif>Tumbes</option>
+                                    <option @if ($evento->stt == 'PE-UCA') selected @endif>Ucayali</option>
+                                    {{-- CHILE --}}
+                                    <option @if ($evento->stt == 'CL-AI') selected @endif>Aysén</option>
+                                    <option @if ($evento->stt == 'CL-AN') selected @endif>Antofagasta</option>
+                                    <option @if ($evento->stt == 'CL-AP') selected @endif>Arica y Parinacota
+                                    </option>
+                                    <option @if ($evento->stt == 'CL-AR') selected @endif>Araucanía</option>
+                                    <option @if ($evento->stt == 'CL-AT') selected @endif>Atacama</option>
+                                    <option @if ($evento->stt == 'CL-BI') selected @endif>Biobío</option>
+                                    <option @if ($evento->stt == 'CL-CO') selected @endif>Coquimbo</option>
+                                    <option @if ($evento->stt == 'CL-LI') selected @endif>O'Higgins</option>
+                                    <option @if ($evento->stt == 'CL-LL') selected @endif>Los Lagos</option>
+                                    <option @if ($evento->stt == 'CL-LR') selected @endif>Los Ríos</option>
+                                    <option @if ($evento->stt == 'CL-MA') selected @endif>Magallanes y Antártica
+                                    </option>
+                                    <option @if ($evento->stt == 'CL-ML') selected @endif>Maule</option>
+                                    <option @if ($evento->stt == 'CL-NB') selected @endif>Ñuble</option>
+                                    <option @if ($evento->stt == 'CL-RM') selected @endif>Santiago</option>
+                                    <option @if ($evento->stt == 'CL-TA') selected @endif>Tarapacá</option>
+                                    <option @if ($evento->stt == 'CL-VS') selected @endif>Valparaíso</option>
+                                </select></td>
                             <td>
-                                <button type="button" class="btn btn-dark" data-bs-toggle="modal"
-                                    data-bs-target="#Organizador{{ $evento->organizador->id }}">
-                                    {{ $evento->organizador->nombre . ' ' . $evento->organizador->apellido }}
-                                </button>
-                                <!-- Modal 1-->
-                                <div class="modal fade" id="Organizador{{ $evento->organizador->id }}"
-                                    aria-hidden="true" aria-labelledby="Organizador" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body mx-auto">
-                                                <figure class="figure">
-                                                    <img src="@if (!empty($evento->organizador->foto)) {{ asset($evento->organizador->foto) }} @else{{ asset('storage/img/pata.jpg') }} @endif"
-                                                        class="figure-img d-block mx-auto" height="250vh">
-                                                    <figcaption class="figure-caption">
-                                                        {{ $evento->organizador->nombre . ' ' . $evento->organizador->apellido }}
-                                                        -
-                                                        {{ $evento->organizador->country . ' ' . $evento->organizador->state }}
-                                                        <br>
-                                                        {{ $evento->organizador->direction }}
-                                                    </figcaption>
-                                                </figure>
-                                            </div>
-                                            <div class="modal-footer d-flex justify-content-between">
-                                                <button class="btn btn-primary"
-                                                    data-bs-target="#Asistente{{ $evento->assistent->id }}"
-                                                    data-bs-toggle="modal">
-                                                    {{ __('Assistent') }}
-                                                </button>
-                                                <button class="btn btn-primary"
-                                                    data-bs-target="#MControl{{ $evento->mcontrol->id }}"
-                                                    data-bs-toggle="modal">
-                                                    {{ __('Desktop Control') }}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php switch ($evento->ctr) {
+                                    case 'PER':
+                                        echo 'Perú';
+                                        break;
+                                    case 'ARG':
+                                        echo 'Argentina';
+                                        break;
+                                    case 'ECU':
+                                        echo 'Ecuador';
+                                        break;
+                                    case 'CHL':
+                                        echo 'Chile';
+                                        break;
+                                } ?>
                             </td>
-                            <td>
-                                <button type="button" class="btn btn-dark" data-bs-toggle="modal"
-                                    data-bs-target="#MControl{{ $evento->mcontrol->id }}">
-                                    {{ $evento->mcontrol->nombre . ' ' . $evento->mcontrol->apellido }}
-                                </button>
-                                <!-- Modal 2-->
-                                <div class="modal fade" id="MControl{{ $evento->mcontrol->id }}" aria-hidden="true"
-                                    aria-labelledby="MControl" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body mx-auto">
-                                                <figure class="figure">
-                                                    <img src="@if (!empty($evento->mcontrol->foto)) {{ asset($evento->mcontrol->foto) }} @else{{ asset('storage/img/pata.jpg') }} @endif"
-                                                        class="figure-img d-block mx-auto" height="250vh">
-                                                    <figcaption class="figure-caption">
-                                                        {{ $evento->mcontrol->nombre . ' ' . $evento->mcontrol->apellido }}
-                                                        -
-                                                        {{ $evento->mcontrol->country . ' ' . $evento->mcontrol->state }}
-                                                        <br>
-                                                        {{ $evento->mcontrol->direction }}
-                                                    </figcaption>
-                                                </figure>
-                                            </div>
-                                            <div class="modal-footer d-flex justify-content-between">
-                                                <button class="btn btn-primary"
-                                                    data-bs-target="#Organizador{{ $evento->organizador->id }}"
-                                                    data-bs-toggle="modal">
-                                                    {{ __('Organizer') }}
-                                                </button>
-                                                <button class="btn btn-primary"
-                                                    data-bs-target="#Judge{{ $evento->judge->id }}"
-                                                    data-bs-toggle="modal">
-                                                    {{ __('Judge') }}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-dark" data-bs-toggle="modal"
-                                    data-bs-target="#Judge{{ $evento->judge->id }}">
-                                    {{ $evento->judge->nombre . ' ' . $evento->judge->apellido }}
-                                </button>
-                                <!-- Modal 3-->
-                                <div class="modal fade" id="Judge{{ $evento->judge->id }}" aria-hidden="true"
-                                    aria-labelledby="Judge" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body mx-auto">
-                                                <figure class="figure">
-                                                    <img src="@if (!empty($evento->judge->foto)) {{ asset($evento->judge->foto) }} @else{{ asset('storage/img/pata.jpg') }} @endif"
-                                                        class="figure-img d-block mx-auto" height="250vh">
-                                                    <figcaption class="figure-caption">
-                                                        {{ $evento->judge->nombre . ' ' . $evento->judge->apellido }} -
-                                                        {{ $evento->judge->country . ' ' . $evento->judge->state }} <br>
-                                                        {{ $evento->judge->direction }}
-                                                    </figcaption>
-                                                </figure>
-                                            </div>
-                                            <div class="modal-footer d-flex justify-content-between">
-                                                <button class="btn btn-primary"
-                                                    data-bs-target="#MControl{{ $evento->mcontrol->id }}"
-                                                    data-bs-toggle="modal">
-                                                    {{ __('Desktop Control') }}</button>
-                                                <button class="btn btn-primary"
-                                                    data-bs-target="#Asistente{{ $evento->assistent->id }}"
-                                                    data-bs-toggle="modal">
-                                                    {{ __('Assitent') }} </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-dark" data-bs-toggle="modal"
-                                    data-bs-target="#Asistente{{ $evento->assistent->id }}">
-                                    {{ $evento->assistent->nombre . ' ' . $evento->assistent->apellido }}
-                                </button>
-                                <!-- Modal 4-->
-                                <div class="modal fade" id="Asistente{{ $evento->assistent->id }}" aria-hidden="true"
-                                    aria-labelledby="Asistente" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body mx-auto">
-                                                <figure class="figure">
-                                                    <img src="@if (!empty($evento->assistent->foto)) {{ asset($evento->assistent->foto) }} @else{{ asset('storage/img/pata.jpg') }} @endif"
-                                                        class="figure-img d-block mx-auto" height="250vh">
-                                                    <figcaption class="figure-caption">
-                                                        {{ $evento->assistent->nombre . ' ' . $evento->assistent->apellido }}
-                                                        -
-                                                        {{ $evento->assistent->country . ' ' . $evento->assistent->state }}
-                                                        <br>
-                                                        {{ $evento->assistent->direction }}
-                                                    </figcaption>
-                                                </figure>
-                                            </div>
-                                            <div class="modal-footer d-flex justify-content-between">
-                                                <button class="btn btn-primary"
-                                                    data-bs-target="#Judge{{ $evento->mcontrol->id }}"
-                                                    data-bs-toggle="modal">
-                                                    {{ __('Judge') }}</button>
-                                                <button class="btn btn-primary"
-                                                    data-bs-target="#Organizador{{ $evento->organizador->id }}"
-                                                    data-bs-toggle="modal">
-                                                    {{ __('Organizer') }}</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="nowrap">
-                                <h6 class="nowrap">
-                                    <?php switch ($evento->ctr) {
-                                        case 'PE':
-                                            echo 'Perú';
-                                            break;
-                                        case 'ARG':
-                                            echo 'Argentina';
-                                            break;
-                                        case 'EC':
-                                            echo 'Ecuador';
-                                            break;
-                                        case 'CL':
-                                            echo 'Chile';
-                                            break;
-                                    } ?>,
-                                    {{ $evento->stt }}<br>{{ $evento->drc }}
-                                </h6>
-                            </td>
+                            <td class="nowrap">{{ $evento->drc }}</td>
                             <td>
                                 <a href="{{ route('events.show', $evento->id) }}" class="btn btn-warning">
                                     {{ __('View') }}
@@ -224,11 +107,10 @@
                 <tfoot>
                     <tr>
                         <th>{{ __('Date') }}</th>
-                        <th>{{ __('Organizer') }}</th>
-                        <th>{{ __('Control desk') }}</th>
-                        <th>{{ __('Judge') }}</th>
-                        <th>{{ __('Assistant') }}</th>
-                        <th class="nowrap">{{ __('Place') }}</th>
+                        <th>{{ __('City') }}</th>
+                        <th>{{ __('State') }}</th>
+                        <th>{{ __('Country') }}</th>
+                        <th class="nowrap">{{ __('Direction') }}</th>
                         <th></th>
                     </tr>
                 </tfoot>
@@ -236,31 +118,51 @@
         </div>
     </div>
 
+    {{-- CSS --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+    {{-- JS --}}
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <script src="https:////cdn.datatables.net/plug-ins/1.11.5/sorting/date-eu.js"></script>
     {{-- SCRIPTS --}}
     <script type="text/javascript">
-        $(document).ready(function() {
-            function getLanguage() {
-                var lang = $('html').attr('lang');
-                if (lang == 'es') {
-                    lng = "es-ES";
-                } else if (lang == 'en') {
-                    lng = "en-GB";
-                }
-                var result = null;
-                var path = 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/';
-                result = path + lng + ".json";
-                return result;
+        function getLanguage() {
+            var lang = $('html').attr('lang');
+            if (lang == 'es') {
+                lng = "es-ES";
+            } else if (lang == 'en') {
+                lng = "en-GB";
             }
-            // Build Datatable
-            $('#datatable').DataTable({
-                language: {
-                    "url": getLanguage()
-                },
-                "columnDefs": [{
-                    "targets": 0,
-                    "type": "date-eu"
-                }],
-            });
+            var result = null;
+            var path = 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/';
+            result = path + lng + ".json";
+            return result;
+        }
+        // Build Datatable
+        $('#datatable').DataTable({
+            language: {
+                "url": getLanguage()
+            },
+            "columnDefs": [{
+                "targets": 0,
+                "type": "date-eu"
+            }],
+        });
+
+        $(document).ready(function() {
+            $('#datatable').DataTable();
+        });
+        //HIDE
+        setTimeout(function() {
+            $('.alert').fadeOut(5000);
         });
     </script>
 @endsection

@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card col-xl-8 mx-auto text-black">
+    <div class="card mx-auto text-black">
         <div class="card-header fw-bold fs-3">{{ __('Register') }}</div>
         <div class="card-body ">
-            <form class="form-horizontal" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+            <form class="form-horizontal" method="POST" action="{{ route('register') }}" enctype="multipart/form-data"
+                autocomplete="off">
                 {{ csrf_field() }}
                 {{-- USERNAME Y FOTO DE PERFIL --}}
                 <div class="row">
                     {{-- NOMBRE Y APELLIDO --}}
-                    <div class="row col-sm-8">
+                    <div class="row col-md-8">
                         {{-- USERNAME --}}
                         <div class="mb-3 form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-form-label fw-bold">
@@ -18,7 +19,7 @@
 
                             <div class="col-auto">
                                 <input id="name" type="text" class="form-control text-danger" name="name"
-                                    value="{{ old('name') }}" required autofocus>
+                                    value="{{ old('name') }}" required autofocus maxlength="15">
 
                                 @if ($errors->has('name'))
                                     <span class="text-da nger fs-6">
@@ -28,9 +29,8 @@
 
                             </div>
                         </div>
-
                         {{-- NOMBRE --}}
-                        <div class="col-sm-6 mb-3 form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
+                        <div class="col-6 mb-3 form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
                             <label for="nombre" class="col-form-label fw-bold">
                                 {{ __('Name') }}
                             </label>
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         {{-- APELLIDO --}}
-                        <div class="col-sm-6 mb-3 form-group{{ $errors->has('apellido') ? ' has-error' : '' }}">
+                        <div class="col-6 mb-3 form-group{{ $errors->has('apellido') ? ' has-error' : '' }}">
                             <label for="apellido" class="col-form-label fw-bold">
                                 {{ __('Surname') }}
                             </label>
@@ -62,9 +62,57 @@
                                 @endif
                             </div>
                         </div>
+                        {{-- DISCPACIDAD --}}
+                        <div class="col-6 mb-3 form-group{{ $errors->has('discapacidad') ? ' has-error' : '' }}">
+                            <label for="discapacidad" class="col-form-label fw-bold">
+                                {{ __('Disability') }}
+                            </label>
+                            <select class="form-select text-danger" id="discapacidad" name="discapacidad"
+                                value="{{ old('discapacidad') }}" required>
+                                <option value="No" @if (old('discapacidad') == 'No') selected @endif>{{ __('No') }}
+                                </option>
+                                <option value="Visual" @if (old('discapacidad') == 'Visual') selected @endif>
+                                    {{ __('Visual') }}
+                                </option>
+                                <option value="Fisica" @if (old('discapacidad') == 'Fisica') selected @endif>
+                                    {{ __('Physical') }}
+                                </option>
+                                <option value="Auditiva" @if (old('discapacidad') == 'Auditiva') selected @endif>
+                                    {{ __('Auditory') }}</option>
+                                <option value="Verbal" @if (old('discapacidad') == 'Verbal') selected @endif>
+                                    {{ __('Verbal') }}
+                                </option>
+                                <option value="Mental" @if (old('discapacidad') == 'Mental') selected @endif>
+                                    {{ __('Mental') }}
+                                </option>
+                            </select>
+
+                            @if ($errors->has('discapacidad'))
+                                <span class="text-danger text-fs6">
+                                    {{ $errors->first('discapacidad') }}
+                                </span>
+                            @endif
+                        </div>
+                        {{-- NÚMERO DE DNI --}}
+                        <div class="col-6 mb-3 form-group{{ $errors->has('dni') ? ' has-error' : '' }}">
+                            <label for="dni" class="col-form-label fw-bold">
+                                {{ __('N°DNI') }}
+                            </label>
+
+                            <div class="col-auto">
+                                <input id="dni" type="number" class="form-control  text-danger" name="dni"
+                                    value="{{ old('dni') }}" required autofocus maxlength="7">
+
+                                @if ($errors->has('dni'))
+                                    <span class="text-danger text-fs6">
+                                        {{ $errors->first('dni') }}
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                     {{-- FOTO DE PERFIL --}}
-                    <div class="col-sm-4 mb-3 form-group{{ $errors->has('foto') ? ' has-error' : '' }}">
+                    <div class="col-md-4 mb-3 form-group{{ $errors->has('foto') ? ' has-error' : '' }}">
                         <label for="foto" class="col-form-label fw-bold">
                             {{ __('Photo') }}
                         </label>
@@ -81,52 +129,37 @@
                         @endif
                     </div>
                 </div>
-
-                {{-- DISCPACIDAD Y DNI --}}
-                <div class="row">
-                    {{-- DISCPACIDAD --}}
-                    <div class="col-sm-4 mb-3 form-group{{ $errors->has('discapacidad') ? ' has-error' : '' }}">
-                        <label for="discapacidad" class="col-form-label fw-bold">
-                            {{ __('Disability') }}
-                        </label>
-                        <select class="form-select text-danger" id="discapacidad" name="discapacidad"
-                            value="{{ old('discapacidad') }}" required>
-                            <option value="No" @if (old('discapacidad') == 'No') selected @endif>{{ __('No') }}
-                            </option>
-                            <option value="Visual" @if (old('discapacidad') == 'Visual') selected @endif>{{ __('Visual') }}
-                            </option>
-                            <option value="Fisica" @if (old('discapacidad') == 'Fisica') selected @endif>{{ __('Physical') }}
-                            </option>
-                            <option value="Auditiva" @if (old('discapacidad') == 'Auditiva') selected @endif>
-                                {{ __('Auditory') }}</option>
-                            <option value="Verbal" @if (old('discapacidad') == 'Verbal') selected @endif>{{ __('Verbal') }}
-                            </option>
-                            <option value="Mental" @if (old('discapacidad') == 'Mental') selected @endif>{{ __('Mental') }}
-                            </option>
-                        </select>
-
-                        @if ($errors->has('discapacidad'))
-                            <span class="text-danger text-fs6">
-                                {{ $errors->first('discapacidad') }}
+                {{-- FOTOS DE DISABILITY --}}
+                <div class="row" id="fdb" style="display: none">
+                    <label for="sdpt" class="col-form-label fw-bold">
+                        {{ __('Photo') }} {{ __('Disability') }}
+                    </label>
+                    {{-- FOTO DE DISABILITY --}}
+                    <div class="col-sm-6 mb-3 form-group{{ $errors->has('fdpt') ? ' has-error' : '' }}">
+                        <div class="col-auto bg-black rounded">
+                            <img id="fdview" class="mx-auto d-block" height="200" width="180" />
+                            <input id="fdpt" type="file" class="form-control form-control-sm" name="fdpt"
+                                value="{{ old('fdpt') }}" accept="image/*">
+                        </div>
+                        @if ($errors->has('fdpt'))
+                            <span class="text-danger fs-6">
+                                {{ $errors->first('fdpt') }}
                             </span>
                         @endif
                     </div>
-                    {{-- NÚMERO DE DNI --}}
-                    <div class="col-sm-8 mb-3 form-group{{ $errors->has('dni') ? ' has-error' : '' }}">
-                        <label for="dni" class="col-form-label fw-bold">
-                            {{ __('N°DNI') }}
-                        </label>
-
-                        <div class="col-auto">
-                            <input id="dni" type="number" class="form-control  text-danger" name="dni"
-                                value="{{ old('dni') }}" required autofocus maxlength="7">
-
-                            @if ($errors->has('dni'))
-                                <span class="text-danger text-fs6">
-                                    {{ $errors->first('dni') }}
-                                </span>
-                            @endif
+                    {{-- FOTO DE DISABILITY 2 --}}
+                    <div class="col-sm-6 mb-3 form-group{{ $errors->has('sdpt') ? ' has-error' : '' }}">
+                        <div class="col-auto m-1 bg-black rounded">
+                            <img id="sdview" class="mx-auto d-block" height="200" width="180" />
+                            <input id="sdpt" type="file" class="form-control form-control-sm" name="sdpt"
+                                value="{{ old('sdpt') }}" accept="image/*">
                         </div>
+
+                        @if ($errors->has('sdpt'))
+                            <span class="text-danger fs-6">
+                                {{ $errors->first('sdpt') }}
+                            </span>
+                        @endif
                     </div>
                 </div>
                 {{-- NOMBRE DE GALPON Y PREPA --}}
@@ -292,7 +325,7 @@
                     {{-- OFICIO --}}
                     <div class="col-sm-5 mb-3 form-group{{ $errors->has('job') ? ' has-error' : '' }}">
                         <label for="job" class="col-form-label fw-bold">
-                            {{ __('Job') }}
+                            {{ __('Trade or profession') }}
                         </label>
                         <div class="col-auto">
                             <input id="job" type="text" class="form-control  text-danger" name="job"
@@ -310,13 +343,12 @@
                 <div class="row">
                     {{-- CONTRASEÑA --}}
                     <div class="col-sm-6 mb-3 form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                        <label for="password" class="col-form-label fw-bold">
+                        <label for="password" class="col-form-label fw-bold" onKeyPress="if(this.value.length==8) return false;">
                             {{ __('Password') }}
                         </label>
 
                         <div class="col-auto">
-                            <input value="{{ old('password') }}" type="password" class="form-control text-danger"
-                                name="password" required>
+                            <input type="password" class="form-control text-danger" name="password" required>
 
                             @if ($errors->has('password'))
                                 <span class="text-danger text-fs6">
@@ -333,11 +365,10 @@
                         </label>
                         <span data-bs-toggle="popover" data-bs-trigger="hover focus"
                             data-bs-content="Debe contener mayusculas, minusculas y un simbolo, min 8">
-                            <button class="btn btn-primary py-0" type="button" disabled>?</button>
+                            <button class="btn btn-primary py-0" type="button">?</button>
                         </span>
                         <div class="col-auto">
-                            <input value="{{ old('password_confirmation') }}" type="password"
-                                class="form-control  text-danger" name="password_confirmation" required>
+                            <input type="password" class="form-control  text-danger" name="password_confirmation" required onKeyPress="if(this.value.length==8) return false;">
                         </div>
                         @if ($errors->has('password_confirmation'))
                             <span class="text-danger text-fs6">
@@ -355,18 +386,18 @@
                         <div class="col-sm-12 col-form-label fw-bold">
                             <select class="form-control text-danger col-sm-12" id="question" name="question"
                                 value="{{ old('question') }}" required>
-                                <option selected disabled value="">Opciones...</option>
+                                <option selected disabled value="">{{ __('Options') }}...</option>
                                 <option value="0" @if (old('question') == '0') selected @endif>
-                                    ¿Nombre de la Primera mascota?</option>
+                                    ¿{{ __('Name of first pet') }}?</option>
                                 <option value="1" @if (old('question') == '1') selected @endif>
-                                    ¿Nombre de la ciudad natal?</option>
+                                    ¿{{ __('Hometown name') }}?</option>
                                 <option value="2" @if (old('question') == '2') selected @endif>
-                                    ¿Nombre del mejor amigo de la infancia?</option>
+                                    ¿{{ __('Name of childhood best friend') }}?</option>
                             </select>
                         </div>
                         <div class="col-sm-12 col-form-label fw-bold">
                             <input id="answer" type="text" class="form-control  text-danger" name="answer"
-                                placeholder="Respuesta..." value="{{ old('answer') }}" required autofocus>
+                                placeholder="{{ __('Answer') }}..." value="{{ old('answer') }}" required autofocus>
 
                             @if ($errors->has('answer'))
                                 <span class="text-danger text-fs6">
@@ -407,23 +438,42 @@
     </div>
 
     {{-- SCRIPTS --}}
+    <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
     <script>
         /*  POPOVER  */
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
         var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
             return new bootstrap.Popover(popoverTriggerEl)
         })
-        var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'), {
-            trigger: 'focus'
-        })
-    </script>
-    <script>
-        /*  PREVIEW */
+        /* PREVIEW */
         foto.onchange = evt => {
             const [file] = foto.files
             if (file) {
                 preview.src = URL.createObjectURL(file)
             }
-        }
+        };
+        /* DISABILITY */
+        $("#discapacidad").change(function() {
+            if ($("#discapacidad").val() != 'No') {
+                $('#fdb').show(600);
+            }
+            if ($("#discapacidad").val() == 'No') {
+                $('#fdb').hide(600);
+            }
+            /* PREVIEW */
+            fdpt.onchange = evt => {
+                const [file] = fdpt.files
+                if (file) {
+                    fdview.src = URL.createObjectURL(file)
+                }
+            };
+            /* PREVIEW */
+            sdpt.onchange = evt => {
+                const [file] = sdpt.files
+                if (file) {
+                    sdview.src = URL.createObjectURL(file)
+                }
+            };
+        }).change();
     </script>
 @endsection

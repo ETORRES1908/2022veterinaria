@@ -6,7 +6,7 @@ use App\Duelos;
 use App\Mascota;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Lparticipantes;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\MFotos;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +42,8 @@ class MascotasController extends Controller
      */
     public function create()
     {
-        return view('Usuario.Mascotas.create');
+        $mascotas = Mascota::where('user_id', Auth::user()->id)->get();
+        return view('Usuario.Mascotas.create', compact('mascotas'));
     }
 
     /**
@@ -60,7 +61,7 @@ class MascotasController extends Controller
         $nmascota = Mascota::Create([
             'user_id' => $request->user_id,
             'fnac' => $request->fnac,
-            'sss' => $request->sss,
+            /* 'sss' => $request->sss, */
             'nombre' => $request->nombre,
             'plc' => $request->plc,
             'plu' => $request->plu,
@@ -72,8 +73,8 @@ class MascotasController extends Controller
 
         $user = User::Find($request->user_id);
         $REGGAL =
-            substr($user->country, 0, 2) .
-            substr($user->state, 0, 2) .
+            $user->country .
+            $user->state .
             '000' .
             $user->id .
             '0' .
@@ -85,7 +86,9 @@ class MascotasController extends Controller
             $file = $request->file('foto');
             $nombre = $REGGAL . '1.' . $file->guessExtension();
             $ruta = 'images/mascotas/' . $nombre;
-            copy($file, $ruta);
+            Image::make($file->getRealPath())->resize(1280, 720, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($ruta, 72, 'jpeg');
             $nmfotos = MFotos::Create([
                 'nfoto' => 1,
                 'ruta' => $ruta,
@@ -108,8 +111,10 @@ class MascotasController extends Controller
     public function show($id)
     {
         $mascota = Mascota::find($id);
+        $pad = Mascota::find($mascota->pad);
+        $mad = Mascota::find($mascota->mad);
         $duelos = Duelos::orWhere(['pmascota_id' => $id, 'smascota_id' => $id])->paginate(10);
-        return view('Usuario.Mascotas.show', compact('mascota', 'duelos'));
+        return view('Usuario.Mascotas.show', compact('mascota', 'duelos', 'pad', 'mad'));
     }
 
     /**
@@ -130,9 +135,10 @@ class MascotasController extends Controller
      * @param  \App\Mascota  $mascota
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mascota $mascota)
+    public function update(Request $request, $id)
     {
-        //
+        Mascota::find($id)->update(['obs' => $request->obs]);
+        return redirect()->route('mascotas.show', $id);
     }
 
     /**

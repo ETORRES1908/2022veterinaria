@@ -28,6 +28,8 @@ Route::group(['middleware' => ['can:Mantenimientos']], function () {
     Route::resource('/usuarios', 'Administrador\UsersController');
     Route::resource('/mmascotas', 'Administrador\MascotasController');
     Route::resource('/meventos', 'Administrador\EventosController');
+    Route::resource('/mcoliseos', 'Administrador\ColiseosController');
+    Route::resource('/mbanners', 'Administrador\BannersController');
 });
 
 Route::get('language/{locale}', function ($locale) {

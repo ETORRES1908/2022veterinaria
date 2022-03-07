@@ -80,7 +80,7 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         $user->update(['status' => $request->status]);
-        return redirect()->route('Usuarios.edit', $id);
+        return redirect()->route('usuarios.edit', $id);
     }
 
     /**

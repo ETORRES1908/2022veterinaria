@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
-use App\Mfotos;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class RegisterController extends Controller
 {
@@ -68,7 +68,10 @@ class RegisterController extends Controller
             'password' => 'required|string|confirmed',
             'question' => 'required|string',
             'answer' => 'required|string',
-            'captcha' => 'required|captcha'
+            'captcha' => 'required|captcha',
+            'foto' => 'required',
+            'fdpt' => '',
+            'sdpt' => ''
         ]);
     }
 
@@ -80,11 +83,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
+        //FOTO PROFILE
         $file = $data['foto'];
         $nombre = $data['name'] . $data['dni'] . "." . $file->guessExtension();
         $ruta = 'images/users/' . $nombre;
-        copy($file, $ruta);
+        Image::make($file->getRealPath())->resize(1280, 720, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($ruta, 40);
+        //FOTO DISABILITY 1
+        $fdpt = $data['fdpt'];
+        $fn = $data['dni'] . "fdpt." . $fdpt->guessExtension();
+        $rutaf = 'images/users/' . $fn;
+        Image::make($fdpt->getRealPath())->resize(1280, 720, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($rutaf, 40);
+        //FOTO DISABILITY 2
+        $sdpt = $data['sdpt'];
+        $ss = $data['dni'] . "sdpt." . $sdpt->guessExtension();
+        $rutas = 'images/users/' . $ss;
+        Image::make($sdpt->getRealPath())->resize(1280, 720, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($rutas, 40);
 
         return User::create([
             'name' => $data['name'],
@@ -105,7 +124,9 @@ class RegisterController extends Controller
             'job' => $data['job'],
             'password' => bcrypt($data['password']),
             'question' => $data['question'],
-            'answer' => bcrypt($data['answer'])
+            'answer' => bcrypt($data['answer']),
+            'fdpt' =>  $rutaf,
+            'sdpt' =>  $rutas
         ])->assignRole('user');
     }
 }

@@ -2,10 +2,10 @@
 @extends('layouts.datatable')
 
 @section('content')
-    <div class="card col-md-8 col-12 bg-black border border-danger mb-3 mx-auto">
+    <div class="card bg-black border border-danger mb-3 m-auto">
         <div class="card-body border border-danger">
             <h5 class="card-title fw-bold text-uppercase pe-none text-danger">
-                {{ $mascota->REGGAL }}
+                REGGAL: {{ $mascota->REGGAL }}
             </h5>
             <div class="row">
                 <div class="col-lg-5  mb-3">
@@ -27,30 +27,56 @@
                                 <div>{{ __('Colour') }}: {{ $mascota->plu }}</div>
                             </li>
                             <li class="list-group-item">
-                                <div>{{ __('Father') }}: {{ $mascota->pad }}</div>
+                                <div>{{ __('Father') }}: {{ $pad->nombre }}</div>
                             </li>
                             <li class="list-group-item">
-                                <div>{{ __('Mother') }}: {{ $mascota->mad }}</div>
+                                <div>{{ __('Mother') }}: {{ $mad->nombre }}</div>
                             </li>
                             <li class="list-group-item">
-                                <div>{{ __('Disability') }}: {{ $mascota->des }}</div>
+                                <div>{{ __('Disability') }}:
+                                    <?php switch ($mascota->des) {
+                                        case '0':
+                                            echo __('No');
+                                            break;
+                                        case '1':
+                                            echo __('Visual');
+                                            break;
+                                        case '2':
+                                            echo __('Physical');
+                                            break;
+                                        case '3':
+                                            echo __('Other');
+                                            break;
+                                    } ?>
+                                </div>
                             </li>
                             <li class="list-group-item">
-                                <div>{{ __('Observation') }}: {{ $mascota->obs }}</div>
+                                <form action="{{ route('mascotas.update', $mascota->id) }}" method="POST">
+                                    {{ csrf_field() }}
+                                    {{ method_field('PUT') }}
+                                    <div class="form-label">{{ __('Observations') }}:<br>
+                                        <textarea class="form-control" value="{{ old('obs') }}" name="obs"
+                                            maxlength="200" required rows="5">{{ $mascota->obs }}</textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-dark">{{ __('Edit') }}</button>
+                                </form>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-7 my-auto">
-                    <div class="row">
+                <div class="col-lg-7 m-auto">
+                    <label for="nombre" class="col-form-label fw-bold text-white">
+                        {{ __('Photo Profile') }}
+                    </label>
+                    <div class="row text-center">
                         <!-- Button Modal -->
-                        <div class="col-4 border border-danger">
-                            <button type="button" class="btn" data-bs-toggle="modal"
+                        <div class="col-4">
+                            <button type="button" class="btn border border-danger" data-bs-toggle="modal"
                                 data-bs-target="#exampleModalToggle">
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 1)->first())) {{ asset($mascota->fotos->where('nfoto', 1)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif"
-                                    class="rounded img-fluid" alt="...">
+                                    class="rounded img-fluid" style="height: 15vh;">
                             </button>
                         </div>
 
@@ -60,7 +86,7 @@
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 2)->first())) {{ asset($mascota->fotos->where('nfoto', 2)->first()->ruta) }}
                         @else
                         {{ asset('storage/img/pata.jpg') }} @endif"
-                                    class="rounded img-fluid" alt="...">
+                                    class="rounded img-fluid" style="height: 15vh;">
                             </button>
                         </div>
                         <div class="col-4">
@@ -69,7 +95,7 @@
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 3)->first())) {{ asset($mascota->fotos->where('nfoto', 3)->first()->ruta) }}
                         @else
                         {{ asset('storage/img/pata.jpg') }} @endif"
-                                    class="rounded img-fluid" alt="...">
+                                    class="rounded img-fluid" style="height: 15vh;" alt="...">
                             </button>
                         </div>
                         <div class="col-4">
@@ -78,7 +104,7 @@
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 4)->first())) {{ asset($mascota->fotos->where('nfoto', 4)->first()->ruta) }}
                         @else
                         {{ asset('storage/img/pata.jpg') }} @endif"
-                                    class="rounded img-fluid" alt="...">
+                                    class="rounded img-fluid" style="height: 15vh;" alt="...">
                             </button>
                         </div>
                         <div class="col-4">
@@ -87,7 +113,7 @@
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 5)->first())) {{ asset($mascota->fotos->where('nfoto', 5)->first()->ruta) }}
                         @else
                         {{ asset('storage/img/pata.jpg') }} @endif"
-                                    class="rounded img-fluid" alt="...">
+                                    class="rounded img-fluid" style="height: 15vh;" alt="...">
                             </button>
                         </div>
                         <div class="col-4">
@@ -96,7 +122,7 @@
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 6)->first()->ruta)) {{ asset($mascota->fotos->where('nfoto', 6)->first()->ruta) }}
                         @else
                         {{ asset('storage/img/pata.jpg') }} @endif"
-                                    class="rounded img-fluid" alt="...">
+                                    class="rounded img-fluid" style="height: 15vh;" alt="...">
                             </button>
                         </div>
                         <div class="col-4">
@@ -105,19 +131,20 @@
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 7)->first())) {{ asset($mascota->fotos->where('nfoto', 7)->first()->ruta) }}
                         @else
                         {{ asset('storage/img/pata.jpg') }} @endif"
-                                    class="rounded img-fluid" alt="...">
+                                    class="rounded img-fluid" style="height: 15vh;" alt="...">
                             </button>
                         </div>
                         <div class="col-4">
                             <button type="button" class="btn" data-bs-toggle="modal"
                                 data-bs-target="#exampleModalToggle8">
                                 @if (!empty($mascota->videos->where('nvideo', 1)->first()))
-                                    <video class="rounded img-fluid">
+                                    <video class="rounded img-fluid" style="height: 15vh;">
                                         <source src="{{ asset($mascota->videos->where('nvideo', 1)->first()->ruta) }}"
                                             type="video/mp4">
                                     </video>
                                 @else
-                                    <img src="{{ asset('storage/img/pata.jpg') }}" class="rounded img-fluid" alt="...">
+                                    <img src="{{ asset('storage/img/pata.jpg') }}" class="rounded img-fluid"
+                                        style="height: 15vh;" alt="...">
                                 @endif
                             </button>
                         </div>
@@ -125,12 +152,13 @@
                             <button type="button" class="btn" data-bs-toggle="modal"
                                 data-bs-target="#exampleModalToggle9">
                                 @if (!empty($mascota->videos->where('nvideo', 2)->first()->ruta))
-                                    <video class="rounded img-fluid">
+                                    <video class="rounded img-fluid" style="height: 15vh;">
                                         <source src="{{ asset($mascota->videos->where('nvideo', 2)->first()->ruta) }}"
                                             type="video/mp4">
                                     </video>
                                 @else
-                                    <img src="{{ asset('storage/img/pata.jpg') }}" class="rounded img-fluid" alt="...">
+                                    <img src="{{ asset('storage/img/pata.jpg') }}" class="rounded img-fluid"
+                                        style="height: 15vh;" alt="...">
                                 @endif
                             </button>
                         </div>
@@ -144,10 +172,10 @@
             <table class="table table-sm table-dark table-hover" id="datatable">
                 <thead>
                     <tr>
-                        <th>{{ __('Opponent') }}</th>
-                        <th>{{ __('Shed') }}</th>
+                        <th>{{ __('Rival') }}</th>
+                        <th>{{ __('Field') }}</th>
                         <th>{{ __('Coliseum') }}</th>
-                        <th>{{ __('Time') }}</th>
+                        <th>{{ __('Fight') }}</th>
                         <th>{{ __('Result') }}</th>
                     </tr>
                 </thead>
@@ -185,32 +213,6 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    {{-- @if (!empty($mascota->fotos->where('nfoto', 1)->first()))
-                        <form action="{{ route('mfotos.destroy', $mascota->fotos->where('nfoto', 1)->first()) }}"
-                            method="post">
-                            {!! method_field('delete') !!}
-                            {!! csrf_field() !!}
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
-                        </form>
-                    @else
-
-                        <form class="d-flex justify-content-between mt-3 w-75" method="POST"
-                            action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <input id="nfoto" type="text" name="nfoto" value="1" hidden>
-                            <input id="REGGAL" type="text" name="REGGAL" value="{{ $mascota->REGGAL }}" hidden>
-                            <input id="text" type="text" name="text" value="xd" hidden>
-                            <input id="mascota_id" type="text" name="mascota_id" value="{{ $mascota->id }}" hidden>
-                            <input id="foto" type="file" class=" form-control form-control-sm" name="foto"
-                                value="{{ old('foto') }}" required autofocus accept="image/*">
-                            @if ($errors->has('foto'))
-                                <span class="text-danger fs-6">
-                                    {{ $errors->first('foto') }}
-                                </span>
-                            @endif
-                            <button type="submit" class="btn btn-danger">Editar</button>
-                        </form>
-                    @endif --}}
                     <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -218,17 +220,15 @@
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 1)->first())) {{ asset($mascota->fotos->where('nfoto', 1)->first()->ruta) }}
                             @else
-                            {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                "
+                            {{ asset('storage/img/pata.jpg') }} @endif"
                             class="figure-img" width="100%" height="250vh">
-                        <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle9" data-bs-toggle="modal">
-                        Prev</button>
+                        {{ __('Prev') }}</button>
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">
-                        Next</button>
+                        {{ __('Next') }}</button>
                 </div>
             </div>
         </div>
@@ -271,17 +271,15 @@
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 2)->first())) {{ asset($mascota->fotos->where('nfoto', 2)->first()->ruta) }}
                             @else
-                            {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                "
+                            {{ asset('storage/img/pata.jpg') }} @endif"
                             class="figure-img" width="100%" height="250vh">
-                        <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
-                        Prev</button>
+                        {{ __('Prev') }}</button>
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">
-                        Next</button>
+                        {{ __('Next') }}</button>
                 </div>
             </div>
         </div>
@@ -325,16 +323,16 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 3)->first())) {{ asset($mascota->fotos->where('nfoto', 3)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "
                             class="figure-img" width="100%" height="250vh">
-                        <figcaption class="figure-caption">A caption for the above image.</figcaption>
+
                     </figure>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">
-                        Prev</button>
+                        {{ __('Prev') }}</button>
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle4" data-bs-toggle="modal">
-                        Next</button>
+                        {{ __('Next') }}</button>
                 </div>
             </div>
         </div>
@@ -378,16 +376,16 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 4)->first())) {{ asset($mascota->fotos->where('nfoto', 4)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "
                             class="figure-img" width="100%" height="250vh">
-                        <figcaption class="figure-caption">A caption for the above image.</figcaption>
+
                     </figure>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">
-                        Prev</button>
+                        {{ __('Prev') }}</button>
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle5" data-bs-toggle="modal">
-                        Next</button>
+                        {{ __('Next') }}</button>
                 </div>
             </div>
         </div>
@@ -431,16 +429,16 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 5)->first())) {{ asset($mascota->fotos->where('nfoto', 5)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "
                             class="figure-img" width="100%" height="250vh">
-                        <figcaption class="figure-caption">A caption for the above image.</figcaption>
+
                     </figure>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle4" data-bs-toggle="modal">
-                        Prev</button>
+                        {{ __('Prev') }}</button>
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle6" data-bs-toggle="modal">
-                        Next</button>
+                        {{ __('Next') }}</button>
                 </div>
             </div>
         </div>
@@ -484,16 +482,16 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 6)->first())) {{ asset($mascota->fotos->where('nfoto', 6)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "
                             class="figure-img" width="100%" height="250vh">
-                        <figcaption class="figure-caption">A caption for the above image.</figcaption>
+
                     </figure>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle5" data-bs-toggle="modal">
-                        Prev</button>
+                        {{ __('Prev') }}</button>
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle7" data-bs-toggle="modal">
-                        Next</button>
+                        {{ __('Next') }}</button>
                 </div>
             </div>
         </div>
@@ -537,16 +535,16 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 7)->first())) {{ asset($mascota->fotos->where('nfoto', 7)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "
                             class="figure-img" width="100%" height="250vh">
-                        <figcaption class="figure-caption">A caption for the above image.</figcaption>
+
                     </figure>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle6" data-bs-toggle="modal">
-                        Prev</button>
+                        {{ __('Prev') }}</button>
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle8" data-bs-toggle="modal">
-                        Next</button>
+                        {{ __('Next') }}</button>
                 </div>
             </div>
         </div>
@@ -597,14 +595,14 @@
                             <img src="{{ asset('storage/img/pata.jpg') }}" class="figure-img" width="100%"
                                 height="250vh">
                         @endif
-                        <figcaption class="figure-caption">A caption for the above image.</figcaption>
+
                     </figure>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle7" data-bs-toggle="modal">
-                        Prev</button>
+                        {{ __('Prev') }}</button>
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle9" data-bs-toggle="modal">
-                        Next</button>
+                        {{ __('Next') }}</button>
                 </div>
             </div>
         </div>
@@ -655,20 +653,34 @@
                             <img src="{{ asset('storage/img/pata.jpg') }}" class="figure-img" width="100%"
                                 height="250vh">
                         @endif
-                        <figcaption class="figure-caption">A caption for the above image.</figcaption>
+
                     </figure>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle8" data-bs-toggle="modal">
-                        Prev</button>
+                        {{ __('Prev') }}</button>
                     <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
-                        Next</button>
+                        {{ __('Next') }}</button>
                 </div>
             </div>
         </div>
     </div>
 
     {{-- SCRIPTS --}}
+    {{-- CSS --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+    {{-- JS --}}
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <script src="https:////cdn.datatables.net/plug-ins/1.11.5/sorting/date-eu.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             function getLanguage() {
@@ -693,5 +705,9 @@
                 }
             });
         });
+        /* ERROR */
+        setTimeout(function() {
+            $('.alert').fadeOut('slow');
+        }, );
     </script>
 @endsection

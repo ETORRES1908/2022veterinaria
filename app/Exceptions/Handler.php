@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\URL;
 
 class Handler extends ExceptionHandler
 {
@@ -51,7 +52,7 @@ class Handler extends ExceptionHandler
             }
             // TODO: Redirect to error page instead
             // Redirect user from here whatever the route you want.
-            return redirect()->route('welcome');
+            return redirect(url(URL::previous()));
         }
         // this will still show the error if there is any in your code.
         return parent::render($request, $exception);

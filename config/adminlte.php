@@ -132,35 +132,18 @@ return [
         ],
         [
             'text' => 'Events',
-            'route'  => 'MEventos.index',
-            'icon' => 'fas fa-fw fa-users',
+            'route'  => 'meventos.index',
+            'icon' => 'far fa-calendar-alt',
         ],
         [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
+            'text' => 'Coliseos',
+            'route'  => 'mcoliseos.index',
+            'icon' => 'far',
         ],
         [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'aqua',
+            'text' => 'Banners',
+            'route'  => 'mbanners.index',
+            'icon' => 'far fa-images',
         ],
     ],
 

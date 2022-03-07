@@ -21,13 +21,13 @@ $factory->define(App\Mascota::class, function (Faker\Generator $faker) {
     return [
         'REGGAL' => $faker->userName,
         'fnac' => $date,
-        'sss' => $faker->randomNumber(7),
+        'sss' => $faker->randomNumber(3),
         'nombre' => $faker->firstName,
         'plc' => $faker->randomNumber(4),
         'plu' => $faker->text($maxNbChars = 18),
-        'pad' => $faker->text($maxNbChars = 24),
-        'mad' => $faker->text($maxNbChars = 24),
-        'des' => $faker->randomElement(['No', 'Visual', 'Fisica', 'Auditiva', 'Verbal', 'Mental']),
+        /* 'pad' => $faker->text($maxNbChars = 24),
+        'mad' => $faker->text($maxNbChars = 24), */
+        'des' => $faker->randomElement(['0', '1', '2', '3']),
         'obs' => $faker->text(200),
     ];
 });

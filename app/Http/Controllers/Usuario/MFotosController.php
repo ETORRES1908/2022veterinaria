@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Usuario;
 
-use App\Mfotos;
+use App\MFotos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class MFotosController extends Controller
@@ -52,10 +51,9 @@ class MFotosController extends Controller
                 $file->guessExtension();
 
             $ruta = 'images/mascotas/' . $nombre;
-            Image::make($file->getRealPath())
-                ->resize(null, 400, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($ruta, 40);
+            Image::make($file->getRealPath())->resize(1280, 720, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($ruta, 72, 'jpeg');
             $nmfotos = MFotos::Create([
                 'nfoto' => $request->nfoto,
                 'ruta' => $ruta,
