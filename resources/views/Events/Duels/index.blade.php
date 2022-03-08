@@ -10,12 +10,12 @@
                 </button>
                 @if ($errors->has('fcc') || $errors->has('scc '))
                     <span class="fs-6 text-danger" id="Message">
-                        Cambie las cintas.
+                        {{__('Change the tapes.')}}
                     </span>
                 @endif
                 @if ($errors->has('pmascota_id') || $errors->has('smascota_id'))
                     <span class="fs-6 text-danger" id="Message">
-                        Las mascotas deben ser diferentes.
+                        {{ __('The exemplars must be different.') }}
                     </span>
                 @endif
             @endif
@@ -29,7 +29,7 @@
                         <th>VS</th>
                         <th class="text-uppercase">{{ __('Pet') }} 2</th>
                         <th class="text-uppercase">{{ __('Owner') }}</th>
-                        <th class="text-uppercase">{{ __('Winner') }}</th>
+                        <th class="text-uppercase">{{ __('Result') }}</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
@@ -54,7 +54,7 @@
                                                         {{ __('Fight') }}: {{ $duel->npelea }}
                                                     </label>
                                                     <label class="btn btn-primary">
-                                                        {{ __('Cancha') }}: {{ $duel->cch }}
+                                                        {{ __('Field') }}: {{ $duel->cch }}
                                                     </label>
                                                 </div>
                                                 <button type="button" class="btn btn-danger bg-danger btn-close"
@@ -71,6 +71,17 @@
                                                                         class="figure-img d-block mx-auto" width="120"
                                                                         height="140">
                                                                 </figure>
+                                                                @if ($evento->judge_id == Auth::user()->id)
+                                                                    <form action="{{ route('duels.update', $duel->id) }}"
+                                                                        method="POST">
+                                                                        {!! method_field('PUT') !!}
+                                                                        {!! csrf_field() !!}
+                                                                        <input type="text" name="result"
+                                                                            value="{{ $duel->pmascota->id }}" hidden>
+                                                                        <button type="submit"
+                                                                            class="btn btn-success">{{ __('Winner') }}</button>
+                                                                    </form>
+                                                                @endif
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-sm-6 mb-3">
@@ -149,8 +160,21 @@
                                                                         {{ __('Disability') }}
                                                                     </label>
                                                                     <div class="col-auto">
-                                                                        <input value="{{ $duel->pmascota->des }}"
-                                                                            class="form-control text-danger" readonly>
+                                                                        <select class="form-control text-danger"
+                                                                            value="{{ $duel->pmascota->des }}" disabled>
+                                                                            <option
+                                                                                @if ($duel->pmascota->des == '0') selected @endif>
+                                                                                {{ __('No') }}</option>
+                                                                            <option
+                                                                                @if ($duel->pmascota->des == '1') selected @endif>
+                                                                                {{ __('Visual') }}</option>
+                                                                            <option
+                                                                                @if ($duel->pmascota->des == '2') selected @endif>
+                                                                                {{ __('Physical') }}</option>
+                                                                            <option
+                                                                                @if ($duel->pmascota->des == '3') selected @endif>
+                                                                                {{ __('Other') }}</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6 mb-3">
@@ -174,6 +198,18 @@
                                                                         class="figure-img d-block mx-auto" width="120"
                                                                         height="140">
                                                                 </figure>
+                                                                @if ($evento->judge_id == Auth::user()->id)
+                                                                    <form action="{{ route('duels.update', $duel->id) }}"
+                                                                        method="POST">
+                                                                        {!! method_field('PUT') !!}
+                                                                        {!! csrf_field() !!}
+                                                                        <input type="text" name="result"
+                                                                            value="{{ $duel->smascota->id }}" hidden>
+
+                                                                        <button type="submit"
+                                                                            class="btn btn-success">{{ __('Winner') }}</button>
+                                                                    </form>
+                                                                @endif
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-sm-6 mb-3">
@@ -252,8 +288,21 @@
                                                                         {{ __('Disability') }}
                                                                     </label>
                                                                     <div class="col-auto">
-                                                                        <input value="{{ $duel->smascota->des }}"
-                                                                            class="form-control text-danger" readonly>
+                                                                        <select class="form-control text-danger"
+                                                                            value="{{ $duel->smascota->des }}" disabled>
+                                                                            <option
+                                                                                @if ($duel->smascota->des == '0') selected @endif>
+                                                                                {{ __('No') }}</option>
+                                                                            <option
+                                                                                @if ($duel->smascota->des == '1') selected @endif>
+                                                                                {{ __('Visual') }}</option>
+                                                                            <option
+                                                                                @if ($duel->smascota->des == '2') selected @endif>
+                                                                                {{ __('Physical') }}</option>
+                                                                            <option
+                                                                                @if ($duel->smascota->des == '3') selected @endif>
+                                                                                {{ __('Other') }}</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6 mb-3">
@@ -280,7 +329,13 @@
                                 @if (empty($duel->result))
                                     <div class="bg-warning p-1">{{ __('Waiting') }}</div>
                                 @else
-                                    <div class="bg-success  p-1">{{ $duel->result }}</div>
+                                    <div class="bg-success  p-1">
+                                        @if ($duel->result == $duel->pmascota->id)
+                                            {{ $duel->pmascota->nombre }}
+                                        @else
+                                            {{ $duel->smascota->nombre }}
+                                        @endif
+                                    </div>
                                 @endif
                             </td>
                         </tr>
@@ -339,11 +394,14 @@
                                             <div class="col-auto">
                                                 <select name="fcc" id="fcc" class="form-select" required autofocus>
                                                     <option value="" disabled selected>Elige cinta</option>
-                                                    <option value="Rojo" @if (old('fcc') == 'Rojo') selected @endif>
+                                                    <option value="Rojo"
+                                                        @if (old('fcc') == 'Rojo') selected @endif>
                                                         Rojo</option>
-                                                    <option value="Azul" @if (old('fcc') == 'Azul') selected @endif>
+                                                    <option value="Azul"
+                                                        @if (old('fcc') == 'Azul') selected @endif>
                                                         Azul</option>
-                                                    <option value="Verde" @if (old('fcc') == 'Verde') selected @endif>
+                                                    <option value="Verde"
+                                                        @if (old('fcc') == 'Verde') selected @endif>
                                                         Verde</option>
                                                     <option value="Blanco"
                                                         @if (old('fcc') == 'Blanco') selected @endif>Blanco</option>
@@ -453,7 +511,8 @@
                                             <div class="col-auto">
                                                 <select name="scc" id="scc" class="form-select" required autofocus>
                                                     <option value="" disabled selected>Elige cinta</option>
-                                                    <option value="Rojo" @if (old('scc') == 'Rojo') selected @endif>
+                                                    <option value="Rojo"
+                                                        @if (old('scc') == 'Rojo') selected @endif>
                                                         Rojo</option>
                                                     <option value="Azul"
                                                         @if (old('scc') == 'Azul') selected @endif>Azul</option>
@@ -540,11 +599,11 @@
                             <div class="row">
                                 <div class="col-sm-6 mx-auto">
                                     <label for="pmad" class="form-label fw-bold">
-                                        {{ __('Cancha') }}
+                                        {{ __('Field') }}
                                     </label>
                                     <div class="col-auto">
                                         <select name="cch" id="cch" class="form-select" required autofocus>
-                                            <option value="" disabled selected>Elige cancha</option>
+                                            <option value="" disabled selected>Elige Field</option>
                                             <option value="A" @if (old('cch') == 'A') selected @endif>A</option>
                                             <option value="B" @if (old('cch') == 'B') selected @endif>B</option>
                                         </select>
@@ -612,7 +671,14 @@
             $('#datatable').DataTable({
                 language: {
                     "url": getLanguage()
-                }
+                },
+                bInfo: false,
+                paginate: false,
+                pageLength: 10,
+                lengthMenu: [
+                    [10],
+                    [10]
+                ]
             });
         });
     </script>

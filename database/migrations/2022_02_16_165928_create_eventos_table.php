@@ -38,12 +38,6 @@ class CreateEventosTable extends Migration
             $table->string('miw');
             //MAX WEIGHT
             $table->string('maw');
-            //COUNTRY
-            $table->string('ctr');
-            //STATE
-            $table->string('stt');
-            //DIRECTION
-            $table->string('drc');
             //FIRST TIME WEIGHT
             $table->string('ftw');
             //SECOND TIME WEIGHT

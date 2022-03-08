@@ -18,7 +18,7 @@
                         <th>{{ __('Control desk') }}</th>
                         <th>{{ __('Judge') }}</th>
                         <th>{{ __('Assistant') }}</th>
-                        <th>{{ __('Awards') }}</th>
+                        <th>{{ __('Award') }}</th>
                         <th>{{ __('Status') }}</th>
                         <th></th>
                     </tr>
@@ -54,7 +54,7 @@
                         <th>{{ __('Control desk') }}</th>
                         <th>{{ __('Judge') }}</th>
                         <th>{{ __('Assistant') }}</th>
-                        <th>{{ __('Awards') }}</th>
+                        <th>{{ __('Award') }}</th>
                         <th>{{ __('Status') }}</th>
                         <th></th>
                     </tr>

@@ -322,7 +322,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 3)->first())) {{ asset($mascota->fotos->where('nfoto', 3)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
                             class="figure-img" width="100%" height="250vh">
 
                     </figure>
@@ -375,7 +375,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 4)->first())) {{ asset($mascota->fotos->where('nfoto', 4)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
                             class="figure-img" width="100%" height="250vh">
 
                     </figure>
@@ -428,7 +428,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 5)->first())) {{ asset($mascota->fotos->where('nfoto', 5)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
                             class="figure-img" width="100%" height="250vh">
 
                     </figure>
@@ -481,7 +481,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 6)->first())) {{ asset($mascota->fotos->where('nfoto', 6)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
                             class="figure-img" width="100%" height="250vh">
 
                     </figure>
@@ -534,7 +534,7 @@
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 7)->first())) {{ asset($mascota->fotos->where('nfoto', 7)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
                             class="figure-img" width="100%" height="250vh">
 
                     </figure>

@@ -13,7 +13,6 @@
             <div class="card-header border border-danger">
                 <a href="{{ route('events.create') }}" class="btn btn-success" style="font-size: 95%">
                     {{ __('Add Event') }}</a>
-
             </div>
         @endcan
         <div class="card-body table-responsive border border-danger">
@@ -24,7 +23,7 @@
                         <th>{{ __('City') }}</th>
                         <th>{{ __('State') }}</th>
                         <th>{{ __('Country') }}</th>
-                        <th class="nowrap">{{ __('Direction') }}</th>
+                        <th class="nowrap">{{ __('Reference') }}</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -32,70 +31,41 @@
                     @foreach ($eventos as $evento)
                         <tr>
                             <td>{{ $evento->fechas[0] }}</td>
-                            <td>{{ $evento->drc }}</td>
-                            <td><select disabled class="text-white"
-                                    style="-webkit-appearance: none;background:none;border:none;">
-                                    <option @if ($evento->stt == 'PE-AMA') selected @endif>Amazonas</option>
-                                    <option @if ($evento->stt == 'PE-ANC') selected @endif>Ancash</option>
-                                    <option @if ($evento->stt == 'PE-APU') selected @endif>Apurímac</option>
-                                    <option @if ($evento->stt == 'PE-ARE') selected @endif>Arequipa</option>
-                                    <option @if ($evento->stt == 'PE-AYA') selected @endif>Ayacucho</option>
-                                    <option @if ($evento->stt == 'PE-CAJ') selected @endif>Cajamarca</option>
-                                    <option @if ($evento->stt == 'PE-CUS') selected @endif>Cuzco</option>
-                                    <option @if ($evento->stt == 'PE-HUV') selected @endif>Huancavelica</option>
-                                    <option @if ($evento->stt == 'PE-HUC') selected @endif>Huánuco</option>
-                                    <option @if ($evento->stt == 'PE-ICA') selected @endif>ICA</option>
-                                    <option @if ($evento->stt == 'PE-JUN') selected @endif>Junín</option>
-                                    <option @if ($evento->stt == 'PE-LAL') selected @endif>La Libertad</option>
-                                    <option @if ($evento->stt == 'PE-LAM') selected @endif>Lambayeque</option>
-                                    <option @if ($evento->stt == 'PE-LIM') selected @endif>Lima</option>
-                                    <option @if ($evento->stt == 'PE-LOR') selected @endif>Loreto</option>
-                                    <option @if ($evento->stt == 'PE-MDD') selected @endif>Madre de Dios</option>
-                                    <option @if ($evento->stt == 'PE-MOQ') selected @endif>Moquegua</option>
-                                    <option @if ($evento->stt == 'PE-PAS') selected @endif>Pasco</option>
-                                    <option @if ($evento->stt == 'PE-PIU') selected @endif>Piura</option>
-                                    <option @if ($evento->stt == 'PE-PUN') selected @endif>Puno</option>
-                                    <option @if ($evento->stt == 'PE-SAM') selected @endif>San Martín</option>
-                                    <option @if ($evento->stt == 'PE-TAC') selected @endif>Tacna</option>
-                                    <option @if ($evento->stt == 'PE-TUM') selected @endif>Tumbes</option>
-                                    <option @if ($evento->stt == 'PE-UCA') selected @endif>Ucayali</option>
-                                    {{-- CHILE --}}
-                                    <option @if ($evento->stt == 'CL-AI') selected @endif>Aysén</option>
-                                    <option @if ($evento->stt == 'CL-AN') selected @endif>Antofagasta</option>
-                                    <option @if ($evento->stt == 'CL-AP') selected @endif>Arica y Parinacota
-                                    </option>
-                                    <option @if ($evento->stt == 'CL-AR') selected @endif>Araucanía</option>
-                                    <option @if ($evento->stt == 'CL-AT') selected @endif>Atacama</option>
-                                    <option @if ($evento->stt == 'CL-BI') selected @endif>Biobío</option>
-                                    <option @if ($evento->stt == 'CL-CO') selected @endif>Coquimbo</option>
-                                    <option @if ($evento->stt == 'CL-LI') selected @endif>O'Higgins</option>
-                                    <option @if ($evento->stt == 'CL-LL') selected @endif>Los Lagos</option>
-                                    <option @if ($evento->stt == 'CL-LR') selected @endif>Los Ríos</option>
-                                    <option @if ($evento->stt == 'CL-MA') selected @endif>Magallanes y Antártica
-                                    </option>
-                                    <option @if ($evento->stt == 'CL-ML') selected @endif>Maule</option>
-                                    <option @if ($evento->stt == 'CL-NB') selected @endif>Ñuble</option>
-                                    <option @if ($evento->stt == 'CL-RM') selected @endif>Santiago</option>
-                                    <option @if ($evento->stt == 'CL-TA') selected @endif>Tarapacá</option>
-                                    <option @if ($evento->stt == 'CL-VS') selected @endif>Valparaíso</option>
-                                </select></td>
+                            <td>{{ $evento->coliseum->district }}</td>
                             <td>
-                                <?php switch ($evento->ctr) {
-                                    case 'PER':
-                                        echo 'Perú';
-                                        break;
-                                    case 'ARG':
-                                        echo 'Argentina';
-                                        break;
-                                    case 'ECU':
-                                        echo 'Ecuador';
-                                        break;
-                                    case 'CHL':
-                                        echo 'Chile';
-                                        break;
-                                } ?>
+                                <select class="form-control text-white" style="background:none;border:none;" disabled>
+                                    <option @if ($evento->coliseum->state == 'AM') selected @endif>AM - Amazonas</option>
+                                    <option @if ($evento->coliseum->state == 'AN') selected @endif>AN - Ancash</option>
+                                    <option @if ($evento->coliseum->state == 'AP') selected @endif>AP - Apurímac</option>
+                                    <option @if ($evento->coliseum->state == 'AR') selected @endif>AR - Arequipa</option>
+                                    <option @if ($evento->coliseum->state == 'AY') selected @endif>AY - Ayacucho</option>
+                                    <option @if ($evento->coliseum->state == 'CJ') selected @endif>CJ - Cajamarca</option>
+                                    <option @if ($evento->coliseum->state == 'CZ') selected @endif>CZ - Cuzco</option>
+                                    <option @if ($evento->coliseum->state == 'HC') selected @endif>HC - Huancavelica</option>
+                                    <option @if ($evento->coliseum->state == 'HU') selected @endif>HU - Huánuco</option>
+                                    <option @if ($evento->coliseum->state == 'IC') selected @endif>IC - ICA</option>
+                                    <option @if ($evento->coliseum->state == 'JU') selected @endif>JU - Junín</option>
+                                    <option @if ($evento->coliseum->state == 'LL') selected @endif>LL - La Libertad</option>
+                                    <option @if ($evento->coliseum->state == 'LB') selected @endif>LB - Lambayeque</option>
+                                    <option @if ($evento->coliseum->state == 'LM') selected @endif>LM - Lima</option>
+                                    <option @if ($evento->coliseum->state == 'LO') selected @endif>LO - Loreto</option>
+                                    <option @if ($evento->coliseum->state == 'MD') selected @endif>MD - Madre de Dios</option>
+                                    <option @if ($evento->coliseum->state == 'MQ') selected @endif>MQ - Moquegua</option>
+                                    <option @if ($evento->coliseum->state == 'PA') selected @endif>PA - Pasco</option>
+                                    <option @if ($evento->coliseum->state == 'PI') selected @endif>PI - Piura</option>
+                                    <option @if ($evento->coliseum->state == 'PU') selected @endif>PU - Puno</option>
+                                    <option @if ($evento->coliseum->state == 'SM') selected @endif>SM - San Martín</option>
+                                    <option @if ($evento->coliseum->state == 'TA') selected @endif>TA - Tacna</option>
+                                    <option @if ($evento->coliseum->state == 'TU') selected @endif>TU - Tumbes</option>
+                                    <option @if ($evento->coliseum->state == 'UC') selected @endif>UC - Ucayali</option>
+                                </select>
                             </td>
-                            <td class="nowrap">{{ $evento->drc }}</td>
+                            <td>
+                                <select class="form-control text-white" style="background:none;border:none;" disabled>
+                                    <option @if ($evento->coliseum->country == 'PER') selected @endif>PER - Perú</option>
+                                </select>
+                            </td>
+                            <td class="nowrap">{{ $evento->coliseum->reference }}</td>
                             <td>
                                 <a href="{{ route('events.show', $evento->id) }}" class="btn btn-warning">
                                     {{ __('View') }}
@@ -110,7 +80,7 @@
                         <th>{{ __('City') }}</th>
                         <th>{{ __('State') }}</th>
                         <th>{{ __('Country') }}</th>
-                        <th class="nowrap">{{ __('Direction') }}</th>
+                        <th class="nowrap">{{ __('Reference') }}</th>
                         <th></th>
                     </tr>
                 </tfoot>
@@ -156,11 +126,15 @@
                 "targets": 0,
                 "type": "date-eu"
             }],
+            bInfo: false,
+            paginate: false,
+            pageLength: 10,
+            lengthMenu: [
+                [10],
+                [10]
+            ]
         });
 
-        $(document).ready(function() {
-            $('#datatable').DataTable();
-        });
         //HIDE
         setTimeout(function() {
             $('.alert').fadeOut(5000);

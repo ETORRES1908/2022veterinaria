@@ -16,7 +16,7 @@
     "Add Duel": "Agregar Duelo",
     "Add Event": "Agregar Evento",
     "Add coliseum": "Registrar coliseo",
-    "CHOOSE PET": "ELEGIR MASCOTA",
+    "CHOOSE PET": "ELEGIR EJEMPLAR",
     "Reference": "Referencia",
     "To": "A",
     "Pet": "Ejemplar",
@@ -189,8 +189,11 @@
     "Observations": "Observaciones",
     "Challenge": "Desafío",
     "Result": "Resultado",
-    "Field": "Campo",
+    "Field": "Cancha",
     "My exemplar": "Mi ejemplar",
+    "My exemplars": "Mis ejemplares",
     "seconds": "segundos",
+    "Change the tapes.": "Cambia las cintas. ",
+    "The exemplars must be different.": "Los ejemplares deben ser diferentes.",
     "LAW 28683 Preferential attention and LAW 29973 rights of people with disabilities.": "LEY 28683 Atención preferencial y LEY 29973 derechos persona con discapacidad."
 }

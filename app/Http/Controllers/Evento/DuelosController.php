@@ -112,7 +112,8 @@ class DuelosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Duelos::find($id)->update(['result' => $request->result]);
+        return redirect()->route('duels.show', $id);
     }
 
     /**

@@ -25,7 +25,6 @@ class UsersTableSeeder extends Seeder
                 } else {
                     $u->assignRole('user');
                 }
-                factory(Mascota::class, 1)->create(['user_id' => $u->id]);
             });
         //ADMIN
         factory(User::class)->create([
@@ -43,11 +42,8 @@ class UsersTableSeeder extends Seeder
             'status' => 1,
             'password' => bcrypt('123'),
         ])->assignRole('user');
-        //MASCOTAS DE PRUEBAS PARA USER
-        factory(Mascota::class, 5)->create(['user_id' => $user->id]);
         //COLISEOS
         factory(Coliseos::class, 5)->create();
-
         //EVENTO
         /* factory(Eventos::class, 1)->create(['organizador_id' => 1, 'jueza_id' => 2, 'juezb_id' => 3]);
         factory(LParticipantes::class, 1)->create(['evento_id' => 1, 'mascota_id' => 1]); */

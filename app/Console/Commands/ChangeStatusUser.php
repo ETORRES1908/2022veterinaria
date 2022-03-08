@@ -22,8 +22,8 @@ class ChangeStatusUser extends Command
     {
         $users = Role::where('name', 'user')->first()->users;
         foreach ($users as $user) {
-            if ($user->updated_at < Carbon::now()->subDays(30)) {
-                $user->update(['status' => '1']);
+            if ($user->updated_at < Carbon::now()->subMonths(6)) {
+                $user->update(['status' => '0']);
             }
         }
     }

@@ -22,7 +22,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('command:status-user')->daily();
+        $schedule->command('command:status-user')->everyMinute();
         $schedule->command('optimize:clear')->daily();
     }
 

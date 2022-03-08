@@ -138,7 +138,7 @@ return [
         [
             'text' => 'Coliseos',
             'route'  => 'mcoliseos.index',
-            'icon' => 'far',
+            'icon' => 'fas fa-place-of-worship',
         ],
         [
             'text' => 'Banners',
