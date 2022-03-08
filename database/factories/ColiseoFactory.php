@@ -16,6 +16,10 @@ $factory->define(App\Coliseos::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'nombre' => $faker->firstName
+        'nombre' => $faker->firstName,
+        'country' => 'PER',
+        'state' => $faker->randomElement(['AM', 'AN', 'AP', 'AY', 'CJ', 'CZ']),
+        'district' => $faker->state(),
+        'reference' => $faker->address(),
     ];
 });

@@ -15,6 +15,7 @@ Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::resource('events', 'Evento\EventoController');
 Route::resource('/participants', 'Evento\LParticipantesController');
 Route::resource('/duels', 'Evento\DuelosController');
+Route::resource('/coliseums', 'Evento\ColiseoController');
 
 //USER CONTROLLER
 Route::group(['middleware' => ['can:MyPets']], function () {

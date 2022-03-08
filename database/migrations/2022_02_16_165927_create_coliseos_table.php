@@ -16,6 +16,10 @@ class CreateColiseosTable extends Migration
         Schema::create('coliseos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
+            $table->string('country');
+            $table->string('state');
+            $table->string('district');
+            $table->string('reference');
             $table->timestamps();
         });
     }

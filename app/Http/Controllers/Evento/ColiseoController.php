@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Administrador;
+namespace App\Http\Controllers\Evento;
 
+use App\Coliseos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Coliseos;
 
-class ColiseosController extends Controller
+class ColiseoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,7 @@ class ColiseosController extends Controller
      */
     public function index()
     {
-        $coliseos = Coliseos::all();
-        return view('Administrador.MColiseos.index', compact('coliseos'));
+        //
     }
 
     /**
@@ -26,7 +25,7 @@ class ColiseosController extends Controller
      */
     public function create()
     {
-        return view('Administrador.MColiseos.create');
+        //
     }
 
     /**
@@ -37,28 +36,28 @@ class ColiseosController extends Controller
      */
     public function store(Request $request)
     {
-        Coliseos::Create($request->all());
-        return redirect()->route('mcoliseos.index');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Coliseos  $coliseos
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $coliseo = Coliseos::find($id);
+        return response()->json(array('success' => true, 'coliseo' => $coliseo));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Coliseos  $coliseos
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Coliseos $coliseos)
     {
         //
     }
@@ -67,10 +66,10 @@ class ColiseosController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Coliseos  $coliseos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Coliseos $coliseos)
     {
         //
     }
@@ -78,12 +77,11 @@ class ColiseosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Coliseos  $coliseos
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Coliseos $coliseos)
     {
-        Coliseos::find($id)->delete();
-        return redirect()->route('mcoliseos.index');
+        //
     }
 }

@@ -9,6 +9,6 @@ class Coliseos extends Model
     protected $guarded = [];
 
     protected $fillable = [
-        'nombre'
+        'nombre', 'country', 'state', 'district', 'reference'
     ];
 }
