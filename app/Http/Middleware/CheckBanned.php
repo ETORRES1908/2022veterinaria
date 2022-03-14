@@ -24,7 +24,7 @@ class CheckBanned
 
             $request->session()->regenerateToken();
 
-            return redirect()->route('login')->with('error', __('Your account is awaiting approval. Please try again later.'));
+            return redirect()->route('login')->with('error', __('Your account is pending approval, WE WILL NOTIFY YOU BY EMAIL.'));
         }
         if (auth()->check() && (auth()->user()->status == 2)) {
             Auth::logout();

@@ -127,7 +127,7 @@
                 "type": "date-eu"
             }],
             bInfo: false,
-            pageLength: false,
+            lengthChange: false,
             pageLength: 10,
             lengthMenu: [
                 [10],
@@ -137,7 +137,7 @@
 
         //HIDE
         setTimeout(function() {
-            $('.alert').fadeOut(3000);
+            $('.alert').fadeOut(4000);
         });
     </script>
 @endsection

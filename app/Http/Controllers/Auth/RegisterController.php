@@ -67,7 +67,6 @@ class RegisterController extends Controller
             'direction' => 'required|string',
             'job' => 'required|string',
             'password' => 'required|string|confirmed',
-            'question' => 'required|string',
             'answer' => 'required|string',
             'captcha' => 'required|captcha',
             'foto' => 'required',
@@ -130,7 +129,6 @@ class RegisterController extends Controller
             'direction' => $data['direction'],
             'job' => $data['job'],
             'password' => bcrypt($data['password']),
-            'question' => $data['question'],
             'answer' => bcrypt($data['answer']),
             'fdpt' =>  $rutaf,
             'sdpt' =>  $rutas

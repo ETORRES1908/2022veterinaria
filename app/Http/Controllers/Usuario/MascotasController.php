@@ -18,7 +18,7 @@ class MascotasController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:addanimal')->only('index' . 'show' . 'create', 'store' . 'edit' . 'update' . 'delete');
+        $this->middleware('can:addanimal')->only('index' , 'show', 'create', 'store' , 'edit' , 'update' , 'delete');
     }
 
     /**
@@ -155,7 +155,7 @@ class MascotasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Mascota::find($id)->update(['sena' => $request->sena, 'obs' => $request->obs]);
+        Mascota::find($id)->update(['sena' => $request->sena, 'obs' => $request->obs, 'spmt' => $request->spmt]);
         return redirect()->route('mascotas.show', $id)->with('mensaje', __('Successfully edited'));
     }
 

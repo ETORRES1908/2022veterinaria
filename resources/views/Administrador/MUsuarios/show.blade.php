@@ -14,9 +14,9 @@
             </div>
         @endif
         <br>
-        @if (Auth::user()->usert == 'webmaster')
+        @can('chngs')
             <a class="btn btn-primary" href="{{ route('usuarios.edit', $user->id) }}">{{ __('Edit') }}</a>
-        @endif
+        @endcan
         <div class="row" style="padding:5vh 0 10vh 0;font-size: 1.3em">
             <div class="col-md-5">
                 <div class="text-center">

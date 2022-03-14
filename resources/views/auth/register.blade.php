@@ -213,7 +213,7 @@
                     {{-- PREPA --}}
                     <div class="col-sm-6 mb-3 form-group{{ $errors->has('prepa') ? ' has-error' : '' }}">
                         <label for="prepa" class="col-form-label fw-bold">
-                            {{ __('Trainer') }}
+                            {{ __('Preparer') }}
                         </label>
 
                         <div class="col-auto">
@@ -445,7 +445,8 @@
                         </label>
                         <div class="col-auto">
                             <input id="direction" type="text" class="form-control  text-danger" name="direction"
-                                value="{{ old('direction') }}" maxlength="30" required autofocus>
+                                value="{{ old('direction') }}" maxlength="30" required autofocus
+                                placeholder="REF. ó ALT.">
 
                             @if ($errors->has('direction'))
                                 <span class="text-danger text-fs6">
@@ -516,33 +517,16 @@
                 </div>
                 {{-- ELEGIR PREGUNTA --}}
                 <div class="col-sm-12 mb-3 form-group{{ $errors->has('question') ? ' has-error' : '' }}">
-                    <label for="question" class="col-auto col-form-label fw-bold">
-                        {{ __('Question to password') }}
+                    <label for="answer" class="col-auto col-form-label fw-bold text-capitalize">
+                        {{ __('secrect answer') }}
                     </label>
-                    <div class="row">
-                        <div class="col-sm-12 col-form-label fw-bold">
-                            <select class="form-control text-danger col-sm-12" id="question" name="question"
-                                value="{{ old('question') }}" required autofocus>
-                                <option selected disabled value="">{{ __('Options') }}...</option>
-                                <option value="0" @if (old('question') == '0') selected @endif>
-                                    ¿{{ __('Name of first pet') }}?</option>
-                                <option value="1" @if (old('question') == '1') selected @endif>
-                                    ¿{{ __('Hometown name') }}?</option>
-                                <option value="2" @if (old('question') == '2') selected @endif>
-                                    ¿{{ __('Name of childhood best friend') }}?</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-12 col-form-label fw-bold">
-                            <input id="answer" type="text" class="form-control  text-danger" name="answer"
-                                placeholder="{{ __('Answer') }}..." value="{{ old('answer') }}" required autofocus>
-
-                            @if ($errors->has('answer'))
-                                <span class="text-danger text-fs6">
-                                    {{ $errors->first('answer') }}
-                                </span>
-                            @endif
-                        </div>
-                    </div>
+                    <input id="answer" type="text" class="form-control text-danger" name="answer" maxlength="10"
+                        placeholder="{{ __('Answer') }}..." value="{{ old('answer') }}" required autofocus>
+                    @if ($errors->has('answer'))
+                        <span class="text-danger text-fs6">
+                            {{ $errors->first('answer') }}
+                        </span>
+                    @endif
                 </div>
                 {{-- CAPTCHAT AND INPUT CAPCHAT --}}
                 <div class="col-sm-6 mx-auto mb-3 form-group{{ $errors->has('captcha') ? ' has-error' : '' }}">

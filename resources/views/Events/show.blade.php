@@ -301,7 +301,7 @@
                                             <input type="text" class="form-control text-danger" id="hours"
                                                 value="{{ $evento->coliseum->nombre }}" readonly>
                                         </div>
-                                        <div class="col-sm-6 mb-3">
+                                        <div class="col-6 mb-3">
                                             <label for="title" class="form-label">{{ __('Weight') }}</label>
                                             <div class="col-auto input-group-text">
                                                 Min
@@ -312,10 +312,40 @@
                                                     {{ $evento->maw }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 mb-3">
+                                        <div class="col-6 mb-3">
                                             <label for="hours" class="form-label">{{ __('Time start') }}</label>
                                             <input type="time" class="form-control text-danger" id="hours"
                                                 value="{{ $evento->hstart }}" readonly>
+                                        </div>
+                                        <div class="col-3 mb-3">
+                                            <label for="title" class="form-label">{{ __('Size') }}</label>
+                                            <div class="col-auto ">
+                                                <input type="text" class="form-control text-danger" id="hours"
+                                                    value="{{ $evento->sz }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 mb-3">
+                                            <label for="title" class="form-label">{{ __('Time') }}</label>
+                                            <div class="col-auto ">
+                                                <input type="text" class="form-control text-danger" id="hours"
+                                                    value="{{ $evento->time }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3">
+                                            <label for="title" class="form-label">{{ __('Regulation') }}</label>
+                                            <div class="col-auto ">
+                                                <select class="form-control text-danger" disabled>
+                                                    <option @if ($evento->trl == 'cls') selected @endif>
+                                                        {{ __('Coliseum') }}</option>
+                                                    <option @if ($evento->trl == 'dpt') selected @endif>
+                                                        {{ __('Departmental') }}</option>
+                                                    <option @if ($evento->trl == 'nac') selected @endif>
+                                                        {{ __('National') }} </option>
+                                                    <option @if ($evento->trl == 'inc') selected @endif>
+                                                        {{ __('International') }}
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="col-sm-8 mb-3">
                                             <label for="dates" class="form-label">{{ __('Dates') }}</label>
@@ -355,8 +385,8 @@
                         </div>
                         <div class="col-12 col-xl-6">
                             <div class="card h-100 bg-black border border-danger">
-                                <div class="card-header border border-danger fw-bold">
-                                    {{ __('AWARDS') . ': ' . $evento->awards }}</div>
+                                <div class="card-header border border-danger fw-bold text-uppercase">
+                                    {{ __('Award') . ': ' . $evento->awards }}</div>
                                 <div class="card-body border border-danger">
                                     <div class="row">
                                         <div class="col-12 col-lg-4 mb-3 my-auto">
@@ -465,13 +495,19 @@
                                 <div class="row">
                                     <div class="col-6 mb-3">
                                         <label for="egn" class="form-label">{{ __('GENERAL') }}</label>
-                                        <input type="text" class="form-control text-danger" id="egn"
-                                            value="{{ $evento->egn }}" readonly>
+                                        <div class="input-group">
+                                            <div class="input-group-text">S/.</div>
+                                            <input type="text" class="form-control text-danger" id="egn"
+                                                value="{{ $evento->egn }}" readonly>
+                                        </div>
                                     </div>
                                     <div class="col-6 mb-3">
                                         <label for="evp" class="form-label">{{ __('VIP') }}</label>
-                                        <input type="text" class="form-control text-danger" id="evp"
-                                            value="{{ $evento->evp }}" readonly>
+                                        <div class="input-group">
+                                            <div class="input-group-text">S/.</div>
+                                            <input type="text" class="form-control text-danger" id="evp"
+                                                value="{{ $evento->evp }}" readonly>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -556,7 +592,7 @@
                 "type": "date-eu"
             }],
             bInfo: false,
-            pageLength: false,
+            lengthChange: false,
             pageLength: 10,
             lengthMenu: [
                 [10],

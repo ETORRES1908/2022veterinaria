@@ -93,17 +93,6 @@ class EventoController extends Controller
             'gll' => 'required',
             'glp' => 'required',
         ]);
-        Eventos::create($request->all());
-        Eventos::create($request->all());
-        Eventos::create($request->all());
-        Eventos::create($request->all());
-        Eventos::create($request->all());
-        Eventos::create($request->all());
-        Eventos::create($request->all());
-        Eventos::create($request->all());
-        Eventos::create($request->all());
-        Eventos::create($request->all());
-        Eventos::create($request->all());
         $nevento = Eventos::create($request->all());
         return redirect()->route('events.index')->with('mensaje', true);
     }

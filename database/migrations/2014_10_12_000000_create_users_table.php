@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
             $table->string('job'); //TRABAJO
             $table->string('password'); //CONTRASEÑA
             $table->string('status')->default('0'); //estado
-            $table->string('question'); //QUESTIOM
+
             $table->string('answer'); //ANSWER
             $table->string('fdpt')->nullable(); //FOTO
             $table->string('sdpt')->nullable(); //FOTO

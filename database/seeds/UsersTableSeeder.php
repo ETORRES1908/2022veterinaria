@@ -19,8 +19,8 @@ class UsersTableSeeder extends Seeder
     {
         //USERS AND ROLES AND MASCOTAS
         factory(User::class)->create([
-            'status' => 1, 'usert' => 'owner'
-        ])->assignRole('owner');
+            'usert' => 'own', 'status' => 1
+        ])->assignRole('own');
 
         //USERS AND ROLES AND MASCOTAS
         factory(User::class)->create([
@@ -29,60 +29,27 @@ class UsersTableSeeder extends Seeder
 
         //USERS AND ROLES AND MASCOTAS
         factory(User::class)->create([
-            'status' => 1, 'usert' => 'jdg'
+            'usert' => 'jdg', 'status' => 1
         ])->assignRole('jdg');
 
         //USERS AND ROLES AND MASCOTAS
         factory(User::class)->create([
-            'status' => 1, 'usert' => 'cdk'
+            'usert' => 'cdk', 'status' => 1
         ])->assignRole('cdk');
 
         //USERS AND ROLES AND MASCOTAS
         factory(User::class)->create([
-            'status' => 1, 'usert' => 'asst'
+            'usert' => 'asst', 'status' => 1
         ])->assignRole('asst');
 
         //USERS AND ROLES AND MASCOTAS
         factory(User::class)->create([
-            'status' => 1, 'usert' => 'ppr'
+            'usert' => 'ppr', 'status' => 1
         ])->assignRole('ppr');
 
         //USERS AND ROLES AND MASCOTAS
         factory(User::class)->create([
-            'status' => 1, 'usert' => 'amt'
+            'usert' => 'amt', 'status' => 1
         ])->assignRole('amt');
-
-        //ADMIN
-        factory(User::class)->create([
-            'name' => 'webmaster',
-            'nombre' => 'webmaster',
-            'usert' => 'webmaster',
-            'apellido' => 'webmaster',
-            'status' => 1,
-            'password' => bcrypt('123'),
-        ])->assignRole('webmaster');
-
-        //ADMIN
-        factory(User::class)->create([
-            'name' => 'admin',
-            'nombre' => 'admin',
-            'usert' => 'admin',
-            'apellido' => 'admin',
-            'status' => 1,
-            'password' => bcrypt('123'),
-        ])->assignRole('admin');
-
-        //USER
-        $user = factory(User::class)->create([
-            'name' => 'user',
-            'nombre' => 'user',
-            'usert' => 'owner',
-            'apellido' => 'user',
-            'status' => 1,
-            'password' => bcrypt('123'),
-        ])->assignRole('owner');
-
-        //COLISEOS
-        factory(Coliseos::class, 5)->create();
     }
 }

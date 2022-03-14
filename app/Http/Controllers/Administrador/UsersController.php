@@ -12,6 +12,8 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:cms')->only('index', 'show');
+        $this->middleware('can:chngs')->only('edit', 'update');
     }
 
     /**

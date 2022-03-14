@@ -36,7 +36,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'direction' => $faker->address(),
         'job' => $faker->jobTitle(),
         'password' => $password ?: $password = bcrypt('123'),
-        'question' => $faker->randomElement(['0', '1']),
         'answer' => $answer ?: $answer = bcrypt('123'),
         'remember_token' => str_random(10),
     ];

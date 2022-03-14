@@ -146,16 +146,20 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item bg-black text-white">
-                                <div><strong>{{ __('Supplement') }}:</strong> {{ $mascota->spmt }}</div>
-                            </li>
                             <form action="{{ route('mascotas.update', $mascota->id) }}" method="POST">
                                 {!! csrf_field() !!}
                                 {{ method_field('PUT') }}
                                 <li class="list-group-item bg-black text-white">
                                     <div><strong>{{ __('SENASA') }}:</strong></div>
                                     <input class="form-control" type="text" name="sena" value="{{ $mascota->sena }}"
-                                        required>
+                                        required required pattern="[A-zÀ-ú1-9\s]+" maxlength="30"
+                                        onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)">
+                                </li>
+                                <li class="list-group-item bg-black text-white">
+                                    <div><strong>{{ __('Supplement') }}:</strong></div>
+                                    <input class="form-control" type="text" name="spmt" value="{{ $mascota->spmt }}"
+                                        required pattern="[A-zÀ-ú1-9\s]+" maxlength="20"
+                                        onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)">
                                 </li>
                                 <li class="list-group-item bg-black text-white">
                                     <div class="form-label"><strong>{{ __('Observations') }}:</strong><br>
@@ -284,9 +288,9 @@
                     <tr>
                         <th>{{ __('Deal') }}</th>
                         <th>{{ __('Rival') }}</th>
-                        <th>{{ __('Field') }}</th>
                         <th>{{ __('Coliseum') }}</th>
                         <th>{{ __('Time') }}</th>
+                        <th>{{ __('Type') }}</th>
                         <th>{{ __('Result') }}</th>
                     </tr>
                 </thead>
@@ -297,14 +301,26 @@
                             </td>
                             <td>
                                 @if ($duelo->pmascota_id == $mascota->id)
-                                    {{ $duelo->smascota->REGGAL }}
+                                    {{ $duelo->smascota->nombre }}
                                 @elseif ($duelo->smascota_id == $mascota->id)
-                                    {{ $duelo->pmascota->REGGAL }}
+                                    {{ $duelo->pmascota->nombre }}
                                 @endif
                             </td>
-                            <td>{{ $duelo->cch }}</td>
                             <td>{{ $duelo->lparticipante->evento->coliseum->nombre }}</td>
-                            <td>{{ $duelo->time }}</td>
+                            <td>{{ $duelo->dm . ':' . $duelo->ds }}</td>
+                            <td>
+                                <select class="form-control text-white" style="background:none;border:none;" disabled>
+                                    <option @if ($duelo->trslt == '') selected @endif> </option>
+                                    <option @if ($duelo->trslt == 'win') selected @endif>
+                                        {{ __('Win') }}</option>
+                                    <option @if ($duelo->trslt == 'win') selected @endif>
+                                        {{ __('Win') }}</option>
+                                    <option @if ($duelo->trslt == 'rooster') selected @endif>
+                                        {{ __('Rooster') }}</option>
+                                    <option @if ($duelo->trslt == 'srstr') selected @endif>
+                                        Super {{ __('Rooster') }}</option>
+                                </select>
+                            </td>
                             <td class="table-active text-center">
                                 @if ($duelo->result == 'draw')
                                     <div class="bg-warning">{{ __('Draw') }}</div>
@@ -438,8 +454,7 @@
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 3)->first())) {{ asset($mascota->fotos->where('nfoto', 3)->first()->ruta) }}
                             @else
-                            {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+                            {{ asset('storage/img/pata.jpg') }} @endif"
                             class="figure-img" width="100%" height="250vh">
 
                     </figure>
@@ -491,8 +506,7 @@
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 4)->first())) {{ asset($mascota->fotos->where('nfoto', 4)->first()->ruta) }}
                             @else
-                            {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+                            {{ asset('storage/img/pata.jpg') }} @endif"
                             class="figure-img" width="100%" height="250vh">
 
                     </figure>
@@ -544,8 +558,7 @@
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 5)->first())) {{ asset($mascota->fotos->where('nfoto', 5)->first()->ruta) }}
                             @else
-                            {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+                            {{ asset('storage/img/pata.jpg') }} @endif"
                             class="figure-img" width="100%" height="250vh">
 
                     </figure>
@@ -597,8 +610,7 @@
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 6)->first())) {{ asset($mascota->fotos->where('nfoto', 6)->first()->ruta) }}
                             @else
-                            {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+                            {{ asset('storage/img/pata.jpg') }} @endif"
                             class="figure-img" width="100%" height="250vh">
 
                     </figure>
@@ -650,8 +662,7 @@
                     <figure class="figure">
                         <img src="@if (!empty($mascota->fotos->where('nfoto', 7)->first())) {{ asset($mascota->fotos->where('nfoto', 7)->first()->ruta) }}
                             @else
-                            {{ asset('storage/img/pata.jpg') }} @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+                            {{ asset('storage/img/pata.jpg') }} @endif"
                             class="figure-img" width="100%" height="250vh">
 
                     </figure>
@@ -813,9 +824,13 @@
             }
             // Build Datatable
             $('#datatable').DataTable({
-                bFilter: false,
-                paging: false,
-                info: false,
+                bInfo: false,
+                lengthChange: false,
+                pageLength: 10,
+                lengthMenu: [
+                    [10],
+                    [10]
+                ],
                 language: {
                     "url": getLanguage()
                 }

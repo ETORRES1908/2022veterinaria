@@ -13,7 +13,7 @@ class MFotosController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:addanimal')->only('index' . 'show' . 'create', 'store' . 'edit' . 'update' . 'delete');
+        $this->middleware('can:addanimal')->only('index' , 'show' , 'create', 'store' , 'edit' , 'update' , 'delete');
     }
 
     public function index()

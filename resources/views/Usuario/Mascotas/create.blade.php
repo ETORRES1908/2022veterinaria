@@ -152,15 +152,16 @@
                                         {{ __('Father') }}
                                     </label>
                                     <div class="col-auto">
-                                        <select class="select2 form-select" name="pad"
-                                            @if (count(Auth::user()->mascotas) > 1) required @endif autofocus>
+                                        <select class="select2 form-select" name="pad" autofocus>
+                                            <option selected value="">
+                                                {{ __('Choose exemplar') }}...
+                                            </option>
                                             @foreach ($mascotas as $mascota)
                                                 <option @if (old('pad') == $mascota->id) selected @endif
                                                     value="{{ $mascota->id }}">{{ $mascota->nombre }}
                                                 </option>
                                             @endforeach
                                         </select>
-
                                         @if ($errors->has('pad'))
                                             <span class="text-danger text-fs6">
                                                 {{ $errors->first('pad') }}
@@ -174,15 +175,16 @@
                                         {{ __('Mother') }}
                                     </label>
                                     <div class="col-auto">
-                                        <select class="select2 form-select" name="mad"
-                                            @if (count(Auth::user()->mascotas) > 1) required @endif autofocus>
+                                        <select class="select2 form-select" name="mad" autofocus>
+                                            <option selected value="">
+                                                {{ __('Choose exemplar') }}...
+                                            </option>
                                             @foreach ($mascotas as $mascota)
                                                 <option @if (old('mad') == $mascota->id) selected @endif
                                                     value="{{ $mascota->id }}">{{ $mascota->nombre }}
                                                 </option>
                                             @endforeach
                                         </select>
-
                                         @if ($errors->has('mad'))
                                             <span class="text-danger text-fs6">
                                                 {{ $errors->first('mad') }}
@@ -385,7 +387,7 @@
                                     </label>
                                     <div class="col-auto">
                                         <input id="spmt" class="form-control text-danger" name="spmt"
-                                            value="{{ old('spmt') }}" maxlength="10" required autofocus>
+                                            value="{{ old('spmt') }}" maxlength="20" required autofocus>
 
                                         @if ($errors->has('spmt'))
                                             <span class="text-danger text-fs6">

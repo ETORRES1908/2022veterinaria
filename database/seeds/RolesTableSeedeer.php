@@ -18,7 +18,7 @@ class RolesTableSeeder extends Seeder
         $role2 = Role::create(['name' => 'admin']);
         $role2->givePermissionTo('cms');
 
-        $role3 = Role::create(['name' => 'owner']);
+        $role3 = Role::create(['name' => 'own']);
         $role3->givePermissionTo('addanimal', 'addevent');
 
         $role4 = Role::create(['name' => 'cls']);

@@ -126,7 +126,7 @@
             </div>
             <div class="form-group">
                 <label class="form-label">{{ __('Reference') }}</label>
-                <input type="text" class="form-control" name="reference" id="rfr" minlength="5" maxlength="60">
+                <input type="text" class="form-control" name="reference" id="rfr" minlength="5" maxlength="60" placeholder="REF. ó ALT.">
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">{{ __('Add coliseum') }}</button>

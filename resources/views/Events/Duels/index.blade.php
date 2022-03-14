@@ -1,32 +1,43 @@
 @extends('layouts.app')
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="card bg-black border border-danger">
-        @if (Gate::check('adddeal') || Gate::check('sentence'))
-            <div class="card-header border border-danger p-0">
-                @if (session('mensaje'))
-                    <span class="alert alert-success text-danger btn">
-                        {{ session('mensaje') }}
-                    </span>
-                @endif
+        <div class="card-header border border-danger">
+            <a class="btn btn-dark" href="{{ route('events.show', $evento->id) }}">
+                {{ __('Event') }}
+            </a>
+            @if (Gate::check('adddeal') || Gate::check('sentence'))
                 @if (count($duelos) <= 150 && $evento->mcontrol_id == Auth::user()->id)
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#AddDeal">
                         {{ __('Add Deal') }}
                     </button>
                     @if ($errors->has('fcc') || $errors->has('scc '))
-                        <span class="fs-6 text-danger" id="Message">
+                        <span class="alert fs-6 text-danger" id="Message">
                             {{ __('Change the tapes.') }}
                         </span>
                     @endif
                     @if ($errors->has('pmascota_id') || $errors->has('smascota_id'))
-                        <span class="fs-6 text-danger" id="Message">
+                        <span class="alert fs-6 text-danger" id="Message">
                             {{ __('The exemplars must be different.') }}
                         </span>
                     @endif
                 @endif
-            </div>
-
-        @endif
+                @if (session('mensaje'))
+                    <span class="alert fs-6 text-danger">
+                        {{ session('mensaje') }}
+                    </span>
+                @endif
+            @endif
+        </div>
         <div class="card-body table-responsive border border-danger">
             <table id="datatable" class="table table-dark table-hover nowrap" style="width:100%">
                 <thead class="text-center">
@@ -36,6 +47,8 @@
                         <th></th>
                         <th class="text-uppercase">{{ __('Exemplar') }} 2</th>
                         <th class="text-uppercase">{{ __('Owner') }}</th>
+                        <th class="text-uppercase">{{ __('Time') }}</th>
+                        <th class="text-uppercase">{{ __('Type') . ' ' . __('Result') }}</th>
                         <th class="text-uppercase">{{ __('Result') }}</th>
                     </tr>
                 </thead>
@@ -337,7 +350,8 @@
                                                             <div class="col-sm-8">
                                                                 <select id="result" name="result"
                                                                     class="form-select text-danger" required autofocus>
-                                                                    <option value="" selected disabled>{{ __('Winner') }}
+                                                                    <option value="" selected disabled>
+                                                                        {{ __('Choose result') }}...
                                                                     </option>
                                                                     <option value="draw">{{ __('Draw') }}</option>
                                                                     <option value="{{ $duel->pmascota->id }}">
@@ -370,7 +384,7 @@
                                                                     $("#trslt").attr("disabled", true);
                                                                 } else {
                                                                     $("#trst").show("3000");
-                                                                    $("#trslt").attr("disabled", true);
+                                                                    $("#trslt").attr("disabled", false);
                                                                 }
                                                             };
                                                             $("#result").change(displayVals);
@@ -411,16 +425,36 @@
                             </td>
                             <td>{{ $duel->smascota->nombre }}</td>
                             <td>{{ $duel->smascota->user->nombre . ' ' . $duel->smascota->user->apellido }}</td>
+                            <td>{{ $duel->dm }}:{{ $duel->ds }}</td>
+                            <td>
+                                <select class="form-control text-white" style="background:none;border:none;" disabled>
+                                    <option @if ($duel->trslt == '') selected @endif> </option>
+                                    <option @if ($duel->trslt == 'win') selected @endif>
+                                        {{ __('Win') }}</option>
+                                    <option @if ($duel->trslt == 'win') selected @endif>
+                                        {{ __('Win') }}</option>
+                                    <option @if ($duel->trslt == 'rooster') selected @endif>
+                                        {{ __('Rooster') }}</option>
+                                    <option @if ($duel->trslt == 'srstr') selected @endif>
+                                        Super {{ __('Rooster') }}</option>
+                                </select>
+                            </td>
                             <td class="text-black fs-5 fw-bolder">
                                 @if (empty($duel->result))
                                     <div class="bg-warning p-1">{{ __('Waiting') }}</div>
                                 @else
                                     @if ($duel->result == $duel->pmascota->id)
-                                        <div class="bg-success  p-1">{{ $duel->pmascota->nombre }}</div>
+                                        <div class="bg-success  p-1">
+                                            {{ $duel->pmascota->nombre }}
+                                        </div>
                                     @elseif ($duel->result == $duel->smascota->id)
-                                        <div class="bg-success  p-1"> {{ $duel->smascota->nombre }}</div>
+                                        <div class="bg-success  p-1">
+                                            {{ $duel->smascota->nombre }}
+                                        </div>
                                     @elseif ($duel->result == 'draw')
-                                        <div class="bg-warning  p-1">{{ __('Draw') }}</div>
+                                        <div class="bg-warning  p-1">
+                                            {{ __('Draw') }}
+                                        </div>
                                     @endif
                                 @endif
                             </td>
@@ -444,7 +478,8 @@
                     {!! csrf_field() !!}
                     <input type="text" id="evento_id" name="evento_id" value="{{ $evento->id }}" hidden>
                     {{-- LPARTICIPANTE_ID --}}
-                    <input type="text" id="lparticipante_id" name="lparticipante_id" value="{{ $lparticipante }}" hidden>
+                    <input type="text" id="lparticipante_id" name="lparticipante_id" value="{{ $lparticipante }}"
+                        hidden>
                     <div class="modal-body border border-danger">
                         <div class="row">
                             {{-- MASCOTA 1 --}}
@@ -760,7 +795,7 @@
                     "url": getLanguage()
                 },
                 bInfo: false,
-                paginate: false,
+                lengthChange: false,
                 pageLength: 10,
                 lengthMenu: [
                     [10],

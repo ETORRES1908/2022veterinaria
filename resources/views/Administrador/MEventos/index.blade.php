@@ -42,7 +42,7 @@
                                     <span class="btn btn-warning">{{ __('Suspended') }}</span>
                                 @endif
                             </td>
-                            <td><a href="{{ route('meventos.edit', $evento->id) }}">{{ __('View') }}</a></td>
+                            <td><a href="{{ route('meventos.show', $evento->id) }}">{{ __('View') }}</a></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -99,7 +99,14 @@
             $('#datatable').DataTable({
                 language: {
                     "url": getLanguage()
-                }
+                },
+                bInfo: false,
+                lengthChange: false,
+                pageLength: 10,
+                lengthMenu: [
+                    [10],
+                    [10]
+                ]
             });
         });
     </script>

@@ -11,6 +11,8 @@ class EventosController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:cms')->only('index', 'show');
+        $this->middleware('can:chngs')->only('edit', 'update');
     }
 
     public function index()
@@ -46,9 +48,10 @@ class EventosController extends Controller
      * @param  \App\Eventos  $eventos
      * @return \Illuminate\Http\Response
      */
-    public function show(Eventos $eventos)
+    public function show($id)
     {
-        //
+        $evento = Eventos::find($id);
+        return view('Administrador.MEventos.show', compact('evento'));
     }
 
     /**

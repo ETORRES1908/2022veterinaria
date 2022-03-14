@@ -21,69 +21,73 @@
                     </div>
                     <div class="mb">{{ $user->name }}</div>
                     <div class="mb">{{ $user->email }}</div>
-
-                    <form class="form-horizontal" method="POST"
-                        action="{{ route('usuarios.update', ['id' => $user->id]) }}">
-                        {!! csrf_field() !!}
-                        {{ method_field('PUT') }}
-                        <input type="text" name="typec" value="0" hidden>
-                        <div class="form-group">
-                            <label class="col-sm-7 control-label">{{ __('Status') . ' ' . __('Account') }}:</label>
-                            <div class="col-sm-5">
-                                <select class="form-control text-danger" name="status"
-                                    @if (Auth::user()->usert != 'webmaster') disabled @endif>
-                                    <option value="0" @if ($user->status == '0') selected @endif>
-                                        {{ __('Inactived') }}
-                                    </option>
-                                    <option value="1" @if ($user->status == '1') selected @endif>
-                                        {{ __('Actived') }}
-                                    </option>
-                                    <option value="2" @if ($user->status == '2') selected @endif>
-                                        {{ __('Suspended') }}
-                                    </option>
-                                    <option value="3" @if ($user->status == '3') selected @endif>
-                                        {{ __('Cancelled') }}
-                                    </option>
-                                </select>
-                            </div>
-                            <br>
-                            <br>
-                            @if (Auth::user()->usert == 'webmaster')
+                    @can('chngs')
+                        @if (Auth::user()->usert == 'webmaster')
+                            <form class="form-horizontal" method="POST"
+                                action="{{ route('usuarios.update', ['id' => $user->id]) }}">
+                                {!! csrf_field() !!}
+                                {{ method_field('PUT') }}
+                                <input type="text" name="typec" value="0" hidden>
                                 <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-primary">{{ __('Change status') }}</button>
+                                    <label class="col-sm-7 control-label">{{ __('Status') . ' ' . __('Account') }}:</label>
+                                    <div class="col-sm-5">
+                                        <select class="form-control text-danger" name="status">
+                                            <option value="0" @if ($user->status == '0') selected @endif>
+                                                {{ __('Inactived') }}
+                                            </option>
+                                            <option value="1" @if ($user->status == '1') selected @endif>
+                                                {{ __('Actived') }}
+                                            </option>
+                                            <option value="2" @if ($user->status == '2') selected @endif>
+                                                {{ __('Suspended') }}
+                                            </option>
+                                            <option value="3" @if ($user->status == '3') selected @endif>
+                                                {{ __('Cancelled') }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary">{{ __('Change status') }}</button>
+                                        </div>
                                     </div>
                                 </div>
-                            @endif
-                        </div>
-                    </form>
-                    <form class="form-horizontal" method="POST"
-                        action="{{ route('usuarios.update', ['id' => $user->id]) }}">
-                        {!! csrf_field() !!}
-                        {{ method_field('PUT') }}
-                        <input type="text" name="typec" value="1" hidden>
-                        @if (Auth::user()->usert == 'webmaster')
-                            <div class="form-group">
-                                <label class="col-sm-7 control-label">{{ __('User') . ' /' . __('Name Social') }}</label>
-                                <div class="col-sm-5">
-                                    <input type="name" name="name" class="form-control" maxlength="12" required autofocus>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-7 control-label">{{ __('Password') }}</label>
-                                <div class="col-sm-5">
-                                    <input type="password" name="password" class="form-control" maxlength="8" required
-                                        autofocus>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit"
-                                        class="btn btn-primary">{{ __('Change username and password') }}</button>
-                                </div>
-                            </div>
+                            </form>
                         @endif
-                    </form>
+                    @endcan
+                    @can('chngs')
+                        @if (Auth::user()->usert == 'webmaster')
+                            <form class="form-horizontal" method="POST"
+                                action="{{ route('usuarios.update', ['id' => $user->id]) }}">
+                                {!! csrf_field() !!}
+                                {{ method_field('PUT') }}
+                                <input type="text" name="typec" value="1" hidden>
+
+                                <div class="form-group">
+                                    <label class="col-sm-7 control-label">{{ __('User') . ' /' . __('Name Social') }}</label>
+                                    <div class="col-sm-5">
+                                        <input type="name" name="name" class="form-control" maxlength="12" required autofocus>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-7 control-label">{{ __('Password') }}</label>
+                                    <div class="col-sm-5">
+                                        <input type="password" name="password" class="form-control" maxlength="8" required
+                                            autofocus>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit"
+                                            class="btn btn-primary">{{ __('Change username and password') }}</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        @endif
+                    @endcan
                 </div>
             </div>
             <div class="col-md-6">

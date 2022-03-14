@@ -99,7 +99,14 @@
             $('#datatable').DataTable({
                 language: {
                     "url": getLanguage()
-                }
+                },
+                bInfo: false,
+                lengthChange: false,
+                pageLength: 10,
+                lengthMenu: [
+                    [10],
+                    [10]
+                ]
             });
         });
     </script>

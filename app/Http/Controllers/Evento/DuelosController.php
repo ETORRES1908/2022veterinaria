@@ -19,7 +19,8 @@ class DuelosController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:adddeal')->only('create', 'store' . 'edit' . 'update' . 'delete');
+        $this->middleware('can:adddeal')->only('create', 'store');
+        $this->middleware('can:sentence')->only('update');
     }
     /**
      * Display a listing of the resource.
@@ -72,7 +73,7 @@ class DuelosController extends Controller
             'npelea' => $request->npelea,
         ]);
 
-        return redirect()->route('duels.show', $request->evento_id)->with('mensaje', 'ok');
+        return redirect()->route('duels.show', $request->evento_id)->with('mensaje', __('Successfully created'));
     }
 
     /**
@@ -117,7 +118,7 @@ class DuelosController extends Controller
         $duel = Duelos::find($id);
         $duel->update(['result' => $request->result, 'trslt' => $request->trslt, 'dm' => $request->dm, 'ds' => $request->ds]);
         $evento_id = $duel->lparticipante->evento_id;
-        return redirect()->route('duels.show', $evento_id)->with('mensaje', __('Successfully updated'));
+        return redirect()->route('duels.show', $evento_id)->with('mensaje', __('Successfully sentenced'));
     }
 
     /**
