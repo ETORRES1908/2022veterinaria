@@ -9,11 +9,13 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class MVideosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:addanimal')->only('index' . 'show' . 'create', 'store' . 'edit' . 'update' . 'delete');
+    }
+
     public function index()
     {
         //
@@ -50,7 +52,7 @@ class MVideosController extends Controller
                 '.' .
                 $file->guessExtension();
 
-            $ruta = 'videos/mascotas/' . $nombre;
+            $ruta = 'storage/videos/mascotas/' . $nombre;
             copy($file, $ruta);
             $nmvideos = MVideos::Create([
                 'nvideo' => $request->nvideo,
@@ -61,7 +63,7 @@ class MVideosController extends Controller
 
             return redirect()
                 ->route('mascotas.show', $nmvideos->mascota_id)
-                ->with('mensaje', 'ok');
+                ->with('mensaje',  __('Successfully edited'));
         }
     }
 
@@ -114,6 +116,6 @@ class MVideosController extends Controller
 
         $mvideo->delete();
 
-        return redirect()->route('mascotas.show', $mvideo->mascota_id);
+        return redirect()->route('mascotas.show', $mvideo->mascota_id)->with('mensaje',  __('Successfully deleted'));
     }
 }

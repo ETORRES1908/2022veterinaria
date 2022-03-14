@@ -9,18 +9,16 @@ use App\Http\Controllers\Controller;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\MFotos;
 use App\User;
+use App\Vacunas;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class MascotasController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:addanimal')->only('index' . 'show' . 'create', 'store' . 'edit' . 'update' . 'delete');
     }
 
     /**
@@ -55,14 +53,26 @@ class MascotasController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'foto' => 'required|image|max:2048',
+            'foto' => 'required|image|max:3000',
         ]);
 
         $nmascota = Mascota::Create([
             'user_id' => $request->user_id,
             'fnac' => $request->fnac,
-            /* 'sss' => $request->sss, */
             'nombre' => $request->nombre,
+            'gender' => $request->gender,
+            'size' => $request->size,
+            'lck' => $request->lck,
+            'icbc' => $request->icbc,
+            'hvs' => $request->hvs,
+            'ncr' => $request->ncr,
+            'sena' => $request->sena,
+            'mvf' => $request->mvf,
+            'mm' => $request->mm,
+            'ms' => $request->ms,
+            'mvtp' => $request->mvtp,
+            'mvr' => $request->mvr,
+            'spmt' => $request->spmt,
             'plc' => $request->plc,
             'plu' => $request->plu,
             'pad' => $request->pad,
@@ -73,23 +83,31 @@ class MascotasController extends Controller
 
         $user = User::Find($request->user_id);
         $REGGAL =
+            str_replace('-', '', Carbon::now()->format('Y-m-d')) .
             $user->country .
             $user->state .
             '000' .
             $user->id .
             '0' .
             $nmascota->id;
-
         $nmascota->update(['REGGAL' => $REGGAL]);
+
+        foreach ($request->vcnsf as $key => $value) {
+            $nvacuna = Vacunas::Create([
+                'mascota_id' => $nmascota->id,
+                'vcnsf' => $request->vcnsf[$key],
+                'vcnst' => $request->vcnst[$key],
+                'vcnsm' => $request->vcnsm[$key],
+                'vcnsd' => $request->vcnsd[$key]
+            ]);
+        }
 
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $nombre = $REGGAL . '1.' . $file->guessExtension();
-            $ruta = 'images/mascotas/' . $nombre;
-            Image::make($file->getRealPath())->resize(1280, 720, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($ruta, 72, 'jpeg');
-            $nmfotos = MFotos::Create([
+            $ruta = 'storage/images/mascotas/' . $nombre;
+            Image::make($file->getRealPath())->resize(720, 1280)->save($ruta, 72, 'jpeg');
+            $nMFotos = MFotos::Create([
                 'nfoto' => 1,
                 'ruta' => $ruta,
                 'texto' => $nmascota->nombre,
@@ -98,7 +116,7 @@ class MascotasController extends Controller
 
             return redirect()
                 ->route('mascotas.show', $nmascota->id)
-                ->with('mensaje', 'ok');
+                ->with('mensaje', __('Successfully created'));
         }
     }
 
@@ -137,8 +155,8 @@ class MascotasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Mascota::find($id)->update(['obs' => $request->obs]);
-        return redirect()->route('mascotas.show', $id);
+        Mascota::find($id)->update(['sena' => $request->sena, 'obs' => $request->obs]);
+        return redirect()->route('mascotas.show', $id)->with('mensaje', __('Successfully edited'));
     }
 
     /**

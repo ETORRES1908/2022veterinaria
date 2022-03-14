@@ -9,11 +9,13 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class MFotosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:addanimal')->only('index' . 'show' . 'create', 'store' . 'edit' . 'update' . 'delete');
+    }
+
     public function index()
     {
         //
@@ -38,7 +40,7 @@ class MFotosController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'foto' => 'required|image|max:5120',
+            'foto' => 'required|image|max:3000',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -50,11 +52,12 @@ class MFotosController extends Controller
                 '.' .
                 $file->guessExtension();
 
-            $ruta = 'images/mascotas/' . $nombre;
+            $ruta = 'storage/images/mascotas/' . $nombre;
             Image::make($file->getRealPath())->resize(1280, 720, function ($constraint) {
                 $constraint->aspectRatio();
+                $constraint->upsize();
             })->save($ruta, 72, 'jpeg');
-            $nmfotos = MFotos::Create([
+            $nMFotos = MFotos::Create([
                 'nfoto' => $request->nfoto,
                 'ruta' => $ruta,
                 'texto' => $request->text,
@@ -62,18 +65,18 @@ class MFotosController extends Controller
             ]);
 
             return redirect()
-                ->route('mascotas.show', $nmfotos->mascota_id)
-                ->with('mensaje', 'ok');
+                ->route('mascotas.show', $nMFotos->mascota_id)
+                ->with('mensaje', __('Successfully edited'));
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Mfotos  $Mfotos
+     * @param  \App\MFotos  $MFotos
      * @return \Illuminate\Http\Response
      */
-    public function show(Mfotos $Mfotos)
+    public function show(MFotos $MFotos)
     {
         //
     }
@@ -81,10 +84,10 @@ class MFotosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Mfotos  $Mfotos
+     * @param  \App\MFotos  $MFotos
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mfotos $Mfotos)
+    public function edit(MFotos $MFotos)
     {
         //
     }
@@ -93,10 +96,10 @@ class MFotosController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Mfotos  $Mfotos
+     * @param  \App\MFotos  $MFotos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mfotos $Mfotos)
+    public function update(Request $request, MFotos $MFotos)
     {
         //
     }
@@ -104,7 +107,7 @@ class MFotosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Mfotos  $Mfotos
+     * @param  \App\MFotos  $MFotos
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -115,6 +118,6 @@ class MFotosController extends Controller
         unlink($mfoto->ruta);
         $mfoto->delete();
 
-        return redirect()->route('mascotas.show', $mfoto->mascota_id);
+        return redirect()->route('mascotas.show', $mfoto->mascota_id)->with('mensaje',  __('Successfully deleted'));
     }
 }

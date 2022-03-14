@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\URL;
+
 class HomeController extends Controller
 {
     public function __construct()
@@ -22,5 +24,12 @@ class HomeController extends Controller
     public function about()
     {
         return view('about');
+    }
+
+    public function language($locale)
+    {
+        app()->setLocale($locale);
+        session(['locale' => $locale]);
+        return redirect(url(URL::previous()));
     }
 }

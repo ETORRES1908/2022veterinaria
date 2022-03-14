@@ -94,6 +94,8 @@ class CreateEventosTable extends Migration
             $table->string('gll');
             //GALPON
             $table->string('glp');
+            //CHALLENGE
+            $table->string('chll');
             //STATUS
             $table->string('status')->default('0'); //estado
             $table->timestamps();

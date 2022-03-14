@@ -41,7 +41,7 @@
                         </div>
                         {{-- Formulario de Inicio de Sesión --}}
                         <form method="POST" action="{{ route('login') }}">
-                            {{ csrf_field() }}
+                            {!! csrf_field() !!}
                             <div class="row mb-3 form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label for="name" class="col-sm-5 col-form-label">{{ __('Username') }}</label>
                                 {{-- USERNAME --}}

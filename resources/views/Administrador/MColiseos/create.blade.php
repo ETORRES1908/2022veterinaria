@@ -9,7 +9,7 @@
 @section('content')
     <div class="container-fluid">
         <form action="{{ route('mcoliseos.store') }}" method="POST">
-            {{ csrf_field() }}
+            {!! csrf_field() !!}
             {{ method_field('POST') }}
             <div class="form-group">
                 <label class="form-label">{{ __('Name') }}</label>

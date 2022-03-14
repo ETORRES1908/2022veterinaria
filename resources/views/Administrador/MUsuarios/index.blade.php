@@ -44,7 +44,7 @@
                                     <span class="btn btn-danger">{{ __('Cancelled') }}</span>
                                 @endif
                             </td>
-                            <td><a href="{{ route('usuarios.edit', $user->id) }}">Ver</a></td>
+                            <td><a href="{{ route('usuarios.show', $user->id) }}">{{ __('View') }}</a></td>
                         </tr>
                     @endforeach
                 </tbody>

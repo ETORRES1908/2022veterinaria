@@ -8,34 +8,45 @@
 
 @section('content')
     <div class="container-fluid">
+        @if (session('mensaje'))
+            <div class="alert alert-success">
+                {{ session('mensaje') }}
+            </div>
+        @endif
         <div class="row bg-black text-danger" style="padding:5vh 0 10vh 0;font-size: 1.3em">
             <div class="col-md-5 text-center center-block">
                 <div class="row">
                     <div class="col-xs-6">
-                        <img width="150" src="{{ asset($evento->organizador->foto) }}" class="form-group">
-                        <div>{{ __('Organizer') }}</div>
-                        <div>{{ $evento->organizador->nombre }} {{ $evento->organizador->apellido }}</div>
+                        <a href="{{ route('usuarios.show', $evento->organizador->id) }}">
+                            <img width="150" src="{{ asset($evento->organizador->foto) }}" class="form-group">
+                            <div>{{ __('Organizer') }}</div>
+                            <div>{{ $evento->organizador->nombre }} {{ $evento->organizador->apellido }}</div>
+                        </a>
                     </div>
                     <div class="col-xs-6">
-                        <img width="150" src="{{ asset($evento->mcontrol->foto) }}" class="form-group">
-                        <div>{{ __('Control desk') }}</div>
-                        <div>{{ $evento->mcontrol->nombre }} {{ $evento->mcontrol->apellido }}</div>
-
+                        <a href="{{ route('usuarios.show', $evento->mcontrol->id) }}">
+                            <img width="150" src="{{ asset($evento->mcontrol->foto) }}" class="form-group">
+                            <div>{{ __('Control desk') }}</div>
+                            <div>{{ $evento->mcontrol->nombre }} {{ $evento->mcontrol->apellido }}</div>
+                        </a>
                     </div>
                     <div class="col-xs-6">
-                        <img width="150" src="{{ asset($evento->judge->foto) }}" class="form-group">
-                        <div>{{ __('Judge') }}</div>
-                        <div>{{ $evento->judge->nombre }} {{ $evento->judge->apellido }}</div>
-
+                        <a href="{{ route('usuarios.show', $evento->judge->id) }}">
+                            <img width="150" src="{{ asset($evento->judge->foto) }}" class="form-group">
+                            <div>{{ __('Judge') }}</div>
+                            <div>{{ $evento->judge->nombre }} {{ $evento->judge->apellido }}</div>
+                        </a>
                     </div>
                     <div class="col-xs-6 form-group">
-                        <img width="150" src="{{ asset($evento->assistent->foto) }}" class="form-group">
-                        <div>{{ __('Assistant') }}</div>
-                        <div>{{ $evento->assistent->nombre }} {{ $evento->assistent->apellido }}</div>
+                        <a href="{{ route('usuarios.show', $evento->assistent->id) }}">
+                            <img width="150" src="{{ asset($evento->assistent->foto) }}" class="form-group">
+                            <div>{{ __('Assistant') }}</div>
+                            <div>{{ $evento->assistent->nombre }} {{ $evento->assistent->apellido }}</div>
+                        </a>
                     </div>
                     <div class="col-xs-12"><br>
                         <form method="POST" action="{{ route('meventos.update', ['id' => $evento->id]) }}">
-                            {{ csrf_field() }}
+                            {!! csrf_field() !!}
                             {{ method_field('PUT') }}
                             <div class="form-group">
                                 <div class="col-xs-6">{{ __('Status') }}:</div>
@@ -254,15 +265,15 @@
                         <input class="form-control" value="{{ $evento->rten }}" readonly>
                     </div>
                     <div class="col-xs-4 form-group">
-                        <label>1 {{ __('FRENTE') }}</label>
+                        <label>1 {{ __('Forehead') }}</label>
                         <input class="form-control" value="{{ $evento->fft }}" readonly>
                     </div>
                     <div class="col-xs-4 form-group">
-                        <label>2 {{ __('FRENTE') }}</label>
+                        <label>2 {{ __('Forehead') }}</label>
                         <input class="form-control" value="{{ $evento->sft }}" readonly>
                     </div>
                     <div class="col-xs-4 form-group">
-                        <label>3 {{ __('FRENTE') }}</label>
+                        <label>3 {{ __('Forehead') }}</label>
                         <input class="form-control" value="{{ $evento->tft }}" readonly>
                     </div>
                     <div class="col-xs-4 form-group">
@@ -307,6 +318,11 @@
     <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
     {{-- COLISEO --}}
     <script>
+        /* ALERT */
+        setTimeout(function() {
+            $('.alert').fadeOut('slow');
+        }, 5000);
+
         function displayVals1() {
             var id = $('#coliseo_id').val();
             $.ajax({
@@ -329,6 +345,10 @@
         }
         $("#coliseo_id").change(displayVals1);
         displayVals1();
+        //HIDE
+        setTimeout(function() {
+            $('.alert').fadeOut(3000);
+        });
     </script>
 
 @endsection

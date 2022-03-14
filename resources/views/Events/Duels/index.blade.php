@@ -1,33 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div class="card bg-black border border-danger">
-        <div class="card-header border border-danger">
-            @if (count($duelos) <= 150 && $evento->judge_id == Auth::user()->id)
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#AddPet">
-                    {{ __('Add Duel') }}
-                </button>
-                @if ($errors->has('fcc') || $errors->has('scc '))
-                    <span class="fs-6 text-danger" id="Message">
-                        {{__('Change the tapes.')}}
+        @if (Gate::check('adddeal') || Gate::check('sentence'))
+            <div class="card-header border border-danger p-0">
+                @if (session('mensaje'))
+                    <span class="alert alert-success text-danger btn">
+                        {{ session('mensaje') }}
                     </span>
                 @endif
-                @if ($errors->has('pmascota_id') || $errors->has('smascota_id'))
-                    <span class="fs-6 text-danger" id="Message">
-                        {{ __('The exemplars must be different.') }}
-                    </span>
+                @if (count($duelos) <= 150 && $evento->mcontrol_id == Auth::user()->id)
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#AddDeal">
+                        {{ __('Add Deal') }}
+                    </button>
+                    @if ($errors->has('fcc') || $errors->has('scc '))
+                        <span class="fs-6 text-danger" id="Message">
+                            {{ __('Change the tapes.') }}
+                        </span>
+                    @endif
+                    @if ($errors->has('pmascota_id') || $errors->has('smascota_id'))
+                        <span class="fs-6 text-danger" id="Message">
+                            {{ __('The exemplars must be different.') }}
+                        </span>
+                    @endif
                 @endif
-            @endif
-        </div>
+            </div>
+
+        @endif
         <div class="card-body table-responsive border border-danger">
             <table id="datatable" class="table table-dark table-hover nowrap" style="width:100%">
                 <thead class="text-center">
                     <tr>
                         <th class="text-uppercase">{{ __('Owner') }}</th>
-                        <th class="text-uppercase">{{ __('Pet') }} 1</th>
-                        <th>VS</th>
-                        <th class="text-uppercase">{{ __('Pet') }} 2</th>
+                        <th class="text-uppercase">{{ __('Exemplar') }} 1</th>
+                        <th></th>
+                        <th class="text-uppercase">{{ __('Exemplar') }} 2</th>
                         <th class="text-uppercase">{{ __('Owner') }}</th>
                         <th class="text-uppercase">{{ __('Result') }}</th>
                     </tr>
@@ -56,6 +63,14 @@
                                                     <label class="btn btn-primary">
                                                         {{ __('Field') }}: {{ $duel->cch }}
                                                     </label>
+                                                    @can('sentence')
+                                                        {{-- 2nd SECOND --}}
+                                                        @if ($evento->judge_id == Auth::user()->id)
+                                                            <button class="btn btn-primary text-capitalize"
+                                                                data-bs-target="#sentence{{ $duel->id }}"
+                                                                data-bs-toggle="modal">{{ __('sentence') }}</button>
+                                                        @endif
+                                                    @endcan
                                                 </div>
                                                 <button type="button" class="btn btn-danger bg-danger btn-close"
                                                     data-bs-dismiss="modal" aria-label="Close"></button>
@@ -71,17 +86,6 @@
                                                                         class="figure-img d-block mx-auto" width="120"
                                                                         height="140">
                                                                 </figure>
-                                                                @if ($evento->judge_id == Auth::user()->id)
-                                                                    <form action="{{ route('duels.update', $duel->id) }}"
-                                                                        method="POST">
-                                                                        {!! method_field('PUT') !!}
-                                                                        {!! csrf_field() !!}
-                                                                        <input type="text" name="result"
-                                                                            value="{{ $duel->pmascota->id }}" hidden>
-                                                                        <button type="submit"
-                                                                            class="btn btn-success">{{ __('Winner') }}</button>
-                                                                    </form>
-                                                                @endif
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-sm-6 mb-3">
@@ -198,18 +202,6 @@
                                                                         class="figure-img d-block mx-auto" width="120"
                                                                         height="140">
                                                                 </figure>
-                                                                @if ($evento->judge_id == Auth::user()->id)
-                                                                    <form action="{{ route('duels.update', $duel->id) }}"
-                                                                        method="POST">
-                                                                        {!! method_field('PUT') !!}
-                                                                        {!! csrf_field() !!}
-                                                                        <input type="text" name="result"
-                                                                            value="{{ $duel->smascota->id }}" hidden>
-
-                                                                        <button type="submit"
-                                                                            class="btn btn-success">{{ __('Winner') }}</button>
-                                                                    </form>
-                                                                @endif
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-sm-6 mb-3">
@@ -322,6 +314,100 @@
                                         </div>
                                     </div>
                                 </div>
+                                @can('sentence')
+                                    {{-- 2nd MODAL --}}
+                                    <div class="modal fade" id="sentence{{ $duel->id }}" aria-hidden="true"
+                                        aria-labelledby="sentence{{ $duel->id }}" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content bg-black border border-danger text-white">
+                                                <div class="modal-header border border-danger">
+                                                    <button class="btn btn-primary" data-bs-target="#VS{{ $duel->id }}"
+                                                        data-bs-toggle="modal">VS</button>
+                                                    <button type="button" class="btn btn-danger bg-danger btn-close"
+                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body border border-danger">
+                                                    <form action="{{ route('duels.update', $duel->id) }}" method="POST">
+                                                        {!! method_field('PUT') !!}
+                                                        {!! csrf_field() !!}
+                                                        <div class="row mb-3">
+                                                            <label
+                                                                class="col-sm-4 col-form-label col-form-label-sm fs-5 fw-uppercase">{{ __('Result') }}
+                                                            </label>
+                                                            <div class="col-sm-8">
+                                                                <select id="result" name="result"
+                                                                    class="form-select text-danger" required autofocus>
+                                                                    <option value="" selected disabled>{{ __('Winner') }}
+                                                                    </option>
+                                                                    <option value="draw">{{ __('Draw') }}</option>
+                                                                    <option value="{{ $duel->pmascota->id }}">
+                                                                        {{ $duel->pmascota->nombre }}</option>
+                                                                    <option value="{{ $duel->smascota->id }}">
+                                                                        {{ $duel->smascota->nombre }}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3" id="trst">
+                                                            <label
+                                                                class="col-sm-4 col-form-label col-form-label-sm fs-5 fw-uppercase">{{ __('Type') . ' ' . __('Result') }}
+                                                            </label>
+                                                            <div class="col-sm-8">
+                                                                <select id="trslt" name="trslt" class="form-select text-danger"
+                                                                    required autofocus>
+                                                                    <option value="win">{{ __('Win') }}</option>
+                                                                    <option value="rooster">
+                                                                        {{ __('Rooster') }}</option>
+                                                                    <option value="srstr">
+                                                                        Super {{ __('Rooster') }}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <script>
+                                                            function displayVals() {
+                                                                var result = $('#result').val();
+                                                                if (result == 'draw') {
+                                                                    $("#trst").fadeOut("3000");
+                                                                    $("#trslt").attr("disabled", true);
+                                                                } else {
+                                                                    $("#trst").show("3000");
+                                                                    $("#trslt").attr("disabled", true);
+                                                                }
+                                                            };
+                                                            $("#result").change(displayVals);
+                                                        </script>
+                                                        <div class="row mb-3">
+                                                            <label
+                                                                class="col-sm-4 col-form-label col-form-label-sm fs-5 fw-uppercase">
+                                                                {{ __('Time') }}(m:s)
+                                                            </label>
+                                                            <div class="col-sm-8">
+                                                                <div class="input-group">
+                                                                    <input type="number" class="form-control text-danger"
+                                                                        name="dm"
+                                                                        onKeyPress="if(this.value.length==2) return false;"
+                                                                        required
+                                                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
+                                                                        min="0" max="59" value="{{ old('dm') }}"
+                                                                        placeholder="00">
+                                                                    <div class="input-group-text">:</div>
+                                                                    <input type="number" class="form-control text-danger"
+                                                                        name="ds"
+                                                                        onKeyPress="if(this.value.length==2) return false;"
+                                                                        required
+                                                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
+                                                                        min="0" max="59" value="{{ old('ds') }}"
+                                                                        placeholder="00">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button type="submit"
+                                                            class="btn btn-warning text-uppercase">{{ __('sentence') }}</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endcan
                             </td>
                             <td>{{ $duel->smascota->nombre }}</td>
                             <td>{{ $duel->smascota->user->nombre . ' ' . $duel->smascota->user->apellido }}</td>
@@ -329,13 +415,13 @@
                                 @if (empty($duel->result))
                                     <div class="bg-warning p-1">{{ __('Waiting') }}</div>
                                 @else
-                                    <div class="bg-success  p-1">
-                                        @if ($duel->result == $duel->pmascota->id)
-                                            {{ $duel->pmascota->nombre }}
-                                        @else
-                                            {{ $duel->smascota->nombre }}
-                                        @endif
-                                    </div>
+                                    @if ($duel->result == $duel->pmascota->id)
+                                        <div class="bg-success  p-1">{{ $duel->pmascota->nombre }}</div>
+                                    @elseif ($duel->result == $duel->smascota->id)
+                                        <div class="bg-success  p-1"> {{ $duel->smascota->nombre }}</div>
+                                    @elseif ($duel->result == 'draw')
+                                        <div class="bg-warning  p-1">{{ __('Draw') }}</div>
+                                    @endif
                                 @endif
                             </td>
                         </tr>
@@ -346,16 +432,17 @@
     </div>
 
     <!-- MODAL ADD -->
-    <div class="modal fade" id="AddPet" aria-hidden="true" aria-labelledby="AddPet" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="AddDeal" aria-hidden="true" aria-labelledby="AddDeal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content bg-black border border-danger">
                 <div class="modal-header border border-danger">
-                    <div class="modal-title fw-bold">{{ __('CHOOSE PET') }}</div>
+                    <div class="modal-title fw-bold text-uppercase">{{ __('Choose exemplars') }}</div>
                     <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <form class="form-horizontal" method="POST" action="{{ route('duels.store') }}">
-                    {{ csrf_field() }}
+                    {!! csrf_field() !!}
+                    <input type="text" id="evento_id" name="evento_id" value="{{ $evento->id }}" hidden>
                     {{-- LPARTICIPANTE_ID --}}
                     <input type="text" id="lparticipante_id" name="lparticipante_id" value="{{ $lparticipante }}" hidden>
                     <div class="modal-body border border-danger">
@@ -603,7 +690,7 @@
                                     </label>
                                     <div class="col-auto">
                                         <select name="cch" id="cch" class="form-select" required autofocus>
-                                            <option value="" disabled selected>Elige Field</option>
+                                            <option value="" disabled selected>{{ __('Choose field') }}</option>
                                             <option value="A" @if (old('cch') == 'A') selected @endif>A</option>
                                             <option value="B" @if (old('cch') == 'B') selected @endif>B</option>
                                         </select>
@@ -627,7 +714,7 @@
                             {{ __('Print') }}
                         </a>
                         <button type="submit" class="btn btn-primary mx-auto">
-                            {{ __('Add Duel') }}
+                            {{ __('Add Deal') }}
                         </button>
                     </div>
                 </form>
@@ -653,7 +740,7 @@
 
     {{-- SCRIPTS --}}
     {{-- DATATABLE --}}
-    <script type="text/javascript">
+    <script>
         $(document).ready(function() {
             function getLanguage() {
                 var lang = $('html').attr('lang');
@@ -681,9 +768,7 @@
                 ]
             });
         });
-    </script>
-    {{-- MASCOTA --}}
-    <script>
+        /*  MASCOTA */
         function displayVals1() {
             var id = $('#pmascota_id').val();
             $.ajax({
@@ -711,9 +796,7 @@
         }
         $("#pmascota_id").change(displayVals1);
         displayVals1();
-    </script>
-    {{-- MASCOTA 2 --}}
-    <script>
+        /* MASCOTA 2 */
         function displayVals2() {
             var id = $('#smascota_id').val();
             $.ajax({
@@ -742,5 +825,15 @@
         }
         $("#smascota_id").change(displayVals2);
         displayVals2();
+        /*  DONT COPY OR PASTE*/
+        $(document).ready(function() {
+            $('input').bind('copy paste', function(e) {
+                e.preventDefault();
+            });
+        });
+        //HIDE
+        setTimeout(function() {
+            $('.alert').fadeOut(2000);
+        });
     </script>
 @endsection

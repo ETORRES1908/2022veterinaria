@@ -13,13 +13,11 @@ class User extends Authenticatable
 
     use HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    protected $guarded = [];
+
     protected $fillable = [
-        'name', 'nombre', 'apellido', 'foto',
+        'name', 'usert',
+        'nombre', 'apellido', 'foto',
         'discapacidad', 'dni',
         'galpon', 'prepa',
         'email', 'company', 'celular',

@@ -13,7 +13,7 @@ class CreateLParticipantesTable extends Migration
      */
     public function up()
     {
-        Schema::create('lparticipantes', function (Blueprint $table) {
+        Schema::create('LParticipantes', function (Blueprint $table) {
             $table->increments('id');
             //FOREIGN MASCOTA
             $table->integer('evento_id')->unsigned();
@@ -21,6 +21,8 @@ class CreateLParticipantesTable extends Migration
             //FOREIGN MASCOTA
             $table->integer('mascota_id')->unsigned();
             $table->foreign('mascota_id')->references('id')->on('mascotas');
+            //STATUS
+            $table->string('status'); //estado
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ class CreateLParticipantesTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('lparticipantes');
+        Schema::dropIfExists('LParticipantes');
     }
 }

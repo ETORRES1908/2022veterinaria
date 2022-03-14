@@ -8,6 +8,7 @@ use App\Eventos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\LParticipantes;
+use App\User;
 use Spatie\Permission\Models\Role;
 
 class EventoController extends Controller
@@ -20,6 +21,7 @@ class EventoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:addevent')->only('create', 'store', 'update');
     }
 
     /**
@@ -33,17 +35,14 @@ class EventoController extends Controller
         return view('Events.index', compact('eventos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $users = Role::where('name', 'user')->first()->users;
+        $cdks = User::where('usert', 'cdk')->get();
+        $jdgs = User::where('usert', 'jdg')->get();
+        $assts = User::where('usert', 'asst')->get();
         $coliseos = Coliseos::all();
         $banners = Banners::where('type', 'bcreate')->get();
-        return view('Events.create', compact('users', 'coliseos', 'banners'));
+        return view('Events.create', compact('cdks', 'jdgs', 'assts', 'coliseos', 'banners'));
     }
 
     /**
@@ -94,6 +93,17 @@ class EventoController extends Controller
             'gll' => 'required',
             'glp' => 'required',
         ]);
+        Eventos::create($request->all());
+        Eventos::create($request->all());
+        Eventos::create($request->all());
+        Eventos::create($request->all());
+        Eventos::create($request->all());
+        Eventos::create($request->all());
+        Eventos::create($request->all());
+        Eventos::create($request->all());
+        Eventos::create($request->all());
+        Eventos::create($request->all());
+        Eventos::create($request->all());
         $nevento = Eventos::create($request->all());
         return redirect()->route('events.index')->with('mensaje', true);
     }
@@ -106,7 +116,7 @@ class EventoController extends Controller
      */
     public function show($evento_id)
     {
-        $listps = Lparticipantes::where('evento_id', '=', $evento_id)->get();
+        $listps = LParticipantes::where('evento_id', '=', $evento_id)->get();
         $evento = Eventos::find($evento_id);
         return view('Events.show', compact('listps', 'evento'));
     }

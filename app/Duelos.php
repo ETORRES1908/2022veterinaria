@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Duelos extends Model
 {
     protected $guarded = [];
-    protected $fillable = ['lparticipante_id', 'pmascota_id', 'fcc', 'smascota_id', 'scc', 'cch', 'npelea', 'result'];
+    protected $fillable = ['lparticipante_id', 'pmascota_id', 'fcc', 'smascota_id', 'scc', 'cch', 'npelea', 'result', 'trslt', 'dm', 'ds'];
 
-    // A DUELOS BELONGS_TO LPARTICIPANTES
+    // A DUELOS BELONGS_TO LParticipantes
     public function lparticipante()
     {
-        return $this->belongsTo(Lparticipantes::class, 'lparticipante_id');
+        return $this->belongsTo(LParticipantes::class, 'lparticipante_id');
     }
     // A MASCOTA BELONGS_TO DUEL.PMASTOA_ID
     public function pmascota()

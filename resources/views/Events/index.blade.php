@@ -9,7 +9,7 @@
     @endif
 
     <div class="card bg-black border border-danger">
-        @can('events.create')
+        @can('addevent')
             <div class="card-header border border-danger">
                 <a href="{{ route('events.create') }}" class="btn btn-success" style="font-size: 95%">
                     {{ __('Add Event') }}</a>
@@ -127,7 +127,7 @@
                 "type": "date-eu"
             }],
             bInfo: false,
-            paginate: false,
+            pageLength: false,
             pageLength: 10,
             lengthMenu: [
                 [10],
@@ -137,7 +137,7 @@
 
         //HIDE
         setTimeout(function() {
-            $('.alert').fadeOut(5000);
+            $('.alert').fadeOut(3000);
         });
     </script>
 @endsection

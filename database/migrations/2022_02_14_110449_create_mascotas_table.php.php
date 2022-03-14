@@ -16,15 +16,27 @@ class CreateMascotasTable extends Migration
         Schema::create('mascotas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('REGGAL')->nullable();
-
             $table->string('fnac');
             $table->string('sss')->nullable();
+            $table->string('size');
             $table->string('nombre');
-            $table->string('plc');
-            $table->string('plu');
-            $table->string('pad')->default(1);
-            $table->string('mad')->default(1);
-            $table->string('des');
+            $table->string('gender');
+            $table->string('plc'); //PLACA - PRECINTO
+            $table->string('lck'); //CASILLERO
+            $table->string('plu'); //COLOR
+            $table->string('pad')->nullable(); //PADRE
+            $table->string('mad')->nullable(); //MADRE
+            $table->string('des'); //DISABILITY
+            $table->string('icbc')->nullable(); //INCUBACIÓN
+            $table->string('hvs')->nullable(); //HUEVOS
+            $table->string('ncr')->nullable(); //NACIERON
+            $table->string('sena')->nullable(); //SENASA
+            $table->string('mvf'); //MOVIDAS
+            $table->string('mm'); //MOVIDAS
+            $table->string('ms'); //MOVIDAS
+            $table->string('mvtp'); //MOVIDAS
+            $table->string('mvr'); //MOVIDAS
+            $table->string('spmt'); //SUPLEMENTO
             $table->string('obs');
 
             //FOREIGN USER

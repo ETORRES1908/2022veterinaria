@@ -14,18 +14,21 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         //Mantenimientos
-        Permission::create(['name' => 'Mantenimientos']);
+        Permission::create(['name' => 'cms']);
+        //Cambiar de Estado
+        Permission::create(['name' => 'chngs']);
         //Mantenimiento de Usuarios
-        Permission::create(['name' => 'MUser']);
-        //Mantenimiento de mascotas
-        Permission::create(['name' => 'MPets']);
-        //Mantenimiento de Eventos
-        Permission::create(['name' => 'MEventos']);
-        //Mantenimiento de Eventos
-        Permission::create(['name' => 'OtroP']);
-        //Mantenimiento de MyPets
-        Permission::create(['name' => 'MyPets']);
-        //Mantenimiento de EVENTS
-        Permission::create(['name' => 'events.create']);
+        Permission::create(['name' => 'muser']);
+
+        //Cambiar peso
+        Permission::create(['name' => 'chngw']);
+        //Agregar pactado
+        Permission::create(['name' => 'adddeal']);
+        //Sentenciar
+        Permission::create(['name' => 'sentence']);
+        //Agregar evento
+        Permission::create(['name' => 'addevent']);
+        //Aggregar evento
+        Permission::create(['name' => 'addanimal']);
     }
 }

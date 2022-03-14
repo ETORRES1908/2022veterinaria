@@ -8,11 +8,6 @@ class Eventos extends Model
 {
     protected $guarded = [];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'fechas' => 'array',
         'spl' => 'array',
@@ -41,7 +36,7 @@ class Eventos extends Model
     // A MASCOTA BELONGS_TO USER
     public function participants()
     {
-        return $this->hasMany(Lparticipantes::class, 'evento_id');
+        return $this->hasMany(LParticipantes::class, 'evento_id');
     }
     // A MASCOTA BELONGS_TO USER
     public function coliseum()

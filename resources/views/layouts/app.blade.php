@@ -18,7 +18,7 @@
     <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
 </head>
 
-<body class="bg-black m-auto p-auto text-light">
+<body class="bg-black m-auto p-auto text-light" oncontextmenu="return false">
     <div id="app">
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-black">
@@ -58,7 +58,7 @@
                         </ul>
 
                         <!-- Derecho Side Of Navbar -->
-                        <ul class="navbar-nav bg-black ms-auto mb-2 fs-5">
+                        <ul class="navbar-nav bg-black ms-auto text-nowrap mb-2 fs-5">
                             <!-- Authentication Links -->
                             @if (Auth::guest())
                                 <li class="nav-item">
@@ -92,30 +92,45 @@
                                         {{ __('Events') }}</a>
                                 </li>
                                 {{-- USERMENU --}}
-                                <li class="nav-item dropdown me-1">
+                                <li class="nav-item dropdown w-100">
                                     <a class="nav-link dropdown-toggle link-light" href="#" id="navbarDropdown"
                                         role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <span class="caret m-1">
-                                            {{ Auth::user()->nombre }}{{ Auth::user()->apellido }}
+                                            {{ Auth::user()->nombre }} {{ Auth::user()->apellido }}
                                             <img src="{{ asset(Auth::user()->foto) }}" width="40vh" height="40vh"
                                                 class="rounded-circle d-inline-block align-text-middle">
                                         </span>
                                     </a>
 
                                     <ul class="dropdown-menu w-100" aria-labelledby="navbarDropdown">
-                                        <li>
-                                            <p class="dropdown-item text-uppercase fw-bolder" display>
-                                                {{ Auth::user()->Roles[0]->name }}
-                                            </p>
-                                        </li>
-                                        @can('MyPets')
+                                        @if (Auth::user()->usert != 'admin')
+                                            <li>
+                                                <select class="form-control fw-bold text-uppercase" disabled>
+                                                    <option @if (Auth::user()->usert == 'own') selected @endif>
+                                                        {{ __('Owner') }}</option>
+                                                    <option @if (Auth::user()->usert == 'cls') selected @endif>
+                                                        {{ __('Coliseum') }}</option>
+                                                    <option @if (Auth::user()->usert == 'cdk') selected @endif>
+                                                        {{ __('Control desk') }}</option>
+                                                    <option @if (Auth::user()->usert == 'jdg') selected @endif>
+                                                        {{ __('Judge') }}</option>
+                                                    <option @if (Auth::user()->usert == 'ppr') selected @endif>
+                                                        {{ __('Preparer') }}</option>
+                                                    <option @if (Auth::user()->usert == 'asst') selected @endif>
+                                                        {{ __('Assistant') }}</option>
+                                                    <option @if (Auth::user()->usert == 'amt') selected @endif>
+                                                        {{ __('Amateur') }}</option>
+                                                </select>
+                                            </li>
+                                        @endif
+                                        @can('addanimal')
                                             <li>
                                                 <a class="dropdown-item link-dark " href="{{ route('mascotas.index') }}">
-                                                    {{ __('My Pets') }}
+                                                    {{ __('Exemplars') }}
                                                 </a>
                                             </li>
                                         @endcan
-                                        @can('Mantenimientos')
+                                        @can('cms')
                                             <li>
                                                 <a class="dropdown-item link-dark" href="{{ route('usuarios.index') }}">
                                                     {{ __('CMS') }}
@@ -130,7 +145,7 @@
 
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                                 style="display: none;">
-                                                {{ csrf_field() }}
+                                                {!! csrf_field() !!}
                                             </form>
                                         </li>
                                     </ul>

@@ -17,7 +17,7 @@ class CreateDuelsTable extends Migration
             $table->increments('id');
             //FOREIGN USER
             $table->integer('lparticipante_id')->unsigned();
-            $table->foreign('lparticipante_id')->references('id')->on('lparticipantes');
+            $table->foreign('lparticipante_id')->references('id')->on('LParticipantes');
             //FOREIGN USER
             $table->integer('pmascota_id')->unsigned();
             $table->foreign('pmascota_id')->references('id')->on('mascotas');
@@ -29,6 +29,9 @@ class CreateDuelsTable extends Migration
             $table->string('cch');
             $table->string('npelea');
             $table->string('result')->nullable();
+            $table->string('trslt')->nullable();
+            $table->string('dm')->nullable();
+            $table->string('ds')->nullable();
             $table->timestamps();
         });
     }

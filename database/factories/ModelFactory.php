@@ -19,7 +19,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     $gender = $faker->randomElement(['male', 'female']);
 
     return [
-        'name' => $faker->userName,
+        'name' => $faker->unique()->userName,
+        'usert' => $faker->randomElement(['own', 'cls', 'cdk', 'jdg', 'ppr', 'asst', 'amt']),
         'nombre' => $faker->firstName($gender),
         'apellido' => $faker->Lastname,
         'dni' => $faker->randomNumber(8),
@@ -29,14 +30,14 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'company' => $faker->firstName(),
         'celular' => $faker->randomNumber(9),
-        'country' => $faker->country(),
-        'state' => $faker->state(),
+        'country' => 'PER',
+        'state' => $faker->randomElement(['AM', 'AN', 'AP', 'AY', 'CJ', 'CZ']),
         'district' => $faker->state(),
         'direction' => $faker->address(),
         'job' => $faker->jobTitle(),
-        'password' => $password ?: $password = bcrypt('asa'),
+        'password' => $password ?: $password = bcrypt('123'),
         'question' => $faker->randomElement(['0', '1']),
-        'answer' => $answer ?: $answer = bcrypt('asa'),
+        'answer' => $answer ?: $answer = bcrypt('123'),
         'remember_token' => str_random(10),
     ];
 });

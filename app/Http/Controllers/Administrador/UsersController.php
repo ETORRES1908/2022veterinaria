@@ -21,7 +21,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = Role::where('name', 'user')->first()->users;
+        $users = User::where('usert', '!=', 'admin')->where('usert', '!=', 'webmaster')->get();
         return  view('Administrador.MUsuarios.index', compact('users'));
     }
 
@@ -54,7 +54,8 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        return  view('Administrador.MUsuarios.show', compact('user'));
     }
 
     /**
@@ -79,8 +80,12 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        $user->update(['status' => $request->status]);
-        return redirect()->route('usuarios.edit', $id);
+        if ($request->typec == 0) {
+            $user->update(['status' => $request->status]);
+        } elseif ($request->typec == 1) {
+            $user->update(['name' => $request->name, 'password' => bcrypt($request->password)]);
+        }
+        return redirect()->route('usuarios.edit', $id)->with('mensaje', __('Successfully updated'));
     }
 
     /**

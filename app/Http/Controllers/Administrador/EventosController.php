@@ -74,7 +74,7 @@ class EventosController extends Controller
     {
         $evento = Eventos::find($id);
         $evento->update(['status' => $request->status]);
-        return redirect()->route('meventos.edit', $id);
+        return redirect()->route('meventos.edit', $id)->with('mensaje', __('Successfully updated'));
     }
 
     /**

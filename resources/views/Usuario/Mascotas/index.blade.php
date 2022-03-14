@@ -4,7 +4,7 @@
     <div class="mx-auto">
         <div class="mb-5">
             <a href="{{ route('mascotas.create') }}" class="fw-bold text-uppercase btn btn-outline-danger px-5">
-                {{ __('Add Pet') }}
+                {{ __('Add Exemplar') }}
             </a>
         </div>
 
@@ -19,7 +19,7 @@
                                     <img src="@if (!empty($mascota->fotos->where('nfoto', 1)->first())) {{ asset($mascota->fotos->where('nfoto', 1)->first()->ruta) }}
                                 @else
                                 {{ asset('storage/img/pata.jpg') }} @endif"
-                                        class="img-fluid rounded-start d-block mx-auto" alt="...">
+                                        class="img-fluid rounded-start d-block mx-auto">
                                 </a>
                             </div>
                             <div class="col-md-8">
@@ -32,13 +32,17 @@
                                     <div class="card-text">
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item">
-                                                <div>{{ __('Name') }}: {{ $mascota->nombre }}</div>
+                                                <div><strong>{{ __('Name') }}:</strong> {{ $mascota->nombre }}</div>
                                             </li>
                                             <li class="list-group-item">
-                                                <div>{{ __('Birthday') }}: {{ $mascota->fnac }}</div>
+                                                <div><strong>{{ __('Birthday') }}:</strong> {{ $mascota->fnac }}</div>
                                             </li>
                                             <li class="list-group-item">
-                                                <div>{{ __('Weight') }}: {{ $mascota->sss }}</div>
+                                                <div><strong>{{ __('Weight') }}:</strong> {{ $mascota->sss }}</div>
+                                            </li>
+                                            <li class="list-group-item text-capitalize">
+                                                <div><strong>{{ __('Gender') }}:</strong> {{ __($mascota->gender) }}
+                                                </div>
                                             </li>
                                         </ul>
                                     </div>

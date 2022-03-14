@@ -9,7 +9,7 @@
 @section('content')
     <div class="container-fluid">
         <form method="POST" action="{{ route('mbanners.store') }}" enctype="multipart/form-data">
-            {{ csrf_field() }}
+            {!! csrf_field() !!}
             <div class="form-group">
                 <label for="type">{{ __('Type Banner') }}</label>
                 <select class="form-control" name="type">

@@ -19,8 +19,7 @@
         <a class="h6 fw-lighter" href="#">Example@gmail.com</a>
 
         <div class="h5 fw-lighter text-start">
-            Si surgen preguntas adicionales,
-            ¡Todo nuestro personal estará inmensamente feliz de responderle!
+            {{__('If additional questions arise, our entire staff will be extremely happy to answer you!')}}
         </div>
     </div>
     <div class="col-xs-12 col-md-6 col-sm-6 py-auto">

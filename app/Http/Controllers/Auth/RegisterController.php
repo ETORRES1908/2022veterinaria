@@ -50,16 +50,17 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|between:3,20|unique:users',
+            'usert' => 'required|string',
             'nombre' => 'required|string|between:3,20|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
             'apellido' => 'required|string|between:3,20|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
             'foto' => 'required|image|max:2048',
             'discapacidad' => 'required|string',
-            'dni' => 'required|numeric|digits:7|unique:users',
+            'dni' => 'required|numeric|digits:8|unique:users',
             'galpon' => 'required|string',
             'prepa' => 'required|string',
             'email' => 'required|string|email|max:255|unique:users',
             'company' => 'required|string',
-            'celular' => 'required|unique:users',
+            'celular' => 'required|unique:users|digits:9',
             'country' => 'required|string',
             'state' => 'required|string',
             'district' => 'required|string',
@@ -70,8 +71,8 @@ class RegisterController extends Controller
             'answer' => 'required|string',
             'captcha' => 'required|captcha',
             'foto' => 'required',
-            'fdpt' => '',
-            'sdpt' => ''
+            'fdpt' => 'mimes:pdf',
+            'sdpt' => 'image'
         ]);
     }
 
@@ -83,30 +84,36 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
         //FOTO PROFILE
-        $file = $data['foto'];
-        $nombre = $data['name'] . $data['dni'] . "." . $file->guessExtension();
-        $ruta = 'images/users/' . $nombre;
-        Image::make($file->getRealPath())->resize(1280, 720, function ($constraint) {
+        $pph = $data['foto'];
+        $nombre = $data['dni'] . "profile." . $pph->guessExtension();
+        $ruta = 'storage/images/users/' . $nombre;
+        Image::make($pph->getRealPath())->resize(1280, 720, function ($constraint) {
             $constraint->aspectRatio();
-        })->save($ruta, 40);
+        })->save($ruta, 40, 'jpeg');
         //FOTO DISABILITY 1
-        $fdpt = $data['fdpt'];
-        $fn = $data['dni'] . "fdpt." . $fdpt->guessExtension();
-        $rutaf = 'images/users/' . $fn;
-        Image::make($fdpt->getRealPath())->resize(1280, 720, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($rutaf, 40);
+        $rutaf = null;
+        if (isset($data['fdpt'])) {
+            $fdpt = $data['fdpt'];
+            $fn = $data['dni'] . "fdpt." . $fdpt->guessExtension();
+            $rutaf = 'storage/docs/users/' . $fn;
+            copy($fdpt, $rutaf);
+        }
         //FOTO DISABILITY 2
-        $sdpt = $data['sdpt'];
-        $ss = $data['dni'] . "sdpt." . $sdpt->guessExtension();
-        $rutas = 'images/users/' . $ss;
-        Image::make($sdpt->getRealPath())->resize(1280, 720, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($rutas, 40);
+        $rutas = null;
+        if (isset($data['sdpt'])) {
+            $sdpt = $data['sdpt'];
+            $ss = $data['dni'] . "sdpt." . $sdpt->guessExtension();
+            $rutas = 'storage/images/users/' . $ss;
+            Image::make($sdpt->getRealPath())->resize(1280, 720, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($rutas, 40, 'jpeg');
+        }
 
         return User::create([
             'name' => $data['name'],
+            'usert' => $data['usert'],
             'nombre' => $data['nombre'],
             'apellido' => $data['apellido'],
             'foto' => $ruta,
@@ -127,6 +134,6 @@ class RegisterController extends Controller
             'answer' => bcrypt($data['answer']),
             'fdpt' =>  $rutaf,
             'sdpt' =>  $rutas
-        ])->assignRole('user');
+        ])->assignRole($data['usert']);
     }
 }

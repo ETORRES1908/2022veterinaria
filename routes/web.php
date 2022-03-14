@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 
 Auth::routes();
 
@@ -18,14 +17,14 @@ Route::resource('/duels', 'Evento\DuelosController');
 Route::resource('/coliseums', 'Evento\ColiseoController');
 
 //USER CONTROLLER
-Route::group(['middleware' => ['can:MyPets']], function () {
+Route::group(['middleware' => ['can:addanimal']], function () {
     Route::resource('/mascotas', 'Usuario\MascotasController');
     Route::resource('/mfotos', 'Usuario\MFotosController');
     Route::resource('/mvideos', 'Usuario\MVideosController');
 });
 
 //ADMIN CONTROLLER
-Route::group(['middleware' => ['can:Mantenimientos']], function () {
+Route::group(['middleware' => ['can:cms']], function () {
     Route::resource('/usuarios', 'Administrador\UsersController');
     Route::resource('/mmascotas', 'Administrador\MascotasController');
     Route::resource('/meventos', 'Administrador\EventosController');
@@ -33,8 +32,4 @@ Route::group(['middleware' => ['can:Mantenimientos']], function () {
     Route::resource('/mbanners', 'Administrador\BannersController');
 });
 
-Route::get('language/{locale}', function ($locale) {
-    app()->setLocale($locale);
-    session(['locale' => $locale]);
-    return redirect(url(URL::previous()));
-})->name('language');
+Route::get('language/{locale}', 'HomeController@language')->name('language');

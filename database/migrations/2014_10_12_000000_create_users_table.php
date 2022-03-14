@@ -16,13 +16,14 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 20); //USERNAME
+            $table->string('usert', 20); //USER TYPE
             $table->string('nombre', 20); //NOMBRE
             $table->string('apellido', 40); //APELLIDO
             $table->string('foto')->default('user.png'); //FOTO
             $table->string('dni', 8); //DNI
             $table->string('discapacidad'); //DISABILITY
             $table->string('galpon'); //GALPON
-            $table->string('prepa'); //TRAINER
+            $table->string('prepa'); //Preparer
             $table->string('email')->unique(); //EMAIL
             $table->string('company'); //COMPAÑIA
             $table->string('celular')->unique(); //PHONE
@@ -35,8 +36,8 @@ class CreateUsersTable extends Migration
             $table->string('status')->default('0'); //estado
             $table->string('question'); //QUESTIOM
             $table->string('answer'); //ANSWER
-            $table->string('fdpt')->default('user.png'); //FOTO
-            $table->string('sdpt')->default('user.png'); //FOTO
+            $table->string('fdpt')->nullable(); //FOTO
+            $table->string('sdpt')->nullable(); //FOTO
             $table->rememberToken();
             $table->timestamps();
         });

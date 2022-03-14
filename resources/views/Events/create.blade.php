@@ -1,62 +1,59 @@
 @extends('layouts.app')
 @section('content')
-    <div class="card bg-black text-white mx-auto border border-danger mb-3">
-        <div class="card-body border border-danger">
-            <div class="row g-1 mx-auto">
-                <div class="col-6 col-lg-3 my-auto">
-                    <img src="@if (!empty(Auth::user()->foto)) {{ asset(Auth::user()->foto) }}
+    <form method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data" autocomplete="off">
+        {!! csrf_field() !!}
+        <div class="card bg-black text-white mx-auto border border-danger mb-3">
+            <div class="card-body border border-danger">
+                <div class="row g-1 mx-auto">
+                    <div class="col-6 col-lg-3 my-auto">
+                        <img src="@if (!empty(Auth::user()->foto)) {{ asset(Auth::user()->foto) }}
                     @else{{ asset('storage/img/pata.jpg') }} @endif"
-                        class="img-fluid d-block mx-auto">
-                </div>
-                <div class="col-6 col-lg-3 m-auto">
-                    <ul class="list-unstyled">
-                        <li>
-                            <h6> {{ __('USER') }}: {{ Auth::user()->name }}</h6>
-                        </li>
-                        <li>
-                            <h6>{{ __('GALPON') }}: {{ Auth::user()->galpon }}</h6>
-                        </li>
-                        <li>
-                            <h6>{{ __('COUNTRY') }}: {{ Auth::user()->country }}</h6>
-                        </li>
-                        <li>
-                            <h6>{{ __('STATE') }}: {{ Auth::user()->stt }}</h6>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-6">
-                    <h5 class="form-label text-center">{{ __('My exemplars') }}</h5>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-control">
-                                <img src="@if (!empty(Auth::user()->mascotas[0])) {{ asset(Auth::user()->mascotas[0]->fotos->where('nfoto', 1)->first()->ruta) }}
-                            @else
-                            {{ asset('storage/img/pata.jpg') }} @endif"
-                                    class="img-fluid d-block mx-auto">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-control">
-                                <img src="@if (!empty(Auth::user()->mascotas[1])) {{ asset(Auth::user()->mascotas[1]->fotos->where('nfoto', 1)->first()->ruta) }}
-                            @else
-                            {{ asset('storage/img/pata.jpg') }} @endif"
-                                    class="img-fluid d-block mx-auto">
-
-                            </div>
-                        </div>
+                            class="img-fluid d-block mx-auto">
                     </div>
-                    <label class="form-label">{{ __('Challenge') }}:</label>
-                    <input class="form-control" type="number" name="chll2" value="{{ old('chll2') }}"
-                        onKeyPress="if(this.value.length==4) return false;"
-                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required>
+                    <div class="col-6 col-lg-3 m-auto">
+                        <ul class="list-unstyled">
+                            <li>
+                                <h6> {{ __('USER') }}: {{ Auth::user()->name }}</h6>
+                            </li>
+                            <li>
+                                <h6>{{ __('GALPON') }}: {{ Auth::user()->galpon }}</h6>
+                            </li>
+                            <li>
+                                <h6>{{ __('COUNTRY') }}: {{ Auth::user()->country }}</h6>
+                            </li>
+                            <li>
+                                <h6>{{ __('STATE') }}: {{ Auth::user()->stt }}</h6>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-control h-100">
+                                    <img src="@if (!empty(Auth::user()->mascotas[0])) {{ asset(Auth::user()->mascotas[0]->fotos->where('nfoto', 1)->first()->ruta) }}
+                            @else
+                            {{ asset('storage/img/pata.jpg') }} @endif"
+                                        class="img-fluid d-block mx-auto" style="height: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-control h-100">
+                                    <img src="@if (!empty(Auth::user()->mascotas[1])) {{ asset(Auth::user()->mascotas[1]->fotos->where('nfoto', 1)->first()->ruta) }}
+                            @else
+                            {{ asset('storage/img/pata.jpg') }} @endif"
+                                        class="img-fluid d-block mx-auto" style="height: 100%;">
+
+                                </div>
+                            </div>
+                        </div>
+                        <label class="form-label">{{ __('Challenge') }}:</label>
+                        <input class="form-control" type="number" name="chll" value="{{ old('chll') }}"
+                            onKeyPress="if(this.value.length==4) return false;"
+                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required onfocus onblur>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <form class="form-horizontal" method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data"
-        autocomplete="off">
-        {{ csrf_field() }}
         <div class="card mx-auto bg-black text-white border border-danger mb-3">
             <div class="card-body border border-danger">
                 <div class="row">
@@ -66,8 +63,8 @@
                     <div class="col-sm-12 mb-3">
                         <label for="jueza_id" class="col-form-label fw-bold">
                             {{ __('Add dates') }}
-                            <button class="btn btn-success" id="adddates">+</button>
-                            <button class="btn btn-danger" id="removedate">-</button>
+                            <input id="adddates" type="button" class="btn btn-success" value="+">
+                            <input id="removedate" type="button" class="btn btn-danger" value="-">
 
                             @if ($errors->has('fechas.*') || $errors->has('fechas'))
                                 <span class="text-danger text-fs6">
@@ -412,7 +409,7 @@
                         </label>
                         <div class="col-auto">
                             <input id="ftw" type="time" class="form-control text-danger fw-bold" name="ftw"
-                                value=@if (!empty(old('ftw'))) "{{ old('ftw') }}" @else "01:23" @endif
+                                value=@if (!empty(old('ftw'))) "{{ old('ftw') }}" @else "--:--" @endif
                                 required autofocus step="0">
                             {{-- <select class="form-control form-select text-danger fw-bold" id="ftw" name="ftw"
                                 value="{{ old('ftw') }}" required autofocus>
@@ -479,7 +476,7 @@
                         </label>
                         <div class="col-auto">
                             <input id="stw" type="time" class="form-control text-danger fw-bold" name="stw"
-                                value=@if (!empty(old('stw'))) "{{ old('stw') }}" @else "01:23" @endif
+                                value=@if (!empty(old('stw'))) "{{ old('stw') }}" @else "--:--" @endif
                                 required autofocus step="0">
                             {{-- <select class="form-control form-select text-danger fw-bold" id="stw" name="stw"
                                 value="{{ old('stw') }}" required autofocus>
@@ -552,7 +549,7 @@
                         </label>
                         <div class="col-auto">
                             <input id="hstart" type="time" class="form-control text-danger fw-bold" name="hstart"
-                                value=@if (!empty(old('hstart'))) "{{ old('hstart') }}" @else "01:23" @endif
+                                value=@if (!empty(old('hstart'))) "{{ old('hstart') }}" @else "--:--" @endif
                                 required autofocus step="0">
                             @if ($errors->has('hstart'))
                                 <span class="text-danger text-fs6">
@@ -570,7 +567,7 @@
                         <div class="col-auto">
                             <select class="form-select text-danger fw-bold" id="mcontrol_id" name="mcontrol_id"
                                 value="{{ old('mcontrol_id') }}" required autofocus>
-                                @foreach ($users as $mcontrol)
+                                @foreach ($cdks as $mcontrol)
                                     <option value="{{ $mcontrol->id }}"
                                         @if (old('mcontrol_id') == $mcontrol->id) selected @endif>
                                         {{ $mcontrol->nombre . ' ' . $mcontrol->apellido }}
@@ -592,7 +589,7 @@
                         <div class="col-auto">
                             <select class="form-select text-danger fw-bold" id="judge_id" name="judge_id"
                                 value="{{ old('judge_id') }}" required autofocus>
-                                @foreach ($users as $judge)
+                                @foreach ($jdgs as $judge)
                                     <option value="{{ $judge->id }}"
                                         @if (old('judge_id') == $judge->id) selected @endif>
                                         {{ $judge->nombre . ' ' . $judge->apellido }}
@@ -615,10 +612,10 @@
                         <div class="col-auto">
                             <select class="form-select text-danger fw-bold" id="assistent_id" name="assistent_id"
                                 value="{{ old('assistent_id') }}" required autofocus>
-                                @foreach ($users as $assisten)
-                                    <option value="{{ $assisten->id }}"
-                                        @if (old('assistent_id') == $assisten->id) selected @endif>
-                                        {{ $assisten->nombre . ' ' . $assisten->apellido }}
+                                @foreach ($assts as $assistent)
+                                    <option value="{{ $assistent->id }}"
+                                        @if (old('assistent_id') == $assistent->id) selected @endif>
+                                        {{ $assistent->nombre . ' ' . $assistent->apellido }}
                                     </option>
                                 @endforeach
                             </select>
@@ -944,10 +941,10 @@
                             @endif
                         </div>
                     </div>
-                    {{-- PACTADO --}}
+                    {{-- PACTADA --}}
                     <div class="col-6 col-md-3 mb-3 form-group{{ $errors->has('pct') ? ' has-error' : '' }}">
                         <label for="pct" class="col-form-label fw-bold">
-                            {{ __('Pact') }}
+                            {{ __('Accordance') }}
                         </label>
                         <div class="col-auto">
                             <div class="input-group">
@@ -989,14 +986,14 @@
                     {{-- FRENTE --}}
                     <div class="col-md-3 mb-3 form-group{{ $errors->has('ift') ? ' has-error' : '' }}">
                         <label for="ift" class="col-form-label fw-bold">
-                            {{ __('FRENTE') }}
+                            {{ __('Forehead') }}
                         </label>
                         <div class="col-auto">
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
                                 <input id="ift" type="number" class="form-control text-danger fw-bold" name="ift"
                                     value="{{ old('ift') }}" required autofocus min="0"
-                                    onKeyPress="if(this.value.length==4) return false;" />
+                                    onKeyPress="if(this.value.length==3) return false;" />
                             </div>
                             @if ($errors->has('ift'))
                                 <span class="text-danger text-fs6">
@@ -1015,7 +1012,7 @@
                                 <div class="input-group-text">S/.</div>
                                 <input id="gll" type="number" class="form-control text-danger fw-bold" name="gll"
                                     value="{{ old('gll') }}" required autofocus min="0"
-                                    onKeyPress="if(this.value.length==4) return false;"
+                                    onKeyPress="if(this.value.length==3) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
                             </div>
                             @if ($errors->has('gll'))
@@ -1035,7 +1032,7 @@
                                 <div class="input-group-text">S/.</div>
                                 <input id="glp" type="number" class="form-control text-danger fw-bold" name="glp"
                                     value="{{ old('glp') }}" required autofocus min="0"
-                                    onKeyPress="if(this.value.length==4) return false;"
+                                    onKeyPress="if(this.value.length==3) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
                             </div>
                             @if ($errors->has('glp'))
@@ -1064,7 +1061,6 @@
         </div>
     </form>
 
-    <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
     <script type="text/javascript">
         /* ADD DATE */
         $("#adddates").click(function() {
@@ -1105,11 +1101,11 @@
         var $select1 = $('#miw'),
             $select2 = $('#maw'),
             $options = $select2.find('option');
-
         $select1.on('change', function() {
             $select2.html($options.filter('[data="' + this.value + '"]'));
         }).trigger('change');
-        /*  SOLO NUMEROS */
+
+        /*  DONT COPY OR PASTE*/
         $(document).ready(function() {
             $('input').bind('copy paste', function(e) {
                 e.preventDefault();

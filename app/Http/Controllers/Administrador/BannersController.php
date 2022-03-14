@@ -53,7 +53,7 @@ class BannersController extends Controller
                 '.' .
                 $file->guessExtension();
 
-            $ruta = 'images/banners/' . $nombre;
+            $ruta = 'storage/images/banners/' . $nombre;
             Image::make($file->getRealPath())->resize(1280, 720)->save($ruta, 80);
             if (Banners::where('name', $nombre)->first()) {
                 return redirect()->route('mbanners.index',)->with('error', __('Already exists'));
@@ -109,7 +109,7 @@ class BannersController extends Controller
         ]);
 
         $file = $request->file('foto');
-        $ruta = 'images/banners/' . $banner->nombre;
+        $ruta = 'storage/images/banners/' . $banner->nombre;
         Image::make($file->getRealPath())->resize(1280, 720)->save($ruta, 80);
         $banner->update([
             'url' => $request->url,
