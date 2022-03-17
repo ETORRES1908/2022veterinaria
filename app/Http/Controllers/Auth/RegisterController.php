@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Coliseos;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -110,7 +111,7 @@ class RegisterController extends Controller
             })->save($rutas, 40, 'jpeg');
         }
 
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'usert' => $data['usert'],
             'nombre' => $data['nombre'],
@@ -133,5 +134,15 @@ class RegisterController extends Controller
             'fdpt' =>  $rutaf,
             'sdpt' =>  $rutas
         ])->assignRole($data['usert']);
+
+        Coliseos::create([
+            'user_id' => $user->id,
+            'nombre' => $data['clsname'],
+            'country' => $data['country'],
+            'state' => $data['state'],
+            'district' => $data['district'],
+            'reference' => $data['direction'],
+        ]);
+        return $user;
     }
 }

@@ -103,7 +103,7 @@
                                                             <div class="row">
                                                                 <div class="col-sm-6 mb-3">
                                                                     <label class="form-label fw-bold">
-                                                                        {{ __('REGGAL') }}
+                                                                        {{ __('REG ANI') }}
                                                                     </label>
                                                                     <div class="col-auto">
                                                                         <input value="{{ $duel->pmascota->REGGAL }}"
@@ -219,7 +219,7 @@
                                                             <div class="row">
                                                                 <div class="col-sm-6 mb-3">
                                                                     <label class="form-label fw-bold">
-                                                                        {{ __('REGGAL') }}
+                                                                        {{ __('REG ANI') }}
                                                                     </label>
                                                                     <div class="col-auto">
                                                                         <input value="{{ $duel->smascota->REGGAL }}"
@@ -501,8 +501,8 @@
                                 <div class="mb-3">
                                     <div class="row">
                                         <div class="col-sm-7">
-                                            <label for="REGGAL" class="form-label fw-bold">
-                                                {{ __('REGGAL') }}
+                                            <label class="form-label fw-bold">
+                                                {{ __('REG ANI') }}
                                             </label>
                                             <div class="col-auto">
                                                 <input id="REGGAL" type="text" class="form-control text-danger" readonly>
@@ -619,8 +619,8 @@
                                 <div class="mb-3">
                                     <div class="row">
                                         <div class="col-sm-7">
-                                            <label for="PREGGAL" class="form-label fw-bold">
-                                                {{ __('REGGAL') }}
+                                            <label class="form-label fw-bold">
+                                                {{ __('REG ANI') }}
                                             </label>
                                             <div class="col-auto">
                                                 <input id="PREGGAL" type="text" class="form-control text-danger" readonly>

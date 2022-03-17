@@ -78,7 +78,7 @@
                             </option>
                         </select>
                     </div>
-                    <div class="col-xs-6 mb"><label>{{ __('N°DNI') }}</label>
+                    <div class="col-xs-6 mb"><label>{{ __('DNI') }}</label>
                         <input type="text" class="form-control" value="{{ $user->dni }}" readonly>
                     </div>
                     @if (isset($user->fdpt))

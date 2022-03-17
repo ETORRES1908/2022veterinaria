@@ -13,9 +13,9 @@
     "Phone Number": "Número de Teléfono",
     "Phone": "Celular",
     "Join": "Unirse",
-    "Add Exemplar": "Añadir ejemplar",
+    "Add Exemplar": "Agregar ejemplar",
     "Add Deal": "Agregar Pactado",
-    "Add Event": "Agregar Evento",
+    "Create your event": "Crear tu evento",
     "Add coliseum": "Registrar coliseo",
     "Choose field": "Elegir cancha",
     "Choose exemplar": "Elegir ejemplar",
@@ -244,5 +244,13 @@
     "Win": "Gana",
     "Lose": "Pierde",
     "Draw": "Tablas",
-    "Must contain 1 letter 1 number, minimum 8": "Debe contener 1 letra 1 número, mínimo 8"
+    "Must contain 1 letter 1 number, minimum 8": "Debe contener 1 letra 1 número, mínimo 8",
+    "Include ref or alt.": "Incluir ref ó alt.",
+    "Architect, Carpenter": "Arquitecto, Carpintero",
+    "To recover your account": "Para recuperar tu cuenta",
+    "Create your account": "Crear tu cuenta",
+    "Are you sure?": "¿Estas seguro?",
+    "Yes I agree!": "Si, estoy deacuerdo!",
+    "Cancel": "Cancelar",
+    "All records will be related to this user will be deleted. This action is irreversible.": "Se eliminarán todos los registros relacionados con este usuario. Esta acción es irreversible."
 }

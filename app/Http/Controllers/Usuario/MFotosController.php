@@ -13,7 +13,7 @@ class MFotosController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:addanimal')->only('index' , 'show' , 'create', 'store' , 'edit' , 'update' , 'delete');
+        $this->middleware('can:addanimal')->only('index', 'show', 'create', 'store', 'edit', 'update', 'delete');
     }
 
     public function index()
@@ -40,7 +40,7 @@ class MFotosController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'foto' => 'required|image|max:3000',
+            'foto' => 'required|image|mimes:jpg,png|max:3000',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -53,10 +53,7 @@ class MFotosController extends Controller
                 $file->guessExtension();
 
             $ruta = 'storage/images/mascotas/' . $nombre;
-            Image::make($file->getRealPath())->resize(1280, 720, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            })->save($ruta, 72, 'jpeg');
+            Image::make($file->getRealPath())->resize(1280, 720)->save($ruta, 72, 'jpeg');
             $nMFotos = MFotos::Create([
                 'nfoto' => $request->nfoto,
                 'ruta' => $ruta,
@@ -113,8 +110,6 @@ class MFotosController extends Controller
     public function destroy($id)
     {
         $mfoto = MFotos::Find($id);
-        /*  $url = str_replace('storage', 'public', $mfoto->ruta);
-        Storage::delete($url); */
         unlink($mfoto->ruta);
         $mfoto->delete();
 

@@ -14,7 +14,7 @@
                 <label for="type">{{ __('Type Banner') }}</label>
                 <select class="form-control" name="type">
                     <option value="blogin">{{ __('Banner in ') . __('Login') }}</option>
-                    <option value="bcreate">{{ __('Banner in ') . __('Add Event') }}</option>
+                    <option value="bcreate">{{ __('Banner in ') . __('Create your event') }}</option>
                 </select>
                 @if ($errors->has('type'))
                     <span class="">

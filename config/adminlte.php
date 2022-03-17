@@ -229,12 +229,12 @@ return [
         ],
         [
             'name' => 'Sweetalert2',
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//unpkg.com/sweetalert/dist/sweetalert.min.js',
+                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
                 ],
             ],
         ],

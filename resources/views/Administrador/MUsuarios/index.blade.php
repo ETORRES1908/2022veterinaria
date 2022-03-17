@@ -10,6 +10,11 @@
 
 @section('content')
     <div class="container-fluid">
+        @if (session('mensaje'))
+            <div class="alert alert-success">
+                {{ session('mensaje') }}
+            </div>
+        @endif
         <div class="table-responsive pb-1">
             <table id="datatable" class="table table-hover nowrap" style="width:100%">
                 <thead>

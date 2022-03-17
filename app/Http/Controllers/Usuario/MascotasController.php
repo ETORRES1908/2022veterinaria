@@ -18,7 +18,7 @@ class MascotasController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:addanimal')->only('index' , 'show', 'create', 'store' , 'edit' , 'update' , 'delete');
+        $this->middleware('can:addanimal')->only('index', 'show', 'create', 'store', 'edit', 'update', 'delete');
     }
 
     /**
@@ -106,7 +106,7 @@ class MascotasController extends Controller
             $file = $request->file('foto');
             $nombre = $REGGAL . '1.' . $file->guessExtension();
             $ruta = 'storage/images/mascotas/' . $nombre;
-            Image::make($file->getRealPath())->resize(720, 1280)->save($ruta, 72, 'jpeg');
+            Image::make($file->getRealPath())->resize(1280, 720)->save($ruta, 72, 'jpeg');
             $nMFotos = MFotos::Create([
                 'nfoto' => 1,
                 'ruta' => $ruta,

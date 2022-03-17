@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "MisterJ.laravel-expack"
+        "misterj.laravel-expack",
+        "MS-CEINTL.vscode-language-pack-es"
     ]
 }

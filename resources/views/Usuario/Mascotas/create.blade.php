@@ -153,7 +153,7 @@
                                     </label>
                                     <div class="col-auto">
                                         <select class="select2 form-select" name="pad" autofocus>
-                                            <option selected value="">
+                                            <option value="" hidden>
                                                 {{ __('Choose exemplar') }}...
                                             </option>
                                             @foreach ($mascotas as $mascota)
@@ -176,7 +176,7 @@
                                     </label>
                                     <div class="col-auto">
                                         <select class="select2 form-select" name="mad" autofocus>
-                                            <option selected value="">
+                                            <option value="" hidden>
                                                 {{ __('Choose exemplar') }}...
                                             </option>
                                             @foreach ($mascotas as $mascota)
@@ -290,7 +290,8 @@
                                     </div>
                                 </div>
                                 {{-- VACUNAS --}}
-                                <div class="col-12 mb-3 form-group{{ $errors->has('vcns') ? ' has-error' : '' }}">
+                                <div
+                                    class="col-12 mb-3 border border-danger rounded form-group{{ $errors->has('vcns') ? ' has-error' : '' }}">
                                     <label for="vcns" class="col-form-label fw-bold">
                                         {{ __('Vaccines') }}
                                     </label>
@@ -307,17 +308,20 @@
                                                 <div class="col-6 col-md-3 mb-1">
                                                     <input id="vcnst" type="text" class="form-control text-danger fw-bold"
                                                         name="vcnst[]" required autofocus placeholder="{{ __('Type') }}"
-                                                        maxlength="5">
+                                                        required pattern="[A-zÀ-ú1-9\s]+" maxlength="10"
+                                                        onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)">
                                                 </div>
-                                                <div class="col-6 col-md-3 mb-1">
+                                                <div class=" col-6 col-md-3 mb-1">
                                                     <input id="vcnsm" type="text" class="form-control text-danger fw-bold"
                                                         name="vcnsm[]" required autofocus placeholder="{{ __('Brand') }}"
-                                                        maxlength="8">
+                                                        required pattern="[A-zÀ-ú\s]+" maxlength="10"
+                                                        onkeydown="return /[A-zÀ-ú\s]/i.test(event.key)">
                                                 </div>
-                                                <div class="col-6 col-md-3 mb-1">
-                                                    <input id="vcnsd" type="text" class="form-control text-danger fw-bold"
+                                                <div class=" col-6 col-md-3 mb-1">
+                                                    <input id="vcnsd" type="number" class="form-control text-danger fw-bold"
                                                         name="vcnsd[]" required autofocus placeholder="{{ __('Dose') }}"
-                                                        maxlength="2">
+                                                        onKeyPress="if(this.value.length==2) return false;"
+                                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189">
                                                 </div>
                                             </div>
                                         </div>
@@ -330,7 +334,8 @@
                                     </div>
                                 </div>
                                 {{-- MOVIDAS --}}
-                                <div class="col-12 mb-3 form-group{{ $errors->has('vcns') ? ' has-error' : '' }}">
+                                <div
+                                    class="col-12 mb-3 border border-danger rounded form-group{{ $errors->has('vcns') ? ' has-error' : '' }}">
                                     <label for="vcns" class="col-form-label fw-bold">
                                         {{ __('Moves') }}
                                     </label>
@@ -363,12 +368,13 @@
                                                     <option value="good"
                                                         @if (old('mvr') == 'good') ) selected @endif>
                                                         {{ __('good') }}</option>
-                                                    <option value="bad"
-                                                        @if (old('mvr') == 'bad') ) selected @endif>
-                                                        {{ __('bad') }}</option>
                                                     <option value="regular"
                                                         @if (old('mvr') == 'regular') ) selected @endif>
                                                         {{ __('regular') }}</option>
+                                                    <option value="bad"
+                                                        @if (old('mvr') == 'bad') ) selected @endif>
+                                                        {{ __('bad') }}</option>
+
                                                 </select>
                                             </div>
                                         </div>
@@ -418,9 +424,8 @@
                                     <label for="name" class="col-form-label fw-bold">
                                         {{ __('Photo Profile') }}
                                     </label>
-                                    <div class="col-auto bg-dark rounded">
-                                        <img id="preview" class="img-fluid mx-auto d-block bg-black"
-                                            style="height: 70vh;" />
+                                    <div class="col-auto bg-danger rounded">
+                                        <img id="preview" class="img-fluid mx-auto d-block bg-danger" />
                                         <input id="foto" type="file" class="form-control text-danger form-control-md"
                                             name="foto" value="{{ old('foto') }}" required autofocus accept="image/*">
                                     </div>
@@ -463,7 +468,7 @@
         /* ADD VCNS */
         $("#addvcns").click(function() {
             $(".form_vcns").append(
-                '<div id="vcns" class="row mt-3"><div class="col-6 col-md-3 mb-1"><input id="vcnsf" type="date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control text-danger fw-bold"name="vcnsf[]" required autofocus></div><div class="col-6 col-md-3 mb-1"><input id="vcnst" type="text" class="form-control text-danger fw-bold"name="vcnst[]" required autofocus placeholder="{{ __('Type') }}" maxlength="5"> </div><div class="col-6 col-md-3 mb-1"><input id="vcnsm" type="text" class="form-control text-danger fw-bold"name="vcnsm[]" required autofocus placeholder="{{ __('Brand') }}" maxlength="8"></div><div class="col-6 col-md-3 mb-1"><input id="vcnsd" type="text" class="form-control text-danger fw-bold"name="vcnsd[]" required autofocus placeholder="{{ __('Dose') }}" maxlength="2"></div></div>'
+                '<div id="vcns" class="row mt-3"><div class="col-6 col-md-3 mb-1"><input id="vcnsf" type="date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control text-danger fw-bold"name="vcnsf[]" required autofocus></div><div class="col-6 col-md-3 mb-1"><input id="vcnst" type="text" class="form-control text-danger fw-bold"name="vcnst[]" required autofocus placeholder="{{ __('Type') }}" pattern="[A-zÀ-ú1-9\s]+" maxlength="10"onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)"> </div><div class="col-6 col-md-3 mb-1"><input id="vcnsm" type="text" class="form-control text-danger fw-bold"name="vcnsm[]" required autofocus placeholder="{{ __('Brand') }}" pattern="[A-zÀ-ú\s]+" maxlength="10" onkeydown="return /[A-zÀ-ú\s]/i.test(event.key)"></div><div class="col-6 col-md-3 mb-1"><input id="vcnsd" type="number" class="form-control text-danger fw-bold"name="vcnsd[]" required autofocus placeholder="{{ __('Dose') }}"onKeyPress="if(this.value.length==2) return false;" onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"> </div></div > '
             );
             var n = $("div[id='vcns']").length;
             if (n == 3) {

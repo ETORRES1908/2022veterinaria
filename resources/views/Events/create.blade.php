@@ -90,7 +90,7 @@
                                 placeholder="{{ __('Coliseum') }}" required autofocus>
                                 @foreach ($coliseos as $coliseo)
                                     <option value="{{ $coliseo->id }}" @if (old('coliseo_id') == $coliseo->id) selected @endif>
-                                        {{ $coliseo->nombre }}
+                                        {{ $coliseo->nombre }} ( {{ $coliseo->country . ' - ' . $coliseo->state }})
                                     </option>
                                 @endforeach
                             </select>
@@ -1052,7 +1052,7 @@
                     <div class="col-md-12 ">
                         <div class="mx-auto">
                             <button type="submit" class="btn btn-primary" id="submit">
-                                {{ __('Add Event') }}
+                                {{ __('Create your event') }}
                             </button>
                         </div>
                     </div>

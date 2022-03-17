@@ -55,10 +55,6 @@
                                     </div>
                                 </div>
                             </form>
-                        @endif
-                    @endcan
-                    @can('chngs')
-                        @if (Auth::user()->usert == 'webmaster')
                             <form class="form-horizontal" method="POST"
                                 action="{{ route('usuarios.update', ['id' => $user->id]) }}">
                                 {!! csrf_field() !!}
@@ -68,7 +64,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-7 control-label">{{ __('User') . ' /' . __('Name Social') }}</label>
                                     <div class="col-sm-5">
-                                        <input type="name" name="name" class="form-control" maxlength="12" required autofocus>
+                                        <input type="name" name="name" class="form-control" maxlength="12" required autofocus
+                                            value="{{ $user->name }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -84,7 +81,12 @@
                                             class="btn btn-primary">{{ __('Change username and password') }}</button>
                                     </div>
                                 </div>
-
+                            </form>
+                            <form class="formulario-eliminar form-horizontal" method="POST"
+                                action="{{ route('usuarios.destroy', ['id' => $user->id]) }}">
+                                {!! csrf_field() !!}
+                                {{ method_field('DELETE') }}
+                                <button type="submit" id="delete" class="btn btn-danger">{{ __('Delete') }}</button>
                             </form>
                         @endif
                     @endcan
@@ -122,7 +124,7 @@
                             </option>
                         </select>
                     </div>
-                    <div class="col-xs-6 mb"><label>{{ __('N°DNI') }}</label>
+                    <div class="col-xs-6 mb"><label>{{ __('DNI') }}</label>
                         <input type="text" class="form-control" value="{{ $user->dni }}" readonly>
                     </div>
                     @if (isset($user->fdpt))
@@ -178,6 +180,11 @@
             margin-bottom: 1vh;
         }
 
+        .swal2-popup {
+            height: 100%;
+            font-size: 100%
+        }
+
     </style>
     <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
     {{-- COLISEO --}}
@@ -186,5 +193,25 @@
         setTimeout(function() {
             $('.alert').fadeOut('slow');
         }, 5000);
+    </script>
+    {{-- FORMULARIO ELIMINAR docente --}}
+    <script>
+        $('.formulario-eliminar').submit(function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: '{{ __('Are you sure?') }}',
+                text: '{{ __('All records will be related to this user will be deleted. This action is irreversible.') }}',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '{{ __('Yes I agree!') }}',
+                cancelButtonText: '{{ __('Cancel') }}'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            })
+        });
     </script>
 @endsection

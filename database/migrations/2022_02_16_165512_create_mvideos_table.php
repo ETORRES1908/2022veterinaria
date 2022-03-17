@@ -23,7 +23,7 @@ class CreateMvideosTable extends Migration
             $table
                 ->foreign('mascota_id')
                 ->references('id')
-                ->on('mascotas');
+                ->on('mascotas')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ class MVideosController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:addanimal')->only('index' , 'show' , 'create', 'store' , 'edit' , 'update' , 'delete');
+        $this->middleware('can:addanimal')->only('index', 'show', 'create', 'store', 'edit', 'update', 'delete');
     }
 
     public function index()
@@ -40,7 +40,7 @@ class MVideosController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'video' => 'required|file|mimetypes:video/mp4|max:3000',
+            'video' => 'required|file|mimes:mp4|max:20000',
         ]);
 
         if ($request->hasFile('video')) {

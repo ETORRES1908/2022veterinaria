@@ -23,9 +23,12 @@ class UsersTableSeeder extends Seeder
         ])->assignRole('own');
 
         //USERS AND ROLES AND MASCOTAS
-        factory(User::class)->create([
+        $cls = factory(User::class)->create([
             'status' => 1, 'usert' => 'cls'
         ])->assignRole('cls');
+        factory(Coliseos::class)->create([
+            'user_id' => $cls->id
+        ]);
 
         //USERS AND ROLES AND MASCOTAS
         factory(User::class)->create([

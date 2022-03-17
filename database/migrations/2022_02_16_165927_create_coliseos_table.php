@@ -15,6 +15,9 @@ class CreateColiseosTable extends Migration
     {
         Schema::create('coliseos', function (Blueprint $table) {
             $table->increments('id');
+            //FOREIGN USER
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('nombre');
             $table->string('country');
             $table->string('state');

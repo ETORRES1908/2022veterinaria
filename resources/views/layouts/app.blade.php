@@ -12,18 +12,20 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
+
+    {{-- Contenido --}}
+    @yield('head')
 </head>
 
 <body class="bg-black m-auto p-auto text-light" oncontextmenu="return false">
     <div id="app">
         <header>
+            {{-- CABEZERA --}}
             <nav class="navbar navbar-expand-lg navbar-dark bg-black">
                 <div class="container-fluid">
-
                     <!-- Branding Image -->
                     <a class="navbar-brand link-light fs-4" href="{{ url('/') }}">
                         <img src="{{ asset('storage/img/pata.jpg') }}" width="50"

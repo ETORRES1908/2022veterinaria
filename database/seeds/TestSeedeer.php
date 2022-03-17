@@ -24,10 +24,14 @@ class TestSeedeer extends Seeder
         ])->assignRole('own');
 
         //USERS AND ROLES AND MASCOTAS
-        factory(User::class)->create([
+        $cls = factory(User::class)->create([
             'name' => 'cls', 'usert' => 'cls',
             'status' => 1
         ])->assignRole('cls');
+
+        factory(Coliseos::class)->create([
+            'user_id' => $cls->id
+        ]);
 
         //USERS AND ROLES AND MASCOTAS
         factory(User::class)->create([
@@ -89,8 +93,5 @@ class TestSeedeer extends Seeder
             'status' => 1,
             'password' => bcrypt('123'),
         ])->assignRole('own');
-
-        //COLISEOS
-        factory(Coliseos::class, 5)->create();
     }
 }

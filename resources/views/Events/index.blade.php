@@ -12,7 +12,7 @@
         @can('addevent')
             <div class="card-header border border-danger">
                 <a href="{{ route('events.create') }}" class="btn btn-success" style="font-size: 95%">
-                    {{ __('Add Event') }}</a>
+                    {{ __('Create your event') }}</a>
             </div>
         @endcan
         <div class="card-body table-responsive border border-danger">

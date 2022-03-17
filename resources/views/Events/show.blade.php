@@ -37,7 +37,7 @@
             <table id="datatable" class="table table-dark table-hover nowrap">
                 <thead>
                     <tr>
-                        <th>REGGAL</th>
+                        <th>REG ANI</th>
                         <th>{{ __('Weight') }}</th>
                         <th>{{ __('Shed') }}</th>
                         <th>{{ __('Disability') }}</th>
@@ -110,10 +110,10 @@
                                                             <input type="text" id="evento_id" name="evento_id"
                                                                 value="{{ $evento->id }}" hidden>
                                                         </div>
-                                                        {{-- REGGAL --}}
+                                                        {{-- REG ANI --}}
                                                         <div class="row mb-2">
                                                             <label
-                                                                class="col-sm-4 col-form-label">{{ __('REGGAL') }}:</label>
+                                                                class="col-sm-4 col-form-label">{{ __('REG ANI') }}:</label>
                                                             <div class="col-sm-8">
                                                                 <input class="form-control text-danger" type="text"
                                                                     value="{{ $listp->mascota->REGGAL }}" readonly>
@@ -190,7 +190,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>REGGAL</th>
+                        <th>REG ANI</th>
                         <th>{{ __('Weight') }}</th>
                         <th>{{ __('Shed') }}</th>
                         <th>{{ __('Disability') }}</th>
@@ -237,9 +237,9 @@
                             <div>
                                 <input type="text" id="evento_id" name="evento_id" value="{{ $evento->id }}" hidden>
                             </div>
-                            {{-- REGGAL --}}
+                            {{-- REG ANI --}}
                             <div class="row mb-2">
-                                <label class="col-sm-4 col-form-label">{{ __('REGGAL') }}:</label>
+                                <label class="col-sm-4 col-form-label">{{ __('REG ANI') }}:</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control text-danger" id="mreggal" readonly>
                                 </div>
