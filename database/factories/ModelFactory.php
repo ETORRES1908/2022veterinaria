@@ -14,7 +14,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
-    static $answer;
+    /* static $answer; */
 
     $gender = $faker->randomElement(['male', 'female']);
 
@@ -36,7 +36,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'direction' => $faker->address(),
         'job' => $faker->jobTitle(),
         'password' => $password ?: $password = bcrypt('123'),
-        'answer' => $answer ?: $answer = bcrypt('123'),
+        'answer' => '123',
         'remember_token' => str_random(10),
     ];
 });

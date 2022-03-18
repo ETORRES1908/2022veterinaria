@@ -125,6 +125,11 @@
                                                 </select>
                                             </li>
                                         @endif
+                                        <li>
+                                            <a class="dropdown-item link-dark " href="{{ route('profile.index') }}">
+                                                {{ __('Profile') }}
+                                            </a>
+                                        </li>
                                         @can('addanimal')
                                             <li>
                                                 <a class="dropdown-item link-dark " href="{{ route('mascotas.index') }}">

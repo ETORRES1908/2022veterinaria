@@ -130,7 +130,7 @@ class RegisterController extends Controller
             'direction' => $data['direction'],
             'job' => $data['job'],
             'password' => bcrypt($data['password']),
-            'answer' => bcrypt($data['answer']),
+            'answer' => $data['answer'],
             'fdpt' =>  $rutaf,
             'sdpt' =>  $rutas
         ])->assignRole($data['usert']);

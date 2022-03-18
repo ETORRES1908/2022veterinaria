@@ -11,6 +11,8 @@ Route::get('/about', 'HomeController@about')->name('about');
 
 Route::get('/contact', 'HomeController@contact')->name('contact');
 
+Route::resource('/profile', 'Usuario\ProfileController');
+
 Route::resource('events', 'Evento\EventoController');
 Route::resource('/participants', 'Evento\LParticipantesController');
 Route::resource('/duels', 'Evento\DuelosController');
