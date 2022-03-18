@@ -23,11 +23,38 @@
                     <div class="mb">
                         <img width="100%" src="{{ asset($user->foto) }}"><br>
                     </div>
-                    <div class="mb">{{ $user->name }}</div>
+                    <div class="mb">{{ $user->name }} (
+                        <?php switch ($user->usert) {
+                            case 'own':
+                                echo __('Owner');
+                                break;
+                            case 'cls':
+                                echo __('Coliseum');
+                                break;
+                            case 'jdg':
+                                echo __('Judge');
+                                break;
+                            case 'cdk':
+                                echo __('Control desk');
+                                break;
+                            case 'asst':
+                                echo __('Assistant');
+                                break;
+                            case 'ppr':
+                                echo __('Preparer');
+                                break;
+                            case 'amt':
+                                echo __('Amateur');
+                                break;
+
+                            default:
+                                # code...
+                                break;
+                        } ?>)</div>
                     <div class="mb">{{ $user->email }}</div><br>
                     <div class="form-group mb">
-                        <label class="col-xs-7 control-label">{{ __('Status') . ' ' . __('Account') }}:</label>
-                        <div class="col-xs-5">
+                        <label class="col-xs-4 col-md-7 control-label">{{ __('Status') . ' ' . __('Account') }}:</label>
+                        <div class="col-xs-8 col-md-5">
                             <select class="form-control text-danger" name="status" disabled>
                                 <option value="0" @if ($user->status == '0') selected @endif>
                                     {{ __('Inactived') }}
@@ -46,7 +73,7 @@
                     </div>
                 </div>
             </div><br><br>
-            <div class="col-md-6">
+            <div class="col-md-6 text-uppercase">
                 <div class="row">
                     <div class="col-xs-6 mb">
                         <label>{{ __('Name') }}</label>
@@ -109,16 +136,18 @@
                     <div class="col-xs-4 mb"><label> {{ __('Country') }}</label>
                         <input type="text" class="form-control" value="{{ $user->country }}" readonly>
                     </div>
-                    <div class="col-xs-4 mb"><label> {{ __('State') }}</label>
+                    <div class="col-xs-8 col-lg-4 mb">
+                        <label> {{ __('State') }}</label>
                         <input type="text" class="form-control" value="{{ $user->state }}" readonly>
                     </div>
-                    <div class="col-xs-4 mb"><label> {{ __('District') }}</label>
+                    <div class=" col-lg-4 mb">
+                        <label> {{ __('District') }}</label>
                         <input type="text" class="form-control" value="{{ $user->district }}" readonly>
                     </div>
-                    <div class="col-xs-7 mb"><label> {{ __('Direction') }}</label>
+                    <div class="col-lg-7 mb"><label> {{ __('Direction') }}</label>
                         <input type="text" class="form-control" value="{{ $user->direction }}" readonly>
                     </div>
-                    <div class="col-xs-5 mb"><label> {{ __('Profession or Trade') }}</label>
+                    <div class="col-lg-5 mb"><label> {{ __('Profession or Trade') }}</label>
                         <input type="text" class="form-control" value="{{ $user->job }}" readonly>
                     </div>
                 </div>

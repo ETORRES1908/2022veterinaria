@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <form method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data" autocomplete="off">
+    <form class="text-uppercase" method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data" autocomplete="off">
         {!! csrf_field() !!}
         <div class="card bg-black text-white mx-auto border border-danger mb-3">
             <div class="card-body border border-danger">

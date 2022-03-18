@@ -4,7 +4,7 @@
     <div class="card bg-black border border-danger">
         <div class="card-header fw-bold fs-3 border border-danger">{{ __('Create your account') }}</div>
         <div class="card-body border border-danger">
-            <form class="form-horizontal" method="POST" action="{{ route('register') }}" enctype="multipart/form-data"
+            <form class="text-uppercase" method="POST" action="{{ route('register') }}" enctype="multipart/form-data"
                 autocomplete="off">
                 {!! csrf_field() !!}
                 {{-- USERNAME Y FOTO DE PERFIL --}}
@@ -54,7 +54,7 @@
                         {{-- NOMBRE --}}
                         <div class="col-6 mb-3 form-group{{ $errors->has('nombre') ? 'has-error' : '' }}">
                             <label for="nombre" class="col-form-label fw-bold">
-                                {{ __('Name') }}
+                                {{ __('First name') }}
                             </label>
                             <div class="col-auto">
                                 <input type="text" class="form-control text-danger" name="nombre"
@@ -70,7 +70,7 @@
                         {{-- APELLIDO --}}
                         <div class="col-6 mb-3 form-group{{ $errors->has('apellido') ? ' has-error' : '' }}">
                             <label for="apellido" class="col-form-label fw-bold">
-                                {{ __('Surname') }}
+                                {{ __('First surname') }}
                             </label>
 
                             <div class="col-auto">
@@ -91,8 +91,8 @@
                                 {{ __('Name') . ' ' . __('Coliseum') }}
                             </label>
                             <input type="text" class="form-control text-danger" name="clsname"
-                                value="{{ old('clsname') }}" required autofocus pattern="[A-zÀ-ú1-9\S]+" maxlength="30"
-                                onkeydown="return /[A-zÀ-ú1-9]/i.test(event.key)" />
+                                value="{{ old('clsname') }}" required autofocus pattern="[A-zÀ-ú1-9\s]+" maxlength="30"
+                                onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)" />
 
                             @if ($errors->has('clsname'))
                                 <span class="text-danger text-fs6">
@@ -172,7 +172,7 @@
                 <div class="row" id="fdb" style="display: none">
                     {{-- FOTO DE DISABILITY --}}
                     <div class="col-sm-6 mb-3 text-center form-group{{ $errors->has('fdpt') ? ' has-error' : '' }}">
-                        <label for="sdpt" class="col-form-label fw-bold text-capitalize">
+                        <label for="sdpt" class="col-form-label fw-bold">
                             {{ __('document') }} {{ __('Disability') }}
                         </label>
                         <div class="col-auto bg-black rounded">
@@ -190,7 +190,7 @@
                     </div>
                     {{-- FOTO DE DISABILITY 2 --}}
                     <div class="col-sm-6 mb-3 text-center form-group{{ $errors->has('sdpt') ? ' has-error' : '' }}">
-                        <label for="sdpt" class="col-form-label fw-bold text-capitalize">
+                        <label for="sdpt" class="col-form-label fw-bold">
                             {{ __('Photo') }} {{ __('Disability') }}
                         </label>
                         <div class="col-auto m-1 bg-black rounded">
@@ -748,7 +748,237 @@
                                     @if (old('state') == 'ZC') selected @endif>
                                     ZC - Zamora Chinchipe
                                 </option>
-
+                                {{-- MEX --}}
+                                <option data="MEX" class="text-danger fw-bold" value="CX"
+                                    @if (old('state') == 'CX') selected @endif>
+                                    CX - Ciudad de México
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="AG"
+                                    @if (old('state') == 'AG') selected @endif>
+                                    AG - Aguascalientes
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="BC"
+                                    @if (old('state') == 'BC') selected @endif>
+                                    BC - Baja California
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="BS"
+                                    @if (old('state') == 'BS') selected @endif>
+                                    BS - Baja California Sur
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="CM"
+                                    @if (old('state') == 'CM') selected @endif>
+                                    CM - Campeche
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="CS"
+                                    @if (old('state') == 'CS') selected @endif>
+                                    CS - Chiapas
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="CH"
+                                    @if (old('state') == 'CH') selected @endif>
+                                    CH - Chihuahua
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="CO"
+                                    @if (old('state') == 'CO') selected @endif>
+                                    CO - Coahuila
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="CL"
+                                    @if (old('state') == 'CL') selected @endif>
+                                    CL - Colima
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="DG"
+                                    @if (old('state') == 'DG') selected @endif>
+                                    DG - Durango
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="GT"
+                                    @if (old('state') == 'GT') selected @endif>
+                                    GT - Guanajuato
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="GR"
+                                    @if (old('state') == 'GR') selected @endif>
+                                    GR - Guerrero
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="HG"
+                                    @if (old('state') == 'HG') selected @endif>
+                                    HG - Hidalgo
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="JC"
+                                    @if (old('state') == 'JC') selected @endif>
+                                    JC - Jalisco
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="EM"
+                                    @if (old('state') == 'EM') selected @endif>
+                                    EM - México
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="MI"
+                                    @if (old('state') == 'MI') selected @endif>
+                                    MI - Michoacán
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="MO"
+                                    @if (old('state') == 'MO') selected @endif>
+                                    MO - Morelos
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="NA"
+                                    @if (old('state') == 'NA') selected @endif>
+                                    NA - Nayarit
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="NL"
+                                    @if (old('state') == 'NL') selected @endif>
+                                    NL - Nuevo León
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="OA"
+                                    @if (old('state') == 'OA') selected @endif>
+                                    OA - Oaxaca
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="PU"
+                                    @if (old('state') == 'PU') selected @endif>
+                                    PU - Puebla
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="QT"
+                                    @if (old('state') == 'QT') selected @endif>
+                                    QT - Querétaro
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="QR"
+                                    @if (old('state') == 'QR') selected @endif>
+                                    QR - Quintana Roo
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="SL"
+                                    @if (old('state') == 'SL') selected @endif>
+                                    SL - San Luis Potosí
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="SI"
+                                    @if (old('state') == 'SI') selected @endif>
+                                    SI - Sinaloa
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="SO"
+                                    @if (old('state') == 'SO') selected @endif>
+                                    SO - Sonora
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="TB"
+                                    @if (old('state') == 'TB') selected @endif>
+                                    TB - Tabasco
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="TL"
+                                    @if (old('state') == 'TL') selected @endif>
+                                    TL - Tlaxcala
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="TM"
+                                    @if (old('state') == 'TM') selected @endif>
+                                    TM - Tamaulipas
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="TL"
+                                    @if (old('state') == 'TL') selected @endif>
+                                    TL - Tlaxcala
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="VE"
+                                    @if (old('state') == 'VE') selected @endif>
+                                    VE - Veracruz
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="YU"
+                                    @if (old('state') == 'YU') selected @endif>
+                                    YU - Yucatán
+                                </option>
+                                <option data="MEX" class="text-danger fw-bold" value="ZA"
+                                    @if (old('state') == 'ZA') selected @endif>
+                                    ZA - Zacatecas
+                                </option>
+                                {{-- PUERTO RICO --}}
+                                <option data="PRI" class="text-danger fw-bold" value="SJ"
+                                    @if (old('state') == 'SJ') selected @endif>
+                                    SJ - San Juan
+                                </option>
+                                <option data="PRI" class="text-danger fw-bold" value="BY"
+                                    @if (old('state') == 'BY') selected @endif>
+                                    BY - Bayamón
+                                </option>
+                                <option data="PRI" class="text-danger fw-bold" value="AB"
+                                    @if (old('state') == 'AB') selected @endif>
+                                    AB - Arecibo
+                                </option>
+                                <option data="PRI" class="text-danger fw-bold" value="AM"
+                                    @if (old('state') == 'AM') selected @endif>
+                                    AM - Aguadilla/ Mayagüez
+                                </option>
+                                <option data="PRI" class="text-danger fw-bold" value="GY"
+                                    @if (old('state') == 'GY') selected @endif>
+                                    GY - Guayama
+                                </option>
+                                <option data="PRI" class="text-danger fw-bold" value="PN"
+                                    @if (old('state') == 'PN') selected @endif>
+                                    PN - Ponce
+                                </option>
+                                <option data="PRI" class="text-danger fw-bold" value="HO"
+                                    @if (old('state') == 'HO') selected @endif>
+                                    HO - Humacao
+                                </option>
+                                <option data="PRI" class="text-danger fw-bold" value="CN"
+                                    @if (old('state') == 'CN') selected @endif>
+                                    CN - Carolina
+                                </option>
+                                {{-- REPUBLICA DOMINICANA --}}
+                                <option data="DOM" class="text-danger fw-bold" value="SJ"
+                                    @if (old('state') == 'SJ') selected @endif>
+                                    SJ - San Juan
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="AZ"
+                                    @if (old('state') == 'AZ') selected @endif>
+                                    AZ - Azua
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="AG"
+                                    @if (old('state') == 'AG') selected @endif>
+                                    AG - La Altagracia
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="BH"
+                                    @if (old('state') == 'BH') selected @endif>
+                                    BH - Barahona
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="DT"
+                                    @if (old('state') == 'DT') selected @endif>
+                                    DT - Duarte
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="EP"
+                                    @if (old('state') == 'EP') selected @endif>
+                                    EP - Elías Piña
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="ES"
+                                    @if (old('state') == 'ES') selected @endif>
+                                    ES - El Seibo
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="HM"
+                                    @if (old('state') == 'HM') selected @endif>
+                                    HM - Hato Mayor
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="IP"
+                                    @if (old('state') == 'IP') selected @endif>
+                                    IP - Independencia
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="LV"
+                                    @if (old('state') == 'LV') selected @endif>
+                                    LV - La Vega
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="MC"
+                                    @if (old('state') == 'MC') selected @endif>
+                                    MC - Monte Cristi
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="MP"
+                                    @if (old('state') == 'MP') selected @endif>
+                                    MP - Monte Plata
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="PD"
+                                    @if (old('state') == 'PD') selected @endif>
+                                    PD - Pedernales
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="PP"
+                                    @if (old('state') == 'PP') selected @endif>
+                                    PP - Puerto Plata
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="SD"
+                                    @if (old('state') == 'SD') selected @endif>
+                                    SD - Santo Domingo
+                                </option>
+                                <option data="DOM" class="text-danger fw-bold" value="SA"
+                                    @if (old('state') == 'SA') selected @endif>
+                                    SA - Santiago
+                                </option>
                                 {{-- OTHER --}}
                                 <option target="OTR" class="text-danger fw-bold" value="OTR"
                                     @if (old('state') == 'OTR') selected @endif>
@@ -827,9 +1057,9 @@
                         </label>
 
                         <div class="col-auto">
-                            <input type="password" class="form-control text-danger" name="password" min="8"
+                            <input type="password" class="form-control text-danger" name="password" minlength="8"
                                 onKeyPress="if(this.value.length==8) return false;" pattern="^(?=\D*\d)(?=.*?[a-zA-Z]).{8}"
-                                required autofocus placeholder="8 digitos - Minimo 1 letra y 1 numero">
+                                required autofocus placeholder="{{ __('8 digits - Minimum 1 letter and 1 number') }}">
                             @if ($errors->has('password'))
                                 <span class="text-danger text-fs6">
                                     {{ $errors->first('password') }}
@@ -845,7 +1075,8 @@
                         </label>
                         <div class="col-auto">
                             <input type="password" class="form-control  text-danger" name="password_confirmation" required
-                                onKeyPress="if(this.value.length==8) return false;" autofocus>
+                                onKeyPress="if(this.value.length==8) return false;" autofocus minlength="8"
+                                placeholder="{{ __('8 digits - Minimum 1 letter and 1 number') }}">
                         </div>
                         @if ($errors->has('password_confirmation'))
                             <span class="text-danger text-fs6">
@@ -856,7 +1087,7 @@
                 </div>
                 {{-- ELEGIR RESPUESTA --}}
                 <div class="col-sm-12 mb-3 form-group{{ $errors->has('question') ? ' has-error' : '' }}">
-                    <label for="answer" class="col-auto col-form-label fw-bold text-capitalize">
+                    <label for="answer" class="col-auto col-form-label fw-bold">
                         {{ __('secrect answer') }}
                     </label>
                     <input id="answer" type="text" class="form-control text-danger" name="answer" maxlength="10"

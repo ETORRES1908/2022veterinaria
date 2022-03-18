@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\MFotos;
+use App\Movidas;
 use App\User;
 use App\Vacunas;
 use Carbon\Carbon;
@@ -67,11 +68,6 @@ class MascotasController extends Controller
             'hvs' => $request->hvs,
             'ncr' => $request->ncr,
             'sena' => $request->sena,
-            'mvf' => $request->mvf,
-            'mm' => $request->mm,
-            'ms' => $request->ms,
-            'mvtp' => $request->mvtp,
-            'mvr' => $request->mvr,
             'spmt' => $request->spmt,
             'plc' => $request->plc,
             'plu' => $request->plu,
@@ -99,6 +95,16 @@ class MascotasController extends Controller
                 'vcnst' => $request->vcnst[$key],
                 'vcnsm' => $request->vcnsm[$key],
                 'vcnsd' => $request->vcnsd[$key]
+            ]);
+        }
+        foreach ($request->mvf as $key => $value) {
+            $nmovidas = Movidas::Create([
+                'mascota_id' => $nmascota->id,
+                'mvf' => $request->mvf[$key],
+                'mm' => $request->mm[$key],
+                /* 'ms' => $request->ms[$key], */
+                'mvtp' => $request->mvtp[$key],
+                'mvr' => $request->mvr[$key]
             ]);
         }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administrador;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Coliseos;
+use App\User;
 
 class ColiseosController extends Controller
 {
@@ -30,7 +31,7 @@ class ColiseosController extends Controller
      */
     public function create()
     {
-        return view('Administrador.MColiseos.create');
+        /* return view('Administrador.MColiseos.create'); */
     }
 
     /**
@@ -87,7 +88,8 @@ class ColiseosController extends Controller
      */
     public function destroy($id)
     {
-        Coliseos::find($id)->delete();
-        return redirect()->route('mcoliseos.index');
+        $cid = Coliseos::find($id);
+        $user = User::find($cid->user_id)->delete();
+        return redirect()->route('mcoliseos.index')->with('mensaje', __('Successfully deleted'));
     }
 }

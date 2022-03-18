@@ -339,7 +339,7 @@
                                                     <button type="button" class="btn btn-danger bg-danger btn-close"
                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body border border-danger">
+                                                <div class="modal-body border border-danger text-uppercase">
                                                     <form action="{{ route('duels.update', $duel->id) }}" method="POST">
                                                         {!! method_field('PUT') !!}
                                                         {!! csrf_field() !!}
@@ -474,7 +474,7 @@
                     <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <form class="form-horizontal" method="POST" action="{{ route('duels.store') }}">
+                <form class="text-uppercase" method="POST" action="{{ route('duels.store') }}">
                     {!! csrf_field() !!}
                     <input type="text" id="evento_id" name="evento_id" value="{{ $evento->id }}" hidden>
                     {{-- LPARTICIPANTE_ID --}}

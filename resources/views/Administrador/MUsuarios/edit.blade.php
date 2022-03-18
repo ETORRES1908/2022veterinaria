@@ -23,7 +23,7 @@
                     <div class="mb">{{ $user->email }}</div>
                     @can('chngs')
                         @if (Auth::user()->usert == 'webmaster')
-                            <form class="form-horizontal" method="POST"
+                            <form class="form-horizontal text-uppercase" method="POST"
                                 action="{{ route('usuarios.update', ['id' => $user->id]) }}">
                                 {!! csrf_field() !!}
                                 {{ method_field('PUT') }}
@@ -46,16 +46,15 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <br>
-                                    <br>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-primary">{{ __('Change status') }}</button>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-primary">{{ __('Change status') }}</button>
                                     </div>
                                 </div>
+
                             </form>
-                            <form class="form-horizontal" method="POST"
+                            <form class="form-horizontal text-uppercase" method="POST"
                                 action="{{ route('usuarios.update', ['id' => $user->id]) }}">
                                 {!! csrf_field() !!}
                                 {{ method_field('PUT') }}
@@ -82,7 +81,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <form class="formulario-eliminar form-horizontal" method="POST"
+                            <form class="formulario-eliminar form-horizontal text-uppercase" method="POST"
                                 action="{{ route('usuarios.destroy', ['id' => $user->id]) }}">
                                 {!! csrf_field() !!}
                                 {{ method_field('DELETE') }}
@@ -153,16 +152,16 @@
                     <div class="col-xs-4 mb"><label> {{ __('Country') }}</label>
                         <input type="text" class="form-control" value="{{ $user->country }}" readonly>
                     </div>
-                    <div class="col-xs-4 mb"><label> {{ __('State') }}</label>
+                    <div class="col-xs-8 col-lg-4 mb"><label> {{ __('State') }}</label>
                         <input type="text" class="form-control" value="{{ $user->state }}" readonly>
                     </div>
-                    <div class="col-xs-4 mb"><label> {{ __('District') }}</label>
+                    <div class=" col-lg-4 mb"><label> {{ __('District') }}</label>
                         <input type="text" class="form-control" value="{{ $user->district }}" readonly>
                     </div>
-                    <div class="col-xs-7 mb"><label> {{ __('Direction') }}</label>
+                    <div class="col-lg-7 mb"><label> {{ __('Direction') }}</label>
                         <input type="text" class="form-control" value="{{ $user->direction }}" readonly>
                     </div>
-                    <div class="col-xs-5 mb"><label> {{ __('Profession or Trade') }}</label>
+                    <div class="col-lg-5 mb"><label> {{ __('Profession or Trade') }}</label>
                         <input type="text" class="form-control" value="{{ $user->job }}" readonly>
                     </div>
                 </div>

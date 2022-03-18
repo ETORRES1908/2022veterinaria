@@ -91,7 +91,7 @@ class RegisterController extends Controller
         $ruta = 'storage/images/users/' . $nombre;
         Image::make($pph->getRealPath())->resize(1280, 720, function ($constraint) {
             $constraint->aspectRatio();
-        })->save($ruta, 40, 'jpeg');
+        })->save($ruta, 72, 'jpeg');
         //FOTO DISABILITY 1
         $rutaf = null;
         if (isset($data['fdpt'])) {
@@ -108,7 +108,7 @@ class RegisterController extends Controller
             $rutas = 'storage/images/users/' . $ss;
             Image::make($sdpt->getRealPath())->resize(1280, 720, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($rutas, 40, 'jpeg');
+            })->save($rutas, 72, 'jpeg');
         }
 
         $user = User::create([
@@ -135,14 +135,16 @@ class RegisterController extends Controller
             'sdpt' =>  $rutas
         ])->assignRole($data['usert']);
 
-        Coliseos::create([
-            'user_id' => $user->id,
-            'nombre' => $data['clsname'],
-            'country' => $data['country'],
-            'state' => $data['state'],
-            'district' => $data['district'],
-            'reference' => $data['direction'],
-        ]);
+        if ($data['clsname']) {
+            Coliseos::create([
+                'user_id' => $user->id,
+                'nombre' => $data['clsname'],
+                'country' => $data['country'],
+                'state' => $data['state'],
+                'district' => $data['district'],
+                'reference' => $data['direction'],
+            ]);
+        }
         return $user;
     }
 }

@@ -15,7 +15,8 @@
                     </div>
                     <div class="mb-3">{{ Auth::user()->name }}</div>
                     <div class="mb-3">{{ Auth::user()->email }}</div>
-                    <form method="POST" action="{{ route('profile.update', ['id' => Auth::user()->id]) }}">
+                    <form class="text-uppercase" method="POST"
+                        action="{{ route('profile.update', ['id' => Auth::user()->id]) }}">
                         {!! csrf_field() !!}
                         {{ method_field('PUT') }}
                         <input type="text" name="typec" value="1" hidden>

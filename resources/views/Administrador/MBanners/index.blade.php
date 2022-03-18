@@ -38,7 +38,7 @@
                             <td>{{ $banner->name }}</td>
                             <td>{{ $banner->ruta }}</td>
                             <td>
-                                <form method="POST" action="{{ route('mbanners.destroy', $banner->id) }}">
+                                <form method="POST" class="text-uppercase" action="{{ route('mbanners.destroy', $banner->id) }}">
                                     {!! method_field('delete') !!}
                                     {!! csrf_field() !!}
                                     <button type="submit" class="col btn btn-danger">{{ __('Delete') }}</button>

@@ -45,7 +45,7 @@
                         </a>
                     </div>
                     <div class="col-xs-12"><br>
-                        <form method="POST" action="{{ route('meventos.update', ['id' => $evento->id]) }}">
+                        <form class="text-uppercase" method="POST" action="{{ route('meventos.update', ['id' => $evento->id]) }}">
                             {!! csrf_field() !!}
                             {{ method_field('PUT') }}
                             <div class="form-group">

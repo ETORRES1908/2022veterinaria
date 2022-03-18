@@ -31,11 +31,6 @@ class CreateMascotasTable extends Migration
             $table->string('hvs')->nullable(); //HUEVOS
             $table->string('ncr')->nullable(); //NACIERON
             $table->string('sena')->nullable(); //SENASA
-            $table->string('mvf'); //MOVIDAS
-            $table->string('mm'); //MOVIDAS
-            $table->string('ms'); //MOVIDAS
-            $table->string('mvtp'); //MOVIDAS
-            $table->string('mvr'); //MOVIDAS
             $table->string('spmt'); //SUPLEMENTO
             $table->string('obs');
 

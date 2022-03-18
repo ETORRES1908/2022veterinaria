@@ -40,14 +40,15 @@
                             <img src="{{ url('storage/img/shampoo.jpg') }}" class="img-fluid col-sm-7">
                         </div>
                         {{-- Formulario de Inicio de Sesión --}}
-                        <form method="POST" action="{{ route('login') }}">
+                        <form class="text-uppercase" method="POST" action="{{ route('login') }}">
                             {!! csrf_field() !!}
                             <div class="row mb-3 form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label for="name" class="col-sm-5 col-form-label">{{ __('Username') }}</label>
                                 {{-- USERNAME --}}
                                 <div class="col-md-7">
                                     <input id="name" type="text" class="form-control text-danger" name="name"
-                                        value="{{ old('name') }}" required autofocus onKeyPress="if(this.value.length==15) return false;">
+                                        value="{{ old('name') }}" required autofocus
+                                        onKeyPress="if(this.value.length==15) return false;">
 
                                     @if ($errors->has('name'))
                                         <span class="fs-6 text-danger">
@@ -94,22 +95,16 @@
                             </div>
 
                             {{-- LOGIN --}}
-                            <div class="row mb-3 form-group">
-                                <div class="mx-auto">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Login') }}
-                                    </button>
-                                </div>
-                            </div>
-                            <div>
-                                <a class="btn btn-link" href="{{ route('register') }}">
-                                    {{ __('Create a new account') }}
-                                </a>
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
+                            <div class="mb-3">
+                                <input type="submit" class="btn btn-primary mb-3" value="{{ __('Login') }}">
                             </div>
                         </form>
+                        <a class="btn btn-link mb-3" href="{{ route('register') }}">
+                            {{ __('Create a new account') }}
+                        </a>
+                        <a class="btn btn-link mb-3" href="{{ route('password.request') }}">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
                     </div>
                 </div>
             </div>

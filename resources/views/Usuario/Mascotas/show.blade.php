@@ -125,7 +125,7 @@
                             <li class="list-group-item bg-black text-white">
                                 <div><strong>{{ __('Vaccines') }}:</strong></div>
                                 <div class="table-responsive">
-                                    <table class="table text-white">
+                                    <table class="table text-white text-uppercase">
                                         <thead>
                                             <tr>
                                                 <th>{{ __('Date') }}</th>
@@ -172,7 +172,8 @@
                                     </div>
                                 </div>
                             </li>
-                            <form action="{{ route('mascotas.update', $mascota->id) }}" method="POST">
+                            <form class="text-uppercase" action="{{ route('mascotas.update', $mascota->id) }}"
+                                method="POST">
                                 {!! csrf_field() !!}
                                 {{ method_field('PUT') }}
                                 <li class="list-group-item bg-black text-white">
@@ -199,7 +200,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-6 h-100">
+                <div class="col-lg-6 h-100 text-uppercase">
                     <div class="row g-3 text-center">
                         <div class="col-12">
                             <div for="nombre" class="form-label fw-bold text-white">
@@ -680,8 +681,9 @@
     </div>
     {{-- TABLE --}}
     <div class="card-footer border border-danger table-responsive">
-        <label class="form-label fw-bold text-uppercase text-danger">{{ __('Last 10 participantions') }}</label>
-        <table class="table table-sm table-dark table-hover fs-5" id="datatable">
+        <label
+            class="form-label fw-bold text-uppercase text-danger text-uppercase">{{ __('Last 10 participantions') }}</label>
+        <table class="table table-sm table-dark table-hover fs-5 text-uppercase" id="datatable">
             <thead>
                 <tr>
                     <th>{{ __('Deal') }}</th>
@@ -771,10 +773,11 @@
         $('#datatable').DataTable({
             bInfo: false,
             lengthChange: false,
-            pageLength: 10,
+            pageLength: 20,
+            paginate: false,
             lengthMenu: [
-                [10],
-                [10]
+                [20],
+                [20]
             ],
             language: {
                 "url": getLanguage()

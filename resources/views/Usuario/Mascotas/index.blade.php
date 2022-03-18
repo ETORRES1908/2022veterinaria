@@ -2,12 +2,15 @@
 
 @section('content')
     <div class="mx-auto">
-        <div class="mb-5">
-            <a href="{{ route('mascotas.create') }}" class="fw-bold text-uppercase btn btn-outline-danger px-5">
-                {{ __('Add Exemplar') }}
-            </a>
-        </div>
-
+        @can('addanimal')
+            @if (count(Auth::user()->mascotas) <= 200)
+                <div class="mb-5">
+                    <a href="{{ route('mascotas.create') }}" class="fw-bold text-uppercase btn btn-outline-danger px-5">
+                        {{ __('Add Exemplar') }}
+                    </a>
+                </div>
+            @endif
+        @endcan
         <div class="row row-cols-1 row-cols-md-2 g-4">
             @foreach ($mascotas as $mascota)
                 <div class="col">

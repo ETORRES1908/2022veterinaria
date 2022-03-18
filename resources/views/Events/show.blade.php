@@ -88,7 +88,7 @@
                                                     <button type="button" class="btn btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
-                                                <form class="form-horizontal" method="POST"
+                                                <form class="text-uppercase" method="POST"
                                                     action="{{ route('participants.update', $listp->id) }}"
                                                     enctype="multipart/form-data" autocomplete="off">
                                                     {{ method_field('PUT') }}
@@ -213,7 +213,7 @@
                         <div class="modal-title text-black fw-bold">{{ __('Choose exemplar') }}</div>
                         <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form class="form-horizontal" method="POST" action="{{ route('participants.store') }}"
+                    <form class="text-uppercase" method="POST" action="{{ route('participants.store') }}"
                         enctype="multipart/form-data" autocomplete="off">
                         {!! csrf_field() !!}
                         <div class="modal-body bg-black">

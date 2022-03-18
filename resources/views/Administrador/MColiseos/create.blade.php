@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <form action="{{ route('mcoliseos.store') }}" method="POST">
+        <form class="text-uppercase" action="{{ route('mcoliseos.store') }}" method="POST">
             {!! csrf_field() !!}
             {{ method_field('POST') }}
             <div class="form-group">

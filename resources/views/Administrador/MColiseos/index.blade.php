@@ -8,9 +8,14 @@
 
 @section('content')
     <div class="container-fluid">
-        <div style="margin-bottom:1vh">
+        {{-- <div style="margin-bottom:1vh">
             <a class="btn btn-primary" href="{{ route('mcoliseos.create') }}">{{ __('Create') }}</a>
-        </div>
+        </div> --}}
+        @if (session('mensaje'))
+            <div class="alert alert-success">
+                {{ session('mensaje') }}
+            </div>
+        @endif
         <div class="table-responsive">
             <table id="datatable" class="table table-hover nowrap" style="width:100%">
                 <thead>
@@ -32,7 +37,8 @@
                             <td>{{ $coliseo->district }}</td>
                             <td>{{ $coliseo->reference }}</td>
                             <td>
-                                <form method="POST" action="{{ route('mcoliseos.destroy', $coliseo->id) }}">
+                                <form class="text-uppercase" method="POST"
+                                    action="{{ route('mcoliseos.destroy', $coliseo->id) }}">
                                     {!! method_field('delete') !!}
                                     {!! csrf_field() !!}
                                     <button type="submit" class="col btn btn-danger">{{ __('Delete') }}</button>
