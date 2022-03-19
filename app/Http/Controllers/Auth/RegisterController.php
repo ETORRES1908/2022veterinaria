@@ -87,11 +87,9 @@ class RegisterController extends Controller
 
         //FOTO PROFILE
         $pph = $data['foto'];
-        $nombre = $data['dni'] . "profile." . $pph->guessExtension();
+        $nombre = $data['dni'] . "profile.jpg";
         $ruta = 'storage/images/users/' . $nombre;
-        Image::make($pph->getRealPath())->resize(1280, 720, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($ruta, 72, 'jpeg');
+        Image::make($pph->getRealPath())->resize(400, 400)->save($ruta, 72, 'jpg');
         //FOTO DISABILITY 1
         $rutaf = null;
         if (isset($data['fdpt'])) {
@@ -104,11 +102,11 @@ class RegisterController extends Controller
         $rutas = null;
         if (isset($data['sdpt'])) {
             $sdpt = $data['sdpt'];
-            $ss = $data['dni'] . "sdpt." . $sdpt->guessExtension();
+            $ss = $data['dni'] . "sdpt.jpg";
             $rutas = 'storage/images/users/' . $ss;
             Image::make($sdpt->getRealPath())->resize(1280, 720, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($rutas, 72, 'jpeg');
+            })->save($rutas, 72, 'jpg');
         }
 
         $user = User::create([

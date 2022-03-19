@@ -17,10 +17,10 @@ class CreateLParticipantesTable extends Migration
             $table->increments('id');
             //FOREIGN MASCOTA
             $table->integer('evento_id')->unsigned();
-            $table->foreign('evento_id')->references('id')->on('eventos');
+            $table->foreign('evento_id')->references('id')->on('eventos')->onDelete('cascade');
             //FOREIGN MASCOTA
             $table->integer('mascota_id')->unsigned();
-            $table->foreign('mascota_id')->references('id')->on('mascotas');
+            $table->foreign('mascota_id')->references('id')->on('mascotas')->onDelete('cascade');
             //STATUS
             $table->string('status'); //estado
             $table->timestamps();

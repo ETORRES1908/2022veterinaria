@@ -47,7 +47,7 @@ class MVideosController extends Controller
             $file = $request->file('video');
             //NAME Video
             $nombre =
-                $request->REGGAL .
+                $request->REGANI .
                 $request->nvideo .
                 '.' .
                 $file->guessExtension();

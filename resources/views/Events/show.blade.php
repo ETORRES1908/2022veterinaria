@@ -21,8 +21,8 @@
                 </span>
             @endif
             @if (count($evento->participants) >= 2)
-                <a type="button" class="btn btn-dark" href="{{ route('duels.show', $evento->id) }}">
-                    {{ __('Duels') }}
+                <a type="button" class="btn btn-dark" href="{{ route('pactados.show', $evento->id) }}">
+                    {{ __('Deal') }}s
                 </a>
             @endif
 
@@ -37,11 +37,11 @@
             <table id="datatable" class="table table-dark table-hover nowrap">
                 <thead>
                     <tr>
-                        <th>REG ANI</th>
+                        <th>REGANI</th>
                         <th>{{ __('Weight') }}</th>
                         <th>{{ __('Shed') }}</th>
                         <th>{{ __('Disability') }}</th>
-                        <th>{{ __('Seal') }}</th>
+                        <th>{{ __('plaque') }}</th>
                         <th>{{ __('BOX') }} MIN.</th>
                         <th>{{ __('BOX') }} MAX.</th>
                         <th></th>
@@ -50,7 +50,7 @@
                 <tbody>
                     @foreach ($listps as $listp)
                         <tr>
-                            <td>{{ $listp->mascota->REGGAL }}</td>
+                            <td>{{ $listp->mascota->REGANI }}</td>
                             <td>{{ $listp->mascota->sss }}</td>
                             <td>{{ $listp->mascota->user->galpon }}</td>
                             <td>
@@ -110,13 +110,13 @@
                                                             <input type="text" id="evento_id" name="evento_id"
                                                                 value="{{ $evento->id }}" hidden>
                                                         </div>
-                                                        {{-- REG ANI --}}
+                                                        {{-- REGANI --}}
                                                         <div class="row mb-2">
                                                             <label
-                                                                class="col-sm-4 col-form-label">{{ __('REG ANI') }}:</label>
+                                                                class="col-sm-4 col-form-label">{{ __('REGANI') }}:</label>
                                                             <div class="col-sm-8">
                                                                 <input class="form-control text-danger" type="text"
-                                                                    value="{{ $listp->mascota->REGGAL }}" readonly>
+                                                                    value="{{ $listp->mascota->REGANI }}" readonly>
                                                             </div>
                                                         </div>
                                                         {{-- Weight --}}
@@ -126,8 +126,18 @@
                                                             <div class="col-sm-8">
                                                                 <input type="number" class="form-control text-danger" id="mp"
                                                                     name="peso" required min="{{ $listp->evento->miw }}"
-                                                                    max="{{ $listp->evento->maw }}"
+                                                                    max="{{ $listp->evento->maw }}" autofocus
                                                                     onKeyPress="if(this.value.length==3) return false;"
+                                                                    onkeydown="return event.keyCode !== 69 && event.keyCode !== 189">
+                                                            </div>
+                                                        </div>
+                                                        {{-- SEAL --}}
+                                                        <div class="row mb-2">
+                                                            <label class="col-sm-4 col-form-label">{{ __('Seal') }}:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="number" class="form-control text-danger" id="seal"
+                                                                    name="seal" required autofocus
+                                                                    onKeyPress="if(this.value.length==4) return false;"
                                                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189">
                                                             </div>
                                                         </div>
@@ -190,7 +200,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>REG ANI</th>
+                        <th>REGANI</th>
                         <th>{{ __('Weight') }}</th>
                         <th>{{ __('Shed') }}</th>
                         <th>{{ __('Disability') }}</th>
@@ -237,9 +247,9 @@
                             <div>
                                 <input type="text" id="evento_id" name="evento_id" value="{{ $evento->id }}" hidden>
                             </div>
-                            {{-- REG ANI --}}
+                            {{-- REGANI --}}
                             <div class="row mb-2">
-                                <label class="col-sm-4 col-form-label">{{ __('REG ANI') }}:</label>
+                                <label class="col-sm-4 col-form-label">{{ __('REGANI') }}:</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control text-danger" id="mreggal" readonly>
                                 </div>
@@ -609,7 +619,7 @@
                 success: function(data) {
                     console.log(data);
                     $.each(data, function(i, item) {
-                        $("#mreggal").val(item.REGGAL);
+                        $("#mreggal").val(item.REGANI);
                     });
                 },
                 error: function() {

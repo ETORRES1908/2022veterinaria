@@ -1,7 +1,4 @@
 @extends('layouts.app')
-@section('head')
-    <link rel="stylesheet" href="{{ asset('font/bootstrap-icons.css') }}">
-@endsection
 @section('content')
     <div class="card mx-auto bg-black border border-danger">
         <div class="card-header fs-4 border border-danger">
@@ -22,7 +19,7 @@
                                 <div
                                     class="col-6 col-md-4 mb-3 form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
                                     <label for="nombre" class="col-form-label fw-bold">
-                                        {{ __('Name') }}
+                                        {{ __('Name') }} {{ __('pet') }}
                                     </label>
                                     <div class="col-auto">
                                         <input id="nombre" type="text" class="form-control text-danger" name="nombre"
@@ -38,7 +35,7 @@
                                 {{-- GENERO --}}
                                 <div
                                     class="col-6 col-md-4 mb-3 form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
-                                    <label for="gender" class="col-form-label fw-bold text-capitalize">
+                                    <label for="gender" class="col-form-label fw-bold">
                                         {{ __('gender') }}
                                     </label>
                                     <div class="col-auto">
@@ -98,12 +95,12 @@
                                 {{-- PLC --}}
                                 <div class="col-6 col-md-4 mb-3 form-group{{ $errors->has('plc') ? ' has-error' : '' }}">
                                     <label for="plc" class="col-form-label fw-bold">
-                                        {{ __('Seal') }}
+                                        {{ __('plaque') }}
                                     </label>
                                     <div class="col-auto">
                                         <input id="plc" type="number" class="form-control text-danger" name="plc"
                                             value="{{ old('plc') }}" required autofocus
-                                            onKeyPress="if(this.value.length==6) return false;"
+                                            onKeyPress="if(this.value.length==4) return false;"
                                             onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" min="0">
 
                                         @if ($errors->has('plc'))
@@ -158,7 +155,7 @@
                                             <option value="" hidden>
                                                 {{ __('Choose exemplar') }}...
                                             </option>
-                                            @foreach ($mascotas as $mascota)
+                                            @foreach ($pads as $mascota)
                                                 <option @if (old('pad') == $mascota->id) selected @endif
                                                     value="{{ $mascota->id }}">{{ $mascota->nombre }}
                                                 </option>
@@ -181,7 +178,7 @@
                                             <option value="" hidden>
                                                 {{ __('Choose exemplar') }}...
                                             </option>
-                                            @foreach ($mascotas as $mascota)
+                                            @foreach ($mads as $mascota)
                                                 <option @if (old('mad') == $mascota->id) selected @endif
                                                     value="{{ $mascota->id }}">{{ $mascota->nombre }}
                                                 </option>
@@ -298,34 +295,10 @@
                                         {{ __('Vaccines') }}
                                     </label>
                                     <div class="col-auto">
-                                        <input id="addvcns" type="button" class="btn btn-success" value="+">
-                                        <input id="removevcns" type="button" class="btn btn-danger" value="-">
+                                        <input id="addvcns" type="button" class="btn btn-success mb-3" value="+">
+                                        <input id="removevcns" type="button" class="btn btn-danger mb-3" value="-">
                                         <div class="form_vcns">
-                                            <div class="row my-3">
-                                                <div class="col-6 col-md-3 mb-1">
-                                                    <input id="vcnsf" type="date" class="form-control text-danger fw-bold"
-                                                        name="vcnsf[]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        required autofocus>
-                                                </div>
-                                                <div class="col-6 col-md-3 mb-1">
-                                                    <input id="vcnst" type="text" class="form-control text-danger fw-bold"
-                                                        name="vcnst[]" required autofocus placeholder="{{ __('Type') }}"
-                                                        required pattern="[A-zÀ-ú1-9\s]+" maxlength="10"
-                                                        onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)">
-                                                </div>
-                                                <div class=" col-6 col-md-3 mb-1">
-                                                    <input id="vcnsm" type="text" class="form-control text-danger fw-bold"
-                                                        name="vcnsm[]" required autofocus placeholder="{{ __('Brand') }}"
-                                                        required pattern="[A-zÀ-ú\s]+" maxlength="10"
-                                                        onkeydown="return /[A-zÀ-ú\s]/i.test(event.key)">
-                                                </div>
-                                                <div class=" col-6 col-md-3 mb-1">
-                                                    <input id="vcnsd" type="number" class="form-control text-danger fw-bold"
-                                                        name="vcnsd[]" required autofocus placeholder="{{ __('Dose') }}"
-                                                        onKeyPress="if(this.value.length==2) return false;"
-                                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189">
-                                                </div>
-                                            </div>
+
                                         </div>
 
                                         @if ($errors->has('vcns'))
@@ -342,94 +315,58 @@
                                         {{ __('Moves') }}
                                     </label>
                                     <div class="col-auto">
-                                        <input id="addmvs" type="button" class="btn btn-success" value="+">
-                                        <input id="removemvs" type="button" class="btn btn-danger" value="-">
+                                        <input id="addmvs" type="button" class="btn btn-success mb-3" value="+">
+                                        <input id="removemvs" type="button" class="btn btn-danger mb-3" value="-">
                                         <div class="form_mvs">
-                                            <div class="row my-3">
-                                                <div class="col-6 col-md-4 mb-1">
-                                                    <input type="date" class="form-control text-danger fw-bold"
-                                                        name="mvf[]" required autofocus
-                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
-                                                </div>
-                                                <div class="col-6 col-md-2 mb-1">
-                                                    <div class="input-group">
-                                                        <input type="number" class="form-control text-danger" name="mm[]"
-                                                            onKeyPress="if(this.value.length==2) return false;" required
-                                                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                                                            min="0" max="59" placeholder="00 min">
-                                                        {{-- <div class="input-group-text"> :</div>
-                                                        <input type="number" class="form-control text-danger" name="ms"
-                                                            onKeyPress="if(this.value.length==2) return false;" required
-                                                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                                                            min="0" max="59" value="{{ old('ms') }}" placeholder="00"> --}}
-                                                    </div>
-                                                </div>
-                                                <div class="col-6 col-md-3 mb-1">
-                                                    <input type="text" class="form-control text-danger fw-bold"
-                                                        name="mvtp[]" required autofocus placeholder="{{ __('Type') }}"
-                                                        maxlength="10">
-                                                </div>
-                                                <div class="col-6 col-md-3 mb-1">
-                                                    <select name="mvr[]" class="form-select text-danger text-capitalize">
-                                                        <option value="good"
-                                                            @if (old('mvr[]') == 'good') ) selected @endif>
-                                                            {{ __('good') }}</option>
-                                                        <option value="regular"
-                                                            @if (old('mvr[]') == 'regular') ) selected @endif>
-                                                            {{ __('regular') }}</option>
-                                                        <option value="bad"
-                                                            @if (old('mvr[]') == 'bad') ) selected @endif>
-                                                            {{ __('bad') }}</option>
 
-                                                    </select>
-                                                </div>
-                                            </div>
                                         </div>
-                                        @if ($errors->has('mvs'))
+                                    </div>
+                                    @if ($errors->has('mvs'))
+                                        <span class="text-danger text-fs6">
+                                            {{ $errors->first('mvs') }}
+                                        </span>
+                                    @endif
+                                </div>
+                                {{-- SUPLEMENTO --}}
+                                <div
+                                    class="col-md-12 mb-3 border border-danger form-group{{ $errors->has('spmt') ? ' has-error' : '' }}">
+                                    <label for="spmt" class="col-form-label fw-bold">
+                                        {{ __('Supplement') }}
+                                    </label>
+                                    <div class="col-auto">
+                                        <input id="addsmpt" type="button" class="btn btn-success mb-3" value="+">
+                                        <input id="removesmpt" type="button" class="btn btn-danger mb-3" value="-">
+                                        <div class="form_smpt">
+                                        </div>
+
+                                        @if ($errors->has('spmt'))
                                             <span class="text-danger text-fs6">
-                                                {{ $errors->first('mvs') }}
+                                                {{ $errors->first('spmt') }}
                                             </span>
                                         @endif
                                     </div>
-                                    {{-- SUPLEMENTO --}}
-                                    <div
-                                        class="col-md-12 mb-3 form-group{{ $errors->has('spmt') ? ' has-error' : '' }}">
-                                        <label for="spmt" class="col-form-label fw-bold">
-                                            {{ __('Supplement') }}
-                                        </label>
-                                        <div class="col-auto">
-                                            <input id="spmt" class="form-control text-danger" name="spmt"
-                                                value="{{ old('spmt') }}" maxlength="20" required autofocus>
-
-                                            @if ($errors->has('spmt'))
-                                                <span class="text-danger text-fs6">
-                                                    {{ $errors->first('spmt') }}
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    {{-- OBS --}}
-                                    <div class="col-md-12 mb-3 form-group{{ $errors->has('obs') ? ' has-error' : '' }}">
-                                        <label for="obs" class="col-form-label fw-bold">
-                                            {{ __('Observations') }}
-                                        </label>
-                                        <div class="col-auto">
-                                            <textarea id="obs" class="form-control text-danger" name="obs" value="{{ old('obs') }}" rows="3" maxlength="200"
-                                                required autofocus></textarea>
-                                            @if ($errors->has('obs'))
-                                                <span class="text-danger text-fs6">
-                                                    {{ $errors->first('obs') }}
-                                                </span>
-                                            @endif
-                                        </div>
+                                </div>
+                                {{-- OBS --}}
+                                <div class="col-md-12 mb-3 form-group{{ $errors->has('obs') ? ' has-error' : '' }}">
+                                    <label for="obs" class="col-form-label fw-bold">
+                                        {{ __('Observations') }}
+                                    </label>
+                                    <div class="col-auto">
+                                        <textarea id="obs" class="form-control text-danger" name="obs" value="{{ old('obs') }}" rows="3" maxlength="200"
+                                            autofocus></textarea>
+                                        @if ($errors->has('obs'))
+                                            <span class="text-danger text-fs6">
+                                                {{ $errors->first('obs') }}
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 my-auto">
+                            <div class="col-lg-4">
                                 {{-- FOTO DE PERFIL --}}
                                 <div class="col-md-12 mb-3 form-group{{ $errors->has('foto') ? ' has-error' : '' }}">
                                     <label for="name" class="col-form-label fw-bold">
-                                        {{ __('Photo Profile') }}
+                                        {{ __('Photo Profile') }} {{ __('Exemplar') }}
                                     </label>
                                     <div class="col-auto rounded">
                                         <img id="preview" class="img-fluid mx-auto d-block bg-danger" />
@@ -493,25 +430,25 @@
                 '<div id="vcns" class="row mb-3"><div class="col-6 col-md-3 mb-1"><input id="vcnsf" type="date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control text-danger fw-bold"name="vcnsf[]" required autofocus></div><div class="col-6 col-md-3 mb-1"><input id="vcnst" type="text" class="form-control text-danger fw-bold"name="vcnst[]" required autofocus placeholder="{{ __('Type') }}" pattern="[A-zÀ-ú1-9\s]+" maxlength="10"onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)"> </div><div class="col-6 col-md-3 mb-1"><input id="vcnsm" type="text" class="form-control text-danger fw-bold"name="vcnsm[]" required autofocus placeholder="{{ __('Brand') }}" pattern="[A-zÀ-ú\s]+" maxlength="10" onkeydown="return /[A-zÀ-ú\s]/i.test(event.key)"></div><div class="col-6 col-md-3 mb-1"><input id="vcnsd" type="number" class="form-control text-danger fw-bold"name="vcnsd[]" required autofocus placeholder="{{ __('Dose') }}"onKeyPress="if(this.value.length==2) return false;" onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"> </div></div > '
             );
             var n = $("div[id='vcns']").length;
-            if (n == 3) {
+            if (n == 4) {
                 $('#addvcns').attr('disabled', true);
                 $('#addvcns').hide(500);
             }
-            if (n > 1) {
+            if (n >= 0) {
                 $('#removevcns').attr('disabled', false);
                 $('#removevcns').show(500);
             }
         });
-        $('#removevcns').hide(400); //HIDE DEFAULT
+
         /* DELETE VCNS */
         $("#removevcns").click(function() {
             $('#vcns').last().remove();
             var n = $("div[id='vcns']").length;
-            if (n <= 3) {
+            if (n <= 4) {
                 $('#addvcns').attr('disabled', false);
                 $('#addvcns').show(500);
             }
-            if (n < 1) {
+            if (n <= 0) {
                 $('#removevcns').attr('disabled', true);
                 $('#removevcns').hide(500);
             }
@@ -523,29 +460,60 @@
                 '<div id="mvs" class="row mb-3"><div class="col-6 col-md-4 mb-1"><input type="date" class="form-control text-danger fw-bold" name="mvf[]"required autofocus max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></div><div class="col-6 col-md-2 mb-1"><div class="input-group"><input type="number" class="form-control text-danger" name="mm[]" onKeyPress="if(this.value.length==2) return false;" required onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" min="0" max="59" placeholder="00 min"></div></div><div class="col-6 col-md-3 mb-1"><input type="text" class="form-control text-danger fw-bold" name="mvtp[]" required autofocus placeholder="{{ __('Type') }}" maxlength="10"></div><div class="col-6 col-md-3 mb-1"><select name="mvr[]" class="form-select text-danger text-capitalize"><option value="good"@if (old('mvr[]') == 'good') ) selected @endif>{{ __('good') }}</option><option value="regular"@if (old('mvr[]') == 'regular') ) selected @endif>{{ __('regular') }}</option><option value="bad"@if (old('mvr[]') == 'bad') ) selected @endif>{{ __('bad') }}</option></select></div></div>'
             );
             var n = $("div[id='mvs']").length;
-            if (n == 3) {
-                $('#addvmvs').attr('disabled', true);
+            if (n >= 4) {
+                $('#addmvs').attr('disabled', true);
                 $('#addmvs').hide(500);
             }
-            if (n > 1) {
+            if (n >= 0) {
                 $('#removemvs').attr('disabled', false);
                 $('#removemvs').show(500);
             }
         });
-        $('#removemvs').hide(400); //HIDE DEFAULT
+
         /* DELETE MVS */
         $("#removemvs").click(function() {
             $('#mvs').last().remove();
             var n = $("div[id='mvs']").length;
-            if (n <= 3) {
+            if (n <= 4) {
                 $('#addmvs').attr('disabled', false);
                 $('#addmvs').show(500);
             }
-            if (n < 1) {
+            if (n <= 0) {
                 $('#removemvs').attr('disabled', true);
                 $('#removemvs').hide(500);
             }
         });
+
+        /* ADD SUPLEMENTOS */
+        $("#addsmpt").click(function() {
+            $(".form_smpt").append(
+                '<div id="smpt" class="row mb-3"><div class="col-6"><input type="text" class="form-control text-danger" name="spmtname[]" maxlength="20" autofocus required></div><div class="col-3"><input type="date" class="form-control text-danger" name="spmtfecha[]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" autofocus required></div><div class="col-3"><input type="time" class="form-control text-danger" name="spmttime[]" autofocus required></div></div>'
+            );
+            var n = $("div[id='smpt']").length;
+            if (n == 4) {
+                $('#addsmpt').attr('disabled', true);
+                $('#addsmpt').hide(500);
+            }
+            if (n >= 0) {
+                $('#removesmpt').attr('disabled', false);
+                $('#removesmpt').show(500);
+            }
+        });
+
+        /* DELETE SUPLEMENTOS */
+        $("#removesmpt").click(function() {
+            $('#smpt').last().remove();
+            var n = $("div[id='smpt']").length;
+            if (n <= 4) {
+                $('#addsmpt').attr('disabled', false);
+                $('#addsmpt').show(500);
+            }
+            if (n <= 0) {
+                $('#removesmpt').attr('disabled', true);
+                $('#removesmpt').hide(500);
+            }
+        });
+
         /* GENDER */
         $("#gender").change(function() {
             if ($("#gender").val() == 'male') {

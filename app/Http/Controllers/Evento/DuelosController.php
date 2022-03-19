@@ -70,10 +70,11 @@ class DuelosController extends Controller
             'smascota_id' => $request->smascota_id,
             'scc' => $request->scc,
             'cch' => $request->cch,
+            'pactada' => $request->pactada,
             'npelea' => $request->npelea,
         ]);
 
-        return redirect()->route('duels.show', $request->evento_id)->with('mensaje', __('Successfully created'));
+        return redirect()->route('pactados.show', $request->evento_id)->with('mensaje', __('Successfully created'));
     }
 
     /**
@@ -118,7 +119,7 @@ class DuelosController extends Controller
         $duel = Duelos::find($id);
         $duel->update(['result' => $request->result, 'trslt' => $request->trslt, 'dm' => $request->dm, 'ds' => $request->ds]);
         $evento_id = $duel->lparticipante->evento_id;
-        return redirect()->route('duels.show', $evento_id)->with('mensaje', __('Successfully sentenced'));
+        return redirect()->route('pactados.show', $evento_id)->with('mensaje', __('Successfully sentenced'));
     }
 
     /**

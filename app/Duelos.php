@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Duelos extends Model
 {
     protected $guarded = [];
-    protected $fillable = ['lparticipante_id', 'pmascota_id', 'fcc', 'smascota_id', 'scc', 'cch', 'npelea', 'result', 'trslt', 'dm', 'ds'];
+    protected $fillable = ['lparticipante_id', 'pmascota_id', 'fcc', 'smascota_id', 'scc', 'cch', 'npelea', 'result', 'trslt', 'dm', 'ds', 'pactada'];
 
     // A DUELOS BELONGS_TO LParticipantes
     public function lparticipante()

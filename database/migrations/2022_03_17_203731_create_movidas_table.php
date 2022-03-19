@@ -15,12 +15,11 @@ class CreateMovidasTable extends Migration
     {
         Schema::create('movidas', function (Blueprint $table) {
             $table->increments('id');
-            //FOREIGN USER
+            //FOREIGN MASCOTA
             $table->integer('mascota_id')->unsigned();
-            $table->foreign('mascota_id')->references('id')->on('mascotas');
+            $table->foreign('mascota_id')->references('id')->on('mascotas')->onDelete('cascade');
             $table->string('mvf');
             $table->string('mm');
-            /* $table->string('ms'); */
             $table->string('mvtp');
             $table->string('mvr');
             $table->timestamps();

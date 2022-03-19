@@ -17,7 +17,7 @@ class CreateEventosTable extends Migration
             $table->increments('id');
             //FOREIGN USER
             $table->integer('organizador_id')->unsigned();
-            $table->foreign('organizador_id')->references('id')->on('users');
+            $table->foreign('organizador_id')->references('id')->on('users')->onDelete('cascade');
             //DATES
             $table->json('fechas');
             //COLISEUM
@@ -94,8 +94,10 @@ class CreateEventosTable extends Migration
             $table->string('gll');
             //GALPON
             $table->string('glp');
-            //CHALLENGE
-            $table->string('chll');
+            //CHALLENGE1
+            $table->string('chll1')->nullable();
+            //CHALLENGE2
+            $table->string('chll2')->nullable();
             //STATUS
             $table->string('status')->default('0'); //estado
             $table->timestamps();

@@ -15,9 +15,9 @@ class CreateVacunasTable extends Migration
     {
         Schema::create('vacunas', function (Blueprint $table) {
             $table->increments('id');
-            //FOREIGN USER
+            //FOREIGN MASCOTA
             $table->integer('mascota_id')->unsigned();
-            $table->foreign('mascota_id')->references('id')->on('mascotas');
+            $table->foreign('mascota_id')->references('id')->on('mascotas')->onDelete('cascade');
             $table->string('vcnsf');
             $table->string('vcnst');
             $table->string('vcnsm');

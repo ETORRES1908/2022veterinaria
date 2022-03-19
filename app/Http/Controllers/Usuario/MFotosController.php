@@ -40,20 +40,19 @@ class MFotosController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'foto' => 'required|image|mimes:jpg,png|max:3000',
+            'foto' => 'required|image|mimes:jpg,png,jpeg|max:3000',
         ]);
 
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             //NAME PHOTO
             $nombre =
-                $request->REGGAL .
+                $request->REGANI .
                 $request->nfoto .
-                '.' .
-                $file->guessExtension();
+                '.jpg';
 
             $ruta = 'storage/images/mascotas/' . $nombre;
-            Image::make($file->getRealPath())->resize(1280, 720)->save($ruta, 72, 'jpeg');
+            Image::make($file->getRealPath())->resize(1280, 720)->save($ruta, 72, 'jpg');
             $nMFotos = MFotos::Create([
                 'nfoto' => $request->nfoto,
                 'ruta' => $ruta,

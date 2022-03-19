@@ -19,7 +19,7 @@ $factory->define(App\Mascota::class, function (Faker\Generator $faker) {
     $date = $dt->format('d/m/Y'); // 1994-09-24
 
     return [
-        'REGGAL' => $faker->userName,
+        'REGANI' => $faker->userName,
         'fnac' => $date,
         'sss' => $faker->randomNumber(3),
         'nombre' => $faker->firstName,

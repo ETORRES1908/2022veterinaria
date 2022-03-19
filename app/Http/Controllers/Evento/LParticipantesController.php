@@ -84,6 +84,7 @@ class LParticipantesController extends Controller
             'mascota_id' => 'required',
             'foto' => 'image|required',
             'peso' => 'integer|required',
+            'seal' => 'integer|required',
         ]);
         if (!empty($mascota->fotos->where('nfoto', 1)->first()->id)) {
             $mfoto = MFotos::Find($mascota->fotos->where('nfoto', 1)->first()->id);
@@ -93,7 +94,7 @@ class LParticipantesController extends Controller
         //NAME PHOTO
         $file = $request->file('foto');
         $nombre =
-            $mascota->REGGAL .
+            $mascota->REGANI .
             1 .
             '.' .
             $file->guessExtension();
@@ -108,7 +109,7 @@ class LParticipantesController extends Controller
             'texto' => 'Perfil',
             'mascota_id' => $request->mascota_id,
         ]); //CREAR PHOTO
-        $mascota->update(['sss' => $request->peso]); // UPDATE
+        $mascota->update(['sss' => $request->peso, 'seal' => $request->seal]); // UPDATE
         LParticipantes::where('evento_id', $request->evento_id)->where('mascota_id', $mascota->id)->first()->update(['status' => "1"]);
         return redirect()->route('events.show', $request->evento_id)->with('mensaje', __('Successfully updated'));
     }

@@ -29,7 +29,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">
                                         <a href="{{ route('mascotas.show', $mascota->id) }}"
-                                            class="fw-bold nav-link link-danger text-uppercase">{{ $mascota->REGGAL }}
+                                            class="fw-bold nav-link link-danger text-uppercase">{{ $mascota->REGANI }}
                                         </a>
                                     </h5>
                                     <div class="card-text">
@@ -44,7 +44,7 @@
                                                 <div><strong>{{ __('Weight') }}:</strong> {{ $mascota->sss }}</div>
                                             </li>
                                             <li class="list-group-item text-capitalize">
-                                                <div><strong>{{ __('Gender') }}:</strong> {{ __($mascota->gender) }}
+                                                <div><strong>{{ __('gender') }}:</strong> {{ __($mascota->gender) }}
                                                 </div>
                                             </li>
                                         </ul>

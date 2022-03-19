@@ -35,7 +35,7 @@
     <div class="card bg-black border border-danger mb-3">
         <div class="card-body border border-danger">
             <h5 class="card-title fw-bold text-uppercase pe-none text-danger">
-                REG ANI: {{ $mascota->REGGAL }}
+                REGANI: {{ $mascota->REGANI }}
             </h5>
             <div class="row">
                 <div class="col-lg-6  mb-3">
@@ -70,8 +70,8 @@
                                     } ?>
                                 </div>
                             </li>
-                            <li class="list-group-item bg-black text-white">
-                                <div><strong>{{ __('Seal') }}:</strong> {{ $mascota->plc }}</div>
+                            <li class="list-group-item bg-black text-white text-capitalize">
+                                <div><strong>{{ __('plaque') }}:</strong> {{ $mascota->plc }}</div>
                             </li>
                             <li class="list-group-item bg-black text-white">
                                 <div><strong>{{ __('Locker') }}:</strong> {{ $mascota->lck }}</div>
@@ -82,14 +82,14 @@
                             <li class="list-group-item bg-black text-white">
                                 <div><strong>{{ __('Father') }}:</strong>
                                     @if ($pad)
-                                        {{ $pad->REGGAL }}
+                                        {{ $pad->REGANI }}
                                     @endif
                                 </div>
                             </li>
                             <li class="list-group-item bg-black text-white">
                                 <div><strong>{{ __('Mother') }}:</strong>
                                     @if ($mad)
-                                        {{ $mad->REGGAL }}
+                                        {{ $mad->REGANI }}
                                     @endif
                                 </div>
                             </li>
@@ -122,8 +122,8 @@
                                     <div><strong>{{ __('Born') }}:</strong> {{ $mascota->ncr }}</div>
                                 </li>
                             @endif
-                            <li class="list-group-item bg-black text-white">
-                                <div><strong>{{ __('Vaccines') }}:</strong></div>
+                            <li class="list-group-item mb-3 bg-black text-white  border border-danger rounded">
+                                <label class="form-label"><strong>{{ __('Vaccines') }}:</strong></label>
                                 <div class="table-responsive">
                                     <table class="table text-white text-uppercase">
                                         <thead>
@@ -155,42 +155,111 @@
                                     </table>
                                 </div>
                             </li>
-                            <li class="list-group-item bg-black text-white">
+                            <li class="list-group-item bg-black mb-3 text-white  border border-danger rounded">
                                 <label class="form-label"><strong>{{ __('Moves') }}</strong></label>
-                                <div class="row">
-                                    <div class="col">
-                                        <strong>{{ __('Date') }}:</strong><br>{{ $mascota->mvf }}
-                                    </div>
-                                    <div class="col">
-                                        <strong>{{ __('Time') }}:</strong><br>{{ $mascota->mm }}:{{ $mascota->ms }}
-                                    </div>
-                                    <div class="col">
-                                        <strong>{{ __('Type') }}:</strong><br>{{ $mascota->mvtp }}
-                                    </div>
-                                    <div class="col text-capitalize">
-                                        <strong>{{ __('Result') }}:</strong><br>{{ __($mascota->mvr) }}
-                                    </div>
+                                <div class="table-responsive">
+                                    <table class="table text-white text-uppercase">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ __('Date') }}</th>
+                                                <th>{{ __('Time') }}</th>
+                                                <th>{{ __('Type') }}</th>
+                                                <th>{{ __('Result') }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($mascota->movidas as $movida)
+                                                <tr>
+                                                    <td>
+                                                        {{ $movida->mvf }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $movida->mm }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $movida->mvtp }}
+                                                    </td>
+                                                    <td>
+                                                        {{ __($movida->mvr) }}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
+                            </li>
+                            <li class="list-group-item bg-black mb-3 text-white  border border-danger rounded">
+                                <div><strong>{{ __('Supplement') }}s:</strong></div>
+                                <div class="table-responsive">
+                                    <table class="table text-white text-uppercase">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ __('Name') . ' ' . __('Supplement') }}</th>
+                                                <th>{{ __('Date') }}</th>
+                                                <th>{{ __('Time') }}</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($mascota->suplementos as $smpt)
+                                                <tr>
+                                                    <td>
+                                                        {{ $smpt->nombre }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $smpt->fecha }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $smpt->time }}
+                                                    </td>
+                                                    <td>
+                                                        <form method="POST" class="text-uppercase"
+                                                            action="{{ route('delete_smpt', $smpt->id) }}">
+                                                            {{ csrf_field() }}
+                                                            <input type="submit" class="col btn btn-danger" value="-">
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <form method="POST" action="{{ route('create_smpt') }}">
+                                    {!! csrf_field() !!}
+                                    <div class="row">
+                                        <input type="hidden" name="mascota_id" value="{{ $mascota->id }}">
+                                        <div class="col-11 mb-2">
+                                            <input class=" form-control" type="text" name="spmtname"
+                                                pattern="[A-zÀ-ú1-9\s]+" maxlength="25" required autofocus
+                                                placeholder="{{ __('New suplement') }}"
+                                                onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)">
+                                        </div>
+                                        <div class="col-6">
+                                            <input class=" form-control" type="date" name="spmtfecha"
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required autofocus>
+                                        </div>
+                                        <div class="col-4">
+                                            <input class=" form-control" type="time" name="spmttime" required autofocus>
+                                        </div>
+                                        <div class="col-1">
+                                            <input type="submit" class="btn btn-success" value="+">
+                                        </div>
+                                    </div>
+                                </form>
                             </li>
                             <form class="text-uppercase" action="{{ route('mascotas.update', $mascota->id) }}"
                                 method="POST">
                                 {!! csrf_field() !!}
                                 {{ method_field('PUT') }}
-                                <li class="list-group-item bg-black text-white">
+                                <li class="list-group-item bg-black mb-3 text-white">
                                     <div><strong>{{ __('SENASA') }}:</strong></div>
                                     <input class="form-control" type="text" name="sena" value="{{ $mascota->sena }}"
-                                        required required pattern="[A-zÀ-ú1-9\s]+" maxlength="30"
-                                        onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)">
-                                </li>
-                                <li class="list-group-item bg-black text-white">
-                                    <div><strong>{{ __('Supplement') }}:</strong></div>
-                                    <input class="form-control" type="text" name="spmt" value="{{ $mascota->spmt }}"
-                                        required pattern="[A-zÀ-ú1-9\s]+" maxlength="25"
+                                        pattern="[A-zÀ-ú1-9\s]+" maxlength="30"
                                         onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)">
                                 </li>
                                 <li class="list-group-item bg-black text-white">
                                     <div class="form-label"><strong>{{ __('Observations') }}:</strong><br>
-                                        <textarea class="form-control" value="{{ old('obs') }}" name="obs" maxlength="200" required
+                                        <textarea class="form-control" value="{{ old('obs') }}" name="obs" maxlength="200"
                                             rows="4">{{ $mascota->obs }}</textarea>
                                     </div>
                                     <button type="submit" class="btn btn-dark">{{ __('Edit') }}</button>
@@ -204,7 +273,7 @@
                     <div class="row g-3 text-center">
                         <div class="col-12">
                             <div for="nombre" class="form-label fw-bold text-white">
-                                {{ __('Photo Profile') }}
+                                {{ __('Photo Profile') }} {{ __('Exemplar') }}
                             </div>
                             <a href="#foto1" class="html5lightbox btn border border-danger" data-group="fotos"
                                 data-width="800" data-height="800">
@@ -222,7 +291,7 @@
                                                 method="post">
                                                 {!! method_field('delete') !!}
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
                                             </form>
                                         @else
                                             {{-- AGREGAR FOTO --}}
@@ -230,21 +299,26 @@
                                                 action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                                                 {!! csrf_field() !!}
                                                 <input id="nfoto" type="text" name="nfoto" value="1" hidden>
-                                                <input id="REGGAL" type="text" name="REGGAL"
-                                                    value="{{ $mascota->REGGAL }}" hidden>
+                                                <input id="REGANI" type="text" name="REGANI"
+                                                    value="{{ $mascota->REGANI }}" hidden>
                                                 <input id="text" type="text" name="text" value="xd" hidden>
                                                 <input id="mascota_id" type="text" name="mascota_id"
                                                     value="{{ $mascota->id }}" hidden>
                                                 <input id="foto" type="file" class="form-control form-control-sm"
                                                     name="foto" value="{{ old('foto') }}" required autofocus
                                                     accept="image/*">
-                                                @if ($errors->has('foto'))
-                                                    <span class="text-danger fs-6">
-                                                        {{ $errors->first('foto') }}
-                                                    </span>
-                                                @endif
-                                                <button type="submit" class="btn btn-danger">Editar</button>
+                                                <button type="submit" class="btn btn-danger">{{ __('Upload') }}</button>
                                             </form>
+                                            @if ($errors->has('foto'))
+                                                <span class="text-danger fs-6">
+                                                    {{ $errors->first('foto') }}
+                                                </span>
+                                            @else{
+                                                <span class="text-danger fs-6">
+                                                    {{ __('Max file size') }} 3MB
+                                                </span>
+                                                }
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -274,7 +348,7 @@
                                                 method="post">
                                                 {!! method_field('delete') !!}
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
                                             </form>
                                         @else
                                             {{-- AGREGAR FOTO --}}
@@ -282,21 +356,28 @@
                                                 action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                                                 {!! csrf_field() !!}
                                                 <input id="nfoto" type="text" name="nfoto" value="2" hidden>
-                                                <input id="REGGAL" type="text" name="REGGAL"
-                                                    value="{{ $mascota->REGGAL }}" hidden>
+                                                <input id="REGANI" type="text" name="REGANI"
+                                                    value="{{ $mascota->REGANI }}" hidden>
                                                 <input id="text" type="text" name="text" value="xd" hidden>
                                                 <input id="mascota_id" type="text" name="mascota_id"
                                                     value="{{ $mascota->id }}" hidden>
                                                 <input id="foto" type="file" class="form-control form-control-sm"
                                                     name="foto" value="{{ old('foto') }}" required autofocus
                                                     accept="image/*">
-                                                @if ($errors->has('foto'))
-                                                    <span class="text-danger fs-6">
-                                                        {{ $errors->first('foto') }}
-                                                    </span>
-                                                @endif
-                                                <button type="submit" class="btn btn-danger">Editar</button>
+
+
+                                                <button type="submit" class="btn btn-danger">{{ __('Upload') }}</button>
                                             </form>
+                                            @if ($errors->has('foto'))
+                                                <span class="text-danger fs-6">
+                                                    {{ $errors->first('foto') }}
+                                                </span>
+                                            @else{
+                                                <span class="text-danger fs-6">
+                                                    {{ __('Max file size') }} 3MB
+                                                </span>
+                                                }
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -323,7 +404,7 @@
                                                 method="post">
                                                 {!! method_field('delete') !!}
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
                                             </form>
                                         @else
                                             {{-- AGREGAR FOTO --}}
@@ -331,21 +412,26 @@
                                                 action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                                                 {!! csrf_field() !!}
                                                 <input id="nfoto" type="text" name="nfoto" value="3" hidden>
-                                                <input id="REGGAL" type="text" name="REGGAL"
-                                                    value="{{ $mascota->REGGAL }}" hidden>
+                                                <input id="REGANI" type="text" name="REGANI"
+                                                    value="{{ $mascota->REGANI }}" hidden>
                                                 <input id="text" type="text" name="text" value="xd" hidden>
                                                 <input id="mascota_id" type="text" name="mascota_id"
                                                     value="{{ $mascota->id }}" hidden>
                                                 <input id="foto" type="file" class="form-control form-control-sm"
                                                     name="foto" value="{{ old('foto') }}" required autofocus
                                                     accept="image/*">
-                                                @if ($errors->has('foto'))
-                                                    <span class="text-danger fs-6">
-                                                        {{ $errors->first('foto') }}
-                                                    </span>
-                                                @endif
-                                                <button type="submit" class="btn btn-danger">Editar</button>
+                                                <button type="submit" class="btn btn-danger">{{ __('Upload') }}</button>
                                             </form>
+                                            @if ($errors->has('foto'))
+                                                <span class="text-danger fs-6">
+                                                    {{ $errors->first('foto') }}
+                                                </span>
+                                            @else{
+                                                <span class="text-danger fs-6">
+                                                    {{ __('Max file size') }} 3MB
+                                                </span>
+                                                }
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -372,7 +458,7 @@
                                                 method="post">
                                                 {!! method_field('delete') !!}
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
                                             </form>
                                         @else
                                             {{-- AGREGAR FOTO --}}
@@ -380,21 +466,27 @@
                                                 action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                                                 {!! csrf_field() !!}
                                                 <input id="nfoto" type="text" name="nfoto" value="4" hidden>
-                                                <input id="REGGAL" type="text" name="REGGAL"
-                                                    value="{{ $mascota->REGGAL }}" hidden>
+                                                <input id="REGANI" type="text" name="REGANI"
+                                                    value="{{ $mascota->REGANI }}" hidden>
                                                 <input id="text" type="text" name="text" value="xd" hidden>
                                                 <input id="mascota_id" type="text" name="mascota_id"
                                                     value="{{ $mascota->id }}" hidden>
                                                 <input id="foto" type="file" class="form-control form-control-sm"
                                                     name="foto" value="{{ old('foto') }}" required autofocus
                                                     accept="image/*">
-                                                @if ($errors->has('foto'))
-                                                    <span class="text-danger fs-6">
-                                                        {{ $errors->first('foto') }}
-                                                    </span>
-                                                @endif
-                                                <button type="submit" class="btn btn-danger">Editar</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Upload') }}</button>
                                             </form>
+                                            @if ($errors->has('foto'))
+                                                <span class="text-danger fs-6">
+                                                    {{ $errors->first('foto') }}
+                                                </span>
+                                            @else{
+                                                <span class="text-danger fs-6">
+                                                    {{ __('Max file size') }} 3MB
+                                                </span>
+                                                }
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -421,7 +513,8 @@
                                                 method="post">
                                                 {!! method_field('delete') !!}
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Delete') }}</button>
                                             </form>
                                         @else
                                             {{-- AGREGAR FOTO --}}
@@ -429,21 +522,27 @@
                                                 action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                                                 {!! csrf_field() !!}
                                                 <input id="nfoto" type="text" name="nfoto" value="5" hidden>
-                                                <input id="REGGAL" type="text" name="REGGAL"
-                                                    value="{{ $mascota->REGGAL }}" hidden>
+                                                <input id="REGANI" type="text" name="REGANI"
+                                                    value="{{ $mascota->REGANI }}" hidden>
                                                 <input id="text" type="text" name="text" value="xd" hidden>
                                                 <input id="mascota_id" type="text" name="mascota_id"
                                                     value="{{ $mascota->id }}" hidden>
                                                 <input id="foto" type="file" class="form-control form-control-sm"
                                                     name="foto" value="{{ old('foto') }}" required autofocus
                                                     accept="image/*">
-                                                @if ($errors->has('foto'))
-                                                    <span class="text-danger fs-6">
-                                                        {{ $errors->first('foto') }}
-                                                    </span>
-                                                @endif
-                                                <button type="submit" class="btn btn-danger">Editar</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Upload') }}</button>
                                             </form>
+                                            @if ($errors->has('foto'))
+                                                <span class="text-danger fs-6">
+                                                    {{ $errors->first('foto') }}
+                                                </span>
+                                            @else{
+                                                <span class="text-danger fs-6">
+                                                    {{ __('Max file size') }} 3MB
+                                                </span>
+                                                }
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -470,7 +569,8 @@
                                                 method="post">
                                                 {!! method_field('delete') !!}
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Delete') }}</button>
                                             </form>
                                         @else
                                             {{-- AGREGAR FOTO --}}
@@ -478,21 +578,27 @@
                                                 action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                                                 {!! csrf_field() !!}
                                                 <input id="nfoto" type="text" name="nfoto" value="6" hidden>
-                                                <input id="REGGAL" type="text" name="REGGAL"
-                                                    value="{{ $mascota->REGGAL }}" hidden>
+                                                <input id="REGANI" type="text" name="REGANI"
+                                                    value="{{ $mascota->REGANI }}" hidden>
                                                 <input id="text" type="text" name="text" value="xd" hidden>
                                                 <input id="mascota_id" type="text" name="mascota_id"
                                                     value="{{ $mascota->id }}" hidden>
                                                 <input id="foto" type="file" class="form-control form-control-sm"
                                                     name="foto" value="{{ old('foto') }}" required autofocus
                                                     accept="image/*">
-                                                @if ($errors->has('foto'))
-                                                    <span class="text-danger fs-6">
-                                                        {{ $errors->first('foto') }}
-                                                    </span>
-                                                @endif
-                                                <button type="submit" class="btn btn-danger">Editar</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Upload') }}</button>
                                             </form>
+                                            @if ($errors->has('foto'))
+                                                <span class="text-danger fs-6">
+                                                    {{ $errors->first('foto') }}
+                                                </span>
+                                            @else{
+                                                <span class="text-danger fs-6">
+                                                    {{ __('Max file size') }} 3MB
+                                                </span>
+                                                }
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -519,7 +625,8 @@
                                                 method="post">
                                                 {!! method_field('delete') !!}
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Delete') }}</button>
                                             </form>
                                         @else
                                             {{-- AGREGAR FOTO --}}
@@ -527,21 +634,27 @@
                                                 action="{{ route('mfotos.store') }}" enctype="multipart/form-data">
                                                 {!! csrf_field() !!}
                                                 <input id="nfoto" type="text" name="nfoto" value="7" hidden>
-                                                <input id="REGGAL" type="text" name="REGGAL"
-                                                    value="{{ $mascota->REGGAL }}" hidden>
+                                                <input id="REGANI" type="text" name="REGANI"
+                                                    value="{{ $mascota->REGANI }}" hidden>
                                                 <input id="text" type="text" name="text" value="xd" hidden>
                                                 <input id="mascota_id" type="text" name="mascota_id"
                                                     value="{{ $mascota->id }}" hidden>
                                                 <input id="foto" type="file" class="form-control form-control-sm"
                                                     name="foto" value="{{ old('foto') }}" required autofocus
                                                     accept="image/*">
-                                                @if ($errors->has('foto'))
-                                                    <span class="text-danger fs-6">
-                                                        {{ $errors->first('foto') }}
-                                                    </span>
-                                                @endif
-                                                <button type="submit" class="btn btn-danger">Editar</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Upload') }}</button>
                                             </form>
+                                            @if ($errors->has('foto'))
+                                                <span class="text-danger fs-6">
+                                                    {{ $errors->first('foto') }}
+                                                </span>
+                                            @else{
+                                                <span class="text-danger fs-6">
+                                                    {{ __('Max file size') }} 3MB
+                                                </span>
+                                                }
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -577,7 +690,8 @@
                                                 method="post">
                                                 {!! method_field('delete') !!}
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Delete') }}</button>
                                             </form>
                                         @else
                                             {{-- AGREGAR VIDEO --}}
@@ -585,21 +699,27 @@
                                                 action="{{ route('mvideos.store') }}" enctype="multipart/form-data">
                                                 {!! csrf_field() !!}
                                                 <input id="nvideo" type="text" name="nvideo" value="1" hidden>
-                                                <input id="REGGAL" type="text" name="REGGAL"
-                                                    value="{{ $mascota->REGGAL }}" hidden>
+                                                <input id="REGANI" type="text" name="REGANI"
+                                                    value="{{ $mascota->REGANI }}" hidden>
                                                 <input id="text" type="text" name="text" value="xd" hidden>
                                                 <input id="mascota_id" type="text" name="mascota_id"
                                                     value="{{ $mascota->id }}" hidden>
                                                 <input id="video" type="file" class="form-control form-control-sm"
                                                     name="video" value="{{ old('video') }}" required autofocus
                                                     accept=".mp4">
-                                                @if ($errors->has('video'))
-                                                    <span class="text-danger fs-6">
-                                                        {{ $errors->first('video') }}
-                                                    </span>
-                                                @endif
-                                                <button type="submit" class="btn btn-danger">Editar</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Upload') }}</button>
                                             </form>
+                                            @if ($errors->has('video'))
+                                                <span class="text-danger fs-6">
+                                                    {{ $errors->first('video') }}
+                                                </span>
+                                            @else{
+                                                <span class="text-danger fs-6">
+                                                    {{ __('Max file size') }} 20MB
+                                                </span>
+                                                }
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -637,7 +757,8 @@
                                                 method="post">
                                                 {!! method_field('delete') !!}
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Delete') }}</button>
                                             </form>
                                         @else
                                             {{-- AGREGAR VIDEO --}}
@@ -645,21 +766,27 @@
                                                 action="{{ route('mvideos.store') }}" enctype="multipart/form-data">
                                                 {!! csrf_field() !!}
                                                 <input id="nvideo" type="text" name="nvideo" value="2" hidden>
-                                                <input id="REGGAL" type="text" name="REGGAL"
-                                                    value="{{ $mascota->REGGAL }}" hidden>
+                                                <input id="REGANI" type="text" name="REGANI"
+                                                    value="{{ $mascota->REGANI }}" hidden>
                                                 <input id="text" type="text" name="text" value="xd" hidden>
                                                 <input id="mascota_id" type="text" name="mascota_id"
                                                     value="{{ $mascota->id }}" hidden>
                                                 <input id="video" type="file" class="form-control form-control-sm"
                                                     name="video" value="{{ old('video') }}" required autofocus
                                                     accept=".mp4">
-                                                @if ($errors->has('video'))
-                                                    <span class="text-danger fs-6">
-                                                        {{ $errors->first('video') }}
-                                                    </span>
-                                                @endif
-                                                <button type="submit" class="btn btn-danger">Editar</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Upload') }}</button>
                                             </form>
+                                            @if ($errors->has('video'))
+                                                <span class="text-danger fs-6">
+                                                    {{ $errors->first('video') }}
+                                                </span>
+                                            @else{
+                                                <span class="text-danger fs-6">
+                                                    {{ __('Max file size') }} 20MB
+                                                </span>
+                                                }
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -682,7 +809,7 @@
     {{-- TABLE --}}
     <div class="card-footer border border-danger table-responsive">
         <label
-            class="form-label fw-bold text-uppercase text-danger text-uppercase">{{ __('Last 10 participantions') }}</label>
+            class="form-label fw-bold text-uppercase text-danger text-uppercase">{{ __('Last 20 participantions') }}</label>
         <table class="table table-sm table-dark table-hover fs-5 text-uppercase" id="datatable">
             <thead>
                 <tr>

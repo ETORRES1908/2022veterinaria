@@ -1,15 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="card bg-black border border-danger">
         <div class="card-header border border-danger">
             <a class="btn btn-dark" href="{{ route('events.show', $evento->id) }}">
@@ -59,7 +50,7 @@
                             <td>{{ $duel->pmascota->nombre }}</td>
                             <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#VS{{ $duel->id }}">
-                                    VS
+                                    {{ __('Deal') }}
                                 </button>
                                 <!-- Modal VS-->
                                 <div class="modal fade" id="VS{{ $duel->id }}" tabindex="-1">
@@ -75,6 +66,9 @@
                                                     </label>
                                                     <label class="btn btn-primary">
                                                         {{ __('Field') }}: {{ $duel->cch }}
+                                                    </label>
+                                                    <label class="btn btn-primary">
+                                                        {{ __('Accordance') }}: {{ $duel->pactada }}
                                                     </label>
                                                     @can('sentence')
                                                         {{-- 2nd SECOND --}}
@@ -103,10 +97,10 @@
                                                             <div class="row">
                                                                 <div class="col-sm-6 mb-3">
                                                                     <label class="form-label fw-bold">
-                                                                        {{ __('REG ANI') }}
+                                                                        {{ __('REGANI') }}
                                                                     </label>
                                                                     <div class="col-auto">
-                                                                        <input value="{{ $duel->pmascota->REGGAL }}"
+                                                                        <input value="{{ $duel->pmascota->REGANI }}"
                                                                             class="form-control text-danger" readonly>
                                                                     </div>
                                                                 </div>
@@ -196,10 +190,10 @@
                                                                 </div>
                                                                 <div class="col-sm-6 mb-3">
                                                                     <label class="form-label fw-bold">
-                                                                        {{ __('Stamp') }}
+                                                                        {{ __('Seal') }}
                                                                     </label>
                                                                     <div class="col-auto">
-                                                                        <input value="{{ $duel->pmascota->plc }}"
+                                                                        <input value="{{ $duel->pmascota->seal }}"
                                                                             class="form-control text-danger" readonly>
                                                                     </div>
                                                                 </div>
@@ -219,10 +213,10 @@
                                                             <div class="row">
                                                                 <div class="col-sm-6 mb-3">
                                                                     <label class="form-label fw-bold">
-                                                                        {{ __('REG ANI') }}
+                                                                        {{ __('REGANI') }}
                                                                     </label>
                                                                     <div class="col-auto">
-                                                                        <input value="{{ $duel->smascota->REGGAL }}"
+                                                                        <input value="{{ $duel->smascota->REGANI }}"
                                                                             class="form-control text-danger" readonly>
                                                                     </div>
                                                                 </div>
@@ -312,10 +306,10 @@
                                                                 </div>
                                                                 <div class="col-sm-6 mb-3">
                                                                     <label class="form-label fw-bold">
-                                                                        {{ __('Stamp') }}
+                                                                        {{ __('Seal') }}
                                                                     </label>
                                                                     <div class="col-auto">
-                                                                        <input value="{{ $duel->smascota->plc }}"
+                                                                        <input value="{{ $duel->smascota->seal }}"
                                                                             class="form-control text-danger" readonly>
                                                                     </div>
                                                                 </div>
@@ -340,7 +334,7 @@
                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body border border-danger text-uppercase">
-                                                    <form action="{{ route('duels.update', $duel->id) }}" method="POST">
+                                                    <form action="{{ route('pactados.update', $duel->id) }}" method="POST">
                                                         {!! method_field('PUT') !!}
                                                         {!! csrf_field() !!}
                                                         <div class="row mb-3">
@@ -474,7 +468,7 @@
                     <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <form class="text-uppercase" method="POST" action="{{ route('duels.store') }}">
+                <form class="text-uppercase" method="POST" action="{{ route('pactados.store') }}">
                     {!! csrf_field() !!}
                     <input type="text" id="evento_id" name="evento_id" value="{{ $evento->id }}" hidden>
                     {{-- LPARTICIPANTE_ID --}}
@@ -502,10 +496,10 @@
                                     <div class="row">
                                         <div class="col-sm-7">
                                             <label class="form-label fw-bold">
-                                                {{ __('REG ANI') }}
+                                                {{ __('REGANI') }}
                                             </label>
                                             <div class="col-auto">
-                                                <input id="REGGAL" type="text" class="form-control text-danger" readonly>
+                                                <input id="REGANI" type="text" class="form-control text-danger" readonly>
                                             </div>
                                         </div>
 
@@ -570,11 +564,11 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="plc" class="form-label fw-bold">
-                                                {{ __('Stamp') }}
+                                            <label for="seal" class="form-label fw-bold">
+                                                {{ __('Seal') }}
                                             </label>
                                             <div class="col-auto">
-                                                <input id="plc" type="text" class="form-control text-danger" readonly>
+                                                <input id="seal" type="text" class="form-control text-danger" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -620,10 +614,10 @@
                                     <div class="row">
                                         <div class="col-sm-7">
                                             <label class="form-label fw-bold">
-                                                {{ __('REG ANI') }}
+                                                {{ __('REGANI') }}
                                             </label>
                                             <div class="col-auto">
-                                                <input id="PREGGAL" type="text" class="form-control text-danger" readonly>
+                                                <input id="PREGANI" type="text" class="form-control text-danger" readonly>
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
@@ -685,11 +679,11 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="pplc" class="form-label fw-bold">
-                                                {{ __('Stamp') }}
+                                            <label for="pseal" class="form-label fw-bold">
+                                                {{ __('Seal') }}
                                             </label>
                                             <div class="col-auto">
-                                                <input id="pplc" type="text" class="form-control text-danger" readonly>
+                                                <input id="pseal" type="text" class="form-control text-danger" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -719,7 +713,18 @@
                         {{-- FOOTER --}}
                         <div class="w-50 mx-auto mt-1">
                             <div class="row">
-                                <div class="col-sm-6 mx-auto">
+                                <div class="col-sm-4 mx-auto">
+                                    <label for="pmad" class="form-label fw-bold">
+                                        {{ __('Accordance') }}
+                                    </label>
+                                    <div class="col-auto">
+                                        <input type="number" class="form-control text-danger" name="pactada"
+                                            onKeyPress="if(this.value.length==4) return false;" required
+                                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" min="0"
+                                            value="{{ old('pactada') }}" placeholder="0000">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 mx-auto">
                                     <label for="pmad" class="form-label fw-bold">
                                         {{ __('Field') }}
                                     </label>
@@ -732,7 +737,7 @@
                                     </div>
                                 </div>
                                 {{-- NUMBER FIGHT --}}
-                                <div class="col-sm-6 mx-auto">
+                                <div class="col-sm-4 mx-auto">
                                     <label for="npelea" class="form-label fw-bold">
                                         {{ __('Fight') }}
                                     </label>
@@ -813,13 +818,13 @@
                 success: function(data) {
                     console.log(data);
                     $.each(data, function(i, item) {
-                        $("#REGGAL").val(item.REGGAL);
+                        $("#REGANI").val(item.REGANI);
                         $("#plu").val(item.plu);
                         $("#sss").val(item.sss);
                         $("#country").val(item.country);
                         $("#state").val(item.state);
                         $("#des").val(item.des);
-                        $("#plc").val(item.plc);
+                        $("#seal").val(item.seal);
                         $("#pad").val(item.pad);
                         $("#mad").val(item.mad);
                     });
@@ -841,14 +846,14 @@
                 success: function(data) {
                     console.log(data);
                     $.each(data, function(i, item) {
-                        $("#pimg").val(item.REGGAL);
-                        $("#PREGGAL").val(item.REGGAL);
+                        $("#pimg").val(item.REGANI);
+                        $("#PREGANI").val(item.REGANI);
                         $("#pplu").val(item.plu);
                         $("#psss").val(item.sss);
                         $("#pcountry").val(item.country);
                         $("#pstate").val(item.state);
                         $("#pdes").val(item.des);
-                        $("#pplc").val(item.plc);
+                        $("#pseal").val(item.seal);
                         $("#ppad").val(item.pad);
                         $("#pmad").val(item.mad);
                     });

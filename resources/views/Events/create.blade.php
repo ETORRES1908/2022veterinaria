@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
-    <form class="text-uppercase" method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data" autocomplete="off">
+    <form class="text-uppercase" method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data"
+        autocomplete="off">
         {!! csrf_field() !!}
         <div class="card bg-black text-white mx-auto border border-danger mb-3">
             <div class="card-body border border-danger">
@@ -22,34 +23,36 @@
                                 <h6>{{ __('COUNTRY') }}: {{ Auth::user()->country }}</h6>
                             </li>
                             <li>
-                                <h6>{{ __('STATE') }}: {{ Auth::user()->stt }}</h6>
+                                <h6>{{ __('STATE') }}: {{ Auth::user()->state }}</h6>
                             </li>
                         </ul>
                     </div>
                     <div class="col-lg-6">
                         <div class="row">
                             <div class="col-6">
-                                <div class="form-control h-100">
-                                    <img src="@if (!empty(Auth::user()->mascotas[0])) {{ asset(Auth::user()->mascotas[0]->fotos->where('nfoto', 1)->first()->ruta) }}
-                            @else
-                            {{ asset('storage/img/pata.jpg') }} @endif"
-                                        class="img-fluid d-block mx-auto" style="height: 100%;">
+                                <div class="form-control">
+                                    <img src="{{ asset('storage/img/perro.jpg') }}" class="img-fluid d-block mx-auto"
+                                        style="height: 100%;">
+                                    <label class="form-label">{{ __('Challenge') }}:</label>
+                                    <input class="form-control text-danger" type="number" name="chll1"
+                                        value="{{ old('chll1') }}" onKeyPress="if(this.value.length==4) return false;"
+                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required autofocus
+                                        onblur>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="form-control h-100">
-                                    <img src="@if (!empty(Auth::user()->mascotas[1])) {{ asset(Auth::user()->mascotas[1]->fotos->where('nfoto', 1)->first()->ruta) }}
-                            @else
-                            {{ asset('storage/img/pata.jpg') }} @endif"
-                                        class="img-fluid d-block mx-auto" style="height: 100%;">
-
+                                <div class="form-control">
+                                    <img src="{{ asset('storage/img/perro.jpg') }}" class="img-fluid d-block mx-auto"
+                                        style="height: 100%;">
+                                    <label class="form-label">{{ __('Challenge') }}:</label>
+                                    <input class="form-control text-danger" type="number" name="chll2"
+                                        value="{{ old('chll2') }}" onKeyPress="if(this.value.length==4) return false;"
+                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required autofocus
+                                        onblur>
                                 </div>
                             </div>
                         </div>
-                        <label class="form-label">{{ __('Challenge') }}:</label>
-                        <input class="form-control" type="number" name="chll" value="{{ old('chll') }}"
-                            onKeyPress="if(this.value.length==4) return false;"
-                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required onfocus onblur>
+
                     </div>
                 </div>
             </div>
@@ -271,22 +274,30 @@
                                     <div class="input-group">
                                         <span class="input-group-text text-danger fw-bold">
                                             {{ __('MIN.') }}</span>
-                                        <select class="form-control text-danger" name="miw" id="miw">
+                                        <input type="number" class="form-control text-danger" name="miw" min="300" max="504"
+                                            onKeyPress="if(this.value.length==3) return false;" placeholder="300"
+                                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required
+                                            autofocus>
+                                        {{-- <select class="form-control text-danger" name="miw" id="miw">
                                             <option value="300">300</option>
                                             <option value="400">400</option>
                                             <option value="500">500</option>
-                                        </select>
+                                        </select> --}}
                                         <span class="input-group-text text-danger fw-bold">{{ __('MAX.') }}</span>
-                                        <select class="form-control text-danger" name="maw" id="maw">
+                                        <input type="number" class="form-control text-danger" name="maw" min="301" max="505"
+                                            onKeyPress="if(this.value.length==3) return false;" placeholder="505"
+                                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required
+                                            autofocus>
+                                        {{-- <select class="form-control text-danger" name="maw" id="maw">
                                             <option data="300" value="315">315</option>
                                             <option data="400" value="415">415</option>
                                             <option data="500" value="505">505</option>
-                                        </select>
+                                        </select> --}}
 
                                     </div>
                                     @if ($errors->has('miw') || $errors->has('maw'))
                                         <span class="text-danger text-fs6">
-                                            {{ __('Enter correct Weights') }}
+                                            {{ __('Enter correct weights') }}
                                         </span>
                                     @endif
                                 </div>
@@ -297,15 +308,23 @@
                                 </label>
                                 <div class="col-auto">
                                     <div class="input-group">
-                                        <select class="form-control text-danger fw-bold" id="ctr" name="ctr"
-                                            value="{{ old('ctr') }}" disabled autofocus>
+                                        <select class="form-control text-danger fw-bold" id="ctr" name="ctr" disabled
+                                            autofocus>
                                             <option class="text-danger fw-bold" value="PER">PER - Perú</option>
-                                            {{-- <option class="text-danger fw-bold" value="ARG" @if (old('ctr') == 'ARG')
-                                            selected @endif>Argentina</option>
-                                        <option class="text-danger fw-bold" value="ECU" @if (old('ctr') == 'ECU')
-                                            selected @endif>Ecuador</option> --}}
-                                            {{-- <option class="text-danger fw-bold" value="CHL" @if (old('ctr') == 'CHL')
-                                            selected @endif>Chile</option> --}}
+                                            <option class="text-danger fw-bold" value="CHI">CHI - Chile
+                                            </option>
+                                            <option class="text-danger fw-bold" value="COL">COL - Colombia
+                                            </option>
+                                            <option class="text-danger fw-bold" value="ECU">ECU - Ecuador
+                                            </option>
+                                            <option class="text-danger fw-bold" value="MEX">MEX - Mexico
+                                            </option>
+                                            <option class="text-danger fw-bold" value="PRI">PRI - Puerto Rico
+                                            </option>
+                                            <option class="text-danger fw-bold" value="DOM">DOM - Rep. Dominicana
+                                            </option>
+                                            <option class="text-danger fw-bold" value="OTR">OTR - Otros
+                                            </option>
                                         </select>
                                     </div>
                                     @if ($errors->has('ctr'))
@@ -323,60 +342,466 @@
                                     <div class="input-group">
                                         <select class="form-control text-danger fw-bold" name="stt" id="stt"
                                             value="{{ old('stt') }}" disabled autofocus>
-                                            <option class="text-danger fw-bold" value="AM">AM - Amazonas</option>
-                                            <option class="text-danger fw-bold" value="AN">AN - Ancash</option>
-                                            <option class="text-danger fw-bold" value="AP">AP - Apurímac
+                                            <option data="PER" class="text-danger fw-bold" value="AM">AM -
+                                                Amazonas
                                             </option>
-                                            <option class="text-danger fw-bold" value="AR">AR - Arequipa
+                                            <option data="PER" class="text-danger fw-bold" value="AN">AN -
+                                                Ancash</option>
+                                            <option data="PER" class="text-danger fw-bold" value="AP">AP -
+                                                Apurímac
                                             </option>
-                                            <option class="text-danger fw-bold" value="AY">AY - Ayacucho
+                                            <option data="PER" class="text-danger fw-bold" value="AR">AR -
+                                                Arequipa
                                             </option>
-                                            <option class="text-danger fw-bold" value="CJ">CJ - Cajamarca
+                                            <option data="PER" class="text-danger fw-bold" value="AY">AY -
+                                                Ayacucho
                                             </option>
-                                            <option class="text-danger fw-bold" value="CZ">CZ - Cuzco</option>
-                                            <option class="text-danger fw-bold" value="HC">HC - Huancavelica
+                                            <option data="PER" class="text-danger fw-bold" value="CJ">CJ -
+                                                Cajamarca
                                             </option>
-                                            <option class="text-danger fw-bold" value="HU">HU - Huánuco</option>
-                                            <option class="text-danger fw-bold" value="IC">IC - Ica</option>
-                                            <option class="text-danger fw-bold" value="JU">JU - Junín</option>
-                                            <option class="text-danger fw-bold" value="LL">LL - La Libertad
+                                            <option data="PER" class="text-danger fw-bold" value="CZ">CZ -
+                                                Cuzco</option>
+                                            <option data="PER" class="text-danger fw-bold" value="HC">HC -
+                                                Huancavelica
                                             </option>
-                                            <option class="text-danger fw-bold" value="LB">LB - Lambayeque
+                                            <option data="PER" class="text-danger fw-bold" value="HU">HU -
+                                                Huánuco</option>
+                                            <option data="PER" class="text-danger fw-bold" value="IC">IC -
+                                                Ica</option>
+                                            <option data="PER" class="text-danger fw-bold" value="JU">JU -
+                                                Junín</option>
+                                            <option data="PER" class="text-danger fw-bold" value="LL">LL -
+                                                La Libertad
                                             </option>
-                                            <option class="text-danger fw-bold" value="LM">LM - Lima</option>
-                                            <option class="text-danger fw-bold" value="LO">LO - Loreto</option>
-                                            <option class="text-danger fw-bold" value="MD">MD - Madre de Dios
+                                            <option data="PER" class="text-danger fw-bold" value="LB">LB -
+                                                Lambayeque
                                             </option>
-                                            <option class="text-danger fw-bold" value="MQ">MQ - Moquegua
+                                            <option data="PER" class="text-danger fw-bold" value="LM">LM -
+                                                Lima</option>
+                                            <option data="PER" class="text-danger fw-bold" value="LO">LO -
+                                                Loreto</option>
+                                            <option data="PER" class="text-danger fw-bold" value="MD">MD -
+                                                Madre de Dios
                                             </option>
-                                            <option class="text-danger fw-bold" value="PA">PA - Pasco</option>
-                                            <option class="text-danger fw-bold" value="PI">PI - Piura</option>
-                                            <option class="text-danger fw-bold" value="PU">PU - Puno</option>
-                                            <option class="text-danger fw-bold" value="SM">SM - San Martín
+                                            <option data="PER" class="text-danger fw-bold" value="MQ">MQ -
+                                                Moquegua
                                             </option>
-                                            <option class="text-danger fw-bold" value="TA">TA - Tacna</option>
-                                            <option class="text-danger fw-bold" value="TU">TU - Tumbes</option>
-                                            <option class="text-danger fw-bold" value="UC">UC - Ucayali
+                                            <option data="PER" class="text-danger fw-bold" value="PA">PA -
+                                                Pasco</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PI">PI -
+                                                Piura</option>
+                                            <option data="PER" class="text-danger fw-bold" value="PU">PU -
+                                                Puno</option>
+                                            <option data="PER" class="text-danger fw-bold" value="SM">SM -
+                                                San Martín
+                                            </option>
+                                            <option data="PER" class="text-danger fw-bold" value="TA">TA -
+                                                Tacna</option>
+                                            <option data="PER" class="text-danger fw-bold" value="TU">TU -
+                                                Tumbes</option>
+                                            <option data="PER" class="text-danger fw-bold" value="UC">UC -
+                                                Ucayali
                                             </option>
                                             {{-- CHILE --}}
-                                            {{-- <option data="CHL" class="text-danger fw-bold" value="CL-AI" @if (old('stt') == 'CL-AI') selected @endif>Aysén</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-AN" @if (old('stt') == 'CL-AN') selected @endif>Antofagasta</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-AP" @if (old('stt') == 'CL-AP') selected @endif>Arica y Parinacota
-                                        </option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-AR" @if (old('stt') == 'CL-AR') selected @endif>Araucanía</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-AT" @if (old('stt') == 'CL-AT') selected @endif>Atacama</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-BI" @if (old('stt') == 'CL-BI') selected @endif>Biobío</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-CO" @if (old('stt') == 'CL-CO') selected @endif>Coquimbo</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-LI" @if (old('stt') == 'CL-LI') selected @endif>O'Higgins</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-LL" @if (old('stt') == 'CL-LL') selected @endif>Los Lagos</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-LR" @if (old('stt') == 'CL-LR') selected @endif>Los Ríos</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-MA" @if (old('stt') == 'CL-MA') selected @endif>Magallanes y Antártica
-                                        </option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-ML" @if (old('stt') == 'CL-ML') selected @endif>Maule</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-NB" @if (old('stt') == 'CL-NB') selected @endif>Ñuble</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-RM" @if (old('stt') == 'CL-RM') selected @endif>Santiago</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-TA" @if (old('stt') == 'CL-TA') selected @endif>Tarapacá</option>
-                                        <option data="CHL" class="text-danger fw-bold" value="CL-VS" @if (old('stt') == 'CL-VS') selected @endif>Valparaíso</option> --}}
+                                            <option data="CHL" class="text-danger fw-bold" value="RM">
+                                                RM - Santiago de Chile
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="AI">
+                                                AI - Aysén
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="AN">
+                                                AN - Antofagasta
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="AP">
+                                                AP - Arica y Parinacota
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="AT">
+                                                AT - Atacama
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="BI">
+                                                BI - Biobío
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="CO">
+                                                CO - Coquimbo
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="AR">
+                                                AR - La Araucanía
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="LI">
+                                                LI - O'Higgins
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="LL">
+                                                LL - Los Lagos
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="LR">
+                                                LR - Los Ríos
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="MA">
+                                                MA - Magallanes
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="ML">
+                                                ML - Maule
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="TA">
+                                                TA - Tarapacá
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="VS">
+                                                VS - Valparaíso
+                                            </option>
+                                            <option data="CHL" class="text-danger fw-bold" value="NB">
+                                                NB - Ñuble
+                                            </option>
+                                            {{-- COLOMBIA --}}
+                                            <option data="COL" class="text-danger fw-bold" value="BO">
+                                                BO - Bogotá
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="AM">
+                                                AM - Amazonas
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="AT">
+                                                AT - Antioquia
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="AR">
+                                                ARA - Arauca
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="AT">
+                                                AT - Atlántico
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="BL">
+                                                BL - Bolívar
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="BY">
+                                                BY - Boyacá
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="CL">
+                                                CL - Caldas
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="CQ">
+                                                CQ - Caquetá
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="CS">
+                                                CS - Casanare
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="CU">
+                                                CU - Cauca
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="CS">
+                                                CS - Cesar
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="CH">
+                                                CH - Chocó
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="CU">
+                                                CU - Cundinamarca
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="CR">
+                                                CR - Córdoba
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="GU">
+                                                GU - Guainía
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="GV">
+                                                GV - Guaviare
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="HU">
+                                                HU - Huila
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="LG">
+                                                LG - La Guajira
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="MG">
+                                                MG - Magdalena
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="MT">
+                                                MT - Meta
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="NR">
+                                                NR - Nariño
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="NS">
+                                                NS - Norte de Santander
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="PT">
+                                                PT - Putumayo
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="QU">
+                                                QU - Quindío
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="RS">
+                                                RS - Risaralda
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="SP">
+                                                SP - San Andrés, Providencia y Santa Catalina
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="SN">
+                                                SN - Santander
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="SC">
+                                                SC - Sucre
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="TL">
+                                                TL - Tolima
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="VC">
+                                                VC - Valle del Cauca
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="VU">
+                                                VU - Vaupés
+                                            </option>
+                                            <option data="COL" class="text-danger fw-bold" value="VD">
+                                                VD - Vichada
+                                            </option>
+                                            {{-- ECUADOR --}}
+                                            <option data="ECU" class="text-danger fw-bold" value="AZ">
+                                                AZ - Azuay
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="BL">
+                                                BL - Bolívar
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="CA">
+                                                CA - Carchi
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="CÑ">
+                                                CÑ - Cañar
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="CH">
+                                                CH - Chimborazo
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="CO">
+                                                CO - Cotopaxi
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="EO">
+                                                EO - El Oro
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="ES">
+                                                ES - Esmeraldas
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="GA">
+                                                GA - Galápagos
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="GU">
+                                                GU - Guayas
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="IM">
+                                                IM - Imbabura
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="LO">
+                                                LO - Loja
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="LR">
+                                                LR - Los Ríos
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="MA">
+                                                MA - Manabí
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="MS">
+                                                MS - Morona Santiago
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="NA">
+                                                NA - Napo
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="OR">
+                                                OR - Orellana
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="PA">
+                                                PA - Pastaza
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="PI">
+                                                PI - Pichincha
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="SE">
+                                                SE - Santa Elena
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="ST">
+                                                ST - Santo Domingo de los Tsáchilas
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="SU">
+                                                SU - Sucumbíos
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="TU">
+                                                TU - Tungurahua
+                                            </option>
+                                            <option data="ECU" class="text-danger fw-bold" value="ZC">
+                                                ZC - Zamora Chinchipe
+                                            </option>
+                                            {{-- MEX --}}
+                                            <option data="MEX" class="text-danger fw-bold" value="CX">
+                                                CX - Ciudad de México
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="AG">
+                                                AG - Aguascalientes
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="BC">
+                                                BC - Baja California
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="BS">
+                                                BS - Baja California Sur
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="CM">
+                                                CM - Campeche
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="CS">
+                                                CS - Chiapas
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="CH">
+                                                CH - Chihuahua
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="CO">
+                                                CO - Coahuila
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="CL">
+                                                CL - Colima
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="DG">
+                                                DG - Durango
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="GT">
+                                                GT - Guanajuato
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="GR">
+                                                GR - Guerrero
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="HG">
+                                                HG - Hidalgo
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="JC">
+                                                JC - Jalisco
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="EM">
+                                                EM - México
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="MI">
+                                                MI - Michoacán
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="MO">
+                                                MO - Morelos
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="NA">
+                                                NA - Nayarit
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="NL">
+                                                NL - Nuevo León
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="OA">
+                                                OA - Oaxaca
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="PU">
+                                                PU - Puebla
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="QT">
+                                                QT - Querétaro
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="QR">
+                                                QR - Quintana Roo
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="SL">
+                                                SL - San Luis Potosí
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="SI">
+                                                SI - Sinaloa
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="SO">
+                                                SO - Sonora
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="TB">
+                                                TB - Tabasco
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="TL">
+                                                TL - Tlaxcala
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="TM">
+                                                TM - Tamaulipas
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="TL">
+                                                TL - Tlaxcala
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="VE">
+                                                VE - Veracruz
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="YU">
+                                                YU - Yucatán
+                                            </option>
+                                            <option data="MEX" class="text-danger fw-bold" value="ZA">
+                                                ZA - Zacatecas
+                                            </option>
+                                            {{-- PUERTO RICO --}}
+                                            <option data="PRI" class="text-danger fw-bold" value="SJ">
+                                                SJ - San Juan
+                                            </option>
+                                            <option data="PRI" class="text-danger fw-bold" value="BY">
+                                                BY - Bayamón
+                                            </option>
+                                            <option data="PRI" class="text-danger fw-bold" value="AB">
+                                                AB - Arecibo
+                                            </option>
+                                            <option data="PRI" class="text-danger fw-bold" value="AM">
+                                                AM - Aguadilla/ Mayagüez
+                                            </option>
+                                            <option data="PRI" class="text-danger fw-bold" value="GY">
+                                                GY - Guayama
+                                            </option>
+                                            <option data="PRI" class="text-danger fw-bold" value="PN">
+                                                PN - Ponce
+                                            </option>
+                                            <option data="PRI" class="text-danger fw-bold" value="HO">
+                                                HO - Humacao
+                                            </option>
+                                            <option data="PRI" class="text-danger fw-bold" value="CN">
+                                                CN - Carolina
+                                            </option>
+                                            {{-- REPUBLICA DOMINICANA --}}
+                                            <option data="DOM" class="text-danger fw-bold" value="SJ">
+                                                SJ - San Juan
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="AZ">
+                                                AZ - Azua
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="AG">
+                                                AG - La Altagracia
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="BH">
+                                                BH - Barahona
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="DT">
+                                                DT - Duarte
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="EP">
+                                                EP - Elías Piña
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="ES">
+                                                ES - El Seibo
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="HM">
+                                                HM - Hato Mayor
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="IP">
+                                                IP - Independencia
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="LV">
+                                                LV - La Vega
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="MC">
+                                                MC - Monte Cristi
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="MP">
+                                                MP - Monte Plata
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="PD">
+                                                PD - Pedernales
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="PP">
+                                                PP - Puerto Plata
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="SD">
+                                                SD - Santo Domingo
+                                            </option>
+                                            <option data="DOM" class="text-danger fw-bold" value="SA">
+                                                SA - Santiago
+                                            </option>
+                                            {{-- OTHER --}}
+                                            <option target="OTR" class="text-danger fw-bold" value="OTR">
+                                                OTR - {{ __('Other') }}
+                                            </option>
                                         </select>
                                     </div>
                                     @if ($errors->has('stt'))
@@ -408,60 +833,59 @@
                             {{ __('1st WEIGH') }}
                         </label>
                         <div class="col-auto">
-                            <input id="ftw" type="time" class="form-control text-danger fw-bold" name="ftw"
+                            {{-- <input id="ftw" type="time" class="form-control text-danger fw-bold" name="ftw"
                                 value=@if (!empty(old('ftw'))) "{{ old('ftw') }}" @else "--:--" @endif
-                                required autofocus step="0">
-                            {{-- <select class="form-control form-select text-danger fw-bold" id="ftw" name="ftw"
-                                value="{{ old('ftw') }}" required autofocus>
-                                <option class="text-danger fw-bold" value="00:00"
-                                    @if (old('ftw') == '00:00') selected @endif>00:00</option>
-                                <option class="text-danger fw-bold" value="01:00"
-                                    @if (old('ftw') == '01:00') selected @endif>01:00</option>
-                                <option class="text-danger fw-bold" value="02:00"
-                                    @if (old('ftw') == '02:00') selected @endif>02:00</option>
-                                <option class="text-danger fw-bold" value="03:00"
-                                    @if (old('ftw') == '03:00') selected @endif>03:00</option>
-                                <option class="text-danger fw-bold" value="04:00"
-                                    @if (old('ftw') == '04:00') selected @endif>04:00</option>
-                                <option class="text-danger fw-bold" value="05:00"
-                                    @if (old('ftw') == '05:00') selected @endif>05:00</option>
-                                <option class="text-danger fw-bold" value="06:00"
-                                    @if (old('ftw') == '06:00') selected @endif>06:00</option>
-                                <option class="text-danger fw-bold" value="07:00"
-                                    @if (old('ftw') == '07:00') selected @endif>07:00</option>
-                                <option class="text-danger fw-bold" value="08:00"
-                                    @if (old('ftw') == '08:00') selected @endif>08:00</option>
-                                <option class="text-danger fw-bold" value="09:00"
-                                    @if (old('ftw') == '09:00') selected @endif>09:00</option>
-                                <option class="text-danger fw-bold" value="10:00"
-                                    @if (old('ftw') == '10:00') selected @endif>10:00</option>
-                                <option class="text-danger fw-bold" value="11:00"
-                                    @if (old('ftw') == '11:00') selected @endif>11:00</option>
-                                <option class="text-danger fw-bold" value="12:00"
-                                    @if (old('ftw') == '12:00') selected @endif>12:00</option>
-                                <option class="text-danger fw-bold" value="13:00"
-                                    @if (old('ftw') == '13:00') selected @endif>13:00</option>
-                                <option class="text-danger fw-bold" value="14:00"
-                                    @if (old('ftw') == '14:00') selected @endif>14:00</option>
-                                <option class="text-danger fw-bold" value="15:00"
-                                    @if (old('ftw') == '15:00') selected @endif>15:00</option>
-                                <option class="text-danger fw-bold" value="16:00"
-                                    @if (old('ftw') == '16:00') selected @endif>16:00</option>
-                                <option class="text-danger fw-bold" value="17:00"
-                                    @if (old('ftw') == '17:00') selected @endif>17:00</option>
-                                <option class="text-danger fw-bold" value="18:00"
-                                    @if (old('ftw') == '18:00') selected @endif>18:00</option>
-                                <option class="text-danger fw-bold" value="19:00"
-                                    @if (old('ftw') == '19:00') selected @endif>19:00</option>
-                                <option class="text-danger fw-bold" value="20:00"
-                                    @if (old('ftw') == '20:00') selected @endif>20:00</option>
-                                <option class="text-danger fw-bold" value="21:00"
-                                    @if (old('ftw') == '21:00') selected @endif>21:00</option>
-                                <option class="text-danger fw-bold" value="22:00"
-                                    @if (old('ftw') == '22:00') selected @endif>22:00</option>
-                                <option class="text-danger fw-bold" value="23:00"
-                                    @if (old('ftw') == '23:00') selected @endif>23:00</option>
-                            </select> --}}
+                                required autofocus step="0"> --}}
+                            <select class="form-select text-danger" name="ftw" id="ftw" required autofocus>
+                                <option @if (old('ftw') == '00:00') selected @endif value="00:00">00:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '01:00') selected @endif value="01:00">01:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '02:00') selected @endif value="02:00">02:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '03:00') selected @endif value="03:00">03:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '04:00') selected @endif value="04:00">04:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '05:00') selected @endif value="05:00">05:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '06:00') selected @endif value="06:00">06:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '07:00') selected @endif value="07:00">07:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '08:00') selected @endif value="08:00">08:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '09:00') selected @endif value="09:00">09:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '10:00') selected @endif value="10:00">10:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '11:00') selected @endif value="11:00">11:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '12:00') selected @endif value="12:00">12:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '13:00') selected @endif value="13:00">13:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '14:00') selected @endif value="14:00">14:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '15:00') selected @endif value="15:00">15:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '16:00') selected @endif value="16:00">16:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '17:00') selected @endif value="17:00">17:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '18:00') selected @endif value="18:00">18:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '19:00') selected @endif value="19:00">19:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '20:00') selected @endif value="20:00">20:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '21:00') selected @endif value="21:00">21:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '22:00') selected @endif value="22:00">22:00 a.m.
+                                </option>
+                                <option @if (old('ftw') == '23:00') selected @endif value="23:00">23:00 a.m.
+                                </option>
+                            </select>
                             @if ($errors->has('ftw'))
                                 <span class="text-danger text-fs6">
                                     {{ $errors->first('ftw') }}
@@ -475,61 +899,59 @@
                             {{ __('2nd WEIGH') }}
                         </label>
                         <div class="col-auto">
-                            <input id="stw" type="time" class="form-control text-danger fw-bold" name="stw"
+                            {{-- <input id="stw" type="time" class="form-control text-danger fw-bold" name="stw"
                                 value=@if (!empty(old('stw'))) "{{ old('stw') }}" @else "--:--" @endif
-                                required autofocus step="0">
-                            {{-- <select class="form-control form-select text-danger fw-bold" id="stw" name="stw"
-                                value="{{ old('stw') }}" required autofocus>
-                                <option class="text-danger fw-bold" value="00:00"
-                                    @if (old('stw') == '00:00') selected @endif>00:00</option>
-                                <option class="text-danger fw-bold" value="01:00"
-                                    @if (old('stw') == '01:00') selected @endif>01:00</option>
-                                <option class="text-danger fw-bold" value="02:00"
-                                    @if (old('stw') == '02:00') selected @endif>02:00</option>
-                                <option class="text-danger fw-bold" value="03:00"
-                                    @if (old('stw') == '03:00') selected @endif>03:00</option>
-                                <option class="text-danger fw-bold" value="04:00"
-                                    @if (old('stw') == '04:00') selected @endif>04:00</option>
-                                <option class="text-danger fw-bold" value="05:00"
-                                    @if (old('stw') == '05:00') selected @endif>05:00</option>
-                                <option class="text-danger fw-bold" value="06:00"
-                                    @if (old('stw') == '06:00') selected @endif>06:00</option>
-                                <option class="text-danger fw-bold" value="07:00"
-                                    @if (old('stw') == '07:00') selected @endif>07:00</option>
-                                <option class="text-danger fw-bold" value="08:00"
-                                    @if (old('stw') == '08:00') selected @endif>08:00</option>
-                                <option class="text-danger fw-bold" value="09:00"
-                                    @if (old('stw') == '09:00') selected @endif>09:00</option>
-                                <option class="text-danger fw-bold" value="10:00"
-                                    @if (old('stw') == '10:00') selected @endif>10:00</option>
-                                <option class="text-danger fw-bold" value="11:00"
-                                    @if (old('stw') == '11:00') selected @endif>11:00</option>
-                                <option class="text-danger fw-bold" value="12:00"
-                                    @if (old('stw') == '12:00') selected @endif>12:00</option>
-                                <option class="text-danger fw-bold" value="13:00"
-                                    @if (old('stw') == '13:00') selected @endif>13:00</option>
-                                <option class="text-danger fw-bold" value="14:00"
-                                    @if (old('stw') == '14:00') selected @endif>14:00</option>
-                                <option class="text-danger fw-bold" value="15:00"
-                                    @if (old('stw') == '15:00') selected @endif>15:00</option>
-                                <option class="text-danger fw-bold" value="16:00"
-                                    @if (old('stw') == '16:00') selected @endif>16:00</option>
-                                <option class="text-danger fw-bold" value="17:00"
-                                    @if (old('stw') == '17:00') selected @endif>17:00</option>
-                                <option class="text-danger fw-bold" value="18:00"
-                                    @if (old('stw') == '18:00') selected @endif>18:00</option>
-                                <option class="text-danger fw-bold" value="19:00"
-                                    @if (old('stw') == '19:00') selected @endif>19:00</option>
-                                <option class="text-danger fw-bold" value="20:00"
-                                    @if (old('stw') == '20:00') selected @endif>20:00</option>
-                                <option class="text-danger fw-bold" value="21:00"
-                                    @if (old('stw') == '21:00') selected @endif>21:00</option>
-                                <option class="text-danger fw-bold" value="22:00"
-                                    @if (old('stw') == '22:00') selected @endif>22:00</option>
-                                <option class="text-danger fw-bold" value="23:00"
-                                    @if (old('stw') == '23:00') selected @endif>23:00</option>
-                            </select> --}}
-
+                                required autofocus step="0"> --}}
+                            <select class="form-select text-danger" name="stw" id="stw" required autofocus>
+                                <option @if (old('stw') == '00:00') selected @endif value="00:00">00:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '01:00') selected @endif value="01:00">01:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '02:00') selected @endif value="02:00">02:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '03:00') selected @endif value="03:00">03:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '04:00') selected @endif value="04:00">04:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '05:00') selected @endif value="05:00">05:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '06:00') selected @endif value="06:00">06:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '07:00') selected @endif value="07:00">07:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '08:00') selected @endif value="08:00">08:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '09:00') selected @endif value="09:00">09:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '10:00') selected @endif value="10:00">10:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '11:00') selected @endif value="11:00">11:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '12:00') selected @endif value="12:00">12:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '13:00') selected @endif value="13:00">13:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '14:00') selected @endif value="14:00">14:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '15:00') selected @endif value="15:00">15:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '16:00') selected @endif value="16:00">16:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '17:00') selected @endif value="17:00">17:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '18:00') selected @endif value="18:00">18:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '19:00') selected @endif value="19:00">19:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '20:00') selected @endif value="20:00">20:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '21:00') selected @endif value="21:00">21:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '22:00') selected @endif value="22:00">22:00 a.m.
+                                </option>
+                                <option @if (old('stw') == '23:00') selected @endif value="23:00">23:00 a.m.
+                                </option>
+                            </select>
                             @if ($errors->has('stw'))
                                 <span class="text-danger text-fs6">
                                     {{ $errors->first('stw') }}
@@ -548,9 +970,58 @@
                             {{ __('Start') }}
                         </label>
                         <div class="col-auto">
-                            <input id="hstart" type="time" class="form-control text-danger fw-bold" name="hstart"
-                                value=@if (!empty(old('hstart'))) "{{ old('hstart') }}" @else "--:--" @endif
-                                required autofocus step="0">
+                            {{-- <input id="hstart" type="time" class="form-control text-danger fw-bold" name="hstart"
+                                value=required autofocus step="0"> --}}
+                            <select class="form-select text-danger" name="hstart" id="hstart" required autofocus>
+                                <option @if (old('hstart') == '00:00') selected @endif value="00:00">00:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '01:00') selected @endif value="01:00">01:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '02:00') selected @endif value="02:00">02:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '03:00') selected @endif value="03:00">03:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '04:00') selected @endif value="04:00">04:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '05:00') selected @endif value="05:00">05:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '06:00') selected @endif value="06:00">06:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '07:00') selected @endif value="07:00">07:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '08:00') selected @endif value="08:00">08:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '09:00') selected @endif value="09:00">09:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '10:00') selected @endif value="10:00">10:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '11:00') selected @endif value="11:00">11:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '12:00') selected @endif value="12:00">12:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '13:00') selected @endif value="13:00">13:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '14:00') selected @endif value="14:00">14:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '15:00') selected @endif value="15:00">15:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '16:00') selected @endif value="16:00">16:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '17:00') selected @endif value="17:00">17:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '18:00') selected @endif value="18:00">18:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '19:00') selected @endif value="19:00">19:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '20:00') selected @endif value="20:00">20:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '21:00') selected @endif value="21:00">21:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '22:00') selected @endif value="22:00">22:00 a.m.
+                                </option>
+                                <option @if (old('hstart') == '23:00') selected @endif value="23:00">23:00 a.m.
+                                </option>
+                            </select>
                             @if ($errors->has('hstart'))
                                 <span class="text-danger text-fs6">
                                     {{ $errors->first('hstart') }}
@@ -565,7 +1036,7 @@
                             {{ __('Control desk') }}
                         </label>
                         <div class="col-auto">
-                            <select class="form-select text-danger fw-bold" id="mcontrol_id" name="mcontrol_id"
+                            <select class="select2 form-select text-danger fw-bold" id="mcontrol_id" name="mcontrol_id"
                                 value="{{ old('mcontrol_id') }}" required autofocus>
                                 @foreach ($cdks as $mcontrol)
                                     <option value="{{ $mcontrol->id }}"
@@ -587,7 +1058,7 @@
                             {{ __('Judge') }}
                         </label>
                         <div class="col-auto">
-                            <select class="form-select text-danger fw-bold" id="judge_id" name="judge_id"
+                            <select class="select2 form-select text-danger fw-bold" id="judge_id" name="judge_id"
                                 value="{{ old('judge_id') }}" required autofocus>
                                 @foreach ($jdgs as $judge)
                                     <option value="{{ $judge->id }}"
@@ -610,7 +1081,7 @@
                             {{ __('Assistant') }}
                         </label>
                         <div class="col-auto">
-                            <select class="form-select text-danger fw-bold" id="assistent_id" name="assistent_id"
+                            <select class="select2 form-select text-danger fw-bold" id="assistent_id" name="assistent_id"
                                 value="{{ old('assistent_id') }}" required autofocus>
                                 @foreach ($assts as $assistent)
                                     <option value="{{ $assistent->id }}"
@@ -993,7 +1464,7 @@
                                 <div class="input-group-text">S/.</div>
                                 <input id="ift" type="number" class="form-control text-danger fw-bold" name="ift"
                                     value="{{ old('ift') }}" required autofocus min="0"
-                                    onKeyPress="if(this.value.length==3) return false;" />
+                                    onKeyPress="if(this.value.length==4) return false;" />
                             </div>
                             @if ($errors->has('ift'))
                                 <span class="text-danger text-fs6">
@@ -1012,7 +1483,7 @@
                                 <div class="input-group-text">S/.</div>
                                 <input id="gll" type="number" class="form-control text-danger fw-bold" name="gll"
                                     value="{{ old('gll') }}" required autofocus min="0"
-                                    onKeyPress="if(this.value.length==3) return false;"
+                                    onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
                             </div>
                             @if ($errors->has('gll'))
@@ -1032,7 +1503,7 @@
                                 <div class="input-group-text">S/.</div>
                                 <input id="glp" type="number" class="form-control text-danger fw-bold" name="glp"
                                     value="{{ old('glp') }}" required autofocus min="0"
-                                    onKeyPress="if(this.value.length==3) return false;"
+                                    onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
                             </div>
                             @if ($errors->has('glp'))
@@ -1043,10 +1514,11 @@
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <h6>*{{ __('People with disabilities and women pass free') }}</h6>
-                        <h6>{{ __('LAW 28683 Preferential attention and LAW 29973 rights of people with disabilities.') }}
+                        <h6>{{ __('* Persons with disabilities - PCD and women free admission! ') }}</h6>
+                        <h6>{{ __('LAW 28683 Preferential attention and LAW 29973 rights of people with disabilities - PCD') }}
                         </h6>
-                        <h6>*{{ __('Old people just pay 50') }}%</h6>
+                        <h6>{{ __('* People over 65 only pay 50% of the entrance') }}%</h6>
+                        <h6>{{ __('PS: Failure to comply with the event created, you can be sanctioned') }}</h6>
                     </div>
                     {{-- BOTON DE REGISTRO --}}
                     <div class="col-md-12 ">

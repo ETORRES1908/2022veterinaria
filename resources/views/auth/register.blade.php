@@ -1,12 +1,11 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="card bg-black border border-danger">
         <div class="card-header fw-bold fs-3 border border-danger">{{ __('Create your account') }}</div>
-        <div class="card-body border border-danger">
-            <form class="text-uppercase" method="POST" action="{{ route('register') }}" enctype="multipart/form-data"
-                autocomplete="off">
-                {!! csrf_field() !!}
+        <form class="text-uppercase" method="POST" action="{{ route('register') }}" enctype="multipart/form-data"
+            autocomplete="off">
+            {!! csrf_field() !!}
+            <div class="card-body border border-danger">
                 {{-- USERNAME Y FOTO DE PERFIL --}}
                 <div class="row">
                     {{-- NOMBRE Y APELLIDO --}}
@@ -91,7 +90,7 @@
                                 {{ __('Name') . ' ' . __('Coliseum') }}
                             </label>
                             <input type="text" class="form-control text-danger" name="clsname"
-                                value="{{ old('clsname') }}" required autofocus pattern="[A-zÀ-ú1-9\s]+" maxlength="30"
+                                value="{{ old('clsname') }}" autofocus pattern="[A-zÀ-ú1-9\s]+" maxlength="30"
                                 onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)" />
 
                             @if ($errors->has('clsname'))
@@ -154,12 +153,35 @@
                     {{-- FOTO DE PERFIL --}}
                     <div class="col-lg-4 my-auto  mb-3 form-group{{ $errors->has('foto') ? 'has-error' : '' }}">
                         <label for="foto" class="col-form-label fw-bold">
-                            {{ __('Photo Profile') }}
+                            {{ __('Photo Profile') }} {{ __('User') }}
                         </label>
                         <div class="col-auto m-1 bg-black rounded">
-                            <img id="preview" class="mx-auto d-block" height="250" width="210" />
-                            <input id="foto" type="file" class="form-control form-control-sm" name="foto"
-                                value="{{ old('foto') }}" required autofocus accept="image/*">
+                            <img id="preview" src="{{ asset('storage/img/defaultuser.png') }}"
+                                class="img-fluid mx-auto d-block" height="250" />
+                            <div for="foto" onclick="getFile()" id="v" class="btn btn-white bg-white d-flex">
+                                <i id="cloud" class="bi bi-cloud-upload"></i>{{ __('Upload') }}
+                                <div id="yourBtn" class="mx-2">...{{ __('there is no picture') }}
+                                </div>
+                            </div>
+                            <input id="foto" type="file" name="foto" value="{{ old('foto') }}" required autofocus
+                                accept="image/*" onchange="sub(this)" hidden>
+                            <script>
+                                function getFile() {
+                                    document.getElementById("foto").click();
+                                }
+
+                                function sub(obj) {
+                                    var file = obj.value;
+                                    var fileName = file.split("\\");
+                                    document.getElementById("yourBtn").innerHTML = fileName[fileName.length - 1];
+                                    event.preventDefault();
+                                    /* FOTO */
+                                    if (foto.files) {
+                                        preview.src = URL.createObjectURL(foto.files[0])
+                                    }
+                                    document.getElementById("cloud").className = "bi bi-cloud-upload-fill";
+                                }
+                            </script>
                         </div>
                         @if ($errors->has('foto'))
                             <span class="text-danger fs-6">
@@ -206,6 +228,28 @@
                         @endif
                     </div>
                 </div>
+            </div>
+            <div class="card-body border border-danger">
+                {{-- BANNER --}}
+                <div class="col-md-8 m-auto">
+                    <div class="card-body">
+                        <div class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach ($banners as $banner)
+                                    <div class="carousel-item @if ($banner->nombre = 'bregister1.png') active @endif"
+                                        data-bs-interval="1000">
+                                        <a href="{{ $banner->url }}">
+                                            <img src="{{ asset($banner->ruta) }}" class="img-fluid mx-auto d-block">
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body border border-danger">
+
                 {{-- NOMBRE DE GALPON Y PREPA --}}
                 <div class="row">
                     {{-- NOMBRE DE GALPON --}}
@@ -294,7 +338,7 @@
                                 <option value="movitar" @if (old('company') == 'movitar') selected @endif>MOVISTAR
                                 </option>
                                 <option value="otros" @if (old('company') == 'otros') selected @endif>
-                                    {{ __('Others') }}</option>
+                                    {{ __('Other') }}</option>
                             </select>
 
                             @if ($errors->has('company'))
@@ -726,7 +770,7 @@
                                 </option>
                                 <option data="ECU" class="text-danger fw-bold" value="PI"
                                     @if (old('state') == 'PI') selected @endif>
-                                    PI - cha
+                                    PI - Pichincha
                                 </option>
                                 <option data="ECU" class="text-danger fw-bold" value="SE"
                                     @if (old('state') == 'SE') selected @endif>
@@ -982,7 +1026,7 @@
                                 {{-- OTHER --}}
                                 <option target="OTR" class="text-danger fw-bold" value="OTR"
                                     @if (old('state') == 'OTR') selected @endif>
-                                    {{ __('Other') }}
+                                    OTR - {{ __('Other') }}
                                 </option>
                             </select>
 
@@ -1000,7 +1044,8 @@
                         </label>
                         <div class="col-auto">
                             <input id="district" type="text" class="form-control  text-danger" name="district"
-                                value="{{ old('district') }}" maxlength="18" required autofocus>
+                                value="{{ old('district') }}" maxlength="18" required autofocus pattern="[A-zÀ-ú\S]+"
+                                onkeydown="return /[A-zÀ-ú]/i.test(event.key)">
 
                             @if ($errors->has('district'))
                                 <span class="text-danger text-fs6">
@@ -1019,7 +1064,7 @@
                         </label>
                         <div class="col-auto">
                             <input id="direction" type="text" class="form-control  text-danger" name="direction"
-                                value="{{ old('direction') }}" maxlength="30" required autofocus
+                                value="{{ old('direction') }}" maxlength="50" required autofocus
                                 placeholder="{{ __('Include ref or alt.') }}">
 
                             @if ($errors->has('direction'))
@@ -1036,8 +1081,9 @@
                         </label>
                         <div class="col-auto">
                             <input id="job" type="text" class="form-control  text-danger" name="job"
-                                value="{{ old('job') }}" maxlength="15" required autofocus
-                                placeholder="{{ __('Architect, Carpenter') }}">
+                                value="{{ old('job') }}" maxlength="36" required autofocus
+                                placeholder="{{ __('Architect, Carpenter') }}" pattern="[A-zÀ-ú\s]+"
+                                onkeydown="return /[A-zÀ-ú\s]/i.test(event.key)">
 
                             @if ($errors->has('job'))
                                 <span class="text-danger text-fs6">
@@ -1101,35 +1147,39 @@
                 </div>
                 {{-- CAPTCHAT AND INPUT CAPCHAT --}}
                 <div class="col-sm-6 mx-auto mb-3 form-group{{ $errors->has('captcha') ? ' has-error' : '' }}">
-                    {{-- CAPTCHAT --}}
-                    <div for="Captcha" class="col-form-label fw-bold">
-                        <span class="captcha-img col-sm-8">
-                            {!! captcha_img() !!}
-                        </span>
-                    </div>
-                    {{-- INPUT CAPTCHAT --}}
-                    <div class="col-sm-7 col-form-label">
-                        <input id="captcha" type="text" class="form-control text-danger fs-3 fw-bold" name="captcha"
-                            required autofocus maxlength="5">
+                    <div class="row">
+                        {{-- CAPTCHAT --}}
+                        <div for="Captcha" class="col-xl-6 col-form-label mx-auto text-center">
 
-                        @if ($errors->has('captcha'))
-                            <span class="fs-6 text-danger">
-                                {{ $errors->first('captcha') }}
-                            </span>
-                        @endif
+                            {!! captcha_img() !!}
+
+                        </div>
+                        {{-- INPUT CAPTCHAT --}}
+                        <div class="col-7 col-xl-6 m-auto mb-3">
+                            <input id="captcha" type="text" class="form-control text-danger fw-bold" name="captcha"
+                                required autofocus placeholder="{{ __('Result of blast') }}">
+
+                            @if ($errors->has('captcha'))
+                                <span class="fs-6 text-danger">
+                                    {{ $errors->first('captcha') }}
+                                </span>
+                            @endif
+                        </div>
+
                     </div>
                 </div>
                 {{-- BOTON DE REGISTRO --}}
-                <div class="col-sm-12 mb-3 ">
-                    <button type="submit" class="btn btn-primary ">
-                        {{ __('Crear cuenta') }}
+                <div class="text-end">
+                    <button type="submit" class="col-auto btn btn-success text-uppercase">
+                        {{ __('Create your account') }}
                     </button>
-                    <a type="" class="btn btn-secondary">
-                        {{ __('Contactenos') }}
+                    <a type="" class="col-auto btn btn-secondary" href="{{ route('contact') }}">
+                        {{ __('Contact us') }}
                     </a>
+
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 
     {{-- SCRIPTS --}}
@@ -1139,13 +1189,6 @@
         var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
             return new bootstrap.Popover(popoverTriggerEl)
         })
-        /* PREVIEW */
-        foto.onchange = evt => {
-            const [file] = foto.files
-            if (file) {
-                preview.src = URL.createObjectURL(file)
-            }
-        };
         /* DISABILITY */
         $("#discapacidad").change(function() {
             if ($("#discapacidad").val() != 'No') {

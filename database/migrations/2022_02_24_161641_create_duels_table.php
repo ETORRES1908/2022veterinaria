@@ -17,16 +17,17 @@ class CreateDuelsTable extends Migration
             $table->increments('id');
             //FOREIGN USER
             $table->integer('lparticipante_id')->unsigned();
-            $table->foreign('lparticipante_id')->references('id')->on('LParticipantes');
+            $table->foreign('lparticipante_id')->references('id')->on('LParticipantes')->onDelete('cascade');
             //FOREIGN USER
             $table->integer('pmascota_id')->unsigned();
-            $table->foreign('pmascota_id')->references('id')->on('mascotas');
+            $table->foreign('pmascota_id')->references('id')->on('mascotas')->onDelete('cascade');
             $table->string('fcc');
             //FOREIGN USER
             $table->integer('smascota_id')->unsigned();
-            $table->foreign('smascota_id')->references('id')->on('mascotas');
+            $table->foreign('smascota_id')->references('id')->on('mascotas')->onDelete('cascade');
             $table->string('scc');
             $table->string('cch');
+            $table->string('pactada');
             $table->string('npelea');
             $table->string('result')->nullable();
             $table->string('trslt')->nullable();

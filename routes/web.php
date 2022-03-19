@@ -15,7 +15,7 @@ Route::resource('/profile', 'Usuario\ProfileController');
 
 Route::resource('events', 'Evento\EventoController');
 Route::resource('/participants', 'Evento\LParticipantesController');
-Route::resource('/duels', 'Evento\DuelosController');
+Route::resource('/pactados', 'Evento\DuelosController');
 Route::resource('/coliseums', 'Evento\ColiseoController');
 
 //USER CONTROLLER
@@ -23,6 +23,8 @@ Route::group(['middleware' => ['can:addanimal']], function () {
     Route::resource('/mascotas', 'Usuario\MascotasController');
     Route::resource('/mfotos', 'Usuario\MFotosController');
     Route::resource('/mvideos', 'Usuario\MVideosController');
+    Route::post('/dsmtp/{id}', 'Usuario\EditMascotaController@deleteSMPT')->name('delete_smpt');
+    Route::post('/csmtp', 'Usuario\EditMascotaController@creteSMPT')->name('create_smpt');
 });
 
 //ADMIN CONTROLLER

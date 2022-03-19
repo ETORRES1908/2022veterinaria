@@ -1,6 +1,26 @@
 @extends('layouts.app')
+@section('head')
+    <style>
+        .cover-container {
+            max-width: 42em;
+            height: 20em;
+        }
 
+    </style>
+@endsection
 @section('content')
+    <div class="cover-container d-flex w-100 p-auto m-auto flex-column">
+        <div class="px-3">
+            <h1>Cover your page.</h1>
+            <p class="lead">Cover is a one-page template for building simple and beautiful home pages.
+                Download,
+                edit the text, and add your own fullscreen background photo to make it your own.</p>
+            <p class="lead">
+                <a href="#" class="btn btn-lg btn-secondary fw-bold border-white">Learn more</a>
+            </p>
+        </div>
+    </div>
+
     <div class="row g-5 m-0 p-0 text-black">
         <div class="col-sm-6 col-md-4 ">
             <div class="card border-0 h-100">

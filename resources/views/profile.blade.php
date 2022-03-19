@@ -1,5 +1,26 @@
 @extends('layouts.app')
+@section('head')
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/lightbox/icons/css/animation.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lightbox/icons/css/mhfontello.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lightbox/icons/css/mhfontello-embedded.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lightbox/icons/css/mhfontello-codes.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lightbox/icons/css/mhfontello-ie7-codes.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lightbox/icons/css/mhfontello-ie7.css') }}">
+    {{-- STYLES --}}
+    <style type="text/css">
+        #html5lightbox-watermark {
+            display: none !important;
+        }
 
+        .lightboxcontainer {
+            width: 100%;
+            height: 100%;
+            text-align: left;
+        }
+
+    </style>
+@endsection
 @section('content')
     <div class="card bg-black">
         @if (session('mensaje'))
@@ -24,14 +45,14 @@
                             <label class="col-sm-7 col-form-label">{{ __('User') . ' /' . __('Name Social') }}</label>
                             <div class="col-sm-5">
                                 <input type="name" name="name" class="form-control" maxlength="12" required autofocus
-                                    value="{{ Auth::user()->name }}">
+                                    value="{{ Auth::user()->name }}" @cannot('chngs') readonly @endcan>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-7 col-form-label">{{ __('Password') }}</label>
                             <div class="col-sm-5">
                                 <input type="password" name="password" class="form-control" maxlength="8" required
-                                    autofocus>
+                                    autofocus pattern="^(?=\D*\d)(?=.*?[a-zA-Z]).{8}">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -112,10 +133,10 @@
                     <div class="col-4 mb"><label class="col-form-label fw-bold"> {{ __('District') }}</label>
                         <input type="text" class="form-control" value="{{ Auth::user()->district }}" readonly>
                     </div>
-                    <div class="col-7 mb"><label class="col-form-label fw-bold"> {{ __('Direction') }}</label>
+                    <div class="col-lg-7 mb"><label class="col-form-label fw-bold"> {{ __('Direction') }}</label>
                         <input type="text" class="form-control" value="{{ Auth::user()->direction }}" readonly>
                     </div>
-                    <div class="col-5 mb"><label class="col-form-label fw-bold">
+                    <div class="col-lg-5 mb"><label class="col-form-label fw-bold">
                             {{ __('Profession or Trade') }}</label>
                         <input type="text" class="form-control" value="{{ Auth::user()->job }}" readonly>
                     </div>
@@ -123,4 +144,10 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        //HIDE
+        setTimeout(function() {
+            $('.alert').fadeOut(3000);
+        });
+    </script>
 @endsection

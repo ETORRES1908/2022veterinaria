@@ -40,4 +40,10 @@ class Mascota extends Model
     {
         return $this->hasMany(Movidas::class);
     }
+
+    // UN MASCOTAS MANY SUPLEMENTOS
+    public function suplementos()
+    {
+        return $this->hasMany(Suplementos::class);
+    }
 }

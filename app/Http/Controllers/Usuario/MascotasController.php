@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\MFotos;
 use App\Movidas;
+use App\Suplementos;
 use App\User;
 use App\Vacunas;
 use Carbon\Carbon;
@@ -30,7 +31,7 @@ class MascotasController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $mascotas = Mascota::where('user_id', '=', $user->id)->get();
+        $mascotas = Mascota::where('user_id', $user->id)->get();
         return view('Usuario.Mascotas.index', compact('mascotas'));
     }
 
@@ -41,8 +42,11 @@ class MascotasController extends Controller
      */
     public function create()
     {
-        $mascotas = Mascota::where('user_id', Auth::user()->id)->get();
-        return view('Usuario.Mascotas.create', compact('mascotas'));
+        $user = Auth::user();
+        $mascotas = Mascota::where('user_id',  $user->id)->get();
+        $pads = $mascotas->where('gender', 'male');
+        $mads = $mascotas->where('gender', 'female');
+        return view('Usuario.Mascotas.create', compact('pads', 'mads'));
     }
 
     /**
@@ -54,7 +58,7 @@ class MascotasController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'foto' => 'required|image|max:3000',
+            'foto' => 'required|image|mimes:jpg,png,jpeg|max:3000',
         ]);
 
         $nmascota = Mascota::Create([
@@ -68,7 +72,6 @@ class MascotasController extends Controller
             'hvs' => $request->hvs,
             'ncr' => $request->ncr,
             'sena' => $request->sena,
-            'spmt' => $request->spmt,
             'plc' => $request->plc,
             'plu' => $request->plu,
             'pad' => $request->pad,
@@ -78,39 +81,54 @@ class MascotasController extends Controller
         ]);
 
         $user = User::Find($request->user_id);
-        $REGGAL =
+        $REGANI =
             str_replace('-', '', Carbon::now()->format('Y-m-d')) .
             $user->country .
             $user->state .
             '000' .
             $user->id .
-            '0' .
+            '00' .
             $nmascota->id;
-        $nmascota->update(['REGGAL' => $REGGAL]);
+        $nmascota->update(['REGANI' => $REGANI]);
 
-        foreach ($request->vcnsf as $key => $value) {
-            $nvacuna = Vacunas::Create([
-                'mascota_id' => $nmascota->id,
-                'vcnsf' => $request->vcnsf[$key],
-                'vcnst' => $request->vcnst[$key],
-                'vcnsm' => $request->vcnsm[$key],
-                'vcnsd' => $request->vcnsd[$key]
-            ]);
+        if ($request->vcnsf) {
+            foreach ($request->vcnsf as $key => $value) {
+                $nvacuna = Vacunas::Create([
+                    'mascota_id' => $nmascota->id,
+                    'vcnsf' => $request->vcnsf[$key],
+                    'vcnst' => $request->vcnst[$key],
+                    'vcnsm' => $request->vcnsm[$key],
+                    'vcnsd' => $request->vcnsd[$key]
+                ]);
+            }
         }
-        foreach ($request->mvf as $key => $value) {
-            $nmovidas = Movidas::Create([
-                'mascota_id' => $nmascota->id,
-                'mvf' => $request->mvf[$key],
-                'mm' => $request->mm[$key],
-                /* 'ms' => $request->ms[$key], */
-                'mvtp' => $request->mvtp[$key],
-                'mvr' => $request->mvr[$key]
-            ]);
+
+        if ($request->mvf) {
+            foreach ($request->mvf as $key => $value) {
+                $nmovidas = Movidas::Create([
+                    'mascota_id' => $nmascota->id,
+                    'mvf' => $request->mvf[$key],
+                    'mm' => $request->mm[$key],
+                    'mvtp' => $request->mvtp[$key],
+                    'mvr' => $request->mvr[$key]
+                ]);
+            }
+        }
+
+        if ($request->spmtname) {
+            foreach ($request->spmtname as $key => $value) {
+                $nspmt = Suplementos::Create([
+                    'mascota_id' => $nmascota->id,
+                    'nombre' => $request->spmtname[$key],
+                    'fecha' => $request->spmtfecha[$key],
+                    'time' => $request->spmttime[$key],
+                ]);
+            }
         }
 
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
-            $nombre = $REGGAL . '1.' . $file->guessExtension();
+            $nombre = $REGANI . '1.jpg';
             $ruta = 'storage/images/mascotas/' . $nombre;
             Image::make($file->getRealPath())->resize(1280, 720)->save($ruta, 72, 'jpeg');
             $nMFotos = MFotos::Create([
@@ -137,7 +155,7 @@ class MascotasController extends Controller
         $mascota = Mascota::find($id);
         $pad = Mascota::find($mascota->pad);
         $mad = Mascota::find($mascota->mad);
-        $duelos = Duelos::orWhere(['pmascota_id' => $id, 'smascota_id' => $id])->paginate(10);
+        $duelos = Duelos::orWhere(['pmascota_id' => $id, 'smascota_id' => $id])->latest()->take(20)->get();
         return view('Usuario.Mascotas.show', compact('mascota', 'duelos', 'pad', 'mad'));
     }
 
@@ -161,7 +179,8 @@ class MascotasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Mascota::find($id)->update(['sena' => $request->sena, 'obs' => $request->obs, 'spmt' => $request->spmt]);
+        $mascota = Mascota::find($id);
+        $mascota->update(['sena' => $request->sena, 'obs' => $request->obs]);
         return redirect()->route('mascotas.show', $id)->with('mensaje', __('Successfully edited'));
     }
 
