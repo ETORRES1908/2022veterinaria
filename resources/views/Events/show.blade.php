@@ -1,5 +1,29 @@
 @extends('layouts.app')
+@section('head')
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/lightbox/icons/css/animation.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lightbox/icons/css/mhfontello.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lightbox/icons/css/mhfontello-embedded.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lightbox/icons/css/mhfontello-codes.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lightbox/icons/css/mhfontello-ie7-codes.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lightbox/icons/css/mhfontello-ie7.css') }}">
+    {{-- STYLES --}}
+    <style type="text/css">
+        #html5lightbox-watermark {
+            display: none !important;
+        }
 
+        .lightboxcontainer {
+            width: 100%;
+            height: 100%;
+            text-align: left;
+        }
+
+    </style>
+    {{-- SCRIPTS --}}
+    <script src="{{ asset('css/lightbox/html5lightbox.js') }}"></script>
+    <script src="{{ asset('css/lightbox/froogaloop2.min.js') }}"></script>
+@endsection
 @section('content')
     @if (session('mensaje'))
         <div class="alert btn alert-warning">
@@ -169,31 +193,9 @@
                                         </div>
                                     </div>
                                 @endcan
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#Foto{{ $listp->id }}">
-                                    {{ __('View') }}
-                                </button>
-                                <!-- Modal FOTO-->
-                                <div class="modal fade" id="Foto{{ $listp->id }}" aria-hidden="true"
-                                    aria-labelledby="Foto{{ $listp->id }}" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered modal-md">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="btn btn-danger bg-danger btn-close"
-                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body mx-auto">
-                                                <figure class="figure">
-                                                    <img src="@if (!empty($listp->mascota->fotos->where('nfoto', 1)->first())) {{ asset($listp->mascota->fotos->where('nfoto', 1)->first()->ruta) }} @else{{ asset('storage/img/pata.jpg') }} @endif"
-                                                        class="figure-img d-block mx-auto" width="300vh" height="400vh">
-                                                    <figcaption class="figure-caption">
-                                                        {{ $listp->mascota->nombre }}
-                                                    </figcaption>
-                                                </figure>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <a href="../{{ $listp->mascota->fotos->where('nfoto', 1)->first()->ruta }}"
+                                    class="html5lightbox btn btn-danger" data-group="animals" data-width="800"
+                                    data-height="800">{{ __('View') }}</a>
                             </td>
                         </tr>
                     @endforeach
@@ -597,10 +599,6 @@
             language: {
                 "url": getLanguage()
             },
-            "columnDefs": [{
-                "targets": 0,
-                "type": "date-eu"
-            }],
             bInfo: false,
             lengthChange: false,
             pageLength: 10,
@@ -619,7 +617,7 @@
                 success: function(data) {
                     console.log(data);
                     $.each(data, function(i, item) {
-                        $("#mreggal").val(item.REGANI);
+                        $("#mreggal").val(item.REGANI)
                     });
                 },
                 error: function() {
@@ -628,7 +626,7 @@
             });
         };
         $("#mascota_id").change(displayVals);
-        displayVals();
+
         //HIDE
         setTimeout(function() {
             $('.alert').fadeOut(3000);

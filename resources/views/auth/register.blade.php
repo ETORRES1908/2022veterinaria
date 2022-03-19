@@ -152,8 +152,8 @@
                     </div>
                     {{-- FOTO DE PERFIL --}}
                     <div class="col-lg-4 my-auto  mb-3 form-group{{ $errors->has('foto') ? 'has-error' : '' }}">
-                        <label for="foto" class="col-form-label fw-bold">
-                            {{ __('Photo Profile') }} {{ __('User') }}
+                        <label for="foto" class="col-form-label fw-bold text-uppercase">
+                            {{ __('upload photo to your profile') }}
                         </label>
                         <div class="col-auto m-1 bg-black rounded">
                             <img id="preview" src="{{ asset('storage/img/defaultuser.png') }}"
@@ -276,7 +276,8 @@
 
                         <div class="col-auto">
                             <input id="prepa" type="text" class="form-control  text-danger" name="prepa"
-                                value="{{ old('prepa') }}" maxlength="14" required autofocus>
+                                value="{{ old('prepa') }}" maxlength="14" required autofocus pattern="[A-zÀ-ú\s]+"
+                                onkeydown="return /[A-zÀ-ú\s]/i.test(event.key)">
 
                             @if ($errors->has('prepa'))
                                 <span class="text-danger text-fs6">
@@ -1044,8 +1045,8 @@
                         </label>
                         <div class="col-auto">
                             <input id="district" type="text" class="form-control  text-danger" name="district"
-                                value="{{ old('district') }}" maxlength="18" required autofocus pattern="[A-zÀ-ú\S]+"
-                                onkeydown="return /[A-zÀ-ú]/i.test(event.key)">
+                                value="{{ old('district') }}" maxlength="18" required autofocus pattern="[A-zÀ-ú\s]+"
+                                onkeydown="return /[A-zÀ-ú\s]/i.test(event.key)">
 
                             @if ($errors->has('district'))
                                 <span class="text-danger text-fs6">

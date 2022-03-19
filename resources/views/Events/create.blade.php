@@ -36,8 +36,7 @@
                                     <label class="form-label">{{ __('Challenge') }}:</label>
                                     <input class="form-control text-danger" type="number" name="chll1"
                                         value="{{ old('chll1') }}" onKeyPress="if(this.value.length==4) return false;"
-                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required autofocus
-                                        onblur>
+                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" autofocus onblur>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -47,8 +46,7 @@
                                     <label class="form-label">{{ __('Challenge') }}:</label>
                                     <input class="form-control text-danger" type="number" name="chll2"
                                         value="{{ old('chll2') }}" onKeyPress="if(this.value.length==4) return false;"
-                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required autofocus
-                                        onblur>
+                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" autofocus onblur>
                                 </div>
                             </div>
                         </div>
@@ -861,29 +859,29 @@
                                 </option>
                                 <option @if (old('ftw') == '11:00') selected @endif value="11:00">11:00 a.m.
                                 </option>
-                                <option @if (old('ftw') == '12:00') selected @endif value="12:00">12:00 a.m.
+                                <option @if (old('ftw') == '12:00') selected @endif value="12:00">12:00 p.m.
                                 </option>
-                                <option @if (old('ftw') == '13:00') selected @endif value="13:00">13:00 a.m.
+                                <option @if (old('ftw') == '13:00') selected @endif value="13:00">13:00 p.m.
                                 </option>
-                                <option @if (old('ftw') == '14:00') selected @endif value="14:00">14:00 a.m.
+                                <option @if (old('ftw') == '14:00') selected @endif value="14:00">14:00 p.m.
                                 </option>
-                                <option @if (old('ftw') == '15:00') selected @endif value="15:00">15:00 a.m.
+                                <option @if (old('ftw') == '15:00') selected @endif value="15:00">15:00 p.m.
                                 </option>
-                                <option @if (old('ftw') == '16:00') selected @endif value="16:00">16:00 a.m.
+                                <option @if (old('ftw') == '16:00') selected @endif value="16:00">16:00 p.m.
                                 </option>
-                                <option @if (old('ftw') == '17:00') selected @endif value="17:00">17:00 a.m.
+                                <option @if (old('ftw') == '17:00') selected @endif value="17:00">17:00 p.m.
                                 </option>
-                                <option @if (old('ftw') == '18:00') selected @endif value="18:00">18:00 a.m.
+                                <option @if (old('ftw') == '18:00') selected @endif value="18:00">18:00 p.m.
                                 </option>
-                                <option @if (old('ftw') == '19:00') selected @endif value="19:00">19:00 a.m.
+                                <option @if (old('ftw') == '19:00') selected @endif value="19:00">19:00 p.m.
                                 </option>
-                                <option @if (old('ftw') == '20:00') selected @endif value="20:00">20:00 a.m.
+                                <option @if (old('ftw') == '20:00') selected @endif value="20:00">20:00 p.m.
                                 </option>
-                                <option @if (old('ftw') == '21:00') selected @endif value="21:00">21:00 a.m.
+                                <option @if (old('ftw') == '21:00') selected @endif value="21:00">21:00 p.m.
                                 </option>
-                                <option @if (old('ftw') == '22:00') selected @endif value="22:00">22:00 a.m.
+                                <option @if (old('ftw') == '22:00') selected @endif value="22:00">22:00 p.m.
                                 </option>
-                                <option @if (old('ftw') == '23:00') selected @endif value="23:00">23:00 a.m.
+                                <option @if (old('ftw') == '23:00') selected @endif value="23:00">23:00 p.m.
                                 </option>
                             </select>
                             @if ($errors->has('ftw'))
@@ -929,27 +927,27 @@
                                 </option>
                                 <option @if (old('stw') == '12:00') selected @endif value="12:00">12:00 a.m.
                                 </option>
-                                <option @if (old('stw') == '13:00') selected @endif value="13:00">13:00 a.m.
+                                <option @if (old('stw') == '13:00') selected @endif value="13:00">13:00 p.m.
                                 </option>
-                                <option @if (old('stw') == '14:00') selected @endif value="14:00">14:00 a.m.
+                                <option @if (old('stw') == '14:00') selected @endif value="14:00">14:00 p.m.
                                 </option>
-                                <option @if (old('stw') == '15:00') selected @endif value="15:00">15:00 a.m.
+                                <option @if (old('stw') == '15:00') selected @endif value="15:00">15:00 p.m.
                                 </option>
-                                <option @if (old('stw') == '16:00') selected @endif value="16:00">16:00 a.m.
+                                <option @if (old('stw') == '16:00') selected @endif value="16:00">16:00 p.m.
                                 </option>
-                                <option @if (old('stw') == '17:00') selected @endif value="17:00">17:00 a.m.
+                                <option @if (old('stw') == '17:00') selected @endif value="17:00">17:00 p.m.
                                 </option>
-                                <option @if (old('stw') == '18:00') selected @endif value="18:00">18:00 a.m.
+                                <option @if (old('stw') == '18:00') selected @endif value="18:00">18:00 p.m.
                                 </option>
-                                <option @if (old('stw') == '19:00') selected @endif value="19:00">19:00 a.m.
+                                <option @if (old('stw') == '19:00') selected @endif value="19:00">19:00 p.m.
                                 </option>
-                                <option @if (old('stw') == '20:00') selected @endif value="20:00">20:00 a.m.
+                                <option @if (old('stw') == '20:00') selected @endif value="20:00">20:00 p.m.
                                 </option>
-                                <option @if (old('stw') == '21:00') selected @endif value="21:00">21:00 a.m.
+                                <option @if (old('stw') == '21:00') selected @endif value="21:00">21:00 p.m.
                                 </option>
-                                <option @if (old('stw') == '22:00') selected @endif value="22:00">22:00 a.m.
+                                <option @if (old('stw') == '22:00') selected @endif value="22:00">22:00 p.m.
                                 </option>
-                                <option @if (old('stw') == '23:00') selected @endif value="23:00">23:00 a.m.
+                                <option @if (old('stw') == '23:00') selected @endif value="23:00">23:00 p.m.
                                 </option>
                             </select>
                             @if ($errors->has('stw'))
@@ -999,27 +997,27 @@
                                 </option>
                                 <option @if (old('hstart') == '12:00') selected @endif value="12:00">12:00 a.m.
                                 </option>
-                                <option @if (old('hstart') == '13:00') selected @endif value="13:00">13:00 a.m.
+                                <option @if (old('hstart') == '13:00') selected @endif value="13:00">13:00 p.m.
                                 </option>
-                                <option @if (old('hstart') == '14:00') selected @endif value="14:00">14:00 a.m.
+                                <option @if (old('hstart') == '14:00') selected @endif value="14:00">14:00 p.m.
                                 </option>
-                                <option @if (old('hstart') == '15:00') selected @endif value="15:00">15:00 a.m.
+                                <option @if (old('hstart') == '15:00') selected @endif value="15:00">15:00 p.m.
                                 </option>
-                                <option @if (old('hstart') == '16:00') selected @endif value="16:00">16:00 a.m.
+                                <option @if (old('hstart') == '16:00') selected @endif value="16:00">16:00 p.m.
                                 </option>
-                                <option @if (old('hstart') == '17:00') selected @endif value="17:00">17:00 a.m.
+                                <option @if (old('hstart') == '17:00') selected @endif value="17:00">17:00 p.m.
                                 </option>
-                                <option @if (old('hstart') == '18:00') selected @endif value="18:00">18:00 a.m.
+                                <option @if (old('hstart') == '18:00') selected @endif value="18:00">18:00 p.m.
                                 </option>
-                                <option @if (old('hstart') == '19:00') selected @endif value="19:00">19:00 a.m.
+                                <option @if (old('hstart') == '19:00') selected @endif value="19:00">19:00 p.m.
                                 </option>
-                                <option @if (old('hstart') == '20:00') selected @endif value="20:00">20:00 a.m.
+                                <option @if (old('hstart') == '20:00') selected @endif value="20:00">20:00 p.m.
                                 </option>
-                                <option @if (old('hstart') == '21:00') selected @endif value="21:00">21:00 a.m.
+                                <option @if (old('hstart') == '21:00') selected @endif value="21:00">21:00 p.m.
                                 </option>
-                                <option @if (old('hstart') == '22:00') selected @endif value="22:00">22:00 a.m.
+                                <option @if (old('hstart') == '22:00') selected @endif value="22:00">22:00 p.m.
                                 </option>
-                                <option @if (old('hstart') == '23:00') selected @endif value="23:00">23:00 a.m.
+                                <option @if (old('hstart') == '23:00') selected @endif value="23:00">23:00 p.m.
                                 </option>
                             </select>
                             @if ($errors->has('hstart'))
@@ -1517,7 +1515,7 @@
                         <h6>{{ __('* Persons with disabilities - PCD and women free admission! ') }}</h6>
                         <h6>{{ __('LAW 28683 Preferential attention and LAW 29973 rights of people with disabilities - PCD') }}
                         </h6>
-                        <h6>{{ __('* People over 65 only pay 50% of the entrance') }}%</h6>
+                        <h6>{{ __('* People over 65 only pay 50% of the entrance') }}</h6>
                         <h6>{{ __('PS: Failure to comply with the event created, you can be sanctioned') }}</h6>
                     </div>
                     {{-- BOTON DE REGISTRO --}}

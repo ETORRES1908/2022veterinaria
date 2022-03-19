@@ -55,7 +55,7 @@ class LParticipantesController extends Controller
         $mascota_id = $request->mascota_id;
         $this->validate($request, [
             'evento_id' => 'required',
-            'mascota_id' => ['required', Rule::unique('LParticipantes')->where(function ($query) use ($mascota_id, $evento_id) {
+            'mascota_id' => ['required', Rule::unique('lparticipantes')->where(function ($query) use ($mascota_id, $evento_id) {
                 return $query->where('mascota_id', $mascota_id)
                     ->where('evento_id', $evento_id);
             }),],

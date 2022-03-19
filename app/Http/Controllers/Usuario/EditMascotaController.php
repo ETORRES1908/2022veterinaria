@@ -23,6 +23,6 @@ class EditMascotaController extends Controller
             'fecha' => $request->spmtfecha,
             'time' => $request->spmttime,
         ]);
-        return redirect()->route('mascotas.show', $request->mascota_id)->with('mensaje', __('Successfully deleted'));
+        return redirect()->route('mascotas.show', $request->mascota_id)->with('mensaje', __('Successfully created'));
     }
 }

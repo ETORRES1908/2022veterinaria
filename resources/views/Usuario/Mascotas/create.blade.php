@@ -369,7 +369,8 @@
                                         {{ __('Photo Profile') }} {{ __('Exemplar') }}
                                     </label>
                                     <div class="col-auto rounded">
-                                        <img id="preview" class="img-fluid mx-auto d-block bg-danger" />
+                                        <img id="preview" src="{{ asset('storage/img/perro.jpg') }}"
+                                            class="img-fluid mx-auto d-block bg-danger" />
                                         <div for="foto" onclick="getFile()" id="v" class="btn btn-white bg-white d-flex">
                                             <i class="bi bi-cloud-upload"></i>{{ __('Upload') }}
                                             <div id="yourBtn" class="mx-2">...{{ __('there is no picture') }}
@@ -423,7 +424,7 @@
                 e.preventDefault();
             });
         });
-
+        $("#removevcns").hide();
         /* ADD VCNS */
         $("#addvcns").click(function() {
             $(".form_vcns").append(
@@ -453,7 +454,7 @@
                 $('#removevcns').hide(500);
             }
         });
-
+        $("#removemvs").hide();
         /* ADD MVS */
         $("#addmvs").click(function() {
             $(".form_mvs").append(
@@ -483,7 +484,7 @@
                 $('#removemvs').hide(500);
             }
         });
-
+        $("#removesmpt").hide();
         /* ADD SUPLEMENTOS */
         $("#addsmpt").click(function() {
             $(".form_smpt").append(

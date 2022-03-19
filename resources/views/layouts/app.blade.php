@@ -95,13 +95,15 @@
                                     href="{{ route('events.index') }}">
                                     {{ __('Events') }}</a>
                             </li>
+                            @cannot('cms')
+                                {{-- PROFILE --}}
+                                <li class="nav-item">
+                                    <a class="nav-link link-light @if (Route::is('profile.index')) fw-bolder @endif"
+                                        href="{{ route('profile.index') }}">
+                                        {{ __('Profile') }}</a>
+                                </li>
+                            @endcannot
 
-                            {{-- PROFILE --}}
-                            <li class="nav-item">
-                                <a class="nav-link link-light @if (Route::is('profile.index')) fw-bolder @endif"
-                                    href="{{ route('profile.index') }}">
-                                    {{ __('Profile') }}</a>
-                            </li>
                             @can('addanimal')
                                 {{-- EXEMPLARS --}}
                                 <li class="nav-item">

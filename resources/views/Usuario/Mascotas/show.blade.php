@@ -230,16 +230,16 @@
                                         <input type="hidden" name="mascota_id" value="{{ $mascota->id }}">
                                         <div class="col-11 mb-2">
                                             <input class=" form-control" type="text" name="spmtname"
-                                                pattern="[A-zÀ-ú1-9\s]+" maxlength="25" required autofocus
+                                                pattern="[A-zÀ-ú1-9\s]+" maxlength="25" required
                                                 placeholder="{{ __('New suplement') }}"
                                                 onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)">
                                         </div>
                                         <div class="col-6">
                                             <input class=" form-control" type="date" name="spmtfecha"
-                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required autofocus>
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
                                         </div>
                                         <div class="col-4">
-                                            <input class=" form-control" type="time" name="spmttime" required autofocus>
+                                            <input class=" form-control" type="time" name="spmttime" required>
                                         </div>
                                         <div class="col-1">
                                             <input type="submit" class="btn btn-success" value="+">
@@ -251,6 +251,7 @@
                                 method="POST">
                                 {!! csrf_field() !!}
                                 {{ method_field('PUT') }}
+                                
                                 <li class="list-group-item bg-black mb-3 text-white">
                                     <div><strong>{{ __('SENASA') }}:</strong></div>
                                     <input class="form-control" type="text" name="sena" value="{{ $mascota->sena }}"
