@@ -7,10 +7,11 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>Veterinaria</title>
 
     <!-- Styles -->
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
+
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('font/bootstrap-icons.css') }}">
 
@@ -95,15 +96,13 @@
                                     href="{{ route('events.index') }}">
                                     {{ __('Events') }}</a>
                             </li>
-                            @cannot('cms')
-                                {{-- PROFILE --}}
-                                <li class="nav-item">
-                                    <a class="nav-link link-light @if (Route::is('profile.index')) fw-bolder @endif"
-                                        href="{{ route('profile.index') }}">
-                                        {{ __('Profile') }}</a>
-                                </li>
-                            @endcannot
 
+                            {{-- PROFILE --}}
+                            <li class="nav-item">
+                                <a class="nav-link link-light @if (Route::is('profile.index')) fw-bolder @endif"
+                                    href="{{ route('profile.index') }}">
+                                    {{ __('Profile') }}</a>
+                            </li>
                             @can('addanimal')
                                 {{-- EXEMPLARS --}}
                                 <li class="nav-item">

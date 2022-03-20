@@ -249,9 +249,8 @@
                 </div>
             </div>
             <div class="card-body border border-danger">
-
                 {{-- NOMBRE DE GALPON Y PREPA --}}
-                <div class="row">
+                <div id class="row">
                     {{-- NOMBRE DE GALPON --}}
                     <div class="col-sm-6 mb-3 form-group{{ $errors->has('galpon') ? ' has-error' : '' }}">
                         <label for="galpon" class="col-form-label fw-bold">
@@ -259,7 +258,7 @@
                         </label>
                         <div class="col-auto">
                             <input id="galpon" type="text" class="form-control  text-danger" name="galpon"
-                                value="{{ old('galpon') }}" maxlength="14" required autofocus>
+                                value="{{ old('galpon') }}" maxlength="14" autofocus>
 
                             @if ($errors->has('galpon'))
                                 <span class="text-danger text-fs6">
@@ -276,7 +275,7 @@
 
                         <div class="col-auto">
                             <input id="prepa" type="text" class="form-control  text-danger" name="prepa"
-                                value="{{ old('prepa') }}" maxlength="14" required autofocus pattern="[A-zÀ-ú\s]+"
+                                value="{{ old('prepa') }}" maxlength="14" autofocus pattern="[A-zÀ-ú\s]+"
                                 onkeydown="return /[A-zÀ-ú\s]/i.test(event.key)">
 
                             @if ($errors->has('prepa'))
@@ -1232,7 +1231,7 @@
             if ($("#usert").val() == 'cls') {
                 $('#clsname').attr("disabled", false);
                 $('#clsname').show(600);
-            } else {
+            }else {
                 $('#clsname').attr("disabled", true);
                 $('#clsname').hide(600);
             }

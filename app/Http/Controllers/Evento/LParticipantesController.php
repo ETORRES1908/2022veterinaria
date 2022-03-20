@@ -77,38 +77,41 @@ class LParticipantesController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $mascota = Mascota::find($request->mascota_id); //MASCOTA
 
         $this->validate($request, [
             'mascota_id' => 'required',
-            'foto' => 'image|required',
+            'foto' => 'image',
             'peso' => 'integer|required',
             'seal' => 'integer|required',
         ]);
-        if (!empty($mascota->fotos->where('nfoto', 1)->first()->id)) {
-            $mfoto = MFotos::Find($mascota->fotos->where('nfoto', 1)->first()->id);
-            unlink($mfoto->ruta);
-            $mfoto->delete(); // ELIMINAR FOTO
-        }
+
         //NAME PHOTO
-        $file = $request->file('foto');
-        $nombre =
-            $mascota->REGANI .
-            1 .
-            '.' .
-            $file->guessExtension();
-        $ruta = 'storage/images/mascotas/' . $nombre; //RUTA
-        Image::make($file->getRealPath())->resize(1280, 720, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        })->save($ruta, 72, 'jpeg'); //COPIAR EN LA RUTA
-        $nMFotos = MFotos::Create([
-            'nfoto' => '1',
-            'ruta' => $ruta,
-            'texto' => 'Perfil',
-            'mascota_id' => $request->mascota_id,
-        ]); //CREAR PHOTO
+        if ($request->file('foto')) {
+            if (!empty($mascota->fotos->where('nfoto', 1)->first()->id)) {
+                $mfoto = MFotos::Find($mascota->fotos->where('nfoto', 1)->first()->id);
+                unlink($mfoto->ruta);
+                $mfoto->delete(); // ELIMINAR FOTO
+            }
+
+            $file = $request->file('foto');
+            $nombre =
+                $mascota->REGANI .
+                1 .
+                '.' .
+                $file->guessExtension();
+            $ruta = 'storage/images/mascotas/' . $nombre; //RUTA
+            Image::make($file->getRealPath())->resize(1280, 720, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->save($ruta, 72, 'jpeg'); //COPIAR EN LA RUTA
+            $nMFotos = MFotos::Create([
+                'nfoto' => '1',
+                'ruta' => $ruta,
+                'texto' => 'Perfil',
+                'mascota_id' => $request->mascota_id,
+            ]); //CREAR PHOTO
+        }
         $mascota->update(['sss' => $request->peso, 'seal' => $request->seal]); // UPDATE
         LParticipantes::where('evento_id', $request->evento_id)->where('mascota_id', $mascota->id)->first()->update(['status' => "1"]);
         return redirect()->route('events.show', $request->evento_id)->with('mensaje', __('Successfully updated'));

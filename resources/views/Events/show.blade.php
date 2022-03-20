@@ -44,11 +44,11 @@
                     {{ __('Choose other exemplar') }}
                 </span>
             @endif
-            @if (count($evento->participants) >= 2)
-                <a type="button" class="btn btn-dark" href="{{ route('pactados.show', $evento->id) }}">
-                    {{ __('Deal') }}s
-                </a>
-            @endif
+
+            <a type="button" class="btn btn-dark" href="{{ route('pactados.show', $evento->id) }}">
+                {{ __('Deal') }}s
+            </a>
+
 
             <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#Event">
                 {{ __('Event') }}
@@ -58,14 +58,14 @@
             </button>
         </div>
         <div class="card-body border border-danger table-responsive">
-            <table id="datatable" class="table table-dark table-hover nowrap">
+            <table id="datatable" class="table table-dark table-hover nowrap text-uppercase">
                 <thead>
                     <tr>
                         <th>REGANI</th>
                         <th>{{ __('Weight') }}</th>
                         <th>{{ __('Shed') }}</th>
                         <th>{{ __('Disability') }}</th>
-                        <th>{{ __('plaque') }}</th>
+                        <th>{{ __('Seal') }}</th>
                         <th>{{ __('BOX') }} MIN.</th>
                         <th>{{ __('BOX') }} MAX.</th>
                         <th></th>
@@ -92,14 +92,14 @@
                                         echo __('Other');
                                         break;
                                 } ?></td>
-                            <td>{{ $listp->mascota->plc }}</td>
+                            <td>{{ $listp->mascota->seal }}</td>
                             <td>1</td>
                             <td>2</td>
                             <td>
-                                @can('chngw')
-                                    <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                @if($evento->mcontrol_id ==Auth::user()->id)
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                         data-bs-target="#CHNGW{{ $listp->mascota->id }}">
-                                        {{ __('Change weight') }}
+                                        {{ __('Weight') }}
                                     </button>
                                     <!-- MODAL CHANGE WEIGHT -->
                                     <div class="modal fade" id="CHNGW{{ $listp->mascota->id }}" aria-hidden="true"
@@ -119,14 +119,14 @@
                                                     {!! csrf_field() !!}
                                                     <div class="modal-body bg-black">
                                                         {{-- MASCOTA --}}
-                                                        <div class="row mb-2">
+                                                        {{--<div class="row mb-2">
                                                             <label
                                                                 class="col-sm-4 col-form-label">{{ __('Exemplar') }}:</label>
                                                             <div class="col-sm-8">
                                                                 <input class="form-control text-danger" type="text"
                                                                     value="{{ $listp->mascota->nombre }}" readonly>
                                                             </div>
-                                                        </div>
+                                                        </div>--}}
                                                         {{-- EVENTO_ID MASCOTA_ID --}}
                                                         <div>
                                                             <input type="text" id="mascota_id" name="mascota_id"
@@ -135,7 +135,7 @@
                                                                 value="{{ $evento->id }}" hidden>
                                                         </div>
                                                         {{-- REGANI --}}
-                                                        <div class="row mb-2">
+                                                       <div class="row mb-2">
                                                             <label
                                                                 class="col-sm-4 col-form-label">{{ __('REGANI') }}:</label>
                                                             <div class="col-sm-8">
@@ -161,12 +161,13 @@
                                                             <div class="col-sm-8">
                                                                 <input type="number" class="form-control text-danger" id="seal"
                                                                     name="seal" required autofocus
-                                                                    onKeyPress="if(this.value.length==4) return false;"
+                                                                    onKeyPress="if(this.value.length==6) return false;"
                                                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189">
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-9 mx-auto">
-                                                            {{-- IMAGEN --}}
+                                                        {{-- IMAGEN--}}
+                                                        {{-- <div class="col-sm-9 mx-auto">
+
                                                             <img id="preview{{ $listp->mascota->id }}"
                                                                 class="mx-auto d-block bg-black" height="200" width="180" />
                                                             <input id="foto{{ $listp->mascota->id }}" type="file"
@@ -181,18 +182,18 @@
                                                                     }
                                                                 };
                                                             </script>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                     <div class="modal-footer p-0">
                                                         <button type="submit" class="btn btn-primary mx-auto">
-                                                            {{ __('Change weight') }}
+                                                            {{ __('Weighed') }}
                                                         </button>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-                                @endcan
+                               @endif
                                 <a href="../{{ $listp->mascota->fotos->where('nfoto', 1)->first()->ruta }}"
                                     class="html5lightbox btn btn-danger" data-group="animals" data-width="800"
                                     data-height="800">{{ __('View') }}</a>

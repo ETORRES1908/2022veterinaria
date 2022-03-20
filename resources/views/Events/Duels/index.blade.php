@@ -6,7 +6,7 @@
             <a class="btn btn-dark" href="{{ route('events.show', $evento->id) }}">
                 {{ __('Event') }}
             </a>
-            @if (Gate::check('adddeal') || Gate::check('sentence'))
+            @if ($evento->mcontrol_id == Auth::user()->id)
                 @if (count($duelos) <= 150 && $evento->mcontrol_id == Auth::user()->id)
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#AddDeal">
                         {{ __('Add Deal') }}
@@ -70,14 +70,14 @@
                                                     <label class="btn btn-primary">
                                                         {{ __('Accordance') }}: {{ $duel->pactada }}
                                                     </label>
-                                                    @can('sentence')
-                                                        {{-- 2nd SECOND --}}
-                                                        @if ($evento->judge_id == Auth::user()->id)
-                                                            <button class="btn btn-primary text-capitalize"
-                                                                data-bs-target="#sentence{{ $duel->id }}"
-                                                                data-bs-toggle="modal">{{ __('sentence') }}</button>
-                                                        @endif
-                                                    @endcan
+
+                                                    {{-- 2nd SECOND --}}
+                                                    @if ($evento->judge_id == Auth::user()->id)
+                                                        <button class="btn btn-primary text-capitalize"
+                                                            data-bs-target="#sentence{{ $duel->id }}"
+                                                            data-bs-toggle="modal">{{ __('sentence') }}</button>
+                                                    @endif
+
                                                 </div>
                                                 <button type="button" class="btn btn-danger bg-danger btn-close"
                                                     data-bs-dismiss="modal" aria-label="Close"></button>
@@ -321,101 +321,101 @@
                                         </div>
                                     </div>
                                 </div>
-                                @can('sentence')
-                                    {{-- 2nd MODAL --}}
-                                    <div class="modal fade" id="sentence{{ $duel->id }}" aria-hidden="true"
-                                        aria-labelledby="sentence{{ $duel->id }}" tabindex="-1">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content bg-black border border-danger text-white">
-                                                <div class="modal-header border border-danger">
-                                                    <button class="btn btn-primary" data-bs-target="#VS{{ $duel->id }}"
-                                                        data-bs-toggle="modal">VS</button>
-                                                    <button type="button" class="btn btn-danger bg-danger btn-close"
-                                                        data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body border border-danger text-uppercase">
-                                                    <form action="{{ route('pactados.update', $duel->id) }}" method="POST">
-                                                        {!! method_field('PUT') !!}
-                                                        {!! csrf_field() !!}
-                                                        <div class="row mb-3">
-                                                            <label
-                                                                class="col-sm-4 col-form-label col-form-label-sm fs-5 fw-uppercase">{{ __('Result') }}
-                                                            </label>
-                                                            <div class="col-sm-8">
-                                                                <select id="result" name="result"
-                                                                    class="form-select text-danger" required autofocus>
-                                                                    <option value="" selected disabled>
-                                                                        {{ __('Choose result') }}...
-                                                                    </option>
-                                                                    <option value="draw">{{ __('Draw') }}</option>
-                                                                    <option value="{{ $duel->pmascota->id }}">
-                                                                        {{ $duel->pmascota->nombre }}</option>
-                                                                    <option value="{{ $duel->smascota->id }}">
-                                                                        {{ $duel->smascota->nombre }}</option>
-                                                                </select>
+
+                                {{-- 2nd MODAL --}}
+                                <div class="modal fade" id="sentence{{ $duel->id }}" aria-hidden="true"
+                                    aria-labelledby="sentence{{ $duel->id }}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content bg-black border border-danger text-white">
+                                            <div class="modal-header border border-danger">
+                                                <button class="btn btn-primary" data-bs-target="#VS{{ $duel->id }}"
+                                                    data-bs-toggle="modal">VS</button>
+                                                <button type="button" class="btn btn-danger bg-danger btn-close"
+                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body border border-danger text-uppercase">
+                                                <form action="{{ route('pactados.update', $duel->id) }}" method="POST">
+                                                    {!! method_field('PUT') !!}
+                                                    {!! csrf_field() !!}
+                                                    <div class="row mb-3">
+                                                        <label
+                                                            class="col-sm-4 col-form-label col-form-label-sm fs-5 fw-uppercase">{{ __('Result') }}
+                                                        </label>
+                                                        <div class="col-sm-8">
+                                                            <select id="result" name="result"
+                                                                class="form-select text-danger" required autofocus>
+                                                                <option value="" selected disabled>
+                                                                    {{ __('Choose result') }}...
+                                                                </option>
+                                                                <option value="draw">{{ __('Draw') }}</option>
+                                                                <option value="{{ $duel->pmascota->id }}">
+                                                                    {{ $duel->pmascota->nombre }}</option>
+                                                                <option value="{{ $duel->smascota->id }}">
+                                                                    {{ $duel->smascota->nombre }}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3" id="trst">
+                                                        <label
+                                                            class="col-sm-4 col-form-label col-form-label-sm fs-5 fw-uppercase">{{ __('Type') . ' ' . __('Result') }}
+                                                        </label>
+                                                        <div class="col-sm-8">
+                                                            <select id="trslt" name="trslt" class="form-select text-danger"
+                                                                required autofocus>
+                                                                <option value="win">{{ __('Win') }}</option>
+                                                                <option value="rooster">
+                                                                    {{ __('Rooster') }}</option>
+                                                                <option value="srstr">
+                                                                    Super {{ __('Rooster') }}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <script>
+                                                        function displayVals() {
+                                                            var result = $('#result').val();
+                                                            if (result == 'draw') {
+                                                                $("#trst").fadeOut("3000");
+                                                                $("#trslt").attr("disabled", true);
+                                                            } else {
+                                                                $("#trst").show("3000");
+                                                                $("#trslt").attr("disabled", false);
+                                                            }
+                                                        };
+                                                        $("#result").change(displayVals);
+                                                    </script>
+                                                    <div class="row mb-3">
+                                                        <label
+                                                            class="col-sm-4 col-form-label col-form-label-sm fs-5 fw-uppercase">
+                                                            {{ __('Time') }}(m:s)
+                                                        </label>
+                                                        <div class="col-sm-8">
+                                                            <div class="input-group">
+                                                                <input type="number" class="form-control text-danger"
+                                                                    name="dm"
+                                                                    onKeyPress="if(this.value.length==2) return false;"
+                                                                    required
+                                                                    onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
+                                                                    min="0" max="59" value="{{ old('dm') }}"
+                                                                    placeholder="00">
+                                                                <div class="input-group-text">:</div>
+                                                                <input type="number" class="form-control text-danger"
+                                                                    name="ds"
+                                                                    onKeyPress="if(this.value.length==2) return false;"
+                                                                    required
+                                                                    onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
+                                                                    min="0" max="59" value="{{ old('ds') }}"
+                                                                    placeholder="00">
                                                             </div>
                                                         </div>
-                                                        <div class="row mb-3" id="trst">
-                                                            <label
-                                                                class="col-sm-4 col-form-label col-form-label-sm fs-5 fw-uppercase">{{ __('Type') . ' ' . __('Result') }}
-                                                            </label>
-                                                            <div class="col-sm-8">
-                                                                <select id="trslt" name="trslt" class="form-select text-danger"
-                                                                    required autofocus>
-                                                                    <option value="win">{{ __('Win') }}</option>
-                                                                    <option value="rooster">
-                                                                        {{ __('Rooster') }}</option>
-                                                                    <option value="srstr">
-                                                                        Super {{ __('Rooster') }}</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <script>
-                                                            function displayVals() {
-                                                                var result = $('#result').val();
-                                                                if (result == 'draw') {
-                                                                    $("#trst").fadeOut("3000");
-                                                                    $("#trslt").attr("disabled", true);
-                                                                } else {
-                                                                    $("#trst").show("3000");
-                                                                    $("#trslt").attr("disabled", false);
-                                                                }
-                                                            };
-                                                            $("#result").change(displayVals);
-                                                        </script>
-                                                        <div class="row mb-3">
-                                                            <label
-                                                                class="col-sm-4 col-form-label col-form-label-sm fs-5 fw-uppercase">
-                                                                {{ __('Time') }}(m:s)
-                                                            </label>
-                                                            <div class="col-sm-8">
-                                                                <div class="input-group">
-                                                                    <input type="number" class="form-control text-danger"
-                                                                        name="dm"
-                                                                        onKeyPress="if(this.value.length==2) return false;"
-                                                                        required
-                                                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                                                                        min="0" max="59" value="{{ old('dm') }}"
-                                                                        placeholder="00">
-                                                                    <div class="input-group-text">:</div>
-                                                                    <input type="number" class="form-control text-danger"
-                                                                        name="ds"
-                                                                        onKeyPress="if(this.value.length==2) return false;"
-                                                                        required
-                                                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                                                                        min="0" max="59" value="{{ old('ds') }}"
-                                                                        placeholder="00">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <button type="submit"
-                                                            class="btn btn-warning text-uppercase">{{ __('sentence') }}</button>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                    <button type="submit"
+                                                        class="btn btn-warning text-uppercase">{{ __('sentence') }}</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
-                                @endcan
+                                </div>
+
                             </td>
                             <td>{{ $duel->smascota->nombre }}</td>
                             <td>{{ $duel->smascota->user->nombre . ' ' . $duel->smascota->user->apellido }}</td>
@@ -508,21 +508,27 @@
                                                 {{ __('Cinta') }}
                                             </label>
                                             <div class="col-auto">
-                                                <select name="fcc" id="fcc" class="form-select" required autofocus>
-                                                    <option value="" disabled selected>Elige cinta</option>
-                                                    <option value="Rojo"
-                                                        @if (old('fcc') == 'Rojo') selected @endif>
-                                                        Rojo</option>
+                                                <select name="fcc" id="fcc" class="form-select text-danger" required
+                                                    autofocus>
+                                                    <option value="" hidden></option>
+                                                    <option value="Roja"
+                                                        @if (old('fcc') == 'Roja') selected @endif>
+                                                        Roja</option>
+                                                    <option value="Blanca"
+                                                        @if (old('fcc') == 'Blanca') selected @endif>Blanca</option>
+                                                    <option value="Amarilla"
+                                                        @if (old('fcc') == 'Amarilla') selected @endif>
+                                                        Amarilla</option>
                                                     <option value="Azul"
                                                         @if (old('fcc') == 'Azul') selected @endif>
                                                         Azul</option>
+                                                    <option value="Negra"
+                                                        @if (old('fcc') == 'Negra') selected @endif>Negra</option>
                                                     <option value="Verde"
                                                         @if (old('fcc') == 'Verde') selected @endif>
                                                         Verde</option>
-                                                    <option value="Blanco"
-                                                        @if (old('fcc') == 'Blanco') selected @endif>Blanco</option>
-                                                    <option value="Morado"
-                                                        @if (old('fcc') == 'Morado') selected @endif>Morado</option>
+                                                    <option value="Gris"
+                                                        @if (old('fcc') == 'Gris') selected @endif>Gris</option>
                                                 </select>
                                                 @if ($errors->has('fcc'))
                                                     <span class="text-danger text-fs6">
@@ -572,8 +578,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
+                                </div>{{-- <div class="mb-3">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="pad" class="form-label fw-bold">
@@ -592,7 +597,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             {{-- MASCOTA 2 --}}
                             <div class="col-sm-5 m-auto border border-danger">
@@ -625,19 +630,28 @@
                                                 {{ __('Cinta') }}
                                             </label>
                                             <div class="col-auto">
-                                                <select name="scc" id="scc" class="form-select" required autofocus>
-                                                    <option value="" disabled selected>Elige cinta</option>
-                                                    <option value="Rojo"
-                                                        @if (old('scc') == 'Rojo') selected @endif>
-                                                        Rojo</option>
+                                                <select name="scc" id="scc" class="form-select text-danger" required
+                                                    autofocus>
+                                                    <option value="" hidden></option>
+                                                    <option value="Roja"
+                                                        @if (old('fcc') == 'Roja') selected @endif>
+                                                        Roja</option>
+                                                    <option value="Blanca"
+                                                        @if (old('fcc') == 'Blanca') selected @endif>Blanca</option>
+                                                    <option value="Amarilla"
+                                                        @if (old('fcc') == 'Amarilla') selected @endif>
+                                                        Amarilla</option>
                                                     <option value="Azul"
-                                                        @if (old('scc') == 'Azul') selected @endif>Azul</option>
+                                                        @if (old('fcc') == 'Azul') selected @endif>
+                                                        Azul</option>
+                                                    <option value="Negra"
+                                                        @if (old('fcc') == 'Negra') selected @endif>Negra</option>
+
                                                     <option value="Verde"
-                                                        @if (old('scc') == 'Verde') selected @endif>Verde</option>
-                                                    <option value="Blanco"
-                                                        @if (old('scc') == 'Blanco') selected @endif>Blanco</option>
-                                                    <option value="Morado"
-                                                        @if (old('scc') == 'Morado') selected @endif>Morado</option>
+                                                        @if (old('fcc') == 'Verde') selected @endif>
+                                                        Verde</option>
+                                                    <option value="Gris"
+                                                        @if (old('fcc') == 'Gris') selected @endif>Gris</option>
                                                 </select>
                                                 @if ($errors->has('scc'))
                                                     <span class="text-danger text-fs6">
@@ -687,8 +701,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
+                                </div>{{-- <div class="mb-3">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="ppad" class="form-label fw-bold">
@@ -707,7 +720,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         {{-- FOOTER --}}
@@ -729,8 +742,8 @@
                                         {{ __('Field') }}
                                     </label>
                                     <div class="col-auto">
-                                        <select name="cch" id="cch" class="form-select" required autofocus>
-                                            <option value="" disabled selected>{{ __('Choose field') }}</option>
+                                        <select name="cch" id="cch" class="form-select text-danger" required autofocus>
+                                            <option value="" hidden>{{-- __('Choose field') --}}</option>
                                             <option value="A" @if (old('cch') == 'A') selected @endif>A</option>
                                             <option value="B" @if (old('cch') == 'B') selected @endif>B</option>
                                         </select>
@@ -753,9 +766,7 @@
                         <a class="btn btn-primary mx-auto" onclick="window.print();">
                             {{ __('Print') }}
                         </a>
-                        <button type="submit" class="btn btn-primary mx-auto">
-                            {{ __('Add Deal') }}
-                        </button>
+                        <input type="submit" class="btn btn-primary mx-auto" value="{{ __('Add Deal') }}">
                     </div>
                 </form>
             </div>
