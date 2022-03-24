@@ -57,8 +57,8 @@
                             </label>
                             <div class="col-auto">
                                 <input type="text" class="form-control text-danger" name="nombre"
-                                    value="{{ old('nombre') }}" required autofocus pattern="[A-zÀ-ú\S]+" maxlength="10"
-                                    onkeydown="return /[A-zÀ-ú]/i.test(event.key)" />
+                                    value="{{ old('nombre') }}" required autofocus maxlength="10" pattern="[A-zÀ-ú\S]+"
+                                    onkeydown="return /[A-zÀ-ú\S]/i.test(event.key)" />
                                 @if ($errors->has('nombre'))
                                     <span class="text-danger text-fs6">
                                         {{ $errors->first('nombre') }}
@@ -250,7 +250,7 @@
             </div>
             <div class="card-body border border-danger">
                 {{-- NOMBRE DE GALPON Y PREPA --}}
-                <div id class="row">
+                <div class="row" id="galpre">
                     {{-- NOMBRE DE GALPON --}}
                     <div class="col-sm-6 mb-3 form-group{{ $errors->has('galpon') ? ' has-error' : '' }}">
                         <label for="galpon" class="col-form-label fw-bold">
@@ -318,7 +318,7 @@
 
                             @if ($errors->has('celular'))
                                 <span class="text-danger text-fs6">
-                                    {{ $errors->first('celular') }}
+                                    {{ __('This cell phone number already registered') }}
                                 </span>
                             @endif
                         </div>
@@ -1225,15 +1225,57 @@
             pdffile_url = URL.createObjectURL(pdffile);
             $('#viewer').attr('src', pdffile_url);
         };
+
         $('#clsname').hide();
+        $('#galpre').hide();
         /* USERT */
         $("#usert").change(function() {
-            if ($("#usert").val() == 'cls') {
-                $('#clsname').attr("disabled", false);
-                $('#clsname').show(600);
-            }else {
-                $('#clsname').attr("disabled", true);
-                $('#clsname').hide(600);
+            switch ($("#usert").val()) {
+                case 'own':
+                    $('#galpre').attr("disabled", false);
+                    $('#galpre').show(600);
+                    $('#clsname').attr("disabled", true);
+                    $('#clsname').hide(600);
+                    break;
+                case 'cls':
+                    $('#galpre').attr("disabled", true);
+                    $('#galpre').hide(600);
+                    $('#clsname').attr("disabled", false);
+                    $('#clsname').show(600);
+                    break;
+                case 'jdg':
+                    $('#galpre').attr("disabled", true);
+                    $('#galpre').hide(600);
+                    $('#clsname').attr("disabled", true);
+                    $('#clsname').hide(600);
+                    break;
+                case 'ppr':
+                    $('#galpre').attr("disabled", true);
+                    $('#galpre').hide(600);
+                    $('#clsname').attr("disabled", true);
+                    $('#clsname').hide(600);
+                    break;
+                case 'cdk':
+                    $('#galpre').attr("disabled", true);
+                    $('#galpre').hide(600);
+                    $('#clsname').attr("disabled", true);
+                    $('#clsname').hide(600);
+                    break;
+                case 'asst':
+                    $('#galpre').attr("disabled", true);
+                    $('#galpre').hide(600);
+                    $('#clsname').attr("disabled", true);
+                    $('#clsname').hide(600);
+                    break;
+                case 'amt':
+                    $('#galpre').attr("disabled", true);
+                    $('#galpre').hide(600);
+                    $('#clsname').attr("disabled", true);
+                    $('#clsname').hide(600);
+                    break;
+
+                default:
+                    break;
             }
         }).change();
     </script>

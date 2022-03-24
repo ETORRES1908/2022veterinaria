@@ -15,6 +15,10 @@ class CreateMascotasTable extends Migration
     {
         Schema::create('mascotas', function (Blueprint $table) {
             $table->increments('id');
+            //FOREIGN USER
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            
             $table->string('REGANI')->nullable();
             $table->string('fnac');
             $table->string('sss')->nullable();
@@ -33,12 +37,6 @@ class CreateMascotasTable extends Migration
             $table->string('ncr')->nullable(); //NACIERON
             $table->string('sena')->nullable(); //SENASA
             $table->string('obs')->nullable();
-            
-
-            //FOREIGN USER
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
             $table->timestamps();
         });
     }

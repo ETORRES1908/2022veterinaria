@@ -1,11 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+    @if (session('mensaje'))
+        <div class="alert btn alert-success">
+            {{ session('mensaje') }}
+        </div>
+    @endif
+
     <div class="card bg-black border border-danger">
         <div class="card-header border border-danger">
-            <a class="btn btn-dark" href="{{ route('events.show', $evento->id) }}">
-                {{ __('Event') }}
-            </a>
+            @cannot('sentence')
+                <a class="btn btn-dark" href="{{ route('events.show', $evento->id) }}">
+                    {{ __('Event') }}
+                </a>
+            @endcan
             @if ($evento->mcontrol_id == Auth::user()->id)
                 @if (count($duelos) <= 150 && $evento->mcontrol_id == Auth::user()->id)
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#AddDeal">
@@ -18,7 +26,7 @@
                     @endif
                     @if ($errors->has('pmascota_id') || $errors->has('smascota_id'))
                         <span class="alert fs-6 text-danger" id="Message">
-                            {{ __('The exemplars must be different.') }}
+                            {{ __('The pets must be different.') }}
                         </span>
                     @endif
                 @endif
@@ -33,20 +41,24 @@
             <table id="datatable" class="table table-dark table-hover nowrap" style="width:100%">
                 <thead class="text-center">
                     <tr>
-                        <th class="text-uppercase">{{ __('Owner') }}</th>
-                        <th class="text-uppercase">{{ __('Exemplar') }} 1</th>
+                        <th class="fw-blod">#</th>
+                        <th class="text-uppercase">{{ __('Shed') }}</th>
+                        <th class="text-uppercase">{{ __('Pet') }} 1</th>
                         <th></th>
-                        <th class="text-uppercase">{{ __('Exemplar') }} 2</th>
-                        <th class="text-uppercase">{{ __('Owner') }}</th>
+                        <th class="text-uppercase">{{ __('Pet') }} 2</th>
+                        <th class="text-uppercase">{{ __('Shed') }}</th>
                         <th class="text-uppercase">{{ __('Time') }}</th>
-                        <th class="text-uppercase">{{ __('Type') . ' ' . __('Result') }}</th>
                         <th class="text-uppercase">{{ __('Result') }}</th>
+                        @can('sentence')
+                            <th></th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     @foreach ($duelos as $duel)
                         <tr>
-                            <td>{{ $duel->pmascota->user->nombre . ' ' . $duel->pmascota->user->apellido }}</td>
+                            <td>{{ $duel->npelea }}</td>
+                            <td>{{ $duel->pmascota->user->galpon }}</td>
                             <td>{{ $duel->pmascota->nombre }}</td>
                             <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#VS{{ $duel->id }}">
@@ -70,14 +82,6 @@
                                                     <label class="btn btn-primary">
                                                         {{ __('Accordance') }}: {{ $duel->pactada }}
                                                     </label>
-
-                                                    {{-- 2nd SECOND --}}
-                                                    @if ($evento->judge_id == Auth::user()->id)
-                                                        <button class="btn btn-primary text-capitalize"
-                                                            data-bs-target="#sentence{{ $duel->id }}"
-                                                            data-bs-toggle="modal">{{ __('sentence') }}</button>
-                                                    @endif
-
                                                 </div>
                                                 <button type="button" class="btn btn-danger bg-danger btn-close"
                                                     data-bs-dismiss="modal" aria-label="Close"></button>
@@ -321,137 +325,55 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                {{-- 2nd MODAL --}}
-                                <div class="modal fade" id="sentence{{ $duel->id }}" aria-hidden="true"
-                                    aria-labelledby="sentence{{ $duel->id }}" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content bg-black border border-danger text-white">
-                                            <div class="modal-header border border-danger">
-                                                <button class="btn btn-primary" data-bs-target="#VS{{ $duel->id }}"
-                                                    data-bs-toggle="modal">VS</button>
-                                                <button type="button" class="btn btn-danger bg-danger btn-close"
-                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body border border-danger text-uppercase">
-                                                <form action="{{ route('pactados.update', $duel->id) }}" method="POST">
-                                                    {!! method_field('PUT') !!}
-                                                    {!! csrf_field() !!}
-                                                    <div class="row mb-3">
-                                                        <label
-                                                            class="col-sm-4 col-form-label col-form-label-sm fs-5 fw-uppercase">{{ __('Result') }}
-                                                        </label>
-                                                        <div class="col-sm-8">
-                                                            <select id="result" name="result"
-                                                                class="form-select text-danger" required autofocus>
-                                                                <option value="" selected disabled>
-                                                                    {{ __('Choose result') }}...
-                                                                </option>
-                                                                <option value="draw">{{ __('Draw') }}</option>
-                                                                <option value="{{ $duel->pmascota->id }}">
-                                                                    {{ $duel->pmascota->nombre }}</option>
-                                                                <option value="{{ $duel->smascota->id }}">
-                                                                    {{ $duel->smascota->nombre }}</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-3" id="trst">
-                                                        <label
-                                                            class="col-sm-4 col-form-label col-form-label-sm fs-5 fw-uppercase">{{ __('Type') . ' ' . __('Result') }}
-                                                        </label>
-                                                        <div class="col-sm-8">
-                                                            <select id="trslt" name="trslt" class="form-select text-danger"
-                                                                required autofocus>
-                                                                <option value="win">{{ __('Win') }}</option>
-                                                                <option value="rooster">
-                                                                    {{ __('Rooster') }}</option>
-                                                                <option value="srstr">
-                                                                    Super {{ __('Rooster') }}</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <script>
-                                                        function displayVals() {
-                                                            var result = $('#result').val();
-                                                            if (result == 'draw') {
-                                                                $("#trst").fadeOut("3000");
-                                                                $("#trslt").attr("disabled", true);
-                                                            } else {
-                                                                $("#trst").show("3000");
-                                                                $("#trslt").attr("disabled", false);
-                                                            }
-                                                        };
-                                                        $("#result").change(displayVals);
-                                                    </script>
-                                                    <div class="row mb-3">
-                                                        <label
-                                                            class="col-sm-4 col-form-label col-form-label-sm fs-5 fw-uppercase">
-                                                            {{ __('Time') }}(m:s)
-                                                        </label>
-                                                        <div class="col-sm-8">
-                                                            <div class="input-group">
-                                                                <input type="number" class="form-control text-danger"
-                                                                    name="dm"
-                                                                    onKeyPress="if(this.value.length==2) return false;"
-                                                                    required
-                                                                    onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                                                                    min="0" max="59" value="{{ old('dm') }}"
-                                                                    placeholder="00">
-                                                                <div class="input-group-text">:</div>
-                                                                <input type="number" class="form-control text-danger"
-                                                                    name="ds"
-                                                                    onKeyPress="if(this.value.length==2) return false;"
-                                                                    required
-                                                                    onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                                                                    min="0" max="59" value="{{ old('ds') }}"
-                                                                    placeholder="00">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <button type="submit"
-                                                        class="btn btn-warning text-uppercase">{{ __('sentence') }}</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </td>
                             <td>{{ $duel->smascota->nombre }}</td>
-                            <td>{{ $duel->smascota->user->nombre . ' ' . $duel->smascota->user->apellido }}</td>
-                            <td>{{ $duel->dm }}:{{ $duel->ds }}</td>
-                            <td>
-                                <select class="form-control text-white" style="background:none;border:none;" disabled>
-                                    <option @if ($duel->trslt == '') selected @endif> </option>
-                                    <option @if ($duel->trslt == 'win') selected @endif>
-                                        {{ __('Win') }}</option>
-                                    <option @if ($duel->trslt == 'win') selected @endif>
-                                        {{ __('Win') }}</option>
-                                    <option @if ($duel->trslt == 'rooster') selected @endif>
-                                        {{ __('Rooster') }}</option>
-                                    <option @if ($duel->trslt == 'srstr') selected @endif>
-                                        Super {{ __('Rooster') }}</option>
-                                </select>
-                            </td>
-                            <td class="text-black fs-5 fw-bolder">
-                                @if (empty($duel->result))
-                                    <div class="bg-warning p-1">{{ __('Waiting') }}</div>
-                                @else
-                                    @if ($duel->result == $duel->pmascota->id)
-                                        <div class="bg-success  p-1">
-                                            {{ $duel->pmascota->nombre }}
-                                        </div>
-                                    @elseif ($duel->result == $duel->smascota->id)
-                                        <div class="bg-success  p-1">
-                                            {{ $duel->smascota->nombre }}
-                                        </div>
-                                    @elseif ($duel->result == 'draw')
-                                        <div class="bg-warning  p-1">
-                                            {{ __('Draw') }}
-                                        </div>
-                                    @endif
-                                @endif
-                            </td>
+                            <td>{{ $duel->smascota->user->galpon }}</td>
+                            <form class="text-uppercase" method="POST"
+                                action="{{ route('pactados.update', $duel->id) }}">
+                                {!! csrf_field() !!}
+                                {{ method_field('PUT') }}
+                                <td>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="00 {{ __('minutes') }}"
+                                            value="{{ $duel->dm }}" name="dm" required
+                                            @if ($duel->result != '') disabled @endif
+                                            @cannot('sentence') readonly @endcan>
+                                        <span class="input-group-text">:</span>
+                                        <input type="text" class="form-control" placeholder="00 {{ __('seconds') }}"
+                                            value="{{ $duel->ds }}" name="ds" required
+                                            @if ($duel->result != '') disabled @endif
+                                            @cannot('sentence') readonly @endcan>
+                                    </div>
+                                </td>
+                                <td class="text-black fs-5 fw-bolder">
+                                    <select name="result" class="form-control" required
+                                        @if ($duel->result != '') disabled @endif
+                                        @cannot('sentence') disabled @endcan>
+                                        <option @if ($duel->result == 'waiting') selected @endif value="waiting" hidden>
+                                            {{ __('Waiting') }}</option>
+                                        <option @if ($duel->result == $duel->pmascota->id) selected @endif
+                                            value="{{ $duel->pmascota->id }}">
+                                            {{ $duel->pmascota->user->galpon }}
+                                        </option>
+                                        <option @if ($duel->result == $duel->smascota->id) selected @endif
+                                            value="{{ $duel->smascota->id }}">
+                                            {{ $duel->smascota->user->galpon }}
+                                        </option>
+                                        <option @if ($duel->result == 'draw') selected @endif value="draw">
+                                            {{ __('Draw') }}</option>
+                                    </select>
+                                </td>
+                                @can('sentence')
+                                    <td>
+                                        @if ($duel->result == '')
+                                            <input type="submit" class="btn btn-warning" value="{{ __('sentence') }}">
+                                        @else
+                                            <input type="submit" class="btn btn-success" value="{{ __('sentenced') }}"
+                                                disabled>
+                                        @endif
+                                    </td>
+                                @endcan
+                            </form>
                         </tr>
                     @endforeach
                 </tbody>
@@ -464,20 +386,19 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content bg-black border border-danger">
                 <div class="modal-header border border-danger">
-                    <div class="modal-title fw-bold text-uppercase">{{ __('Choose exemplars') }}</div>
+                    <div class="modal-title fw-bold text-uppercase">{{ __('Choose pets') }}</div>
                     <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <form class="text-uppercase" method="POST" action="{{ route('pactados.store') }}">
                     {!! csrf_field() !!}
+                    {{-- EVENTO --}}
                     <input type="text" id="evento_id" name="evento_id" value="{{ $evento->id }}" hidden>
-                    {{-- LPARTICIPANTE_ID --}}
-                    <input type="text" id="lparticipante_id" name="lparticipante_id" value="{{ $lparticipante }}"
-                        hidden>
+
                     <div class="modal-body border border-danger">
                         <div class="row">
                             {{-- MASCOTA 1 --}}
-                            <div class="col-sm-5 m-auto border border-danger">
+                            <div class="col-lg-5 m-auto border border-danger">
                                 {{-- SELECT PMASCOTA --}}
                                 <div class="mb-3">
                                     <label class="form-label">MASCOTA 1:</label>
@@ -566,7 +487,8 @@
                                                 {{ __('Disability') }}
                                             </label>
                                             <div class="col-auto">
-                                                <input id="des" type="text" class="form-control text-danger" readonly>
+                                                <input id="des" type="text" class="form-control text-danger" value=""
+                                                    readonly>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -578,29 +500,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>{{-- <div class="mb-3">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <label for="pad" class="form-label fw-bold">
-                                                {{ __('Father') }}
-                                            </label>
-                                            <div class="col-auto">
-                                                <input id="pad" type="text" class="form-control text-danger" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="mad" class="form-label fw-bold">
-                                                {{ __('Mother') }}
-                                            </label>
-                                            <div class="col-auto">
-                                                <input id="mad" type="text" class="form-control text-danger" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                </div>
                             </div>
                             {{-- MASCOTA 2 --}}
-                            <div class="col-sm-5 m-auto border border-danger">
+                            <div class="col-lg-5 m-auto border border-danger">
                                 {{-- SELECT PMASCOTA --}}
                                 <div class="mb-3">
                                     <label class="form-label">MASCOTA 2:</label>
@@ -701,26 +604,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>{{-- <div class="mb-3">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <label for="ppad" class="form-label fw-bold">
-                                                {{ __('Father') }}
-                                            </label>
-                                            <div class="col-auto">
-                                                <input id="ppad" type="text" class="form-control text-danger" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="pmad" class="form-label fw-bold">
-                                                {{ __('Mother') }}
-                                            </label>
-                                            <div class="col-auto">
-                                                <input id="pmad" type="text" class="form-control text-danger" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                         {{-- FOOTER --}}
@@ -846,7 +730,7 @@
             });
         }
         $("#pmascota_id").change(displayVals1);
-        displayVals1();
+
         /* MASCOTA 2 */
         function displayVals2() {
             var id = $('#smascota_id').val();
@@ -857,7 +741,6 @@
                 success: function(data) {
                     console.log(data);
                     $.each(data, function(i, item) {
-                        $("#pimg").val(item.REGANI);
                         $("#PREGANI").val(item.REGANI);
                         $("#pplu").val(item.plu);
                         $("#psss").val(item.sss);
@@ -875,7 +758,7 @@
             });
         }
         $("#smascota_id").change(displayVals2);
-        displayVals2();
+
         /*  DONT COPY OR PASTE*/
         $(document).ready(function() {
             $('input').bind('copy paste', function(e) {

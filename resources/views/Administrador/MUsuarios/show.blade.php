@@ -110,9 +110,11 @@
                     </div>
                     @if (isset($user->fdpt))
                         <div class="col-xs-6 mb text-capitalize text-center center-block">
-                            <label>{{ __('document') . ' ' . __('Disability') }}</label>
-                            <a href="{{ asset($user->fdpt) }}"
-                                target="blank">{{ __('document') }}<br>{{ __('Disability') }}</a>
+                            <a target="blank" class="col-form-label text-decoration-none"
+                                href="{{ asset($user->fdpt) }}">{{ __('document') . ' ' . __('Disability') }}
+                            </a>
+                            <iframe id="viewer" src="{{ asset($user->fdpt) }}" frameborder="0" scrolling="no"
+                                height="200" width="100%"></iframe>
                         </div>
                     @endif
                     @if (isset($user->sdpt))
@@ -121,12 +123,16 @@
                             <img class="img-responsive center-block" src="{{ asset($user->sdpt) }}" width="100%">
                         </div>
                     @endif
-                    <div class="col-xs-6 mb"><label>{{ __('Galpon') }}</label>
-                        <input type="text" class="form-control" value="{{ $user->galpon }}" readonly>
-                    </div>
-                    <div class="col-xs-6 mb"><label> {{ __('Preparer') }}</label>
-                        <input type="text" class="form-control" value="{{ $user->prepa }}" readonly>
-                    </div>
+                    @if (isset($user->galpon))
+                        <div class="col-xs-6 mb"><label>{{ __('Galpon') }}</label>
+                            <input type="text" class="form-control" value="{{ $user->galpon }}" readonly>
+                        </div>
+                    @endif
+                    @if (isset($user->prepa))
+                        <div class="col-xs-6 mb"><label> {{ __('Preparer') }}</label>
+                            <input type="text" class="form-control" value="{{ $user->prepa }}" readonly>
+                        </div>
+                    @endif
                     <div class="col-xs-6 mb"><label> {{ __('Operator') }}</label>
                         <input type="text" class="form-control" value="{{ $user->company }}" readonly>
                     </div>

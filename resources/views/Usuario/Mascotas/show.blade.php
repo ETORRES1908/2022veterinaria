@@ -109,6 +109,7 @@
                                             echo __('Other');
                                             break;
                                     } ?>
+                                    {{ $mascota->des }}
                                 </div>
                             </li>
                             @if ($mascota->gender == 'female')
@@ -251,8 +252,8 @@
                                 method="POST">
                                 {!! csrf_field() !!}
                                 {{ method_field('PUT') }}
-                                
-                                <li class="list-group-item bg-black mb-3 text-white">
+
+                                <li class="list-group-item bg-black text-white">
                                     <div><strong>{{ __('SENASA') }}:</strong></div>
                                     <input class="form-control" type="text" name="sena" value="{{ $mascota->sena }}"
                                         pattern="[A-zÀ-ú1-9\s]+" maxlength="30"
@@ -263,8 +264,9 @@
                                         <textarea class="form-control" value="{{ old('obs') }}" name="obs" maxlength="200"
                                             rows="4">{{ $mascota->obs }}</textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-dark">{{ __('Edit') }}</button>
-
+                                </li>
+                                <li class="list-group-item bg-black text-center">
+                                    <input type="submit" class="btn btn-dark" value=" {{ __('Update') }}">
                                 </li>
                             </form>
                         </ul>
@@ -274,7 +276,7 @@
                     <div class="row g-3 text-center">
                         <div class="col-12">
                             <div for="nombre" class="form-label fw-bold text-white">
-                                {{ __('Photo Profile') }} {{ __('Exemplar') }}
+                                {{ __('Photo Profile') }} {{ __('Pet') }}
                             </div>
                             <a href="#foto1" class="html5lightbox btn border border-danger" data-group="fotos"
                                 data-width="800" data-height="800">
@@ -818,14 +820,13 @@
                     <th>{{ __('Rival') }}</th>
                     <th>{{ __('Coliseum') }}</th>
                     <th>{{ __('Time') }}</th>
-                    <th>{{ __('Type') }}</th>
                     <th>{{ __('Result') }}</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($duelos as $duelo)
                     <tr>
-                        <td>{{ str_replace('-', '', $duelo->lparticipante->evento->fechas[0]) .$duelo->lparticipante->evento->coliseum->country .$duelo->lparticipante->evento->coliseum->estate .'JUE' .$duelo->lparticipante->evento->judge->id }}
+                        <td>{{ str_replace('-', '', $duelo->evento->fechas[0]) .$duelo->evento->coliseum->country .$duelo->evento->coliseum->estate .'JUE' .$duelo->evento->judge->id }}
                         </td>
                         <td>
                             @if ($duelo->pmascota_id == $mascota->id)
@@ -834,21 +835,8 @@
                                 {{ $duelo->pmascota->nombre }}
                             @endif
                         </td>
-                        <td>{{ $duelo->lparticipante->evento->coliseum->nombre }}</td>
+                        <td>{{ $duelo->evento->coliseum->nombre }}</td>
                         <td>{{ $duelo->dm . ':' . $duelo->ds }}</td>
-                        <td>
-                            <select class="form-control text-white" style="background:none;border:none;" disabled>
-                                <option @if ($duelo->trslt == '') selected @endif> </option>
-                                <option @if ($duelo->trslt == 'win') selected @endif>
-                                    {{ __('Win') }}</option>
-                                <option @if ($duelo->trslt == 'win') selected @endif>
-                                    {{ __('Win') }}</option>
-                                <option @if ($duelo->trslt == 'rooster') selected @endif>
-                                    {{ __('Rooster') }}</option>
-                                <option @if ($duelo->trslt == 'srstr') selected @endif>
-                                    Super {{ __('Rooster') }}</option>
-                            </select>
-                        </td>
                         <td class="table-active text-center">
                             @if ($duelo->result == 'draw')
                                 <div class="bg-warning">{{ __('Draw') }}</div>

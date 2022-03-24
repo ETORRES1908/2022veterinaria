@@ -22,13 +22,15 @@ class PermissionsTableSeeder extends Seeder
 
         //Cambiar peso
         Permission::create(['name' => 'chngw']);
-        //Agregar pactado
+        //ADD PACTADO
         Permission::create(['name' => 'adddeal']);
-        //Sentenciar
+        //SENTENCE
         Permission::create(['name' => 'sentence']);
-        //Agregar evento
+        //ADD EVENT
         Permission::create(['name' => 'addevent']);
-        //Aggregar evento
+        //ADD ANIMAL
         Permission::create(['name' => 'addanimal']);
+        //PROFILE
+        Permission::create(['name' => 'profile']);
     }
 }

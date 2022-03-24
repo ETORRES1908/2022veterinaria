@@ -54,7 +54,7 @@ class DuelosController extends Controller
         $pmascota_id = $request->pmascota_id;
         $smascota_id = $request->smascota_id;
         $this->validate($request, [
-            'lparticipante_id' => 'required',
+            'evento_id' => 'required',
             'pmascota_id' => 'required|different:smascota_id',
             'smascota_id' => 'required|different:pmascota_id',
             'fcc' => 'required|different:scc',
@@ -64,7 +64,7 @@ class DuelosController extends Controller
         ]);
 
         Duelos::create([
-            'lparticipante_id' => $request->lparticipante_id,
+            'evento_id' => $request->evento_id,
             'pmascota_id' => $request->pmascota_id,
             'fcc' => $request->fcc,
             'smascota_id' => $request->smascota_id,
@@ -86,11 +86,10 @@ class DuelosController extends Controller
     public function show($id)
     {
         $evento = Eventos::find($id);
-        if (LParticipantes::where('evento_id', $id)->first()) {
-            $lparticipante = LParticipantes::where('evento_id', $id)->first()->id;
+        if (!empty(LParticipantes::where('evento_id', $id)->get())) {
             $participantes = LParticipantes::where('evento_id', $id)->where(['status' => '1'])->get();
-            $duelos = Duelos::where('lparticipante_id', $lparticipante)->get();
-            return view('Events.Duels.index', compact('lparticipante', 'participantes', 'duelos', 'evento'));
+            $duelos = Duelos::where('evento_id', $id)->get();
+            return view('Events.Duels.index', compact('evento', 'participantes', 'duelos'));
         } else {
             return redirect()->route('events.index');
         }
@@ -117,8 +116,8 @@ class DuelosController extends Controller
     public function update(Request $request, $id)
     {
         $duel = Duelos::find($id);
-        $duel->update(['result' => $request->result, 'trslt' => $request->trslt, 'dm' => $request->dm, 'ds' => $request->ds]);
-        $evento_id = $duel->lparticipante->evento_id;
+        $duel->update(['result' => $request->result, 'dm' => $request->dm, 'ds' => $request->ds]);
+        $evento_id = $duel->evento_id;
         return redirect()->route('pactados.show', $evento_id)->with('mensaje', __('Successfully sentenced'));
     }
 

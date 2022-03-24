@@ -45,7 +45,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Izquierdo Side Of Navbar -->
-                    <ul class="navbar-nav bg-black me-auto mb-2 fs-5">
+                    <ul class="navbar-nav bg-black me-auto mb-2 mb-2 fs-5">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,18 +78,21 @@
                                     href="{{ route('welcome') }}">
                                     {{ __('Home') }}</a>
                             </li>
+
                             {{-- QUIENES SOMOS --}}
                             <li class="nav-item">
                                 <a class="nav-link link-light @if (Route::is('about')) fw-bolder @endif"
                                     href="{{ route('about') }}">
                                     {{ __('About us') }}</a>
                             </li>
+
                             {{-- CONTACTENOS --}}
                             <li class="nav-item">
                                 <a class="nav-link link-light @if (Route::is('contact')) fw-bolder @endif"
                                     href="{{ route('contact') }}">
                                     {{ __('Contact us') }}</a>
                             </li>
+
                             {{-- EVENTOS --}}
                             <li class="nav-item">
                                 <a class="nav-link link-light @if (Route::is('events.index')) fw-bolder @endif"
@@ -97,24 +100,20 @@
                                     {{ __('Events') }}</a>
                             </li>
 
-                            {{-- PROFILE --}}
-                            <li class="nav-item">
-                                <a class="nav-link link-light @if (Route::is('profile.index')) fw-bolder @endif"
-                                    href="{{ route('profile.index') }}">
-                                    {{ __('Profile') }}</a>
-                            </li>
+
+
+                            {{-- Pets --}}
                             @can('addanimal')
-                                {{-- EXEMPLARS --}}
                                 <li class="nav-item">
                                     <a class="nav-link link-light @if (Route::is('mascotas.index')) fw-bolder @endif"
                                         href="{{ route('mascotas.index') }}">
-                                        {{ __('Exemplars') }}</a>
+                                        {{ __('Pets') }}</a>
                                 </li>
                             @endcan
 
-
+                            {{-- CMS --}}
                             @can('cms')
-                                <li>
+                                <li class="nav-item">
                                     <a class="nav-link link-light @if (Route::is('usuarios.index')) fw-bolder @endif"
                                         href="{{ route('usuarios.index') }}">
                                         {{ __('CMS') }}
@@ -122,51 +121,31 @@
                                 </li>
                             @endcan
 
+                            <li class="nav-item">
+                                {{-- LOGOUT --}}
+                                <a class="nav-link link-light" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                            </li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                style="display: none;">
+                                {!! csrf_field() !!}
+                            </form>
+
+
                             {{-- USERMENU --}}
-                            <li class="nav-item dropdown w-100">
-                                <a class="nav-link dropdown-toggle link-light" href="#" id="navbarDropdown"
-                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="caret m-1">
-                                        {{ Auth::user()->nombre }} {{ Auth::user()->apellido }}
-                                        <img src="{{ asset(Auth::user()->foto) }}" width="40vh" height="40vh"
-                                            class="rounded-circle d-inline-block align-text-middle">
-                                    </span>
+                            <li class="nav-item">
+                                <a class="nav-link link-light"
+                                    @can('profile') href="{{ route('profile.index') }}" @endcan>
+
+                                    {{ Auth::user()->nombre }} {{ Auth::user()->apellido }}
+
+                                    <img src="{{ asset(Auth::user()->foto) }}" width="30vh" height="30vh"
+                                        class="rounded-circle d-inline align-text-middle">
+
                                 </a>
 
-                                <ul class="dropdown-menu w-100" aria-labelledby="navbarDropdown">
-                                    @if (Auth::user()->usert != 'admin')
-                                        <li>
-                                            <select class="form-control fw-bold text-uppercase" disabled>
-                                                <option @if (Auth::user()->usert == 'own') selected @endif>
-                                                    {{ __('Owner') }}</option>
-                                                <option @if (Auth::user()->usert == 'cls') selected @endif>
-                                                    {{ __('Coliseum') }}</option>
-                                                <option @if (Auth::user()->usert == 'cdk') selected @endif>
-                                                    {{ __('Control desk') }}</option>
-                                                <option @if (Auth::user()->usert == 'jdg') selected @endif>
-                                                    {{ __('Judge') }}</option>
-                                                <option @if (Auth::user()->usert == 'ppr') selected @endif>
-                                                    {{ __('Preparer') }}</option>
-                                                <option @if (Auth::user()->usert == 'asst') selected @endif>
-                                                    {{ __('Assistant') }}</option>
-                                                <option @if (Auth::user()->usert == 'amt') selected @endif>
-                                                    {{ __('Amateur') }}</option>
-                                            </select>
-                                        </li>
-                                    @endif
-
-                                    <li>
-                                        <a class="dropdown-item link-dark" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                            style="display: none;">
-                                            {!! csrf_field() !!}
-                                        </form>
-                                    </li>
-                                </ul>
                             </li>
                         @endif
                     </ul>

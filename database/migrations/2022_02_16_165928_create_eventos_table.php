@@ -23,7 +23,7 @@ class CreateEventosTable extends Migration
             //COLISEUM
             //FOREIGN USER
             $table->integer('coliseo_id')->unsigned();
-            $table->foreign('coliseo_id')->references('id')->on('coliseos');
+            $table->foreign('coliseo_id')->references('id')->on('coliseos')->onDelete('cascade');
             //TYPE EVENT
             $table->string('tevent');
             //REGULATION
@@ -46,13 +46,13 @@ class CreateEventosTable extends Migration
             $table->string('hstart');
             //FOREIGN USER
             $table->integer('mcontrol_id')->unsigned();
-            $table->foreign('mcontrol_id')->references('id')->on('users');
+            $table->foreign('mcontrol_id')->references('id')->on('users')->onDelete('cascade');
             //FOREIGN USER
             $table->integer('judge_id')->unsigned();
-            $table->foreign('judge_id')->references('id')->on('users');
+            $table->foreign('judge_id')->references('id')->on('users')->onDelete('cascade');
             //FOREIGN USER
-            $table->integer('assistent_id')->unsigned();
-            $table->foreign('assistent_id')->references('id')->on('users');
+            $table->integer('assistent_id')->unsigned()->nullable();
+            $table->foreign('assistent_id')->references('id')->on('users')->onDelete('cascade');
             //AWARDS
             $table->string('awards');
             //THOPYS
@@ -98,6 +98,18 @@ class CreateEventosTable extends Migration
             $table->string('chll1')->nullable();
             //CHALLENGE2
             $table->string('chll2')->nullable();
+            //Internacionales
+            $table->text('invi', 2000)->nullable();
+            //Nacionales
+            $table->text('invn', 2000)->nullable();
+            //Honor
+            $table->text('invhr', 2000)->nullable();
+            //Homonejeados
+            $table->text('invhj', 2000)->nullable();
+            //Padrinos
+            $table->text('invpr', 2000)->nullable();
+            //OTROS
+            $table->text('invot', 2000)->nullable();
             //STATUS
             $table->string('status')->default('0'); //estado
             $table->timestamps();

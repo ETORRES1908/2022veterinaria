@@ -36,7 +36,7 @@
                                     <label class="form-label">{{ __('Challenge') }}:</label>
                                     <input class="form-control text-danger" type="number" name="chll1"
                                         value="{{ old('chll1') }}" onKeyPress="if(this.value.length==4) return false;"
-                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" autofocus onblur>
+                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" autofocus>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -46,7 +46,7 @@
                                     <label class="form-label">{{ __('Challenge') }}:</label>
                                     <input class="form-control text-danger" type="number" name="chll2"
                                         value="{{ old('chll2') }}" onKeyPress="if(this.value.length==4) return false;"
-                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" autofocus onblur>
+                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" autofocus>
                                 </div>
                             </div>
                         </div>
@@ -57,6 +57,9 @@
         </div>
         <div class="card mx-auto bg-black text-white border border-danger mb-3">
             <div class="card-body border border-danger">
+                <div class="fw-bold text-center">
+                    <h3> {{ __('Details') }}</h3>
+                </div>
                 <div class="row">
                     {{-- ORGANIZADOR ID --}}
                     <input id="organizador_id" type="text" name="organizador_id" value="{{ Auth::user()->id }}" hidden>
@@ -276,22 +279,11 @@
                                             onKeyPress="if(this.value.length==3) return false;" placeholder="300"
                                             onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required
                                             autofocus>
-                                        {{-- <select class="form-control text-danger" name="miw" id="miw">
-                                            <option value="300">300</option>
-                                            <option value="400">400</option>
-                                            <option value="500">500</option>
-                                        </select> --}}
                                         <span class="input-group-text text-danger fw-bold">{{ __('MAX.') }}</span>
                                         <input type="number" class="form-control text-danger" name="maw" min="301" max="505"
                                             onKeyPress="if(this.value.length==3) return false;" placeholder="505"
                                             onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required
                                             autofocus>
-                                        {{-- <select class="form-control text-danger" name="maw" id="maw">
-                                            <option data="300" value="315">315</option>
-                                            <option data="400" value="415">415</option>
-                                            <option data="500" value="505">505</option>
-                                        </select> --}}
-
                                     </div>
                                     @if ($errors->has('miw') || $errors->has('maw'))
                                         <span class="text-danger text-fs6">
@@ -964,7 +956,7 @@
                     </div>
                     {{-- HORA INICIO --}}
                     <div class="col-4 form-group{{ $errors->has('hstart') ? ' has-error' : '' }}">
-                        <label for="hstart" class="col-form-label fw-bold text-uppercase">
+                        <label for="hstart" class="col-form-label fw-bold">
                             {{ __('Start') }}
                         </label>
                         <div class="col-auto">
@@ -1080,7 +1072,10 @@
                         </label>
                         <div class="col-auto">
                             <select class="select2 form-select text-danger fw-bold" id="assistent_id" name="assistent_id"
-                                value="{{ old('assistent_id') }}" required autofocus>
+                                value="{{ old('assistent_id') }}" autofocus>
+                                <option value="">
+                                    {{ __('No one') }}
+                                </option>
                                 @foreach ($assts as $assistent)
                                     <option value="{{ $assistent->id }}"
                                         @if (old('assistent_id') == $assistent->id) selected @endif>
@@ -1118,6 +1113,9 @@
         </div>
         <div class="card mx-auto bg-black text-white border border-danger mb-3">
             <div class="card-body border border-danger">
+                <div class="fw-bold text-center">
+                    <h3> {{ __('Awards') }}</h3>
+                </div>
                 <div class="row">
                     {{-- AWARDS --}}
                     <div class="col-6 col-md-3 mb-3 form-group{{ $errors->has('awards') ? ' has-error' : '' }}">
@@ -1364,9 +1362,12 @@
         </div>
         <div class="card mx-auto bg-black text-white border border-danger mb-3">
             <div class="card-body border border-danger">
+                <div class="fw-bold text-center">
+                    <h3> {{ __('Tickets and Inscriptions') }}</h3>
+                </div>
                 <div class="row">
                     {{-- ENTRADAS --}}
-                    <label for="egn" class="col-form-label fw-bold text-uppercase">
+                    <label for="egn" class="col-form-label fw-bold">
                         {{ __('Tickets') }}
                     </label>
                     {{-- GENERAL --}}
@@ -1448,7 +1449,7 @@
                             @endif
                         </div>
                     </div>
-                    <label for="ift" class="col-form-label fw-bold text-uppercase">
+                    <label for="ift" class="col-form-label fw-bold">
                         {{ __('inscriptions') }}
                     </label>
                     {{-- INSCRIPCIÓN --}}
@@ -1516,15 +1517,132 @@
                         <h6>{{ __('LAW 28683 Preferential attention and LAW 29973 rights of people with disabilities - PCD') }}
                         </h6>
                         <h6>{{ __('* People over 65 only pay 50% of the entrance') }}</h6>
-                        <h6>{{ __('PS: Failure to comply with the event created, you can be sanctioned') }}</h6>
                     </div>
-                    {{-- BOTON DE REGISTRO --}}
-                    <div class="col-md-12 ">
-                        <div class="mx-auto">
-                            <button type="submit" class="btn btn-primary" id="submit">
-                                {{ __('Create your event') }}
-                            </button>
+                </div>
+            </div>
+        </div>
+        <div class="card mx-auto bg-black text-white border border-danger mb-3">
+            <div class="card-body border border-danger">
+                <div class="fw-bold text-center">
+                    <h3>{{ __('inviteds') }}</h3>
+                </div>
+                <div class="row">
+                    {{-- INTERNACIONALES --}}
+                    <div class="col-12 mb-3 form-group{{ $errors->has('invi') ? ' has-error' : '' }}">
+                        <label for="invi" class="col-form-label fw-bold">
+                            {{ __('Internationals') }}
+                        </label>
+                        <div class="col-auto">
+
+                            <textarea name="invi" class="form-control" maxlength="2000" autofocus
+                                placeholder="{{ __('Add internationals inviteds') }}" pattern="[A-zÀ-ú\s]+"
+                                onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"></textarea>
+
+                            @if ($errors->has('invi'))
+                                <span class="text-danger text-fs6">
+                                    {{ $errors->first('invi') }}
+                                </span>
+                            @endif
                         </div>
+                    </div>
+                    {{-- NACIONALES --}}
+                    <div class="mb-3 form-group{{ $errors->has('invn') ? ' has-error' : '' }}">
+                        <label for="invn" class="col-form-label fw-bold">
+                            {{ __('Nationals') }}
+                        </label>
+                        <div class="col-auto">
+
+                            <textarea name="invn" class="form-control" maxlength="2000" autofocus
+                                placeholder="{{ __('Add nationals inviteds') }}" pattern="[A-zÀ-ú\s]+"
+                                onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"></textarea>
+                            @if ($errors->has('invn'))
+                                <span class="text-danger text-fs6">
+                                    {{ $errors->first('invn') }}
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    {{-- HONOR --}}
+                    <div class="mb-3 form-group{{ $errors->has('invhr') ? ' has-error' : '' }}">
+                        <label for="invhr" class="col-form-label fw-bold">
+                            {{ __('Honor') }}
+                        </label>
+                        <div class="col-auto">
+
+                            <textarea name="invhr" class="form-control" maxlength="2000" autofocus
+                                placeholder="{{ __('Add honers inviteds') }}" pattern="[A-zÀ-ú\s]+"
+                                onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"></textarea>
+
+                            @if ($errors->has('invhr'))
+                                <span class="text-danger text-fs6">
+                                    {{ $errors->first('invhr') }}
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    {{-- HOMENAJEADOS --}}
+                    <div class="mb-3 form-group{{ $errors->has('invhj') ? ' has-error' : '' }}">
+                        <label for="invhj" class="col-form-label fw-bold">
+                            {{ __('honorees') }}
+                        </label>
+                        <div class="col-auto">
+
+                            <textarea name="invhj" class="form-control" maxlength="2000" autofocus
+                                placeholder="{{ __('Add honorees inviteds') }}" pattern="[A-zÀ-ú\s]+"
+                                onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"></textarea>
+
+                            @if ($errors->has('invhj'))
+                                <span class="text-danger text-fs6">
+                                    {{ $errors->first('invhj') }}
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    {{-- PADRINOS --}}
+                    <div class="mb-3 form-group{{ $errors->has('invpr') ? ' has-error' : '' }}">
+                        <label for="invpr" class="col-form-label fw-bold">
+                            {{ __('Godparents') }}
+                        </label>
+                        <div class="col-auto">
+
+                            <textarea name="invpr" class="form-control" maxlength="2000" autofocus
+                                placeholder="{{ __('Add inviteds godparents') }}" pattern="[A-zÀ-ú\s]+"
+                                onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"></textarea>
+
+                            @if ($errors->has('invpr'))
+                                <span class="text-danger text-fs6">
+                                    {{ $errors->first('invpr') }}
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    {{-- PADRINOS --}}
+                    <div class="mb-3 form-group{{ $errors->has('invot') ? ' has-error' : '' }}">
+                        <label for="invot" class="col-form-label fw-bold">
+                            {{ __('Others inviteds') }}
+                        </label>
+                        <div class="col-auto">
+
+                            <textarea name="invot" class="form-control" maxlength="2000" autofocus
+                                placeholder="{{ __('Add inviteds godparents') }}" pattern="[A-zÀ-ú\s]+"
+                                onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"></textarea>
+
+                            @if ($errors->has('invot'))
+                                <span class="text-danger text-fs6">
+                                    {{ $errors->first('invot') }}
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <h6>{{ __('PS: Failure to comply with the event created, you can be sanctioned') }}</h6>
+
+                {{-- BOTON DE REGISTRO --}}
+                <div class="col-md-12 ">
+                    <div class="mx-auto">
+                        <button type="submit" class="btn btn-primary" id="submit">
+                            {{ __('Create your event') }}
+                        </button>
                     </div>
                 </div>
             </div>

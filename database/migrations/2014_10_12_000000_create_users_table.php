@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('foto')->default('user.png'); //FOTO
             $table->string('dni', 8); //DNI
             $table->string('discapacidad'); //DISABILITY
-            $table->string('galpon'); //GALPON
-            $table->string('prepa'); //Preparer
+            $table->string('galpon')->nullable(); //GALPON
+            $table->string('prepa')->nullable(); //Preparer
             $table->string('email')->unique(); //EMAIL
             $table->string('company'); //COMPAÑIA
             $table->string('celular')->unique(); //PHONE

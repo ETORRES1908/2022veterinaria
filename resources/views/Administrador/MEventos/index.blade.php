@@ -12,9 +12,9 @@
             <table id="datatable" class="table table-hover nowrap" style="width:100%">
                 <thead>
                     <tr>
+                        <th>{{ __('Organizer') }}</th>
                         <th>{{ __('Date') }}</th>
                         <th>{{ __('Coliseum') }}</th>
-                        <th>{{ __('Organizer') }}</th>
                         <th>{{ __('Control desk') }}</th>
                         <th>{{ __('Judge') }}</th>
                         <th>{{ __('Assistant') }}</th>
@@ -26,12 +26,18 @@
                 <tbody>
                     @foreach ($eventos as $evento)
                         <tr>
+                            <td>{{ $evento->organizador->nombre . ' ' . $evento->organizador->apellido }}</td>
                             <td>{{ $evento->fechas[0] }}</td>
                             <td>{{ $evento->coliseum->nombre }}</td>
-                            <td>{{ $evento->organizador->nombre . ' ' . $evento->organizador->apellido }}</td>
                             <td>{{ $evento->mcontrol->nombre . ' ' . $evento->mcontrol->apellido }}</td>
                             <td>{{ $evento->judge->nombre . ' ' . $evento->judge->apellido }}</td>
-                            <td>{{ $evento->assistent->nombre . ' ' . $evento->assistent->apellido }}</td>
+                            <td>
+                                @if (!empty($evento->assistent))
+                                    {{ $evento->assistent->nombre . ' ' . $evento->assistent->apellido }}
+                                @else
+                                    {{ __('No one') }}
+                                @endif
+                            </td>
                             <td>{{ $evento->awards }}</td>
                             <td>
                                 @if ($evento->status == 0)
@@ -48,9 +54,9 @@
                 </tbody>
                 <tfoot>
                     <tr>
+                        <th>{{ __('Organizer') }}</th>
                         <th>{{ __('Date') }}</th>
                         <th>{{ __('Coliseum') }}</th>
-                        <th>{{ __('Organizer') }}</th>
                         <th>{{ __('Control desk') }}</th>
                         <th>{{ __('Judge') }}</th>
                         <th>{{ __('Assistant') }}</th>
@@ -97,6 +103,10 @@
             }
             // Build Datatable
             $('#datatable').DataTable({
+                columnDefs: [{
+                    type: 'date-eu',
+                    targets: 1
+                }],
                 language: {
                     "url": getLanguage()
                 },

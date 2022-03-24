@@ -41,13 +41,15 @@
                             <div>{{ $evento->judge->nombre }} {{ $evento->judge->apellido }}</div>
                         </a>
                     </div>
-                    <div class="col-xs-6 form-group">
-                        <a href="{{ route('usuarios.show', $evento->assistent->id) }}">
-                            <img width="150" src="{{ asset($evento->assistent->foto) }}" class="form-group">
-                            <div>{{ __('Assistant') }}</div>
-                            <div>{{ $evento->assistent->nombre }} {{ $evento->assistent->apellido }}</div>
-                        </a>
-                    </div>
+                    @if (!empty($evento->assistent))
+                        <div class="col-xs-6 form-group">
+                            <a href="{{ route('usuarios.show', $evento->assistent->id) }}">
+                                <img width="150" src="{{ asset($evento->assistent->foto) }}" class="form-group">
+                                <div>{{ __('Assistant') }}</div>
+                                <div>{{ $evento->assistent->nombre }} {{ $evento->assistent->apellido }}</div>
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="col-md-7 center-block">
@@ -167,57 +169,19 @@
                     {{-- COUNTRY --}}
                     <div class="col-xs-6 form-group">
                         <label>{{ __('Country') }}</label>
-                        <select class="form-control text-danger fw-bold" id="ctr" disabled>
-                            <option value="PER">PER - Perú</option>
-                        </select>
+                        <input type="text" class="form-control" value="{{ $evento->coliseum->country }}" readonly>
                     </div>
                     {{-- STATE --}}
                     <div class="col-xs-6 form-group">
                         <label>{{ __('State') }}</label>
-                        <select class="form-group form-control text-danger fw-bold" name="stt" id="stt" disabled>
-                            <option class="text-danger fw-bold" value="AM">AM - Amazonas</option>
-                            <option class="text-danger fw-bold" value="AN">AN - Ancash</option>
-                            <option class="text-danger fw-bold" value="AP">AP - Apurímac
-                            </option>
-                            <option class="text-danger fw-bold" value="AR">AR - Arequipa
-                            </option>
-                            <option class="text-danger fw-bold" value="AY">AY - Ayacucho
-                            </option>
-                            <option class="text-danger fw-bold" value="CJ">CJ - Cajamarca
-                            </option>
-                            <option class="text-danger fw-bold" value="CZ">CZ - Cuzco</option>
-                            <option class="text-danger fw-bold" value="HC">HC - Huancavelica
-                            </option>
-                            <option class="text-danger fw-bold" value="HU">HU - Huánuco</option>
-                            <option class="text-danger fw-bold" value="IC">IC - Ica</option>
-                            <option class="text-danger fw-bold" value="JU">JU - Junín</option>
-                            <option class="text-danger fw-bold" value="LL">LL - La Libertad
-                            </option>
-                            <option class="text-danger fw-bold" value="LB">LB - Lambayeque
-                            </option>
-                            <option class="text-danger fw-bold" value="LM">LM - Lima</option>
-                            <option class="text-danger fw-bold" value="LO">LO - Loreto</option>
-                            <option class="text-danger fw-bold" value="MD">MD - Madre de Dios
-                            </option>
-                            <option class="text-danger fw-bold" value="MQ">MQ - Moquegua
-                            </option>
-                            <option class="text-danger fw-bold" value="PA">PA - Pasco</option>
-                            <option class="text-danger fw-bold" value="PI">PI - Piura</option>
-                            <option class="text-danger fw-bold" value="PU">PU - Puno</option>
-                            <option class="text-danger fw-bold" value="SM">SM - San Martín
-                            </option>
-                            <option class="text-danger fw-bold" value="TA">TA - Tacna</option>
-                            <option class="text-danger fw-bold" value="TU">TU - Tumbes</option>
-                            <option class="text-danger fw-bold" value="UC">UC - Ucayali
-                            </option>
-                        </select>
+                        <input type="text" class="form-control" value="{{ $evento->coliseum->state }}" readonly>
                     </div>
                     {{-- DIRECCION --}}
                     <div class="col-xs-8 form-group">
                         <label>{{ __('Referencia') }}</label>
                         <input class="form-control" type="text" id="rfr" readonly>
                     </div>
-                    {{-- DISTRICO --}}
+                    {{-- DISTRITO --}}
                     <div class="col-xs-4 form-group">
                         <label>{{ __('District') }}</label>
                         <input class="form-control" type="text" id="drt" readonly>

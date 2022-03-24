@@ -8,11 +8,12 @@ use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:profile');
+    }
+
     public function index()
     {
         return view('profile');
@@ -70,7 +71,12 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'celular' => 'unique:users'
+        ]);
+
         $user = User::Find($id);
+
         $user->update($request->all());
         return redirect()->route('profile.index')->with('mensaje', __('Successfully updated'));
     }

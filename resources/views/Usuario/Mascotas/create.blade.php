@@ -2,7 +2,7 @@
 @section('content')
     <div class="card mx-auto bg-black border border-danger">
         <div class="card-header fs-4 border border-danger">
-            {{ __('Add Exemplar') }}
+            {{ __('Add pet') }}
         </div>
         <div class="card-body border border-danger">
             <form class="text-uppercase" method="POST" action="{{ route('mascotas.store') }}" enctype="multipart/form-data"
@@ -153,7 +153,7 @@
                                     <div class="col-auto">
                                         <select class="select2 form-select" name="pad" autofocus>
                                             <option value="" hidden>
-                                                {{ __('Choose exemplar') }}...
+                                                {{ __('Choose pet') }}...
                                             </option>
                                             @foreach ($pads as $mascota)
                                                 <option @if (old('pad') == $mascota->id) selected @endif
@@ -176,7 +176,7 @@
                                     <div class="col-auto">
                                         <select class="select2 form-select" name="mad" autofocus>
                                             <option value="" hidden>
-                                                {{ __('Choose exemplar') }}...
+                                                {{ __('Choose pet') }}...
                                             </option>
                                             @foreach ($mads as $mascota)
                                                 <option @if (old('mad') == $mascota->id) selected @endif
@@ -199,13 +199,13 @@
                                     <div class="col-auto">
                                         <select class="form-select text-danger" id="des" name="des"
                                             value="{{ old('des') }}" required>
-                                            <option value="0" @if (old('des') == '0') selected @endif>
+                                            <option value="No" @if (old('des') == 'No') selected @endif>
                                                 {{ __('No') }}</option>
-                                            <option value="1" @if (old('des') == '1') selected @endif>
+                                            <option value="Visual" @if (old('des') == 'Visual') selected @endif>
                                                 {{ __('Visual') }}</option>
-                                            <option value="2" @if (old('des') == '2') selected @endif>
-                                                {{ __('Physical') }}</option>
-                                            <option value="3" @if (old('des') == '3') selected @endif>
+                                            <option value="Fisica" @if (old('des') == 'Física') selected @endif>
+                                                {{ __('Física') }}</option>
+                                            <option value="Otra" @if (old('des') == 'Otra') selected @endif>
                                                 {{ __('Other') }}</option>
                                         </select>
 
@@ -366,7 +366,7 @@
                                 {{-- FOTO DE PERFIL --}}
                                 <div class="col-md-12 mb-3 form-group{{ $errors->has('foto') ? ' has-error' : '' }}">
                                     <label for="name" class="col-form-label fw-bold">
-                                        {{ __('Photo Profile') }} {{ __('Exemplar') }}
+                                        {{ __('Photo Profile') }} {{ __('Pet') }}
                                     </label>
                                     <div class="col-auto rounded">
                                         <img id="preview" src="{{ asset('storage/img/perro.jpg') }}"
@@ -407,7 +407,7 @@
                         {{-- BOTON DE REGISTRO --}}
                         <div class="mx-auto">
                             <button type="submit" class="btn btn-primary">
-                                {{ __('Add Exemplar') }}
+                                {{ __('Add pet') }}
                             </button>
                         </div>
                     </div>

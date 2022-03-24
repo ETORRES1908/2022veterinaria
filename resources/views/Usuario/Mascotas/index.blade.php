@@ -6,7 +6,7 @@
             @if (count(Auth::user()->mascotas) <= 200)
                 <div class="mb-5">
                     <a href="{{ route('mascotas.create') }}" class="fw-bold text-uppercase btn btn-outline-danger px-5">
-                        {{ __('Add Exemplar') }}
+                        {{ __('Add pet') }}
                     </a>
                 </div>
             @endif

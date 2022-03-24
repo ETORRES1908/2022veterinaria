@@ -61,7 +61,7 @@ class LParticipantesController extends Controller
             }),],
         ]);
         LParticipantes::create(['evento_id' => $request->evento_id, 'mascota_id' => $mascota->id, 'status' => '0']);
-        return redirect()->route('events.show', $request->evento_id)->with('mensaje', __('Successfully joined'));
+        return redirect()->route('events.show', $request->evento_id)->with('mensaje', __('Successfully collated'));
     }
 
     public function show($id)
@@ -83,7 +83,7 @@ class LParticipantesController extends Controller
             'mascota_id' => 'required',
             'foto' => 'image',
             'peso' => 'integer|required',
-            'seal' => 'integer|required',
+            'seal' => '',
         ]);
 
         //NAME PHOTO

@@ -15,15 +15,16 @@
                     {{ __('Create your event') }}</a>
             </div>
         @endcan
-        <div class="card-body table-responsive border border-danger">
+        <div class="card-body table-responsive border border-danger text-uppercase">
             <table id="datatable" class="table table-dark table-hover" style="width:100%">
                 <thead>
                     <tr>
                         <th>{{ __('Date') }}</th>
-                        <th>{{ __('City') }}</th>
+                        <th>{{ __('Shed') }}</th>
+                        <th>{{ __('Award') }}</th>
+                        <th>{{ __('Type Event') }}</th>
                         <th>{{ __('State') }}</th>
                         <th>{{ __('Country') }}</th>
-                        <th class="nowrap">{{ __('Reference') }}</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -31,56 +32,62 @@
                     @foreach ($eventos as $evento)
                         <tr>
                             <td>{{ $evento->fechas[0] }}</td>
-                            <td>{{ $evento->coliseum->district }}</td>
-                            <td>
-                                <select class="form-control text-white" style="background:none;border:none;" disabled>
-                                    <option @if ($evento->coliseum->state == 'AM') selected @endif>AM - Amazonas</option>
-                                    <option @if ($evento->coliseum->state == 'AN') selected @endif>AN - Ancash</option>
-                                    <option @if ($evento->coliseum->state == 'AP') selected @endif>AP - Apurímac</option>
-                                    <option @if ($evento->coliseum->state == 'AR') selected @endif>AR - Arequipa</option>
-                                    <option @if ($evento->coliseum->state == 'AY') selected @endif>AY - Ayacucho</option>
-                                    <option @if ($evento->coliseum->state == 'CJ') selected @endif>CJ - Cajamarca</option>
-                                    <option @if ($evento->coliseum->state == 'CZ') selected @endif>CZ - Cuzco</option>
-                                    <option @if ($evento->coliseum->state == 'HC') selected @endif>HC - Huancavelica</option>
-                                    <option @if ($evento->coliseum->state == 'HU') selected @endif>HU - Huánuco</option>
-                                    <option @if ($evento->coliseum->state == 'IC') selected @endif>IC - ICA</option>
-                                    <option @if ($evento->coliseum->state == 'JU') selected @endif>JU - Junín</option>
-                                    <option @if ($evento->coliseum->state == 'LL') selected @endif>LL - La Libertad</option>
-                                    <option @if ($evento->coliseum->state == 'LB') selected @endif>LB - Lambayeque</option>
-                                    <option @if ($evento->coliseum->state == 'LM') selected @endif>LM - Lima</option>
-                                    <option @if ($evento->coliseum->state == 'LO') selected @endif>LO - Loreto</option>
-                                    <option @if ($evento->coliseum->state == 'MD') selected @endif>MD - Madre de Dios</option>
-                                    <option @if ($evento->coliseum->state == 'MQ') selected @endif>MQ - Moquegua</option>
-                                    <option @if ($evento->coliseum->state == 'PA') selected @endif>PA - Pasco</option>
-                                    <option @if ($evento->coliseum->state == 'PI') selected @endif>PI - Piura</option>
-                                    <option @if ($evento->coliseum->state == 'PU') selected @endif>PU - Puno</option>
-                                    <option @if ($evento->coliseum->state == 'SM') selected @endif>SM - San Martín</option>
-                                    <option @if ($evento->coliseum->state == 'TA') selected @endif>TA - Tacna</option>
-                                    <option @if ($evento->coliseum->state == 'TU') selected @endif>TU - Tumbes</option>
-                                    <option @if ($evento->coliseum->state == 'UC') selected @endif>UC - Ucayali</option>
+                            <td>{{ $evento->organizador->galpon }}</td>
+                            <td>{{ $evento->awards }}</td>
+                            <td> <select class="form-control text-white" disabled
+                                    style="-webkit-appearance: none;background: none;border: none">
+                                    <option @if ($evento->tevent == 'cmp') selected @endif>
+                                        {{ __('Championship') }}
+                                    </option>
+                                    <option @if ($evento->tevent == 'cct') selected @endif>
+                                        {{ __('Concentration') }}
+                                    </option>
+                                    <option @if ($evento->tevent == 'chk') selected @endif>
+                                        {{ __('Chuzk') }}
+                                    </option>
+                                    <option @if ($evento->tevent == 'drb') selected @endif>
+                                        {{ __('Derby') }}
+                                    </option>
+                                    <option @if ($evento->tevent == 'prt') selected @endif>
+                                        {{ __('Party') }}
+                                    </option>
+                                    <option @if ($evento->tevent == 'thr') selected @endif>
+                                        {{ __('Other') }}
+                                    </option>
                                 </select>
+
                             </td>
                             <td>
-                                <select class="form-control text-white" style="background:none;border:none;" disabled>
-                                    <option @if ($evento->coliseum->country == 'PER') selected @endif>PER - Perú</option>
-                                </select>
+                                {{ $evento->coliseum->state }}
                             </td>
-                            <td class="nowrap">{{ $evento->coliseum->reference }}</td>
                             <td>
-                                <a href="{{ route('events.show', $evento->id) }}" class="btn btn-warning">
-                                    {{ __('View') }}
-                                </a>
+                                {{ $evento->coliseum->country }}
+                            </td>
+                            <td>
+                                @cannot('sentence')
+                                    <a href="{{ route('events.show', $evento->id) }}" class="btn btn-warning">
+                                        {{ __('participate') }}
+                                    </a>
+                                @endcan
+                                @can('sentence')
+                                @if (Auth::user()->id == $evento->judge_id)
+                                    <a href="{{ route('pactados.show', $evento->id) }}" class="btn btn-warning">
+                                        {{ __('sentence') }}
+                                    </a>
+                                @endif
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>{{ __('Date') }}</th>
-                        <th>{{ __('City') }}</th>
+                         <th>{{ __('Date') }}</th>
+                        <th>{{ __('Shed') }}</th>
+                        <th>{{ __('Award') }}</th>
+                        <th>{{ __('Type Event') }}</th>
                         <th>{{ __('State') }}</th>
                         <th>{{ __('Country') }}</th>
-                        <th class="nowrap">{{ __('Reference') }}</th>
                         <th></th>
                     </tr>
                 </tfoot>

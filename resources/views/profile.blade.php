@@ -20,6 +20,9 @@
         }
 
     </style>
+    {{-- SCRIPTS --}}
+    <script src="{{ asset('css/lightbox/html5lightbox.js') }}"></script>
+    <script src="{{ asset('css/lightbox/froogaloop2.min.js') }}"></script>
 @endsection
 @section('content')
     <div class="card bg-black">
@@ -28,126 +31,161 @@
                 {{ session('mensaje') }}
             </div>
         @endif
-        <div class="row">
-            <div class="col-md-5">
-                <div class="text-center">
-                    <div class="mb-3">
-                        <img class="img-fluid" src="{{ asset(Auth::user()->foto) }}"><br>
-                    </div>
-                    <div class="mb-3">{{ Auth::user()->name }}</div>
-                    <div class="mb-3">{{ Auth::user()->email }}</div>
-                    <form class="text-uppercase" method="POST"
-                        action="{{ route('profile.update', ['id' => Auth::user()->id]) }}">
-                        {!! csrf_field() !!}
-                        {{ method_field('PUT') }}
-                        <input type="text" name="typec" value="1" hidden>
+        <div class="row mb-3">
+            <div class="col-lg-5">
+                <form class="text-uppercase" method="POST"
+                    action="{{ route('profile.update', ['id' => Auth::user()->id]) }}">
+                    {!! csrf_field() !!}
+                    {{ method_field('PUT') }}
+                    <div class="text-center">
+                        <div class="mb-3">
+                            <a href="{{ asset(Auth::user()->foto) }}" class="html5lightbox" data-width="800"
+                                data-height="800"> <img class="img-fluid" src="{{ asset(Auth::user()->foto) }}"></a>
+                        </div>
+                        <div class="mb-3">{{ Auth::user()->name }}</div>
+                        <div class="mb-3">{{ Auth::user()->email }}</div>
+
                         <div class="row mb-3">
-                            <label class="col-sm-7 col-form-label">{{ __('User') . ' /' . __('Name Social') }}</label>
-                            <div class="col-sm-5">
-                                <input type="name" name="name" class="form-control" maxlength="12" required autofocus
+                            <label class="col-lg-5 col-form-label">{{ __('User') . ' /' . __('Name Social') }}</label>
+                            <div class="col-lg-7">
+                                <input type="name" name="name" class="form-control" maxlength="12" required
                                     value="{{ Auth::user()->name }}" @cannot('chngs') readonly @endcan>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-7 col-form-label">{{ __('Password') }}</label>
-                            <div class="col-sm-5">
-                                <input type="password" name="password" class="form-control" maxlength="8" required
-                                    autofocus pattern="^(?=\D*\d)(?=.*?[a-zA-Z]).{8}">
+                            <label class="col-lg-5 col-form-label">{{ __('Password') }}</label>
+                            <div class="col-lg-7">
+                                <input type="password" name="password" class="form-control" maxlength="8" minlength="8"
+                                    pattern="^(?=\D*\d)(?=.*?[a-zA-Z]).{8}" required
+                                    placeholder="{{ __('8 digits - Minimum 1 letter and 1 number') }}">
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit"
-                                    class="btn btn-primary">{{ __('Change username and password') }}</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div><br><br>
-            <div class="col-md-7">
-                <div class="row">
-                    <div class="col-6 mb">
-                        <label class="col-form-label fw-bold">{{ __('Name') }}</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->nombre }}" readonly>
                     </div>
-                    <div class="col-6 mb">
-                        <label class="col-form-label fw-bold">{{ __('Surname') }}</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->apellido }}" readonly>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary" value="{{ __('Change password') }}" />
                     </div>
-                    <div class="col-6">
-                        <label class="col-form-label fw-bold">{{ __('Disability') }}</label>
-                        <select class="form-control mb" disabled style="-webkit-appearance: none;">
-                            <option value="No" @if (Auth::user()->discapacidad == 'No') selected @endif>
-                                {{ __('No') }}
-                            </option>
-                            <option value="Visual" @if (Auth::user()->discapacidad == 'Visual') selected @endif>
-                                {{ __('Visual') }}
-                            </option>
-                            <option value="Fisica" @if (Auth::user()->discapacidad == 'Fisica') selected @endif>
-                                {{ __('Physical') }}
-                            </option>
-                            <option value="Auditiva" @if (Auth::user()->discapacidad == 'Auditiva') selected @endif>
-                                {{ __('Auditory') }}</option>
-                            <option value="Verbal" @if (Auth::user()->discapacidad == 'Verbal') selected @endif>
-                                {{ __('Verbal') }}
-                            </option>
-                            <option value="Mental" @if (Auth::user()->discapacidad == 'Mental') selected @endif>
-                                {{ __('Mental') }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-6 mb"><label class="col-form-label fw-bold">{{ __('DNI') }}</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->dni }}" readonly>
-                    </div>
-                    @if (isset(Auth::user()->fdpt))
-                        <div class="col-6 mb text-capitalize text-center center-block">
-                            <label class="col-form-label fw-bold">{{ __('document') . ' ' . __('Disability') }}</label>
-                            <a href="{{ asset(Auth::user()->fdpt) }}"
-                                target="blank">{{ __('document') }}<br>{{ __('Disability') }}</a>
-                        </div>
-                    @endif
-                    @if (isset(Auth::user()->sdpt))
-                        <div class="col-6 mb text-center">
-                            <label class="col-form-label fw-bold">{{ __('Photo') . ' ' . __('Disability') }}</label>
-                            <img class="img-responsive center-block" src="{{ asset(Auth::user()->sdpt) }}" width="100%">
-                        </div>
-                    @endif
-                    <div class="col-6 mb"><label class="col-form-label fw-bold">{{ __('Galpon') }}</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->galpon }}" readonly>
-                    </div>
-                    <div class="col-6 mb"><label class="col-form-label fw-bold"> {{ __('Preparer') }}</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->prepa }}" readonly>
-                    </div>
-                    <div class="col-6 mb"><label class="col-form-label fw-bold"> {{ __('Operator') }}</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->company }}" readonly>
-                    </div>
-                    <div class="col-6 mb"><label class="col-form-label fw-bold"> {{ __('Phone') }}</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->celular }}" readonly>
-                    </div>
-                    <div class="col-4 mb"><label class="col-form-label fw-bold"> {{ __('Country') }}</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->country }}" readonly>
-                    </div>
-                    <div class="col-4 mb"><label class="col-form-label fw-bold"> {{ __('State') }}</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->state }}" readonly>
-                    </div>
-                    <div class="col-4 mb"><label class="col-form-label fw-bold"> {{ __('District') }}</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->district }}" readonly>
-                    </div>
-                    <div class="col-lg-7 mb"><label class="col-form-label fw-bold"> {{ __('Direction') }}</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->direction }}" readonly>
-                    </div>
-                    <div class="col-lg-5 mb"><label class="col-form-label fw-bold">
-                            {{ __('Profession or Trade') }}</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->job }}" readonly>
-                    </div>
-                </div>
+                </form>
             </div>
+
+            <div class="col-lg-7">
+                <form class="text-uppercase" method="POST"
+                    action="{{ route('profile.update', ['id' => Auth::user()->id]) }}">
+                    {!! csrf_field() !!}
+                    {{ method_field('PUT') }}
+                    <div class="row mb-3">
+                        <div class="col-6 mb-3">
+                            <label class="col-form-label fw-bold">{{ __('First name') }}</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->nombre }}" readonly>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="col-form-label fw-bold">{{ __('First surname') }}</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->apellido }}" readonly>
+                        </div>
+                        <div class="col-6">
+                            <label class="col-form-label fw-bold">{{ __('Disability') }}</label>
+                            <select class="form-control mb-3" disabled style="-webkit-appearance: none;">
+                                <option value="No" @if (Auth::user()->discapacidad == 'No') selected @endif>
+                                    {{ __('No') }}
+                                </option>
+                                <option value="Visual" @if (Auth::user()->discapacidad == 'Visual') selected @endif>
+                                    {{ __('Visual') }}
+                                </option>
+                                <option value="Fisica" @if (Auth::user()->discapacidad == 'Fisica') selected @endif>
+                                    {{ __('Physical') }}
+                                </option>
+                                <option value="Auditiva" @if (Auth::user()->discapacidad == 'Auditiva') selected @endif>
+                                    {{ __('Auditory') }}</option>
+                                <option value="Verbal" @if (Auth::user()->discapacidad == 'Verbal') selected @endif>
+                                    {{ __('Verbal') }}
+                                </option>
+                                <option value="Mental" @if (Auth::user()->discapacidad == 'Mental') selected @endif>
+                                    {{ __('Mental') }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-6 mb-3"><label class="col-form-label fw-bold">{{ __('DNI') }}</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->dni }}" readonly>
+                        </div>
+                        @if (isset(Auth::user()->fdpt))
+                            <div class="col-6 mb-3 text-capitalize text-center center-block">
+                                <a target="blank" class="col-form-label text-decoration-none"
+                                    href="{{ asset(Auth::user()->fdpt) }}">{{ __('document') . ' ' . __('Disability') }}</a>
+                                <iframe id="viewer" src="{{ asset(Auth::user()->fdpt) }}" frameborder="0" scrolling="no"
+                                    height="200" width="100%"></iframe>
+
+                            </div>
+                        @endif
+                        @if (isset(Auth::user()->sdpt))
+                            <div class="col-6 mb-3 text-center">
+                                <label class="form-label fw-bold">{{ __('Photo') . ' ' . __('Disability') }}</label>
+                                <a href="{{ asset(Auth::user()->sdpt) }}" class="html5lightbox" data-width="800"
+                                    data-height="800">
+                                    <img class="img-responsive center-block" src="{{ asset(Auth::user()->sdpt) }}"
+                                        width="100%">
+                                </a>
+
+                            </div>
+                        @endif
+                        <div class="col-6 mb-3"><label class="col-form-label fw-bold">{{ __('Galpon') }}</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->galpon }}" readonly>
+                        </div>
+                        <div class="col-6 mb-3"><label class="col-form-label fw-bold"> {{ __('Preparer') }}</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->prepa }}" readonly>
+                        </div>
+                        <div class="col-6 mb-3"><label class="col-form-label fw-bold"> {{ __('Operator') }}</label>
+                            <select class="form-select text-uppercase" name="company" required autofocus>
+                                <option value="bitel" @if (Auth::user()->company == 'bitel') selected @endif>BITEL</option>
+                                <option value="claro" @if (Auth::user()->company == 'claro') selected @endif>CLARO</option>
+                                <option value="entel" @if (Auth::user()->company == 'entel') selected @endif>ENTEL</option>
+                                <option value="movitar" @if (Auth::user()->company == 'movitar') selected @endif>MOVISTAR
+                                </option>
+                                <option value="otros" @if (Auth::user()->company == 'otros') selected @endif>
+                                    {{ __('Other') }}</option>
+                            </select>
+                        </div>
+                        <div class="col-6 mb-3"><label class="col-form-label fw-bold"> {{ __('Phone') }}</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->celular }}" minlength="9"
+                                onKeyPress="if(this.value.length==9) return false;" name="celular"
+                                onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required>
+                            @if ($errors->has('celular'))
+                                <span class="text-danger text-fs6">
+                                    {{ __('This cell phone number already registered') }}
+                                </span>
+                            @endif
+                        </div>
+                        <div class="col-4 mb-3"><label class="col-form-label fw-bold"> {{ __('Country') }}</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->country }}" readonly>
+                        </div>
+                        <div class="col-4 mb-3"><label class="col-form-label fw-bold"> {{ __('State') }}</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->state }}" readonly>
+                        </div>
+                        <div class="col-4 mb-3"><label class="col-form-label fw-bold"> {{ __('District') }}</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->district }}" readonly>
+                        </div>
+                        <div class="col-lg-7 mb-3"><label class="col-form-label fw-bold"> {{ __('Direction') }}</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->direction }}" readonly>
+                        </div>
+                        <div class="col-lg-5 mb-3"><label class="col-form-label fw-bold">
+                                {{ __('Profession or Trade') }}</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->job }}" readonly>
+                        </div>
+                    </div>
+                    <div class="position-relative start-50">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
         </div>
+
     </div>
     <script type="text/javascript">
         //HIDE
         setTimeout(function() {
-            $('.alert').fadeOut(3000);
+            $('.alert').fadeOut(6000);
+            $('span').fadeOut(6000);
         });
     </script>
 @endsection
