@@ -17,13 +17,13 @@ class CreateEventosTable extends Migration
             $table->increments('id');
             //FOREIGN USER
             $table->integer('organizador_id')->unsigned();
-            $table->foreign('organizador_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('organizador_id')->references('id')->on('users');
             //DATES
             $table->json('fechas');
             //COLISEUM
             //FOREIGN USER
             $table->integer('coliseo_id')->unsigned();
-            $table->foreign('coliseo_id')->references('id')->on('coliseos')->onDelete('cascade');
+            $table->foreign('coliseo_id')->references('id')->on('coliseos');
             //TYPE EVENT
             $table->string('tevent');
             //REGULATION
@@ -46,13 +46,13 @@ class CreateEventosTable extends Migration
             $table->string('hstart');
             //FOREIGN USER
             $table->integer('mcontrol_id')->unsigned();
-            $table->foreign('mcontrol_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('mcontrol_id')->references('id')->on('users');
             //FOREIGN USER
             $table->integer('judge_id')->unsigned();
-            $table->foreign('judge_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('judge_id')->references('id')->on('users'));
             //FOREIGN USER
             $table->integer('assistent_id')->unsigned()->nullable();
-            $table->foreign('assistent_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('assistent_id')->references('id')->on('users');
             //AWARDS
             $table->string('awards');
             //THOPYS
