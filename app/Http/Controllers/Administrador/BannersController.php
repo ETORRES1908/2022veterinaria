@@ -47,7 +47,7 @@ class BannersController extends Controller
             'type' => 'required',
             'number' => 'required',
             'url' => 'required',
-            'foto' => 'required|image|mimes:png,jpg,jpeg',
+            'foto' => 'required|image|mimes:png,jpg,jpeg|max:3000',
         ]);
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
@@ -55,10 +55,10 @@ class BannersController extends Controller
             $nombre =
                 $request->type .
                 $request->number .
-                '.png';
+                '.jpeg';
 
             $ruta = 'storage/images/banners/' . $nombre;
-            Image::make($file->getRealPath())->resize(1280, 720)->save($ruta, 80, 'png');
+            Image::make($file->getRealPath())->resize(1280, 720)->save($ruta, 80, 'jpeg');
             if (Banners::where('name', $nombre)->first()) {
                 return redirect()->route('mbanners.index',)->with('error', __('Already exists'));
             } else {

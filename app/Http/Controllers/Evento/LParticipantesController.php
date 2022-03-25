@@ -60,13 +60,13 @@ class LParticipantesController extends Controller
                     ->where('evento_id', $evento_id);
             }),],
         ]);
-        LParticipantes::create(['evento_id' => $request->evento_id, 'mascota_id' => $mascota->id, 'status' => '0']);
-        return redirect()->route('events.show', $request->evento_id)->with('mensaje', __('Successfully collated'));
+        LParticipantes::create(['evento_id' => $request->evento_id, 'boxn' => $request->boxn, 'boxx' => $request->boxx, 'mascota_id' => $mascota->id, 'status' => '0']);
+        return redirect()->route('events.show', $request->evento_id)->with('mensaje', __('Successfully joined'));
     }
 
     public function show($id)
     {
-        $mascota = Mascota::find($id);
+        $mascota = LParticipantes::find($id)->mascota;
         return response()->json(array('success' => true, 'mascota' => $mascota));
     }
 
@@ -88,7 +88,7 @@ class LParticipantesController extends Controller
 
         //NAME PHOTO
         if ($request->file('foto')) {
-            if (!empty($mascota->fotos->where('nfoto', 1)->first()->id)) {
+            if (!empty($mascota->fotos->where('nfoto', 1)->last()->id)) {
                 $mfoto = MFotos::Find($mascota->fotos->where('nfoto', 1)->first()->id);
                 unlink($mfoto->ruta);
                 $mfoto->delete(); // ELIMINAR FOTO
@@ -112,8 +112,8 @@ class LParticipantesController extends Controller
                 'mascota_id' => $request->mascota_id,
             ]); //CREAR PHOTO
         }
-        $mascota->update(['sss' => $request->peso, 'seal' => $request->seal]); // UPDATE
-        LParticipantes::where('evento_id', $request->evento_id)->where('mascota_id', $mascota->id)->first()->update(['status' => "1"]);
+        $mascota->update(['sss' => $request->peso]); // UPDATE
+        LParticipantes::where('evento_id', $request->evento_id)->where('mascota_id', $mascota->id)->first()->update(['sss' => $request->peso, 'seal' => $request->seal, 'status' => "1"]);
         return redirect()->route('events.show', $request->evento_id)->with('mensaje', __('Successfully updated'));
     }
 

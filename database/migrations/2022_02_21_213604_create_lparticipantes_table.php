@@ -21,6 +21,12 @@ class CreateLParticipantesTable extends Migration
             //FOREIGN MASCOTA
             $table->integer('mascota_id')->unsigned();
             $table->foreign('mascota_id')->references('id')->on('mascotas')->onDelete('cascade');
+
+            $table->string('boxn')->nullable(); //BOX MIN
+            $table->string('boxx')->nullable(); //BOX MAX
+
+            $table->string('sss')->nullable(); //PESO
+            $table->string('seal')->nullable(); //PRECINTO
             //STATUS
             $table->string('status'); //estado
             $table->timestamps();

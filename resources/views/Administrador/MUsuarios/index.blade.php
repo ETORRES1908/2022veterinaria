@@ -22,7 +22,7 @@
                         <th>{{ __('Username') }}</th>
                         <th>{{ __('Name') }}</th>
                         <th>{{ __('Surname') }}</th>
-                        <th>{{ __('DNI') }}</th>
+                        <th>{{ __('Type') }}</th>
                         <th>{{ __('E-Mail Address') }}</th>
                         <th>{{ __('Country') }},&nbsp{{ __('State') }}&nbsp-&nbsp{{ __('District') }}</th>
                         <th>{{ __('Status') }}</th>
@@ -35,7 +35,7 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->nombre }}</td>
                             <td>{{ $user->apellido }}</td>
-                            <td>{{ $user->dni }}</td>
+                            <td>{{ $user->usert }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->country }}, {{ $user->state }}<br>{{ $user->district }}</td>
                             <td>
@@ -58,7 +58,7 @@
                         <th>{{ __('Username') }}</th>
                         <th>{{ __('Name') }}</th>
                         <th>{{ __('Surname') }}</th>
-                        <th>{{ __('DNI') }}</th>
+                        <th>{{ __('Type') }}</th>
                         <th>{{ __('E-Mail Address') }}</th>
                         <th>{{ __('Country') }},&nbsp{{ __('State') }}&nbsp-&nbsp{{ __('District') }}</th>
                         <th>{{ __('Status') }}</th>

@@ -368,7 +368,10 @@
                                     <label for="name" class="col-form-label fw-bold">
                                         {{ __('Photo Profile') }} {{ __('Pet') }}
                                     </label>
-                                    <div class="col-auto rounded">
+                                    <div class="col-auto rounded text-center">
+                                        <label class="rounded border p-1 m-1 bg-danger text-white">
+                                            {{ __('put a photo is required') }}
+                                        </label>
                                         <img id="preview" src="{{ asset('storage/img/perro.jpg') }}"
                                             class="img-fluid mx-auto d-block bg-danger" />
                                         <div for="foto" onclick="getFile()" id="v" class="btn btn-white bg-white d-flex">
@@ -381,7 +384,6 @@
                                         <script>
                                             function getFile() {
                                                 document.getElementById("foto").click();
-
                                             }
 
                                             function sub(obj) {
@@ -406,9 +408,7 @@
                         </div>
                         {{-- BOTON DE REGISTRO --}}
                         <div class="mx-auto">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Add pet') }}
-                            </button>
+                            <input type="submit" class="btn btn-primary" value="{{ __('Add pet') }}" />
                         </div>
                     </div>
                 </div>

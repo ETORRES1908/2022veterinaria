@@ -16,8 +16,8 @@
                         <th>{{ __('Date') }}</th>
                         <th>{{ __('Coliseum') }}</th>
                         <th>{{ __('Control desk') }}</th>
-                        <th>{{ __('Judge') }}</th>
-                        <th>{{ __('Assistant') }}</th>
+                        <th>{{ __('Judge') }} A</th>
+                        <th>{{ __('Judge') }} B</th>
                         <th>{{ __('Award') }}</th>
                         <th>{{ __('Status') }}</th>
                         <th></th>
@@ -58,8 +58,8 @@
                         <th>{{ __('Date') }}</th>
                         <th>{{ __('Coliseum') }}</th>
                         <th>{{ __('Control desk') }}</th>
-                        <th>{{ __('Judge') }}</th>
-                        <th>{{ __('Assistant') }}</th>
+                        <th>{{ __('Judge') }} A</th>
+                        <th>{{ __('Judge') }} B</th>
                         <th>{{ __('Award') }}</th>
                         <th>{{ __('Status') }}</th>
                         <th></th>

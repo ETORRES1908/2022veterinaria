@@ -11,11 +11,18 @@
             {{-- BANNER --}}
             <div class="col-lg-7 m-auto">
                 <div class="card-body">
-                    <div class="carousel slide" data-bs-ride="carousel">
+                    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
+                            @if (isset($banners[0]))
+                            <div class="carousel-item @if ($banners[0]->nombre = 'blogin1.jpeg') active @endif"
+                                data-bs-interval="1000">
+                                <a href="{{ $banners[0]->url }}">
+                                    <img src="{{ asset($banners[0]->ruta) }}" class="img-fluid mx-auto d-block">
+                                </a>
+                            </div>
+                            @endif
                             @foreach ($banners as $banner)
-                                <div class="carousel-item @if ($banner->nombre = 'blogin1.jpeg') active @endif"
-                                    data-bs-interval="1000">
+                                <div class="carousel-item" data-bs-interval="1000">
                                     <a href="{{ $banner->url }}">
                                         <img src="{{ asset($banner->ruta) }}" class="img-fluid mx-auto d-block">
                                     </a>
@@ -75,10 +82,10 @@
                             {{-- CAPTCHAT --}}
                             <div class="mb-3 form-group{{ $errors->has('captcha') ? ' has-error' : '' }}">
                                 <div class="row">
-                                    <label for="Captcha" class="col-xl-12 col-form-label mx-auto text-start">
+                                    <label for="Captcha" class="col-xl-12 col-form-label mx-auto text-end">
                                         {!! captcha_img() !!}
                                     </label>
-                                    <div class="col-7 m-auto ms-0">
+                                    <div class="col-sm-7 m-auto me-0">
                                         <input id="captcha" type="text" class="form-control text-danger fw-bold"
                                             name="captcha" required autofocus placeholder="{{ __('Result of blast') }}">
 
@@ -93,7 +100,7 @@
                             </div>
 
                             {{-- LOGIN --}}
-                            <div class="text-center mb-3">
+                            <div class="text-end mb-3">
                                 <input type="submit" class="btn btn-primary mb-3 text-uppercase"
                                     value="{{ __('Enter') }}">
                                 <a class="btn btn-success mb-3"

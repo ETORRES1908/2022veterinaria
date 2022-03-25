@@ -10,13 +10,13 @@
     <div class="card bg-black border border-danger">
         <div class="card-header border border-danger">
             @cannot('sentence')
-                <a class="btn btn-dark" href="{{ route('events.show', $evento->id) }}">
+                <a class="btn btn-success" href="{{ route('events.show', $evento->id) }}">
                     {{ __('Event') }}
                 </a>
             @endcan
             @if ($evento->mcontrol_id == Auth::user()->id)
                 @if (count($duelos) <= 150 && $evento->mcontrol_id == Auth::user()->id)
-                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#AddDeal">
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#AddDeal">
                         {{ __('Add Deal') }}
                     </button>
                     @if ($errors->has('fcc') || $errors->has('scc '))
@@ -192,7 +192,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6 mb-3">
+                                                                {{-- <div class="col-sm-6 mb-3">
                                                                     <label class="form-label fw-bold">
                                                                         {{ __('Seal') }}
                                                                     </label>
@@ -200,7 +200,7 @@
                                                                         <input value="{{ $duel->pmascota->seal }}"
                                                                             class="form-control text-danger" readonly>
                                                                     </div>
-                                                                </div>
+                                                                </div> --}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -308,7 +308,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6 mb-3">
+                                                                {{-- <div class="col-sm-6 mb-3">
                                                                     <label class="form-label fw-bold">
                                                                         {{ __('Seal') }}
                                                                     </label>
@@ -316,7 +316,7 @@
                                                                         <input value="{{ $duel->smascota->seal }}"
                                                                             class="form-control text-danger" readonly>
                                                                     </div>
-                                                                </div>
+                                                                </div> --}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -334,14 +334,18 @@
                                 {{ method_field('PUT') }}
                                 <td>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="00 {{ __('minutes') }}"
+                                        <input type="number" class="form-control" placeholder="00 {{ __('minutes') }}"
                                             value="{{ $duel->dm }}" name="dm" required
+                                            onKeyPress="if(this.value.length==1) return false;"
+                                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
                                             @if ($duel->result != '') disabled @endif
                                             @cannot('sentence') readonly @endcan>
                                         <span class="input-group-text">:</span>
-                                        <input type="text" class="form-control" placeholder="00 {{ __('seconds') }}"
+                                        <input type="number" class="form-control" placeholder="00 {{ __('seconds') }}"
                                             value="{{ $duel->ds }}" name="ds" required
                                             @if ($duel->result != '') disabled @endif
+                                            onKeyPress="if(this.value.length==2) return false;"
+                                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
                                             @cannot('sentence') readonly @endcan>
                                     </div>
                                 </td>
@@ -404,10 +408,10 @@
                                     <label class="form-label">MASCOTA 1:</label>
                                     <select class="form-select" id="pmascota_id" name="pmascota_id"
                                         value="{{ old('pmascota_id') }}" required>
-                                        <option value="" selected disabled>Seleccionar mascota</option>
+                                        <option value="" selected disabled>{{ __('Choose pet') }}</option>
                                         @foreach ($participantes as $participante)
-                                            <option class="text-black" value="{{ $participante->mascota->id }}"
-                                                @if (old('pmascota_id') == $participante->mascota->id) selected @endif>
+                                            <option class="text-black" value="{{ $participante->id }}"
+                                                @if (old('pmascota_id') == $participante->id) selected @endif>
                                                 {{ $participante->mascota->nombre }}
                                             </option>
                                         @endforeach
@@ -491,14 +495,14 @@
                                                     readonly>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        {{-- <div class="col-sm-6">
                                             <label for="seal" class="form-label fw-bold">
                                                 {{ __('Seal') }}
                                             </label>
                                             <div class="col-auto">
                                                 <input id="seal" type="text" class="form-control text-danger" readonly>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -509,10 +513,10 @@
                                     <label class="form-label">MASCOTA 2:</label>
                                     <select class="form-select" id="smascota_id" name="smascota_id"
                                         value="{{ old('smascota_id') }}" required>
-                                        <option value="" selected disabled>Seleccionar mascota</option>
+                                        <option value="" selected disabled>{{ __('Choose pet') }}</option>
                                         @foreach ($participantes as $participante)
-                                            <option class="text-black" value="{{ $participante->mascota->id }}"
-                                                @if (old('smascota_id') == $participante->mascota->id) selected @endif>
+                                            <option class="text-black" value="{{ $participante->id }}"
+                                                @if (old('smascota_id') == $participante->id) selected @endif>
                                                 {{ $participante->mascota->nombre }}
                                             </option>
                                         @endforeach
@@ -595,14 +599,14 @@
                                                 <input id="pdes" type="text" class="form-control text-danger" readonly>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        {{-- <div class="col-sm-6">
                                             <label for="pseal" class="form-label fw-bold">
                                                 {{ __('Seal') }}
                                             </label>
                                             <div class="col-auto">
                                                 <input id="pseal" type="text" class="form-control text-danger" readonly>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -719,13 +723,13 @@
                         $("#country").val(item.country);
                         $("#state").val(item.state);
                         $("#des").val(item.des);
-                        $("#seal").val(item.seal);
+                        /* $("#seal").val(item.seal); */
                         $("#pad").val(item.pad);
                         $("#mad").val(item.mad);
                     });
                 },
                 error: function() {
-                    console.log(data);
+                    console.log(id);
                 }
             });
         }
@@ -747,13 +751,13 @@
                         $("#pcountry").val(item.country);
                         $("#pstate").val(item.state);
                         $("#pdes").val(item.des);
-                        $("#pseal").val(item.seal);
+                        /*  $("#pseal").val(item.seal); */
                         $("#ppad").val(item.pad);
                         $("#pmad").val(item.mad);
                     });
                 },
                 error: function() {
-                    console.log(data);
+                    console.log(id);
                 }
             });
         }
@@ -767,7 +771,7 @@
         });
         //HIDE
         setTimeout(function() {
-            $('.alert').fadeOut(2000);
+            $('.alert').fadeOut(5000);
         });
     </script>
 @endsection

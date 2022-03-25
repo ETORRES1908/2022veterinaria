@@ -37,7 +37,7 @@
                     <div class="col-xs-6">
                         <a href="{{ route('usuarios.show', $evento->judge->id) }}">
                             <img width="150" src="{{ asset($evento->judge->foto) }}" class="form-group">
-                            <div>{{ __('Judge') }}</div>
+                            <div>{{ __('Judge') }} A</div>
                             <div>{{ $evento->judge->nombre }} {{ $evento->judge->apellido }}</div>
                         </a>
                     </div>
@@ -45,7 +45,7 @@
                         <div class="col-xs-6 form-group">
                             <a href="{{ route('usuarios.show', $evento->assistent->id) }}">
                                 <img width="150" src="{{ asset($evento->assistent->foto) }}" class="form-group">
-                                <div>{{ __('Assistant') }}</div>
+                                <div>{{ __('Judge') }} B</div>
                                 <div>{{ $evento->assistent->nombre }} {{ $evento->assistent->apellido }}</div>
                             </a>
                         </div>
@@ -86,7 +86,7 @@
                                 {{ __('Concentration') }}
                             </option>
                             <option value="chk" @if ($evento->tevent == 'chk') selected @endif>
-                                {{ __('Chuscas') }}
+                                {{ __('Chukz') }}
                             </option>
                             <option value="drb" @if ($evento->tevent == 'drb') selected @endif>
                                 {{ __('Derby') }}

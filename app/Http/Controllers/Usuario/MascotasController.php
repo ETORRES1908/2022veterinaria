@@ -165,9 +165,10 @@ class MascotasController extends Controller
      * @param  \App\Mascota  $mascota
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mascota $mascota)
+    public function edit($id)
     {
-        //
+        $mascota = Mascota::find($id);
+        return response()->json(array('success' => true, 'mascota' => $mascota));
     }
 
     /**

@@ -20,11 +20,11 @@ class CreateDuelsTable extends Migration
             $table->foreign('evento_id')->references('id')->on('eventos')->onDelete('cascade');
             //FOREIGN USER
             $table->integer('pmascota_id')->unsigned();
-            $table->foreign('pmascota_id')->references('id')->on('mascotas')->onDelete('cascade');
+            $table->foreign('pmascota_id')->references('id')->on('lparticipantes')->onDelete('cascade');
             $table->string('fcc');
             //FOREIGN USER
             $table->integer('smascota_id')->unsigned();
-            $table->foreign('smascota_id')->references('id')->on('mascotas')->onDelete('cascade');
+            $table->foreign('smascota_id')->references('id')->on('lparticipantes')->onDelete('cascade');
             $table->string('scc');
             $table->string('cch');
             $table->string('pactada');

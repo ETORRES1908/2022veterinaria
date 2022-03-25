@@ -1045,7 +1045,7 @@
                     {{-- JUEZ --}}
                     <div class="col-4 form-group{{ $errors->has('judge_id') ? ' has-error' : '' }}">
                         <label for="judge_id" class="col-form-label fw-bold">
-                            {{ __('Judge') }}
+                            {{ __('Judge') }} A
                         </label>
                         <div class="col-auto">
                             <select class="select2 form-select text-danger fw-bold" id="judge_id" name="judge_id"
@@ -1068,15 +1068,15 @@
                     {{-- ASSINTENT --}}
                     <div class="col-4 form-group{{ $errors->has('assistent_id') ? ' has-error' : '' }}">
                         <label for="assistent_id" class="col-form-label fw-bold">
-                            {{ __('Assistant') }}
+                            {{ __('Judge') }} B
                         </label>
                         <div class="col-auto">
                             <select class="select2 form-select text-danger fw-bold" id="assistent_id" name="assistent_id"
                                 value="{{ old('assistent_id') }}" autofocus>
-                                <option value="">
+                                {{-- <option value="">
                                     {{ __('No one') }}
-                                </option>
-                                @foreach ($assts as $assistent)
+                                </option> --}}
+                                @foreach ($jdgs as $assistent)
                                     <option value="{{ $assistent->id }}"
                                         @if (old('assistent_id') == $assistent->id) selected @endif>
                                         {{ $assistent->nombre . ' ' . $assistent->apellido }}
@@ -1099,9 +1099,16 @@
                 {{-- BANNER --}}
                 <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        @foreach ($banners as $banner)
-                            <div class="carousel-item @if ($banner->nombre = 'bcreate1.png') active @endif"
+                        @if (isset($banners[0]))
+                            <div class="carousel-item @if ($banners[0]->nombre = 'bcreate1.jpeg') active @endif"
                                 data-bs-interval="1000">
+                                <a href="{{ $banners[0]->url }}">
+                                    <img src="{{ asset($banners[0]->ruta) }}" class="img-fluid mx-auto d-block">
+                                </a>
+                            </div>
+                        @endif
+                        @foreach ($banners as $banner)
+                            <div class="carousel-item" data-bs-interval="1000">
                                 <a href="{{ $banner->url }}">
                                     <img src="{{ asset($banner->ruta) }}" class="img-fluid mx-auto d-block">
                                 </a>

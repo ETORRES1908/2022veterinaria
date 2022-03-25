@@ -18,15 +18,14 @@ class CreateMascotasTable extends Migration
             //FOREIGN USER
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            
+
             $table->string('REGANI')->nullable();
             $table->string('fnac');
-            $table->string('sss')->nullable();
+            $table->string('sss')->nullable(); //PESO
             $table->string('size');
             $table->string('nombre');
             $table->string('gender');
             $table->string('plc'); //PLACA
-            $table->string('seal')->nullable();; //PRECINTO
             $table->string('lck'); //CASILLERO
             $table->string('plu'); //COLOR
             $table->string('pad')->nullable(); //PADRE

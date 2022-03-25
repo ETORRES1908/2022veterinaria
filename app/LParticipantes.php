@@ -8,8 +8,6 @@ class Lparticipantes extends Model
 {
     protected $guarded = [];
 
-    protected $fillable = ['evento_id', 'mascota_id', 'status'];
-
     // A LParticipantes BELONGS_TO EVENTO
     public function evento()
     {
@@ -19,10 +17,5 @@ class Lparticipantes extends Model
     public function mascota()
     {
         return $this->belongsTo(Mascota::class);
-    }
-    // A LParticipantes BELONGS_TO EVENTO
-    public function duelos()
-    {
-        return $this->hasMany(Duelos::class, 'lparticipante_id');
     }
 }

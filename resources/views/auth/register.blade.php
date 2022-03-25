@@ -151,13 +151,16 @@
                         </div>
                     </div>
                     {{-- FOTO DE PERFIL --}}
-                    <div class="col-lg-4 my-auto  mb-3 form-group{{ $errors->has('foto') ? 'has-error' : '' }}">
+                    <div class="col-lg-4 my-auto text-center mb-3 form-group{{ $errors->has('foto') ? 'has-error' : '' }}">
                         <label for="foto" class="col-form-label fw-bold text-uppercase">
                             {{ __('upload photo to your profile') }}
                         </label>
+                        <label class="rounded border p-1 m-1 bg-danger text-white">
+                            {{ __('put a photo is required') }}
+                        </label>
                         <div class="col-auto m-1 bg-black rounded">
                             <img id="preview" src="{{ asset('storage/img/defaultuser.png') }}"
-                                class="img-fluid mx-auto d-block" height="250" />
+                                class="img-fluid mx-auto d-block" height="240" />
                             <div for="foto" onclick="getFile()" id="v" class="btn btn-white bg-white d-flex">
                                 <i id="cloud" class="bi bi-cloud-upload"></i>{{ __('Upload') }}
                                 <div id="yourBtn" class="mx-2">...{{ __('there is no picture') }}
@@ -233,11 +236,18 @@
                 {{-- BANNER --}}
                 <div class="col-md-8 m-auto">
                     <div class="card-body">
-                        <div class="carousel slide" data-bs-ride="carousel">
+                        <div id="bregister" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
-                                @foreach ($banners as $banner)
-                                    <div class="carousel-item @if ($banner->nombre = 'bregister1.png') active @endif"
+                                @if (isset($banners[0]))
+                                    <div class="carousel-item @if ($banners[0]->nombre = 'bregister1.jpeg') active @endif"
                                         data-bs-interval="1000">
+                                        <a href="{{ $banners[0]->url }}">
+                                            <img src="{{ asset($banners[0]->ruta) }}" class="img-fluid mx-auto d-block">
+                                        </a>
+                                    </div>
+                                @endif
+                                @foreach ($banners as $banner)
+                                    <div class="carousel-item" data-bs-interval="1000">
                                         <a href="{{ $banner->url }}">
                                             <img src="{{ asset($banner->ruta) }}" class="img-fluid mx-auto d-block">
                                         </a>
@@ -358,8 +368,8 @@
                         </label>
 
                         <div class="col">
-                            <select class="select2 form-control form-select text-danger fw-bold" name="country" id="country"
-                                value="{{ old('country') }}" required autofocus>
+                            <select class="select2 form-control form-select text-danger fw-bold" name="country"
+                                id="country" value="{{ old('country') }}" required autofocus>
                                 <option class="text-danger fw-bold" value="PER"
                                     @if (old('country') == 'PER') selected @endif>PER - Perú
                                 </option>

@@ -49,7 +49,7 @@ class CreateEventosTable extends Migration
             $table->foreign('mcontrol_id')->references('id')->on('users');
             //FOREIGN USER
             $table->integer('judge_id')->unsigned();
-            $table->foreign('judge_id')->references('id')->on('users'));
+            $table->foreign('judge_id')->references('id')->on('users');
             //FOREIGN USER
             $table->integer('assistent_id')->unsigned()->nullable();
             $table->foreign('assistent_id')->references('id')->on('users');
