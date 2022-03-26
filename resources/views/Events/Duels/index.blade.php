@@ -1,40 +1,44 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (session('mensaje'))
-        <div class="alert btn alert-success">
-            {{ session('mensaje') }}
-        </div>
-    @endif
-
+    <div class="text-center text-uppercase">
+        <h1>
+            @if ($evento->judge_id == Auth::user()->id)
+                {{ __('LIST FIGHTS') }} - {{ __('Judge') }}
+            @elseif ($evento->mcontrol_id == Auth::user()->id)
+                {{ __('Control Desk') }} - {{ __('Deal') }}s
+            @endif
+        </h1>
+    </div>
     <div class="card bg-black border border-danger">
         <div class="card-header border border-danger">
             @cannot('sentence')
-                <a class="btn btn-success" href="{{ route('events.show', $evento->id) }}">
-                    {{ __('Event') }}
+                <a class="btn btn-success text-capitalize" href="{{ route('events.show', $evento->id) }}">
+                    {{ __('weigh') }}
                 </a>
             @endcan
             @if ($evento->mcontrol_id == Auth::user()->id)
                 @if (count($duelos) <= 150 && $evento->mcontrol_id == Auth::user()->id)
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#AddDeal">
-                        {{ __('Add Deal') }}
+                    <button type="button" class="btn btn-danger text-uppercase" data-bs-toggle="modal"
+                        data-bs-target="#AddDeal">
+                        {{ __('Add Deal') }}s
                     </button>
                     @if ($errors->has('fcc') || $errors->has('scc '))
-                        <span class="alert fs-6 text-danger" id="Message">
-                            {{ __('Change the tapes.') }}
+                        <span class="alert btn alert-warning" id="Message">
+                            {{ __('Change color the tapes.') }}
                         </span>
                     @endif
                     @if ($errors->has('pmascota_id') || $errors->has('smascota_id'))
-                        <span class="alert fs-6 text-danger" id="Message">
-                            {{ __('The pets must be different.') }}
+                        <span class="alert btn alert-warning" id="Message">
+                            {{ __('The cocks must be different.') }}
                         </span>
                     @endif
                 @endif
-                @if (session('mensaje'))
-                    <span class="alert fs-6 text-danger">
-                        {{ session('mensaje') }}
-                    </span>
-                @endif
+            @endif
+            @if (session('mensaje'))
+                <span class="alert btn alert-warning">
+                    {{ session('mensaje') }}
+                </span>
             @endif
         </div>
         <div class="card-body table-responsive border border-danger">
@@ -43,15 +47,15 @@
                     <tr>
                         <th class="fw-blod">#</th>
                         <th class="text-uppercase">{{ __('Shed') }}</th>
-                        <th class="text-uppercase">{{ __('Pet') }} 1</th>
+                        <th class="text-uppercase">{{ __('Cock') }} 1</th>
                         <th></th>
-                        <th class="text-uppercase">{{ __('Pet') }} 2</th>
+                        <th class="text-uppercase">{{ __('Cock') }} 2</th>
                         <th class="text-uppercase">{{ __('Shed') }}</th>
                         <th class="text-uppercase">{{ __('Time') }}</th>
                         <th class="text-uppercase">{{ __('Result') }}</th>
-                        @can('sentence')
+                        @if ($evento->mcontrol_id == Auth::user()->id || $evento->judge_id == Auth::user()->id)
                             <th></th>
-                        @endcan
+                        @endif
                     </tr>
                 </thead>
                 <tbody class="text-center">
@@ -60,7 +64,7 @@
                             <td>{{ $duel->npelea }}</td>
                             <td>{{ $duel->pmascota->user->galpon }}</td>
                             <td>{{ $duel->pmascota->nombre }}</td>
-                            <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            <td><button type="button" class="btn btn-danger text-uppercase" data-bs-toggle="modal"
                                     data-bs-target="#VS{{ $duel->id }}">
                                     {{ __('Deal') }}
                                 </button>
@@ -70,7 +74,7 @@
                                         <div class="modal-content bg-black border border-danger text-white">
                                             <div class="modal-header border-danger">
                                                 <div class="justify-content-between">
-                                                    <a class="btn btn-primary" onclick="window.print();">
+                                                    <a class="btn btn-secondary" onclick="window.print();">
                                                         {{ __('Print') }}
                                                     </a>
                                                     <label class="btn btn-primary">
@@ -178,16 +182,16 @@
                                                                         <select class="form-control text-danger"
                                                                             value="{{ $duel->pmascota->des }}" disabled>
                                                                             <option
-                                                                                @if ($duel->pmascota->des == '0') selected @endif>
+                                                                                @if ($duel->pmascota->des == 'No') selected @endif>
                                                                                 {{ __('No') }}</option>
                                                                             <option
-                                                                                @if ($duel->pmascota->des == '1') selected @endif>
+                                                                                @if ($duel->pmascota->des == 'Visual') selected @endif>
                                                                                 {{ __('Visual') }}</option>
                                                                             <option
-                                                                                @if ($duel->pmascota->des == '2') selected @endif>
+                                                                                @if ($duel->pmascota->des == 'Physical') selected @endif>
                                                                                 {{ __('Physical') }}</option>
                                                                             <option
-                                                                                @if ($duel->pmascota->des == '3') selected @endif>
+                                                                                @if ($duel->pmascota->des == 'Other') selected @endif>
                                                                                 {{ __('Other') }}</option>
                                                                         </select>
                                                                     </div>
@@ -294,16 +298,16 @@
                                                                         <select class="form-control text-danger"
                                                                             value="{{ $duel->smascota->des }}" disabled>
                                                                             <option
-                                                                                @if ($duel->smascota->des == '0') selected @endif>
+                                                                                @if ($duel->smascota->des == 'No') selected @endif>
                                                                                 {{ __('No') }}</option>
                                                                             <option
-                                                                                @if ($duel->smascota->des == '1') selected @endif>
+                                                                                @if ($duel->smascota->des == 'Visual') selected @endif>
                                                                                 {{ __('Visual') }}</option>
                                                                             <option
-                                                                                @if ($duel->smascota->des == '2') selected @endif>
+                                                                                @if ($duel->smascota->des == 'Physical') selected @endif>
                                                                                 {{ __('Physical') }}</option>
                                                                             <option
-                                                                                @if ($duel->smascota->des == '3') selected @endif>
+                                                                                @if ($duel->smascota->des == 'Other') selected @endif>
                                                                                 {{ __('Other') }}</option>
                                                                         </select>
                                                                     </div>
@@ -328,7 +332,7 @@
                             </td>
                             <td>{{ $duel->smascota->nombre }}</td>
                             <td>{{ $duel->smascota->user->galpon }}</td>
-                            <form class="text-uppercase" method="POST"
+                            <form class="text-uppercase" method="POST" autocomplete="off"
                                 action="{{ route('pactados.update', $duel->id) }}">
                                 {!! csrf_field() !!}
                                 {{ method_field('PUT') }}
@@ -341,8 +345,9 @@
                                             @if ($duel->result != '') disabled @endif
                                             @cannot('sentence') readonly @endcan>
                                         <span class="input-group-text">:</span>
-                                        <input type="number" class="form-control" placeholder="00 {{ __('seconds') }}"
-                                            value="{{ $duel->ds }}" name="ds" required
+                                        <input type="text" class="form-control" placeholder="00 {{ __('seconds') }}"
+                                            value="{{ $duel->ds }}" name="ds" max="59" pattern="\d{2}" minlength="2"
+                                            required oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                             @if ($duel->result != '') disabled @endif
                                             onKeyPress="if(this.value.length==2) return false;"
                                             onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
@@ -353,7 +358,7 @@
                                     <select name="result" class="form-control" required
                                         @if ($duel->result != '') disabled @endif
                                         @cannot('sentence') disabled @endcan>
-                                        <option @if ($duel->result == 'waiting') selected @endif value="waiting" hidden>
+                                        <option @if ($duel->result == '') selected @endif value="" hidden>
                                             {{ __('Waiting') }}</option>
                                         <option @if ($duel->result == $duel->pmascota->id) selected @endif
                                             value="{{ $duel->pmascota->id }}">
@@ -370,13 +375,27 @@
                                 @can('sentence')
                                     <td>
                                         @if ($duel->result == '')
-                                            <input type="submit" class="btn btn-warning" value="{{ __('sentence') }}">
+                                            <input type="submit" class="btn btn-warning text-uppercase"
+                                                value="{{ __('sentence') }}">
                                         @else
-                                            <input type="submit" class="btn btn-success" value="{{ __('sentenced') }}"
-                                                disabled>
+                                            <input type="submit" class="btn btn-success text-uppercase"
+                                                value="{{ __('sentenced') }}" disabled>
                                         @endif
                                     </td>
                                 @endcan
+                                @if ($evento->mcontrol_id == Auth::user()->id)
+                                    <td>
+                                        @if ($duel->result == '')
+                                            <form class="text-uppercase" method="POST" autocomplete="off"
+                                                action="{{ route('pactados.destroy', $duel->id) }}">
+                                                {!! csrf_field() !!}
+                                                {{ method_field('DELETE') }}
+                                                <input type="submit" class="btn btn-danger text-uppercase"
+                                                    value="{{ __('desaccord') }}">
+                                            </form>
+                                        @endif
+                                    </td>
+                                @endif
                             </form>
                         </tr>
                     @endforeach
@@ -390,7 +409,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content bg-black border border-danger">
                 <div class="modal-header border border-danger">
-                    <div class="modal-title fw-bold text-uppercase">{{ __('Choose pets') }}</div>
+                    <div class="modal-title fw-bold text-uppercase">{{ __('Choose cocks') }}</div>
                     <button type="button" class="btn btn-danger bg-danger btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -400,18 +419,18 @@
                     <input type="text" id="evento_id" name="evento_id" value="{{ $evento->id }}" hidden>
 
                     <div class="modal-body border border-danger">
-                        <div class="row">
+                        <div class="row mb-3">
                             {{-- MASCOTA 1 --}}
                             <div class="col-lg-5 m-auto border border-danger">
                                 {{-- SELECT PMASCOTA --}}
                                 <div class="mb-3">
-                                    <label class="form-label">MASCOTA 1:</label>
+                                    <label class="form-label">{{ __('Cock') }} 1:</label>
                                     <select class="form-select" id="pmascota_id" name="pmascota_id"
                                         value="{{ old('pmascota_id') }}" required>
-                                        <option value="" selected disabled>{{ __('Choose pet') }}</option>
+                                        <option value="" selected disabled>{{ __('Choose cock') }}</option>
                                         @foreach ($participantes as $participante)
-                                            <option class="text-black" value="{{ $participante->id }}"
-                                                @if (old('pmascota_id') == $participante->id) selected @endif>
+                                            <option class="text-black" value="{{ $participante->mascota->id }}"
+                                                @if (old('pmascota_id') == $participante->mascota->id) selected @endif>
                                                 {{ $participante->mascota->nombre }}
                                             </option>
                                         @endforeach
@@ -435,12 +454,12 @@
                                             <div class="col-auto">
                                                 <select name="fcc" id="fcc" class="form-select text-danger" required
                                                     autofocus>
-                                                    <option value="" hidden></option>
                                                     <option value="Roja"
                                                         @if (old('fcc') == 'Roja') selected @endif>
                                                         Roja</option>
                                                     <option value="Blanca"
                                                         @if (old('fcc') == 'Blanca') selected @endif>Blanca</option>
+
                                                     <option value="Amarilla"
                                                         @if (old('fcc') == 'Amarilla') selected @endif>
                                                         Amarilla</option>
@@ -510,13 +529,13 @@
                             <div class="col-lg-5 m-auto border border-danger">
                                 {{-- SELECT PMASCOTA --}}
                                 <div class="mb-3">
-                                    <label class="form-label">MASCOTA 2:</label>
+                                    <label class="form-label">{{ __('Cock') }} 2:</label>
                                     <select class="form-select" id="smascota_id" name="smascota_id"
                                         value="{{ old('smascota_id') }}" required>
-                                        <option value="" selected disabled>{{ __('Choose pet') }}</option>
+                                        <option value="" selected disabled>{{ __('Choose cock') }}</option>
                                         @foreach ($participantes as $participante)
-                                            <option class="text-black" value="{{ $participante->id }}"
-                                                @if (old('smascota_id') == $participante->id) selected @endif>
+                                            <option class="text-black" value="{{ $participante->mascota->id }}"
+                                                @if (old('smascota_id') == $participante->mascota->id) selected @endif>
                                                 {{ $participante->mascota->nombre }}
                                             </option>
                                         @endforeach
@@ -539,12 +558,11 @@
                                             <div class="col-auto">
                                                 <select name="scc" id="scc" class="form-select text-danger" required
                                                     autofocus>
-                                                    <option value="" hidden></option>
+                                                    <option value="Blanca"
+                                                        @if (old('fcc') == 'Blanca') selected @endif>Blanca</option>
                                                     <option value="Roja"
                                                         @if (old('fcc') == 'Roja') selected @endif>
                                                         Roja</option>
-                                                    <option value="Blanca"
-                                                        @if (old('fcc') == 'Blanca') selected @endif>Blanca</option>
                                                     <option value="Amarilla"
                                                         @if (old('fcc') == 'Amarilla') selected @endif>
                                                         Amarilla</option>
@@ -599,48 +617,61 @@
                                                 <input id="pdes" type="text" class="form-control text-danger" readonly>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-sm-6">
-                                            <label for="pseal" class="form-label fw-bold">
-                                                {{ __('Seal') }}
-                                            </label>
-                                            <div class="col-auto">
-                                                <input id="pseal" type="text" class="form-control text-danger" readonly>
-                                            </div>
-                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         {{-- FOOTER --}}
-                        <div class="w-50 mx-auto mt-1">
+                        <div class="col-12 col-md-8">
                             <div class="row">
-                                <div class="col-sm-4 mx-auto">
+                                <div class="col-6 col-md-2 mx-auto">
                                     <label for="pmad" class="form-label fw-bold">
-                                        {{ __('Accordance') }}
+                                        {{ __('Pactada') }}
                                     </label>
                                     <div class="col-auto">
                                         <input type="number" class="form-control text-danger" name="pactada"
-                                            onKeyPress="if(this.value.length==4) return false;" required
+                                            onKeyPress="if(this.value.length==3) return false;" required
                                             onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" min="0"
-                                            value="{{ old('pactada') }}" placeholder="0000">
+                                            value="{{ old('pactada') }}" placeholder="000">
                                     </div>
                                 </div>
-                                <div class="col-sm-4 mx-auto">
+                                <div class="col-6 col-md-2 mx-auto">
+                                    <label for="pmad" class="form-label fw-bold">
+                                        {{ __('Box') }}
+                                    </label>
+                                    <div class="col-auto">
+                                        <input type="number" class="form-control text-danger" name="box"
+                                            onKeyPress="if(this.value.length==4) return false;" required
+                                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" min="0"
+                                            value="{{ old('box') }}" placeholder="0000">
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-3 mx-auto">
+                                    <label for="pmad" class="form-label fw-bold">
+                                        {{ __('Fight by') }}
+                                    </label>
+                                    <div class="col-auto">
+                                        <input type="number" class="form-control text-danger" name="peleap"
+                                            onKeyPress="if(this.value.length==4) return false;" required
+                                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" min="0"
+                                            value="{{ old('peleap') }}" placeholder="0000">
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-2 mx-auto">
                                     <label for="pmad" class="form-label fw-bold">
                                         {{ __('Field') }}
                                     </label>
                                     <div class="col-auto">
                                         <select name="cch" id="cch" class="form-select text-danger" required autofocus>
-                                            <option value="" hidden>{{-- __('Choose field') --}}</option>
                                             <option value="A" @if (old('cch') == 'A') selected @endif>A</option>
                                             <option value="B" @if (old('cch') == 'B') selected @endif>B</option>
                                         </select>
                                     </div>
                                 </div>
                                 {{-- NUMBER FIGHT --}}
-                                <div class="col-sm-4 mx-auto">
+                                <div class="col-4 col-md-3 mx-auto">
                                     <label for="npelea" class="form-label fw-bold">
-                                        {{ __('Fight') }}
+                                        N. {{ __('Fight') }}
                                     </label>
                                     <div class="col-auto">
                                         <input id="npelea" name="npelea" type="text" class="form-control text-danger"
@@ -651,10 +682,12 @@
                         </div>
                     </div>
                     <div class="modal-footer bg-black border-top border-danger">
-                        <a class="btn btn-primary mx-auto" onclick="window.print();">
-                            {{ __('Print') }}
-                        </a>
-                        <input type="submit" class="btn btn-primary mx-auto" value="{{ __('Add Deal') }}">
+                        <div class="mx-auto">
+                            <a class="btn btn-secondary" onclick="window.print();">
+                                {{ __('Print') }}
+                            </a>
+                            <input type="submit" class="btn btn-danger text-uppercase" value="{{ __('Add Deal') }}s">
+                        </div>
                     </div>
                 </form>
             </div>
@@ -698,6 +731,7 @@
                 language: {
                     "url": getLanguage()
                 },
+                "order": [0, 'desc'],
                 bInfo: false,
                 lengthChange: false,
                 pageLength: 10,
@@ -771,7 +805,7 @@
         });
         //HIDE
         setTimeout(function() {
-            $('.alert').fadeOut(5000);
+            $('.alert').fadeOut(6000);
         });
     </script>
 @endsection

@@ -15,15 +15,15 @@
                         <div class="carousel-inner">
                             @if (isset($banners[0]))
                             <div class="carousel-item @if ($banners[0]->nombre = 'blogin1.jpeg') active @endif"
-                                data-bs-interval="1000">
-                                <a href="{{ $banners[0]->url }}">
+                                data-bs-interval="4000">
+                                <a href="{{ $banners[0]->url }}" target="__blank">
                                     <img src="{{ asset($banners[0]->ruta) }}" class="img-fluid mx-auto d-block">
                                 </a>
                             </div>
                             @endif
                             @foreach ($banners as $banner)
-                                <div class="carousel-item" data-bs-interval="1000">
-                                    <a href="{{ $banner->url }}">
+                                <div class="carousel-item" data-bs-interval="4000">
+                                    <a href="{{ $banner->url }}" target="_blank">
                                         <img src="{{ asset($banner->ruta) }}" class="img-fluid mx-auto d-block">
                                     </a>
                                 </div>

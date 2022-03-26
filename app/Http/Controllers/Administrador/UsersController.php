@@ -6,6 +6,8 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 class UsersController extends Controller
 {
@@ -86,6 +88,43 @@ class UsersController extends Controller
             $user->update(['status' => $request->status]);
         } elseif ($request->typec == 1) {
             $user->update(['name' => $request->name, 'password' => bcrypt($request->password)]);
+        } elseif ($request->typec == 2) {
+
+            $rutaf = $user->fdpt;
+            if (isset($request->fdpt)) {
+                if ($user->fdpt != null) {
+                    unlink($user->fdpt);
+                }
+                $fdpt = $request->fdpt;
+                return var_dump($request->all());
+                $fn = $request->dni . "fdpt." . $fdpt->guessExtension();
+                $rutaf = 'storage/docs/users/' . $fn;
+                copy($fdpt, $rutaf);
+            }
+
+            $rutas = $user->spdt;
+            if (isset($request->sdpt)) {
+                if ($user->sdpt != null) {
+                    unlink($user->spdt);
+                }
+                return dd($request->file('sdpt'));
+                $sdpt = $request->file('sdpt');
+                $ss = $request->dni . "sdpt.jpg";
+                $rutas = 'storage/images/users/' . $ss;
+                Image::make($sdpt->getRealPath())->resize(1280, 720, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($rutas, 72, 'jpg');
+            }
+
+
+            $user->update([
+                'nombre' => $request->nombre,
+                'apellido' => $request->apellido,
+                'discapacidad' => $request->discapacidad,
+                'dni' => $request->dni,
+                'fdpt' =>  $rutaf,
+                'sdpt' =>  $rutas
+            ]);
         }
         return redirect()->route('usuarios.edit', $id)->with('mensaje', __('Successfully updated'));
     }

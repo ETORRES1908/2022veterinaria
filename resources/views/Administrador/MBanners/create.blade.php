@@ -46,7 +46,8 @@
             </div>
             <div class="form-group">
                 <label for="url">{{ __('URL') }}</label>
-                <input type="text" class="form-control" name="url" value="{{ old('url') }}" required autofocus>
+                <input type="text" class="form-control" name="url" value="{{ old('url') }}"
+                    placeholder="https://facebook.com" autofocus>
             </div>
             <div class="form-group">
                 <label>{{ __('Photo') }}</label>
@@ -82,7 +83,7 @@
                     @endif
                 </div>
             </div>
-            <button type="submit" class="btn btn-default">{{ __('Create') }}</button>
+            <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
         </form>
     </div>
 

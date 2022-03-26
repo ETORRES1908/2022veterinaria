@@ -53,10 +53,17 @@ class DuelosController extends Controller
         /*  return $request->all(); */
         $pmascota_id = $request->pmascota_id;
         $smascota_id = $request->smascota_id;
+        $evento_id = $request->evento_id;
         $this->validate($request, [
             'evento_id' => 'required',
-            'pmascota_id' => 'required|different:smascota_id',
-            'smascota_id' => 'required|different:pmascota_id',
+            'pmascota_id' =>  ['required', 'different:smascota_id', Rule::unique('duelos')->where(function ($query) use ($pmascota_id, $evento_id) {
+                return $query->where('pmascota_id', $pmascota_id)
+                    ->where('evento_id', $evento_id);
+            }),],
+            'smascota_id' =>  ['required', 'different:pmascota_id',  Rule::unique('duelos')->where(function ($query) use ($smascota_id, $evento_id) {
+                return $query->where('smascota_id', $smascota_id)
+                    ->where('evento_id', $evento_id);
+            }),],
             'fcc' => 'required|different:scc',
             'scc' => 'required|different:fcc',
             'cch' => 'required',
@@ -69,12 +76,21 @@ class DuelosController extends Controller
             'fcc' => $request->fcc,
             'smascota_id' => $request->smascota_id,
             'scc' => $request->scc,
-            'cch' => $request->cch,
             'pactada' => $request->pactada,
+            'box' => $request->box,
+            'cch' => $request->cch,
+            'peleap' => $request->peleap,
             'npelea' => $request->npelea,
+            'result' => ''
         ]);
 
-        return redirect()->route('pactados.show', $request->evento_id)->with('mensaje', __('Successfully created'));
+        LParticipantes::where('evento_id', $request->evento_id)
+            ->where('mascota_id', $request->pmascota_id)->first()->update(['status' => 0]);
+
+        LParticipantes::where('evento_id', $request->evento_id)
+            ->where('mascota_id', $request->smascota_id)->first()->update(['status' => 0]);
+
+        return redirect()->route('pactados.show', $request->evento_id)->with('mensaje', __('Agreed correctly'));
     }
 
     /**
@@ -116,8 +132,17 @@ class DuelosController extends Controller
     public function update(Request $request, $id)
     {
         $duel = Duelos::find($id);
+
+        LParticipantes::where('evento_id', $duel->evento_id)
+            ->where('mascota_id', $duel->pmascota_id)->first()->update(['status' => 1]);
+
+        LParticipantes::where('evento_id', $duel->evento_id)
+            ->where('mascota_id', $duel->smascota_id)->first()->update(['status' => 1]);
+
         $duel->update(['result' => $request->result, 'dm' => $request->dm, 'ds' => $request->ds]);
+
         $evento_id = $duel->evento_id;
+
         return redirect()->route('pactados.show', $evento_id)->with('mensaje', __('Successfully sentenced'));
     }
 
@@ -129,6 +154,18 @@ class DuelosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $duelo = Duelos::find($id);
+
+        if (!empty($duelo->result)) {
+            return redirect()->route('pactados.show', $duelo->evento_id)->with('mensaje', __('Imposible desaccord'));
+        } else {
+            LParticipantes::where('evento_id', $duelo->evento_id)
+                ->where('mascota_id', $duelo->pmascota_id)->first()->update(['status' => 1]);
+
+            LParticipantes::where('evento_id', $duelo->evento_id)
+                ->where('mascota_id', $duelo->smascota_id)->first()->update(['status' => 1]);
+            $duelo->delete();
+            return redirect()->route('pactados.show', $duelo->evento_id)->with('mensaje', __('Successfully desaccord'));
+        }
     }
 }

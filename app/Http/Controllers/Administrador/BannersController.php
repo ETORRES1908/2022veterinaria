@@ -46,7 +46,7 @@ class BannersController extends Controller
         $this->validate($request, [
             'type' => 'required',
             'number' => 'required',
-            'url' => 'required',
+            'url' => '',
             'foto' => 'required|image|mimes:png,jpg,jpeg|max:3000',
         ]);
         if ($request->hasFile('foto')) {

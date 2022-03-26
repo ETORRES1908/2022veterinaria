@@ -123,12 +123,10 @@
                             <img class="img-responsive center-block" src="{{ asset($user->sdpt) }}" width="100%">
                         </div>
                     @endif
-                    @if (isset($user->galpon))
-                        <div class="col-xs-6 mb"><label>{{ __('Galpon') }}</label>
+                    @if ($user->usert == 'own')
+                        <div class="col-xs-6 mb"><label>{{ __('Shed') }}</label>
                             <input type="text" class="form-control" value="{{ $user->galpon }}" readonly>
                         </div>
-                    @endif
-                    @if (isset($user->prepa))
                         <div class="col-xs-6 mb"><label> {{ __('Preparer') }}</label>
                             <input type="text" class="form-control" value="{{ $user->prepa }}" readonly>
                         </div>

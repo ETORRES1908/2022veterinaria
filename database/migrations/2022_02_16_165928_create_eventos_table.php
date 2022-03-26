@@ -56,37 +56,37 @@ class CreateEventosTable extends Migration
             //AWARDS
             $table->string('awards');
             //THOPYS
-            $table->string('trophys');
+            $table->string('trophys')->nullable();
             //ROOSTER
             $table->string('rooster');
             //TIME ROOSTER
             $table->string('trooster');
             //ROOSTER 10
-            $table->string('rten');
+            $table->string('rten')->nullable();
             //1 FRENTE
-            $table->string('fft');
+            $table->string('fft')->nullable();
             //2 FRENTE
-            $table->string('sft');
+            $table->string('sft')->nullable();
             //3 FRENTE
-            $table->string('tft');
+            $table->string('tft')->nullable();
             //PELEA DE CALIDAD
-            $table->string('fcd');
+            $table->string('fcd')->nullable();
             //PAVOS
-            $table->string('pvs');
+            $table->string('pvs')->nullable();
             //LECHONES
-            $table->string('lch');
+            $table->string('lch')->nullable();
             //CANASTAS
-            $table->string('cnt');
+            $table->string('cnt')->nullable();
             //SACO
-            $table->string('skg');
+            $table->string('skg')->nullable();
             //ENTRADA GENERAL
             $table->string('egn');
             //ENTRADA VIP
-            $table->string('evp');
+            $table->string('evp')->nullable();
             //PACTADO
             $table->string('pct');
             //BASE
-            $table->string('bs');
+            $table->string('bs')->nullable();
             //INSCRIPCIÓNES
             //FRENTE
             $table->string('ift');
@@ -95,9 +95,11 @@ class CreateEventosTable extends Migration
             //GALPON
             $table->string('glp');
             //CHALLENGE1
-            $table->string('chll1')->nullable();
+            /* $table->string('fchll1')->nullable(); */
+            /* $table->string('chll1')->nullable(); */
             //CHALLENGE2
-            $table->string('chll2')->nullable();
+            /* $table->string('fchll2')->nullable(); */
+            /* $table->string('chll2')->nullable(); */
             //Internacionales
             $table->text('invi', 2000)->nullable();
             //Nacionales

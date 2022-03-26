@@ -6,12 +6,12 @@
         <div class="card bg-black text-white mx-auto border border-danger mb-3">
             <div class="card-body border border-danger">
                 <div class="row g-1 mx-auto">
-                    <div class="col-6 col-lg-3 my-auto">
+                    <div class="col-6 m-auto">
                         <img src="@if (!empty(Auth::user()->foto)) {{ asset(Auth::user()->foto) }}
                     @else{{ asset('storage/img/pata.jpg') }} @endif"
                             class="img-fluid d-block mx-auto">
                     </div>
-                    <div class="col-6 col-lg-3 m-auto">
+                    <div class="col-6 m-auto">
                         <ul class="list-unstyled">
                             <li>
                                 <h6> {{ __('USER') }}: {{ Auth::user()->name }}</h6>
@@ -27,12 +27,36 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-lg-6">
+                    {{-- <div class="col-lg-6">
                         <div class="row">
                             <div class="col-6">
-                                <div class="form-control">
-                                    <img src="{{ asset('storage/img/perro.jpg') }}" class="img-fluid d-block mx-auto"
-                                        style="height: 100%;">
+                                <div class="form-control h-100">
+                                    <img id="previewf" src="{{ asset('storage/img/perro.jpg') }}"
+                                        class="img-fluid mx-auto d-block bg-danger" />
+                                    <div for="fotof" onclick="getFile()" id="v1" class="btn btn-white bg-white d-flex">
+                                        <i class="bi bi-cloud-upload"></i>{{ __('Upload') }}
+                                        <div id="yourBtnf" class="mx-2">...{{ __('there is no picture') }}
+                                        </div>
+                                    </div>
+                                    <input id="fotof" type="file" name="fotof" value="{{ old('fotof') }}" required
+                                        autofocus accept="image/*" onchange="sub(this)" hidden>
+                                    <script>
+                                        function getFile() {
+                                            document.getElementById("fotof").click();
+                                        }
+
+                                        function sub(obj) {
+                                            var file = obj.value;
+                                            var fileName = file.split("\\");
+                                            document.getElementById("yourBtnf").innerHTML = fileName[fileName.length - 1];
+                                            event.preventDefault();
+                                            /* fotof */
+                                            if (fotof.files) {
+                                                previewf.src = URL.createObjectURL(fotof.files[0])
+                                            }
+                                        }
+                                    </script>
+
                                     <label class="form-label">{{ __('Challenge') }}:</label>
                                     <input class="form-control text-danger" type="number" name="chll1"
                                         value="{{ old('chll1') }}" onKeyPress="if(this.value.length==4) return false;"
@@ -41,8 +65,31 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-control">
-                                    <img src="{{ asset('storage/img/perro.jpg') }}" class="img-fluid d-block mx-auto"
-                                        style="height: 100%;">
+                                    <img id="previews" src="{{ asset('storage/img/perro.jpg') }}"
+                                        class="img-fluid mx-auto d-block bg-danger" />
+                                    <div for="fotos" onclick="getFile()" id="v2" class="btn btn-white bg-white d-flex">
+                                        <i class="bi bi-cloud-upload"></i>{{ __('Upload') }}
+                                        <div id="yourBtn2" class="mx-2">...{{ __('there is no picture') }}
+                                        </div>
+                                    </div>
+                                    <input id="fotos" type="file" name="fotos" value="{{ old('fotos') }}" required
+                                        autofocus accept="image/*" onchange="sub(this)" hidden>
+                                    <script>
+                                        function getFile() {
+                                            document.getElementById("fotos").click();
+                                        }
+
+                                        function sub(obj) {
+                                            var file = obj.value;
+                                            var fileName = file.split("\\");
+                                            document.getElementById("yourBtn2").innerHTML = fileName[fileName.length - 1];
+                                            event.preventDefault();
+                                            /* fotos */
+                                            if (fotos.files) {
+                                                previews.src = URL.createObjectURL(fotos.files[0])
+                                            }
+                                        }
+                                    </script>
                                     <label class="form-label">{{ __('Challenge') }}:</label>
                                     <input class="form-control text-danger" type="number" name="chll2"
                                         value="{{ old('chll2') }}" onKeyPress="if(this.value.length==4) return false;"
@@ -51,7 +98,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -1045,7 +1092,7 @@
                     {{-- JUEZ --}}
                     <div class="col-4 form-group{{ $errors->has('judge_id') ? ' has-error' : '' }}">
                         <label for="judge_id" class="col-form-label fw-bold">
-                            {{ __('Judge') }} A
+                            {{ __('Judge') . ' ' . __('Field') }} A
                         </label>
                         <div class="col-auto">
                             <select class="select2 form-select text-danger fw-bold" id="judge_id" name="judge_id"
@@ -1068,14 +1115,14 @@
                     {{-- ASSINTENT --}}
                     <div class="col-4 form-group{{ $errors->has('assistent_id') ? ' has-error' : '' }}">
                         <label for="assistent_id" class="col-form-label fw-bold">
-                            {{ __('Judge') }} B
+                            {{ __('Judge') . ' ' . __('Field') }} B ({{ __('optional') }})
                         </label>
                         <div class="col-auto">
                             <select class="select2 form-select text-danger fw-bold" id="assistent_id" name="assistent_id"
                                 value="{{ old('assistent_id') }}" autofocus>
-                                {{-- <option value="">
-                                    {{ __('No one') }}
-                                </option> --}}
+                                <option value="">
+
+                                </option>
                                 @foreach ($jdgs as $assistent)
                                     <option value="{{ $assistent->id }}"
                                         @if (old('assistent_id') == $assistent->id) selected @endif>
@@ -1101,15 +1148,15 @@
                     <div class="carousel-inner">
                         @if (isset($banners[0]))
                             <div class="carousel-item @if ($banners[0]->nombre = 'bcreate1.jpeg') active @endif"
-                                data-bs-interval="1000">
-                                <a href="{{ $banners[0]->url }}">
+                                data-bs-interval="500">
+                                <a href="{{ $banners[0]->url }}" target="_blank">
                                     <img src="{{ asset($banners[0]->ruta) }}" class="img-fluid mx-auto d-block">
                                 </a>
                             </div>
                         @endif
                         @foreach ($banners as $banner)
-                            <div class="carousel-item" data-bs-interval="1000">
-                                <a href="{{ $banner->url }}">
+                            <div class="carousel-item" data-bs-interval="4000">
+                                <a href="{{ $banner->url }}" target="_blank">
                                     <img src="{{ asset($banner->ruta) }}" class="img-fluid mx-auto d-block">
                                 </a>
                             </div>
@@ -1151,7 +1198,7 @@
                         </label>
                         <div class="col-auto">
                             <input id="trophys" type="number" class="form-control text-danger fw-bold" name="trophys"
-                                value="{{ old('trophys') }}" required autofocus min="0"
+                                value="{{ old('trophys') }}" autofocus
                                 onKeyPress="if(this.value.length==1) return false;"
                                 onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
@@ -1197,7 +1244,7 @@
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
                                 <input id="rten" type="number" class="form-control text-danger fw-bold" name="rten"
-                                    value="{{ old('rten') }}" required autofocus min="0"
+                                    value="{{ old('rten') }}" autofocus
                                     onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189">
 
@@ -1218,7 +1265,7 @@
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
                                 <input id="fft" type="number" class="form-control text-danger fw-bold" name="fft"
-                                    value="{{ old('fft') }}" required autofocus min="0"
+                                    value="{{ old('fft') }}" autofocus
                                     onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
@@ -1239,7 +1286,7 @@
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
                                 <input id="sft" type="number" class="form-control text-danger fw-bold" name="sft"
-                                    value="{{ old('sft') }}" required autofocus min="0"
+                                    value="{{ old('sft') }}" autofocus
                                     onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
@@ -1260,7 +1307,7 @@
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
                                 <input id="tft" type="number" class="form-control text-danger fw-bold" name="tft"
-                                    value="{{ old('tft') }}" required autofocus min="0"
+                                    value="{{ old('tft') }}" autofocus
                                     onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
@@ -1281,7 +1328,7 @@
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
                                 <input id="fcd" type="number" class="form-control text-danger fw-bold" name="fcd"
-                                    value="{{ old('fcd') }}" required autofocus min="0"
+                                    value="{{ old('fcd') }}" autofocus
                                     onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
@@ -1300,8 +1347,7 @@
                         </label>
                         <div class="col-auto">
                             <input id="pvs" type="number" class="form-control text-danger fw-bold" name="pvs"
-                                value="{{ old('pvs') }}" required autofocus min="0"
-                                onKeyPress="if(this.value.length==1) return false;"
+                                value="{{ old('pvs') }}" autofocus onKeyPress="if(this.value.length==1) return false;"
                                 onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
                             @if ($errors->has('pvs'))
@@ -1318,9 +1364,8 @@
                         </label>
                         <div class="col-auto">
                             <input id="lch" type="number" class="form-control text-danger fw-bold" name="lch"
-                                value="{{ old('lch') }}" required autofocus min="0"
-                                onKeyPress="if(this.value.length==1) return false;" }
-                                onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
+                                value="{{ old('lch') }}" autofocus onKeyPress="if(this.value.length==1) return false;"
+                                } onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
                             @if ($errors->has('lch'))
                                 <span class="text-danger text-fs6">
@@ -1336,8 +1381,7 @@
                         </label>
                         <div class="col-auto">
                             <input id="cnt" type="number" class="form-control text-danger fw-bold" name="cnt"
-                                value="{{ old('cnt') }}" required autofocus min="0"
-                                onKeyPress="if(this.value.length==1) return false;"
+                                value="{{ old('cnt') }}" autofocus onKeyPress="if(this.value.length==1) return false;"
                                 onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
                             @if ($errors->has('cnt'))
@@ -1354,8 +1398,7 @@
                         </label>
                         <div class="row">
                             <input id="skg" type="number" class="col form-control text-danger fw-bold" name="skg"
-                                value="{{ old('skg') }}" required autofocus min="0"
-                                onKeyPress="if(this.value.length==1) return false;"
+                                value="{{ old('skg') }}" autofocus onKeyPress="if(this.value.length==1) return false;"
                                 onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
                             @if ($errors->has('skg'))
                                 <span class="text-danger text-fs6">
@@ -1407,7 +1450,7 @@
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
                                 <input id="evp" type="number" class="form-control text-danger fw-bold" name="evp"
-                                    value="{{ old('evp') }}" required autofocus min="0"
+                                    value="{{ old('evp') }}" autofocus
                                     onKeyPress="if(this.value.length==3) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
                             </div>
@@ -1445,8 +1488,7 @@
                         </label>
                         <div class="col-auto">
                             <input id="bs" type="number" class="form-control text-danger fw-bold" name="bs"
-                                value="{{ old('bs') }}" required autofocus min="0"
-                                onKeyPress="if(this.value.length==4) return false;"
+                                value="{{ old('bs') }}" autofocus onKeyPress="if(this.value.length==4) return false;"
                                 onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
 
                             @if ($errors->has('bs'))
@@ -1469,7 +1511,7 @@
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
                                 <input id="ift" type="number" class="form-control text-danger fw-bold" name="ift"
-                                    value="{{ old('ift') }}" required autofocus min="0"
+                                    value="{{ old('ift') }}" autofocus
                                     onKeyPress="if(this.value.length==4) return false;" />
                             </div>
                             @if ($errors->has('ift'))
@@ -1488,7 +1530,7 @@
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
                                 <input id="gll" type="number" class="form-control text-danger fw-bold" name="gll"
-                                    value="{{ old('gll') }}" required autofocus min="0"
+                                    value="{{ old('gll') }}" autofocus
                                     onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
                             </div>
@@ -1508,7 +1550,7 @@
                             <div class="input-group">
                                 <div class="input-group-text">S/.</div>
                                 <input id="glp" type="number" class="form-control text-danger fw-bold" name="glp"
-                                    value="{{ old('glp') }}" required autofocus min="0"
+                                    value="{{ old('glp') }}" autofocus
                                     onKeyPress="if(this.value.length==4) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" />
                             </div>
@@ -1541,9 +1583,9 @@
                         </label>
                         <div class="col-auto">
 
-                            <textarea name="invi" class="form-control" maxlength="2000" autofocus
-                                placeholder="{{ __('Add internationals inviteds') }}" pattern="[A-zÀ-ú\s]+"
-                                onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"></textarea>
+                            <textarea name="invi" class="form-control" maxlength="2000" autofocus pattern="[A-zÀ-ú\s]+"
+                                style="text-transform:uppercase" onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"
+                                placeholder="JUAN PEREZ GLP CHATIN - LIMA PERU, CARLOS VELASCO GLP TRUENO - QUITO ECUADOR,"></textarea>
 
                             @if ($errors->has('invi'))
                                 <span class="text-danger text-fs6">
@@ -1559,9 +1601,9 @@
                         </label>
                         <div class="col-auto">
 
-                            <textarea name="invn" class="form-control" maxlength="2000" autofocus
-                                placeholder="{{ __('Add nationals inviteds') }}" pattern="[A-zÀ-ú\s]+"
-                                onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"></textarea>
+                            <textarea name="invn" class="form-control" maxlength="2000" autofocus pattern="[A-zÀ-ú\s]+"
+                                style="text-transform:uppercase" onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"
+                                placeholder="JUAN PEREZ GLP CHATIN - LIMA PERU, CARLOS VELASCO GLP TRUENO - QUITO ECUADOR,"></textarea>
                             @if ($errors->has('invn'))
                                 <span class="text-danger text-fs6">
                                     {{ $errors->first('invn') }}
@@ -1576,9 +1618,9 @@
                         </label>
                         <div class="col-auto">
 
-                            <textarea name="invhr" class="form-control" maxlength="2000" autofocus
-                                placeholder="{{ __('Add honers inviteds') }}" pattern="[A-zÀ-ú\s]+"
-                                onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"></textarea>
+                            <textarea name="invhr" class="form-control" maxlength="2000" autofocus pattern="[A-zÀ-ú\s]+"
+                                style="text-transform:uppercase" onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"
+                                placeholder="JUAN PEREZ GLP CHATIN - LIMA PERU, CARLOS VELASCO GLP TRUENO - QUITO ECUADOR,"></textarea>
 
                             @if ($errors->has('invhr'))
                                 <span class="text-danger text-fs6">
@@ -1594,9 +1636,9 @@
                         </label>
                         <div class="col-auto">
 
-                            <textarea name="invhj" class="form-control" maxlength="2000" autofocus
-                                placeholder="{{ __('Add honorees inviteds') }}" pattern="[A-zÀ-ú\s]+"
-                                onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"></textarea>
+                            <textarea name="invhj" class="form-control" maxlength="2000" autofocus pattern="[A-zÀ-ú\s]+"
+                                style="text-transform:uppercase" onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"
+                                placeholder="JUAN PEREZ GLP CHATIN - LIMA PERU, CARLOS VELASCO GLP TRUENO - QUITO ECUADOR,"></textarea>
 
                             @if ($errors->has('invhj'))
                                 <span class="text-danger text-fs6">
@@ -1612,9 +1654,9 @@
                         </label>
                         <div class="col-auto">
 
-                            <textarea name="invpr" class="form-control" maxlength="2000" autofocus
-                                placeholder="{{ __('Add inviteds godparents') }}" pattern="[A-zÀ-ú\s]+"
-                                onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"></textarea>
+                            <textarea name="invpr" class="form-control" maxlength="2000" autofocus pattern="[A-zÀ-ú\s]+"
+                                style="text-transform:uppercase" onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"
+                                placeholder="JUAN PEREZ GLP CHATIN - LIMA PERU, CARLOS VELASCO GLP TRUENO - QUITO ECUADOR,"></textarea>
 
                             @if ($errors->has('invpr'))
                                 <span class="text-danger text-fs6">
@@ -1623,16 +1665,16 @@
                             @endif
                         </div>
                     </div>
-                    {{-- PADRINOS --}}
+                    {{-- OTHERS --}}
                     <div class="mb-3 form-group{{ $errors->has('invot') ? ' has-error' : '' }}">
                         <label for="invot" class="col-form-label fw-bold">
                             {{ __('Others inviteds') }}
                         </label>
                         <div class="col-auto">
 
-                            <textarea name="invot" class="form-control" maxlength="2000" autofocus
-                                placeholder="{{ __('Add inviteds godparents') }}" pattern="[A-zÀ-ú\s]+"
-                                onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"></textarea>
+                            <textarea name="invot" class="form-control" maxlength="2000" autofocus pattern="[A-zÀ-ú\s]+"
+                                style="text-transform:uppercase" onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"
+                                placeholder="JUAN PEREZ GLP CHATIN - LIMA PERU, CARLOS VELASCO GLP TRUENO - QUITO ECUADOR,"></textarea>
 
                             @if ($errors->has('invot'))
                                 <span class="text-danger text-fs6">

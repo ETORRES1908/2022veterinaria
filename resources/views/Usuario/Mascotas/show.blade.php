@@ -840,7 +840,7 @@
                         <td class="table-active text-center">
                             @if ($duelo->result == 'draw')
                                 <div class="bg-warning">{{ __('Draw') }}</div>
-                            @elseif ($duelo->result == null)
+                            @elseif ($duelo->result == '')
                                 <div class="bg-warning">{{ __('Waiting') }}</div>
                             @elseif ($duelo->result == $mascota->id)
                                 <div class="bg-success">{{ __('Win') }}</div>
@@ -901,7 +901,7 @@
         });
         /* ERROR */
         setTimeout(function() {
-            $('.alert').fadeOut(3000);
+            $('.alert').fadeOut(6000);
         }, );
     </script>
 @endsection

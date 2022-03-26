@@ -27,8 +27,12 @@ class CreateDuelsTable extends Migration
             $table->foreign('smascota_id')->references('id')->on('lparticipantes')->onDelete('cascade');
             $table->string('scc');
             $table->string('cch');
+
             $table->string('pactada');
+            $table->string('box');
+            $table->string('peleap');
             $table->string('npelea');
+            
             $table->string('result')->nullable();
             $table->string('dm')->nullable();
             $table->string('ds')->nullable();

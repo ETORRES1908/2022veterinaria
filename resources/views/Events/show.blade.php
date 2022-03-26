@@ -56,19 +56,15 @@
     <script src="{{ asset('css/lightbox/froogaloop2.min.js') }}"></script>
 @endsection
 @section('content')
-    @if (session('mensaje'))
-        <div class="alert btn alert-warning">
-            {{ session('mensaje') }}
-        </div>
-    @endif
-
+    <div class="text-center text-uppercase">
+        <h1>{{ __('Control Desk') . ' - ' . __('Weighed') }}</h1>
+    </div>
     <div class="card bg-black text-white border border-danger">
-        <div class="card-header border border-danger">
+        <div class="card-header border border-danger text-uppercase">
             @can('addanimal')
                 @if (count($listps) < 300)
-                    <button type="button" class="btn btn-success text-capitalize" data-bs-toggle="modal"
-                        data-bs-target="#AddPet">
-                        {{ __('Add my pet') }}
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AddPet">
+                        {{ __('Add cock') }}
                     </button>
                 @endif
             @endcan
@@ -78,17 +74,25 @@
                 </button>
             @endif
 
-            <a type="button" class="btn btn-danger" href="{{ route('pactados.show', $evento->id) }}">
+            <a type="button" class="btn btn-danger text-uppercase" href="{{ route('pactados.show', $evento->id) }}">
                 {{ __('Deal') }}s
             </a>
 
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Event">
+            <button type="button" class="btn btn-warning text-white text-uppercase" data-bs-toggle="modal"
+                data-bs-target="#Event">
                 {{ __('Details') }}
             </button>
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Tickets">
+            <button type="button" class="btn btn-secondary text-white text-uppercase" data-bs-toggle="modal"
+                data-bs-target="#Tickets">
                 {{ __('Tickets and Insc.') }}
             </button>
+
+            @if (session('mensaje'))
+                <div class="alert btn btn-warning">
+                    {{ session('mensaje') }}
+                </div>
+            @endif
         </div>
         <div class="card-body border border-danger table-responsive">
             <table id="datatable" class="table table-dark table-hover nowrap text-uppercase">
@@ -116,9 +120,9 @@
                             <td>{{ $listp->boxx }}</td>
                             <td>
                                 @if ($evento->mcontrol_id == Auth::user()->id && count($listps->where('status', 1)) <= 300)
-                                    <button type="button" class="btn btn-success text-capitalize" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-success text-uppercase" data-bs-toggle="modal"
                                         data-bs-target="#CHNGW{{ $listp->mascota->id }}">
-                                        {{ __('modify weight') }}
+                                        {{ __('modif. weight') }}
                                     </button>
                                     <!-- MODAL CHANGE WEIGHT -->
                                     <div class="modal fade" id="CHNGW{{ $listp->mascota->id }}" aria-hidden="true"
@@ -320,7 +324,7 @@
                                                     {{ __('Concentration') }}
                                                 </option>
                                                 <option value="chk" @if ($evento->tevent == 'chk') selected @endif>
-                                                    {{ __('Chuscas') }}
+                                                    {{ __('Chuzk') }}
                                                 </option>
                                                 <option value="drb" @if ($evento->tevent == 'drb') selected @endif>
                                                     {{ __('Derby') }}
@@ -337,6 +341,18 @@
                                             <label for="hours" class="form-label">{{ __('Coliseum') }}</label>
                                             <input type="text" class="form-control text-danger" id="hours"
                                                 value="{{ $evento->coliseum->nombre }}" readonly>
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label for="dates" class="form-label">{{ __('Dates') }}</label>
+                                            <div class="row">
+                                                @foreach ($evento->fechas as $fecha)
+                                                    <div class="col-6 mb-1">
+                                                        <label type="text" class="form-control text-danger">
+                                                            {{ $fecha }}
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
                                         </div>
                                         <div class="col-6 mb-3">
                                             <label for="title" class="form-label">{{ __('Weight') }}</label>
@@ -384,49 +400,59 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3 mb-3">
-                                            <label for="title" class="form-label">{{ __('Judge') }} A</label>
+                                        <div class="col-sm-4 mb-3">
+                                            <label for="title"
+                                                class="form-label">{{ __('Judge') . ' ' . __('Field') }}
+                                                A</label>
                                             <div class="col-auto ">
                                                 <input type="text" class="form-control text-danger" id="hours"
                                                     value="{{ $evento->judge->nombre }}" readonly>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3 mb-3">
-                                            <label for="title" class="form-label">{{ __('Judge') }} B</label>
+                                        @if (isset($evento->assistent))
+                                            <div class="col-sm-4 mb-3">
+                                                <label for="title"
+                                                    class="form-label">{{ __('Judge') . ' ' . __('Field') }}
+                                                    B</label>
+                                                <div class="col-auto ">
+                                                    <input type="text" class="form-control text-danger" id="hours"
+                                                        value="{{ $evento->assistent->nombre }}" readonly>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <div class="col-sm-4 mb-3">
+                                            <label for="title" class="form-label">{{ __('Control desk') }}</label>
                                             <div class="col-auto ">
                                                 <input type="text" class="form-control text-danger" id="hours"
-                                                    value="{{ $evento->assistent->nombre }}" readonly>
+                                                    value="{{ $evento->mcontrol->nombre }}" readonly>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 mb-3">
+                                        <div class="col-sm-12 mb-3">
                                             <label class="form-label">{{ __('Spurs') }}</label>
-                                            <ul class="list-group list-group-flush">
-                                                @foreach ($evento->spl as $spl)
-                                                    <li class="list-group-item text-danger">
-                                                        @if ($spl == 'lbr')
-                                                            Libre
-                                                        @elseif($spl == 'fbr')
-                                                            Fibra
-                                                        @elseif($spl == 'plt')
-                                                            Plastica
-                                                        @elseif($spl == 'cry')
-                                                            Carey
-                                                        @elseif($spl == 'spn')
-                                                            Espina
-                                                        @endif
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                        <div class="col-12 mb-3">
-                                            <label for="dates" class="form-label">{{ __('Dates') }}</label>
                                             <div class="row">
-                                                @foreach ($evento->fechas as $fecha)
-                                                    <div class="col-6 mb-1">
-                                                        <label type="text" class="form-control text-danger">
-                                                            {{ $fecha }}
-                                                        </label>
-                                                    </div>
+                                                @foreach ($evento->spl as $spl)
+                                                    @if ($spl == 'lbr')
+                                                        <div class="col-auto">
+                                                            <label class="form-control text-danger">
+                                                                Libre</label>
+                                                        </div>
+                                                    @elseif($spl == 'fbr')
+                                                        <div class="col-auto">
+                                                            <label class="form-control text-danger">Fibra</label>
+                                                        </div>
+                                                    @elseif($spl == 'plt')
+                                                        <div class="col-auto">
+                                                            <label class="form-control text-danger">Plastica</label>
+                                                        </div>
+                                                    @elseif($spl == 'cry')
+                                                        <div class="col-auto">
+                                                            <label class="form-control text-danger">Carey</label>
+                                                        </div>
+                                                    @elseif($spl == 'spn')
+                                                        <div class="col-auto">
+                                                            <label class="form-control text-danger">Espina</label>
+                                                        </div>
+                                                    @endif
                                                 @endforeach
                                             </div>
                                         </div>

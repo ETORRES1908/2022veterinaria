@@ -18,13 +18,14 @@
         <div class="table-responsive pb-1">
             <table id="datatable" class="table table-hover nowrap" style="width:100%">
                 <thead>
-                    <tr>
+                    <tr class="text-uppercase">
+                        <th>{{ __('Date') }}</th>
                         <th>{{ __('Username') }}</th>
                         <th>{{ __('Name') }}</th>
                         <th>{{ __('Surname') }}</th>
                         <th>{{ __('Type') }}</th>
                         <th>{{ __('E-Mail Address') }}</th>
-                        <th>{{ __('Country') }},&nbsp{{ __('State') }}&nbsp-&nbsp{{ __('District') }}</th>
+                        <th>{{ __('Country') }},&nbsp{{ __('STATE') }}</th>
                         <th>{{ __('Status') }}</th>
                         <th></th>
                     </tr>
@@ -32,12 +33,40 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
+                            <td>{{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y') }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->nombre }}</td>
                             <td>{{ $user->apellido }}</td>
-                            <td>{{ $user->usert }}</td>
+                            <td>
+                                <?php switch ($user->usert) {
+                                    case 'own':
+                                        echo __('Owner');
+                                        break;
+                                    case 'cls':
+                                        echo __('Coliseum');
+                                        break;
+                                    case 'jdg':
+                                        echo __('Judge');
+                                        break;
+                                    case 'cdk':
+                                        echo __('Control desk');
+                                        break;
+                                    case 'asst':
+                                        echo __('Assistant');
+                                        break;
+                                    case 'ppr':
+                                        echo __('Preparer');
+                                        break;
+                                    case 'amt':
+                                        echo __('Amateur');
+                                        break;
+
+                                    default:
+                                        # code...
+                                        break;
+                                } ?></td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->country }}, {{ $user->state }}<br>{{ $user->district }}</td>
+                            <td>{{ $user->country }}, {{ $user->state }}</td>
                             <td>
                                 @if ($user->status == 0)
                                     <span class="btn btn-primary">{{ __('Inactived') }}</span>
@@ -54,13 +83,14 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <tr>
+                    <tr class="text-uppercase">
+                        <th>{{ __('Date') }}</th>
                         <th>{{ __('Username') }}</th>
                         <th>{{ __('Name') }}</th>
                         <th>{{ __('Surname') }}</th>
                         <th>{{ __('Type') }}</th>
                         <th>{{ __('E-Mail Address') }}</th>
-                        <th>{{ __('Country') }},&nbsp{{ __('State') }}&nbsp-&nbsp{{ __('District') }}</th>
+                        <th>{{ __('Country') }},&nbsp{{ __('STATE') }}</th>
                         <th>{{ __('Status') }}</th>
                         <th></th>
                     </tr>
@@ -105,6 +135,10 @@
                 language: {
                     "url": getLanguage()
                 },
+                "columnDefs": [{
+                    "targets": 0,
+                    "type": "date-eu"
+                }],
                 bInfo: false,
                 lengthChange: false,
                 pageLength: 10,

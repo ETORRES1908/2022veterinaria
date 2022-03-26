@@ -20,11 +20,11 @@
                 <thead>
                     <tr>
                         <th>{{ __('Date') }}</th>
-                        <th>{{ __('Shed') }}</th>
+                        <th>ORG. {{ __('Shed') }}</th>
                         <th>{{ __('Award') }}</th>
-                        <th>{{ __('Type Event') }}</th>
-                        <th>{{ __('State') }}</th>
+                        <th>{{ __('Event') }}</th>
                         <th>{{ __('Country') }}</th>
+                        <th>{{ __('STATE') }}</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -58,10 +58,10 @@
 
                             </td>
                             <td>
-                                {{ $evento->coliseum->state }}
+                                {{ $evento->coliseum->country }}
                             </td>
                             <td>
-                                {{ $evento->coliseum->country }}
+                                {{ $evento->coliseum->state }}
                             </td>
                             <td>
                                 @cannot('sentence')
@@ -70,11 +70,11 @@
                                     </a>
                                 @endcan
                                 @can('sentence')
-                                @if (Auth::user()->id == $evento->judge_id)
-                                    <a href="{{ route('pactados.show', $evento->id) }}" class="btn btn-warning">
-                                        {{ __('sentence') }}
-                                    </a>
-                                @endif
+                                    @if (Auth::user()->id == $evento->judge_id)
+                                        <a href="{{ route('pactados.show', $evento->id) }}" class="btn btn-warning">
+                                            {{ __('participate') }}
+                                        </a>
+                                    @endif
                                 @endcan
                             </td>
                         </tr>
@@ -82,12 +82,12 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                         <th>{{ __('Date') }}</th>
-                        <th>{{ __('Shed') }}</th>
+                        <th>{{ __('Date') }}</th>
+                        <th>ORG. {{ __('Shed') }}</th>
                         <th>{{ __('Award') }}</th>
-                        <th>{{ __('Type Event') }}</th>
-                        <th>{{ __('State') }}</th>
+                        <th>{{ __('Event') }}</th>
                         <th>{{ __('Country') }}</th>
+                        <th>{{ __('STATE') }}</th>
                         <th></th>
                     </tr>
                 </tfoot>
@@ -129,6 +129,7 @@
             language: {
                 "url": getLanguage()
             },
+            "order": [0, 'desc'],
             "columnDefs": [{
                 "targets": 0,
                 "type": "date-eu"
