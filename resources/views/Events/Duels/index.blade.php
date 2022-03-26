@@ -429,10 +429,12 @@
                                         value="{{ old('pmascota_id') }}" required>
                                         <option value="" selected disabled>{{ __('Choose cock') }}</option>
                                         @foreach ($participantes as $participante)
-                                            <option class="text-black" value="{{ $participante->mascota->id }}"
-                                                @if (old('pmascota_id') == $participante->mascota->id) selected @endif>
-                                                {{ $participante->mascota->nombre }}
-                                            </option>
+                                            @if ($participante->status != 0)
+                                                <option class="text-black" value="{{ $participante->mascota->id }}"
+                                                    @if (old('pmascota_id') == $participante->mascota->id) selected @endif>
+                                                    {{ $participante->mascota->nombre }}
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -534,10 +536,12 @@
                                         value="{{ old('smascota_id') }}" required>
                                         <option value="" selected disabled>{{ __('Choose cock') }}</option>
                                         @foreach ($participantes as $participante)
-                                            <option class="text-black" value="{{ $participante->mascota->id }}"
-                                                @if (old('smascota_id') == $participante->mascota->id) selected @endif>
-                                                {{ $participante->mascota->nombre }}
-                                            </option>
+                                            @if ($participante->status != 0)
+                                                <option class="text-black" value="{{ $participante->mascota->id }}"
+                                                    @if (old('smascota_id') == $participante->mascota->id) selected @endif>
+                                                    {{ $participante->mascota->nombre }}
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
