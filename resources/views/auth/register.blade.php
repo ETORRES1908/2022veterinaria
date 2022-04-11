@@ -20,7 +20,7 @@
                                     value="{{ old('name') }}" required autofocus maxlength="12">
 
                                 @if ($errors->has('name'))
-                                    <span class="text-da nger fs-6">
+                                    <span class="text-danger fs-6">
                                         {{ $errors->first('name') }}
                                     </span>
                                 @endif
@@ -57,8 +57,8 @@
                             </label>
                             <div class="col-auto">
                                 <input type="text" class="form-control text-danger" name="nombre"
-                                    value="{{ old('nombre') }}" required autofocus maxlength="10" pattern="[A-zÀ-ú\S]+"
-                                    onkeydown="return /[A-zÀ-ú\S]/i.test(event.key)" />
+                                    value="{{ old('nombre') }}" required autofocus maxlength="10" pattern="[A-zÀ-ú]+"
+                                    onkeydown="return /[A-zÀ-ú]/i.test(event.key)" />
                                 @if ($errors->has('nombre'))
                                     <span class="text-danger text-fs6">
                                         {{ $errors->first('nombre') }}
@@ -74,7 +74,7 @@
 
                             <div class="col-auto">
                                 <input id="apellido" type="text" class="form-control  text-danger" name="apellido"
-                                    value="{{ old('apellido') }}" autofocus required pattern="[A-zÀ-ú\S]+" maxlength="10"
+                                    value="{{ old('apellido') }}" autofocus required pattern="[A-zÀ-ú]+" maxlength="10"
                                     onkeydown="return /[A-zÀ-ú]/i.test(event.key)">
 
                                 @if ($errors->has('apellido'))
@@ -151,7 +151,8 @@
                         </div>
                     </div>
                     {{-- FOTO DE PERFIL --}}
-                    <div class="col-lg-4 my-auto text-center mb-3 form-group{{ $errors->has('foto') ? 'has-error' : '' }}">
+                    <div
+                        class="col-lg-4 my-auto text-center mb-3 form-group{{ $errors->has('foto') ? 'has-error' : '' }}">
                         <label for="foto" class="col-form-label fw-bold text-uppercase">
                             {{ __('upload photo to your profile') }}
                         </label>
@@ -383,7 +384,7 @@
                                     @if (old('country') == 'ECU') selected @endif>ECU - Ecuador
                                 </option>
                                 <option class="text-danger fw-bold" value="MEX"
-                                    @if (old('country') == 'MEX') selected @endif>MEX - Mexico
+                                    @if (old('country') == 'MEX') selected @endif>MEX - México
                                 </option>
                                 <option class="text-danger fw-bold" value="PRI"
                                     @if (old('country') == 'PRI') selected @endif>PRI - Puerto Rico
@@ -1183,7 +1184,7 @@
                     <button type="submit" class="col-auto btn btn-success text-uppercase">
                         {{ __('Create your account') }}
                     </button>
-                    <a type="" class="col-auto btn btn-secondary" href="{{ route('contact') }}">
+                    <a type="" class="col-auto btn btn-warning" href="{{ route('contact') }}">
                         {{ __('Contact us') }}
                     </a>
 
@@ -1215,6 +1216,7 @@
                 }
             };
         }).change();
+
         /* STATE -  */
         var $select1 = $('#country'),
             $select2 = $('#state'),
@@ -1223,6 +1225,7 @@
         $select1.on('change', function() {
             $select2.html($options.filter('[data="' + this.value + '"],[target="OTR"]'));
         }).trigger('change');
+
         /*  DONT COPY OR PASTE*/
         $(document).ready(function() {
             $('input').bind('cut copy paste', function(e) {

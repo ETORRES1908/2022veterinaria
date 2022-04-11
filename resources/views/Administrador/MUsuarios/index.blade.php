@@ -33,7 +33,7 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td>{{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y') }}</td>
+                            <td>{{ Carbon\Carbon::parse($user->created_at)->format('Y/m/d') }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->nombre }}</td>
                             <td>{{ $user->apellido }}</td>
@@ -135,6 +135,7 @@
                 language: {
                     "url": getLanguage()
                 },
+                "order": [0, 'desc'],
                 "columnDefs": [{
                     "targets": 0,
                     "type": "date-eu"

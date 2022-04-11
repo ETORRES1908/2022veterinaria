@@ -27,6 +27,8 @@ class User extends Authenticatable
         'answer', 'status', 'fdpt', 'sdpt'
     ];
 
+    protected $dates = ['created_at', 'updated_at'];
+
     /**
      * The attributes that should be hidden for arrays.
      *

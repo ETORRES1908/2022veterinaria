@@ -94,6 +94,7 @@ class EventoController extends Controller
             'glp' => '',
         ]);
         $nevento = Eventos::create($request->all());
+        //$nevento->update(['status' => '1']);  // 0 DESACTIVADO, 1 ACTIVADO
         return redirect()->route('events.index')->with('mensaje', true);
     }
 

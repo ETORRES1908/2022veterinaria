@@ -77,8 +77,13 @@ class ProfileController extends Controller
 
         $user = User::Find($id);
 
-        $user->update($request->all());
-        return redirect()->route('profile.index')->with('mensaje', __('Successfully updated'));
+        if ($request->type == "a") {
+            $user->update(['password' => bcrypt($request->password)]);
+            return redirect()->route('profile.index')->with('mensaje', __('Successfully updated'));
+        } elseif ($request->type == "b") {
+            $user->update(['company' => $request->company, 'celular' => $request->celular]);
+            return redirect()->route('profile.index')->with('mensaje', __('Successfully updated'));
+        }
     }
 
     /**

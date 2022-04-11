@@ -116,6 +116,6 @@ class MVideosController extends Controller
 
         $mvideo->delete();
 
-        return redirect()->route('mascotas.show', $mvideo->mascota_id)->with('mensaje',  __('Successfully deleted'));
+        return redirect()->route('mascotas.show', $mvideo->mascota_id)->with('mensaje',  __('deleted'));
     }
 }

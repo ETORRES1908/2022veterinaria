@@ -14,12 +14,12 @@
                     <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             @if (isset($banners[0]))
-                            <div class="carousel-item @if ($banners[0]->nombre = 'blogin1.jpeg') active @endif"
-                                data-bs-interval="4000">
-                                <a href="{{ $banners[0]->url }}" target="__blank">
-                                    <img src="{{ asset($banners[0]->ruta) }}" class="img-fluid mx-auto d-block">
-                                </a>
-                            </div>
+                                <div class="carousel-item @if ($banners[0]->nombre = 'blogin1.jpeg') active @endif"
+                                    data-bs-interval="4000">
+                                    <a href="{{ $banners[0]->url }}" target="__blank">
+                                        <img src="{{ asset($banners[0]->ruta) }}" class="img-fluid mx-auto d-block">
+                                    </a>
+                                </div>
                             @endif
                             @foreach ($banners as $banner)
                                 <div class="carousel-item" data-bs-interval="4000">
@@ -105,14 +105,15 @@
                                     value="{{ __('Enter') }}">
                                 <a class="btn btn-success mb-3"
                                     href="{{ route('register') }}">{{ __('Create your account') }}</a>
-                                <a class="btn btn-secondary mb-3"
+                                <a class="btn btn-warning mb-3"
                                     href="{{ route('contact') }}">{{ __('Contact us') }}</a>
                             </div>
                         </form>
 
-                        {{-- <a class="btn btn-link mb-3" href="{{ route('password.request') }}">
+                        <a class="btn btn-secondary mb-3 text-uppercase" href="{{ route('password.request') }}">
                             {{ __('Forgot Your Password?') }}
-                        </a> --}}
+                        </a>
+
                     </div>
                 </div>
             </div>

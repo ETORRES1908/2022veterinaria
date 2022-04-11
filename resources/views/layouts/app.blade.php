@@ -11,9 +11,12 @@
 
     <!-- Styles -->
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
-
+    {{-- CSSS --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    {{-- BOOTSTRAPP ICONS --}}
     <link rel="stylesheet" href="{{ asset('font/bootstrap-icons.css') }}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/font-awesome/css/all.min.css') }}">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
@@ -24,10 +27,12 @@
 
 </head>
 
+{{-- CAMBIAR RETURN "FALSE" -> "TRUE"  PARA ACTIVAR SEGUNDO CLICK --}}
+
 <body class="bg-black text-light" oncontextmenu="return false">
     <header>
         {{-- CABEZERA --}}
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-black">
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-black">
             <div class="container-fluid">
                 <!-- Branding Image -->
                 <a class="navbar-brand link-light fs-4" href="{{ url('/') }}">
@@ -45,7 +50,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Izquierdo Side Of Navbar -->
-                    <ul class="navbar-nav bg-black me-auto mb-2 mb-2 fs-5">
+                    <ul class="navbar-nav bg-black me-auto mb-2 mb-2">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -60,10 +65,18 @@
                                 </li>
                             </ul>
                         </li>
+                        @auth
+                            {{-- FIND --}}
+                            <li class="nav-item">
+                                <a class="link-light text-capitalize nav-link @if (Route::is('findperson')) fw-bolder @endif"
+                                    href="{{ route('findperson') }}">
+                                    {{ __('searcher') }} <i class="bi bi-search"></i></a>
+                            </li>
+                        @endauth
                     </ul>
 
                     <!-- Derecho Side Of Navbar -->
-                    <ul class="navbar-nav bg-black ms-auto text-nowrap mb-2 fs-5">
+                    <ul class="navbar-nav bg-black ms-auto text-nowrap mb-2">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li class="nav-item">
@@ -100,8 +113,6 @@
                                     {{ __('Events') }}</a>
                             </li>
 
-
-
                             {{-- Pets --}}
                             @can('addanimal')
                                 <li class="nav-item">
@@ -133,19 +144,15 @@
                                 {!! csrf_field() !!}
                             </form>
 
-
                             {{-- USERMENU --}}
                             <li class="nav-item">
                                 <a class="nav-link link-light"
                                     @can('profile') href="{{ route('profile.index') }}" @endcan>
-
                                     {{ Auth::user()->nombre }} {{ Auth::user()->apellido }}
-
                                     <img src="{{ asset(Auth::user()->foto) }}" width="30vh" height="30vh"
                                         class="rounded-circle d-inline align-text-middle">
 
                                 </a>
-
                             </li>
                         @endif
                     </ul>
@@ -167,7 +174,7 @@
         <div class="row">
             <div class="col">
                 <p class="text-center">
-                    <img width="250" height="100" alt="">
+                    <img src="{{ asset('') }}" width="250" height="100">
                 </p>
                 <p class="h6">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor pelican incididunt ut

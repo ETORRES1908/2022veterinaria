@@ -13,7 +13,7 @@
     <div class="card bg-black border border-danger">
         <div class="card-header border border-danger">
             @cannot('sentence')
-                <a class="btn btn-success text-capitalize" href="{{ route('events.show', $evento->id) }}">
+                <a class="btn btn-success text-uppercase" href="{{ route('events.show', $evento->id) }}">
                     {{ __('weigh') }}
                 </a>
             @endcan
@@ -342,22 +342,21 @@
                                             value="{{ $duel->dm }}" name="dm" required
                                             onKeyPress="if(this.value.length==1) return false;"
                                             onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                                            @if ($duel->result != '') disabled @endif
-                                            @cannot('sentence') readonly @endcan>
+                                            @if ($duel->result != '') disabled @endif @cannot('sentence') readonly
+                                            @endcan>
                                         <span class="input-group-text">:</span>
                                         <input type="text" class="form-control" placeholder="00 {{ __('seconds') }}"
-                                            value="{{ $duel->ds }}" name="ds" max="59" pattern="\d{2}" minlength="2"
-                                            required oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                                            @if ($duel->result != '') disabled @endif
-                                            onKeyPress="if(this.value.length==2) return false;"
-                                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                                            @cannot('sentence') readonly @endcan>
+                                            value="{{ $duel->ds }}" name="ds" required maxlength="2" minlength="2"
+                                            pattern="\d{2}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+                                            onkeydown=" return event.keyCode !==69 && event.keyCode !==189"
+                                            @if ($duel->result != '') disabled @endif @cannot('sentence') readonly
+                                            @endcan>
                                     </div>
                                 </td>
                                 <td class="text-black fs-5 fw-bolder">
                                     <select name="result" class="form-control" required
-                                        @if ($duel->result != '') disabled @endif
-                                        @cannot('sentence') disabled @endcan>
+                                        @if ($duel->result != '') disabled @endif @cannot('sentence') disabled
+                                        @endcan>
                                         <option @if ($duel->result == '') selected @endif value="" hidden>
                                             {{ __('Waiting') }}</option>
                                         <option @if ($duel->result == $duel->pmascota->id) selected @endif
@@ -419,7 +418,7 @@
                     <input type="text" id="evento_id" name="evento_id" value="{{ $evento->id }}" hidden>
 
                     <div class="modal-body border border-danger">
-                        <div class="row mb-3">
+                        <div class="row  mb-3">
                             {{-- MASCOTA 1 --}}
                             <div class="col-lg-5 m-auto border border-danger">
                                 {{-- SELECT PMASCOTA --}}
@@ -432,7 +431,8 @@
                                             @if ($participante->status != 0)
                                                 <option class="text-black" value="{{ $participante->mascota->id }}"
                                                     @if (old('pmascota_id') == $participante->mascota->id) selected @endif>
-                                                    {{ $participante->mascota->nombre }}
+                                                    {{ $participante->mascota->nombre }} -
+                                                    {{ $participante->mascota->user->galpon }}
                                                 </option>
                                             @endif
                                         @endforeach
@@ -536,12 +536,11 @@
                                         value="{{ old('smascota_id') }}" required>
                                         <option value="" selected disabled>{{ __('Choose cock') }}</option>
                                         @foreach ($participantes as $participante)
-                                            @if ($participante->status != 0)
-                                                <option class="text-black" value="{{ $participante->mascota->id }}"
-                                                    @if (old('smascota_id') == $participante->mascota->id) selected @endif>
-                                                    {{ $participante->mascota->nombre }}
-                                                </option>
-                                            @endif
+                                            <option class="text-black" value="{{ $participante->mascota->id }}"
+                                                @if (old('smascota_id') == $participante->mascota->id) selected @endif>
+                                                {{ $participante->mascota->nombre }} -
+                                                {{ $participante->mascota->user->galpon }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -626,9 +625,9 @@
                             </div>
                         </div>
                         {{-- FOOTER --}}
-                        <div class="col-12 col-md-8">
+                        <div class="col-12 col-md-8 mx-auto">
                             <div class="row">
-                                <div class="col-6 col-md-2 mx-auto">
+                                <div class="col-6 col-md-2">
                                     <label for="pmad" class="form-label fw-bold">
                                         {{ __('Pactada') }}
                                     </label>
@@ -705,14 +704,6 @@
     {{-- JS --}}
     <script src="{{ asset('js/datatable/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/datatable/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('js/datatable/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/ajax/jszip.min.js') }}"></script>
-    <script src="{{ asset('js/ajax/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('js/ajax/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('js/datatable/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/datatable/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/datatable/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/datatable/sorting/date-eu.js') }}"></script>
 
     {{-- SCRIPTS --}}
     {{-- DATATABLE --}}
@@ -772,6 +763,7 @@
             });
         }
         $("#pmascota_id").change(displayVals1);
+        displayVals1();
 
         /* MASCOTA 2 */
         function displayVals2() {
@@ -800,6 +792,7 @@
             });
         }
         $("#smascota_id").change(displayVals2);
+        displayVals2();
 
         /*  DONT COPY OR PASTE*/
         $(document).ready(function() {

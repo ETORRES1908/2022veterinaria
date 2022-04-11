@@ -89,7 +89,7 @@ class ColiseosController extends Controller
     public function destroy($id)
     {
         $cid = Coliseos::find($id);
-        $user = User::find($cid->user_id)->delete();
+        User::find($cid->user_id)->delete();
         return redirect()->route('mcoliseos.index')->with('mensaje', __('Successfully deleted'));
     }
 }

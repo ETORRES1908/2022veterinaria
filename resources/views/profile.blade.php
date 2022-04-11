@@ -37,6 +37,7 @@
                     action="{{ route('profile.update', ['id' => Auth::user()->id]) }}">
                     {!! csrf_field() !!}
                     {{ method_field('PUT') }}
+                    <input type="hidden" name="type" value="a">
                     <div class="text-center">
                         <div class="mb-3">
                             <a href="{{ asset(Auth::user()->foto) }}" class="html5lightbox" data-width="800"
@@ -72,6 +73,7 @@
                     action="{{ route('profile.update', ['id' => Auth::user()->id]) }}">
                     {!! csrf_field() !!}
                     {{ method_field('PUT') }}
+                    <input type="hidden" name="type" value="b">
                     <div class="row mb-3">
                         <div class="col-6 mb-3">
                             <label class="col-form-label fw-bold">{{ __('First name') }}</label>
@@ -108,7 +110,7 @@
                         </div>
                         @if (isset(Auth::user()->fdpt))
                             <div class="col-6 mb-3 text-capitalize text-center center-block">
-                                <a target="blank" class="col-form-label text-decoration-none"
+                                <a target="_blank" class="col-form-label text-decoration-none"
                                     href="{{ asset(Auth::user()->fdpt) }}">{{ __('document') . ' ' . __('Disability') }}</a>
                                 <iframe id="viewer" src="{{ asset(Auth::user()->fdpt) }}" frameborder="0" scrolling="no"
                                     height="200" width="100%"></iframe>
@@ -132,7 +134,8 @@
                         <div class="col-6 mb-3"><label class="col-form-label fw-bold"> {{ __('Preparer') }}</label>
                             <input type="text" class="form-control" value="{{ Auth::user()->prepa }}" readonly>
                         </div>
-                        <div class="col-6 mb-3"><label class="col-form-label fw-bold"> {{ __('Operator') }}</label>
+                        <div class="col-6 col-md-4 mb-3"><label class="col-form-label fw-bold">
+                                {{ __('Operator') }}</label>
                             <select class="form-select text-uppercase" name="company" required autofocus>
                                 <option value="bitel" @if (Auth::user()->company == 'bitel') selected @endif>BITEL</option>
                                 <option value="claro" @if (Auth::user()->company == 'claro') selected @endif>CLARO</option>
@@ -143,7 +146,7 @@
                                     {{ __('Other') }}</option>
                             </select>
                         </div>
-                        <div class="col-6 mb-3"><label class="col-form-label fw-bold"> {{ __('Phone') }}</label>
+                        <div class="col-6 col-md-4 mb-3"><label class="col-form-label fw-bold"> {{ __('Phone') }}</label>
                             <input type="text" class="form-control" value="{{ Auth::user()->celular }}" minlength="9"
                                 onKeyPress="if(this.value.length==9) return false;" name="celular"
                                 onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required>
@@ -152,6 +155,10 @@
                                     {{ __('This cell phone number already registered') }}
                                 </span>
                             @endif
+                        </div>
+                        <div class="col-12 col-md-4 mb-3"><label class="col-form-label fw-bold">
+                                {{ __('secrect answer') }}</label>
+                            <input type="text" class="form-control" value="{{ Auth::user()->answer }}" readonly>
                         </div>
                         <div class="col-4 mb-3"><label class="col-form-label fw-bold"> {{ __('Country') }}</label>
                             <input type="text" class="form-control" value="{{ Auth::user()->country }}" readonly>

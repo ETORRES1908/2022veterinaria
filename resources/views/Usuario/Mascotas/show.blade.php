@@ -52,9 +52,9 @@
                             <li class="list-group-item bg-black text-white">
                                 <div><strong>{{ __('Birthday') }}:</strong> {{ $mascota->fnac }}</div>
                             </li>
-                            <li class="list-group-item bg-black text-white">
+                            {{-- <li class="list-group-item bg-black text-white">
                                 <div><strong>{{ __('Weight') }}:</strong> {{ $mascota->sss }}</div>
-                            </li>
+                            </li> --}}
                             <li class="list-group-item bg-black text-white">
                                 <div><strong>{{ __('Size') }}:</strong>
                                     <?php switch ($mascota->size) {
@@ -753,7 +753,7 @@
                             </a>
                             <div id="video2" style="display:none;">
                                 <div class="lightboxcontainer w-100 h-100">
-                                    <div class="position-absolute">
+                                    <div class="position-absolute fixed-top">
                                         @if (!empty($mascota->videos->where('nvideo', 2)->first()))
                                             <form
                                                 action="{{ route('mvideos.destroy', $mascota->videos->where('nvideo', 2)->first()) }}"
@@ -810,23 +810,24 @@
         </div>
     </div>
     {{-- TABLE --}}
-    <div class="card-footer border border-danger table-responsive">
+    <div class="border border-danger table-responsive">
         <label
             class="form-label fw-bold text-uppercase text-danger text-uppercase">{{ __('Last 20 participantions') }}</label>
         <table class="table table-sm table-dark table-hover fs-5 text-uppercase" id="datatable">
             <thead>
                 <tr>
                     <th>{{ __('Deal') }}</th>
-                    <th>{{ __('Rival') }}</th>
+                    <th>{{ __('Shed') }}</th>
                     <th>{{ __('Coliseum') }}</th>
                     <th>{{ __('Time') }}</th>
                     <th>{{ __('Result') }}</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($duelos as $duelo)
-                    <tr>
-                        <td>{{ str_replace('-', '', $duelo->evento->fechas[0]) .$duelo->evento->coliseum->country .$duelo->evento->coliseum->estate .'JUE' .$duelo->evento->judge->id }}
+                    <tr class="my-auto">
+                        <td>{{ str_replace('-', '', $duelo->evento->fechas[0]) .$duelo->evento->coliseum->country .$duelo->evento->coliseum->state .'JUEZ' .$duelo->evento->judge->id }}
                         </td>
                         <td>
                             @if ($duelo->pmascota_id == $mascota->id)
@@ -837,22 +838,104 @@
                         </td>
                         <td>{{ $duelo->evento->coliseum->nombre }}</td>
                         <td>{{ $duelo->dm . ':' . $duelo->ds }}</td>
-                        <td class="table-active text-center">
+                        <td class="text-center">
                             @if ($duelo->result == 'draw')
-                                <div class="bg-warning">{{ __('Draw') }}</div>
+                                <div class="bg-warning mt-1">{{ __('Draw') }}</div>
                             @elseif ($duelo->result == '')
-                                <div class="bg-warning">{{ __('Waiting') }}</div>
+                                <div class="bg-warning mt-1">{{ __('Waiting') }}</div>
                             @elseif ($duelo->result == $mascota->id)
-                                <div class="bg-success">{{ __('Win') }}</div>
+                                <div class="bg-success mt-1">{{ __('Win') }}</div>
                             @elseif ($duelo->result != $mascota->id)
-                                <div class="bg-danger">{{ __('Lose') }}</div>
+                                <div class="bg-danger mt-1">{{ __('Lose') }}</div>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($duelo->pmascota_id == $mascota->id)
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal"
+                                    data-bs-target="#m1">
+                                    <i class="bi bi-upload"></i>
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="m1" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{ route('url1') }}" method="post"
+                                                    class="text-black">
+                                                    {!! csrf_field() !!}
+                                                    <div class="mb-3">
+                                                        <h4 class="text-uppercase">{{ __('put your link') }}</h4>
+                                                    </div>
+                                                    <input type="hidden" name="duelo_id" value="{{ $duelo->id }}">
+                                                    <input type="hidden" name="mascota_id" value="{{ $mascota->id }}">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">{{ __('link') }}</label>
+                                                        <input type="text" maxlength="80" class="form-control"
+                                                            name="url1" placeholder="https://www.example.com">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <input type="submit" class="btn btn-danger text-uppercase"
+                                                            value="{{ __('ready') }}" />
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{{ $duelo->url1 }}" target="_blank" class="btn btn-primary"><i
+                                        class="bi bi-eye-fill"></i></a>
+                            @elseif ($duelo->smascota_id == $mascota->id)
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal"
+                                    data-bs-target="#m2">
+                                    <i class="bi bi-upload"></i>
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="m2" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{ route('url2') }}" method="post"
+                                                    class="text-black">
+                                                    {!! csrf_field() !!}
+                                                    <div class="mb-3">
+                                                        <h4 class="text-uppercase">{{ __('put your link') }}</h4>
+                                                    </div>
+                                                    <input type="hidden" name="duelo_id" value="{{ $duelo->id }}">
+                                                    <input type="hidden" name="mascota_id" value="{{ $mascota->id }}">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">{{ __('link') }}</label>
+                                                        <input type="text" maxlength="80" class="form-control"
+                                                            name="url2" placeholder="https://www.example.com">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <input type="submit" class="btn btn-danger text-uppercase"
+                                                            value="{{ __('ready') }}" />
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{{ $duelo->url2 }}" target="_blank" class="btn btn-primary"><i
+                                        class="bi bi-eye-fill"></i></a>
                             @endif
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-    </div>
     </div>
 
     {{-- CSS --}}

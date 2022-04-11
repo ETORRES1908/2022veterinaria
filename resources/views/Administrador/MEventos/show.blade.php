@@ -151,7 +151,7 @@
                     {{-- TIME --}}
                     <div class="col-xs-3 form-group">
                         <label>{{ __('Time') }}</label>
-                        <input type="text" class="form-control" value="{{ $evento->sz }}" readonly>
+                        <input type="text" class="form-control" value="{{ $evento->time }}" readonly>
                     </div>
                     {{-- MIN - MAX WEIGHT --}}
                     <div class="col-xs-6 form-group">

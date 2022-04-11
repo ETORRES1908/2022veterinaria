@@ -46,7 +46,7 @@
                             </a>
                         </div>
                     @endif
-                    <div class="col-xs-12"><br>
+                    <div class="col-xs-12">
                         <form class="text-uppercase" method="POST"
                             action="{{ route('meventos.update', ['id' => $evento->id]) }}">
                             {!! csrf_field() !!}
@@ -63,6 +63,13 @@
                                 </select><br>
                             </div><br>
                             <button type="submit" class="btn btn-primary">{{ __('Change status') }}</button>
+                        </form>
+                        <br>
+                        <form class="formulario-eliminar form-horizontal text-uppercase" method="POST"
+                            action="{{ route('meventos.destroy', ['id' => $evento->id]) }}">
+                            {!! csrf_field() !!}
+                            {{ method_field('DELETE') }}
+                            <input type="submit" id="delete" class="btn btn-danger" value="{{ __('Delete') }}">
                         </form>
                     </div>
                 </div>
@@ -166,7 +173,7 @@
                     {{-- TIME --}}
                     <div class="col-xs-3 form-group">
                         <label>{{ __('Time') }}</label>
-                        <input type="text" class="form-control" value="{{ $evento->sz }}" readonly>
+                        <input type="text" class="form-control" value="{{ $evento->time }}" readonly>
                     </div>
                     {{-- MIN - MAX WEIGHT --}}
                     <div class="col-xs-6 form-group">
@@ -270,13 +277,19 @@
         </div>
     </div>
 
-    {{-- STYLES --}} <style>
+    {{-- STYLES --}}
+    <style>
         .form-control {
             color: rgb(210, 0, 0);
         }
 
         .form-group {
             margin-bottom: 1vh;
+        }
+
+        .swal2-popup {
+            height: 100%;
+            font-size: 100%
         }
 
     </style>
@@ -313,6 +326,25 @@
         //HIDE
         setTimeout(function() {
             $('.alert').fadeOut(3000);
+        });
+
+        /* FORMULARIO ELIMINAR */
+        $('.formulario-eliminar').submit(function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: '{{ __('Are you sure?') }}',
+                text: '{{ __('All records will be related to this user will be deleted. This action is irreversible.') }}',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '{{ __('Yes I agree!') }}',
+                cancelButtonText: '{{ __('Cancel') }}'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            })
         });
     </script>
 

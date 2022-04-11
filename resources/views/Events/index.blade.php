@@ -11,7 +11,7 @@
     <div class="card bg-black border border-danger">
         @can('addevent')
             <div class="card-header border border-danger">
-                <a href="{{ route('events.create') }}" class="btn btn-success" style="font-size: 95%">
+                <a href="{{ route('events.create') }}" class="btn btn-success text-uppercase" style="font-size: 95%">
                     {{ __('Create your event') }}</a>
             </div>
         @endcan
@@ -23,6 +23,8 @@
                         <th>ORG. {{ __('Shed') }}</th>
                         <th>{{ __('Award') }}</th>
                         <th>{{ __('Event') }}</th>
+                        <th>{{ __('Judge') }} A</th>
+                        <th>{{ __('Judge') }} B</th>
                         <th>{{ __('Country') }}</th>
                         <th>{{ __('STATE') }}</th>
                         <th></th>
@@ -31,31 +33,39 @@
                 <tbody>
                     @foreach ($eventos as $evento)
                         <tr>
-                            <td>{{ $evento->fechas[0] }}</td>
+                            <td>{{ Carbon\Carbon::parse($evento->fechas[0])->format('Y/m/d') }}</td>
                             <td>{{ $evento->organizador->galpon }}</td>
                             <td>{{ $evento->awards }}</td>
-                            <td> <select class="form-control text-white" disabled
-                                    style="-webkit-appearance: none;background: none;border: none">
-                                    <option @if ($evento->tevent == 'cmp') selected @endif>
-                                        {{ __('Championship') }}
-                                    </option>
-                                    <option @if ($evento->tevent == 'cct') selected @endif>
-                                        {{ __('Concentration') }}
-                                    </option>
-                                    <option @if ($evento->tevent == 'chk') selected @endif>
-                                        {{ __('Chuzk') }}
-                                    </option>
-                                    <option @if ($evento->tevent == 'drb') selected @endif>
-                                        {{ __('Derby') }}
-                                    </option>
-                                    <option @if ($evento->tevent == 'prt') selected @endif>
-                                        {{ __('Party') }}
-                                    </option>
-                                    <option @if ($evento->tevent == 'thr') selected @endif>
-                                        {{ __('Other') }}
-                                    </option>
-                                </select>
+                            <td>
+                                <?php
+                                switch ($evento->tevent) {
+                                    case 'cmp':
+                                        echo __('Championship');
+                                        break;
 
+                                    case 'cct':
+                                        echo __('Concentration');
+                                        break;
+
+                                    case 'drb':
+                                        echo __('Derby');
+                                        break;
+
+                                    case 'prt':
+                                        echo__('Party');
+                                        break;
+
+                                    case 'thr':
+                                        echo __('Other');
+                                        break;
+                                }
+                                ?>
+                            </td>
+                            <td>{{ $evento->judge->name }}</td>
+                            <td>
+                                @if ($evento->assistent)
+                                    {{ $evento->assistent->name }}
+                                @endif
                             </td>
                             <td>
                                 {{ $evento->coliseum->country }}
@@ -86,6 +96,8 @@
                         <th>ORG. {{ __('Shed') }}</th>
                         <th>{{ __('Award') }}</th>
                         <th>{{ __('Event') }}</th>
+                        <th>{{ __('Judge') }} A</th>
+                        <th>{{ __('Judge') }} B</th>
                         <th>{{ __('Country') }}</th>
                         <th>{{ __('STATE') }}</th>
                         <th></th>
@@ -101,14 +113,6 @@
     {{-- JS --}}
     <script src="{{ asset('js/datatable/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/datatable/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('js/datatable/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/ajax/jszip.min.js') }}"></script>
-    <script src="{{ asset('js/ajax/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('js/ajax/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('js/datatable/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/datatable/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/datatable/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/datatable/sorting/date-eu.js') }}"></script>
 
     {{-- SCRIPTS --}}
     <script type="text/javascript">
@@ -130,10 +134,6 @@
                 "url": getLanguage()
             },
             "order": [0, 'desc'],
-            "columnDefs": [{
-                "targets": 0,
-                "type": "date-eu"
-            }],
             bInfo: false,
             lengthChange: false,
             pageLength: 10,

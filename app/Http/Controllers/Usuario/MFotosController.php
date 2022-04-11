@@ -112,6 +112,6 @@ class MFotosController extends Controller
         unlink($mfoto->ruta);
         $mfoto->delete();
 
-        return redirect()->route('mascotas.show', $mfoto->mascota_id)->with('mensaje',  __('Successfully deleted'));
+        return redirect()->route('mascotas.show', $mfoto->mascota_id)->with('mensaje',  __('deleted'));
     }
 }

@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/login';
+    /* protected $redirectTo = 'profile'; */
 
     /**
      * Create a new controller instance.
@@ -129,6 +129,8 @@ class RegisterController extends Controller
             'job' => $data['job'],
             'password' => bcrypt($data['password']),
             'answer' => $data['answer'],
+            // ESTADO DE USUARIO 0 = PENDIENTE, 1 = ACTIVADO
+            'status' => '1',
             'fdpt' =>  $rutaf,
             'sdpt' =>  $rutas
         ])->assignRole($data['usert']);

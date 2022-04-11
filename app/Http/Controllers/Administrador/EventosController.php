@@ -86,8 +86,10 @@ class EventosController extends Controller
      * @param  \App\Eventos  $eventos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Eventos $eventos)
+    public function destroy($id)
     {
-        //
+        $evento = Eventos::find($id);
+        $evento->delete();
+        return redirect()->route('meventos.index')->with('mensaje', __('Successfully deleted'));
     }
 }

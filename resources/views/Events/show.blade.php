@@ -57,13 +57,14 @@
 @endsection
 @section('content')
     <div class="text-center text-uppercase">
-        <h1>{{ __('Control Desk') . ' - ' . __('Weighed') }}</h1>
+        <h1>{{ __('Control Desk') . ' - ' . __('weigh') }}</h1>
     </div>
     <div class="card bg-black text-white border border-danger">
-        <div class="card-header border border-danger text-uppercase">
+        <div class="card-header border border-danger">
             @can('addanimal')
                 @if (count($listps) < 300)
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AddPet">
+                    <button type="button" class="btn btn-success text-uppercase" data-bs-toggle="modal"
+                        data-bs-target="#AddPet">
                         {{ __('Add cock') }}
                     </button>
                 @endif
@@ -78,13 +79,11 @@
                 {{ __('Deal') }}s
             </a>
 
-            <button type="button" class="btn btn-warning text-white text-uppercase" data-bs-toggle="modal"
-                data-bs-target="#Event">
+            <button type="button" class="btn btn-warning text-white text-uppercase" data-bs-toggle="modal" data-bs-target="#Event">
                 {{ __('Details') }}
             </button>
 
-            <button type="button" class="btn btn-secondary text-white text-uppercase" data-bs-toggle="modal"
-                data-bs-target="#Tickets">
+            <button type="button" class="btn btn-secondary text-white text-uppercase" data-bs-toggle="modal" data-bs-target="#Tickets">
                 {{ __('Tickets and Insc.') }}
             </button>
 

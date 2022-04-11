@@ -20,6 +20,7 @@
             <table id="datatable" class="table table-hover nowrap" style="width:100%">
                 <thead>
                     <tr>
+                        <th>{{ __('Date') }}</th>
                         <th>{{ __('Name') }}</th>
                         <th>{{ __('Country') }}</th>
                         <th>{{ __('State') }}</th>
@@ -31,6 +32,7 @@
                 <tbody>
                     @foreach ($coliseos as $coliseo)
                         <tr>
+                            <td>{{ Carbon\Carbon::parse($coliseo->created_at)->format('Y/m/d') }}</td>
                             <td>{{ $coliseo->nombre }}</td>
                             <td>{{ $coliseo->country }}</td>
                             <td>{{ $coliseo->state }}</td>
@@ -49,6 +51,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
+                        <th>{{ __('Date') }}</th>
                         <th>{{ __('Name') }}</th>
                         <th>{{ __('Country') }}</th>
                         <th>{{ __('State') }}</th>
@@ -97,6 +100,11 @@
                 language: {
                     "url": getLanguage()
                 },
+                "order": [0, 'desc'],
+                columnDefs: [{
+                    type: 'date-eu',
+                    targets: 0
+                }],
                 bInfo: false,
                 lengthChange: false,
                 pageLength: 10,

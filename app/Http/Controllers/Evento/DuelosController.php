@@ -50,10 +50,11 @@ class DuelosController extends Controller
      */
     public function store(Request $request)
     {
-        /*  return $request->all(); */
+        /* return $request->all(); */
         $pmascota_id = $request->pmascota_id;
         $smascota_id = $request->smascota_id;
         $evento_id = $request->evento_id;
+
         $this->validate($request, [
             'evento_id' => 'required',
             'pmascota_id' =>  ['required', 'different:smascota_id', Rule::unique('duelos')->where(function ($query) use ($pmascota_id, $evento_id) {
@@ -78,17 +79,19 @@ class DuelosController extends Controller
             'scc' => $request->scc,
             'pactada' => $request->pactada,
             'box' => $request->box,
-            'cch' => $request->cch,
             'peleap' => $request->peleap,
+            'cch' => $request->cch,
             'npelea' => $request->npelea,
             'result' => ''
         ]);
 
-        LParticipantes::where('evento_id', $request->evento_id)
-            ->where('mascota_id', $request->pmascota_id)->first()->update(['status' => 0]);
+        $L1 = LParticipantes::where('evento_id', $request->evento_id)
+            ->where('mascota_id', $request->pmascota_id)->first();
+        $L1->update(['status' => 0]);
 
-        LParticipantes::where('evento_id', $request->evento_id)
-            ->where('mascota_id', $request->smascota_id)->first()->update(['status' => 0]);
+        $L2 = LParticipantes::where('evento_id', $request->evento_id)
+            ->where('mascota_id', $request->smascota_id)->first();
+        $L2->update(['status' => 0]);
 
         return redirect()->route('pactados.show', $request->evento_id)->with('mensaje', __('Agreed correctly'));
     }
@@ -111,47 +114,31 @@ class DuelosController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         $duel = Duelos::find($id);
 
-        LParticipantes::where('evento_id', $duel->evento_id)
-            ->where('mascota_id', $duel->pmascota_id)->first()->update(['status' => 1]);
+        $L1 = LParticipantes::where('evento_id', $duel->evento_id)
+            ->where('mascota_id', $duel->pmascota->id)->first();
+        $L1->update(['status' => 1]);
 
-        LParticipantes::where('evento_id', $duel->evento_id)
-            ->where('mascota_id', $duel->smascota_id)->first()->update(['status' => 1]);
+        $L2 = LParticipantes::where('evento_id', $duel->evento_id)
+            ->where('mascota_id', $duel->smascota->id)->first();
+        $L2->update(['status' => 1]);
 
         $duel->update(['result' => $request->result, 'dm' => $request->dm, 'ds' => $request->ds]);
 
-        $evento_id = $duel->evento_id;
-
-        return redirect()->route('pactados.show', $evento_id)->with('mensaje', __('Successfully sentenced'));
+        return redirect()->route('pactados.show', $duel->evento_id)->with('mensaje', __('Successfully sentenced'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $duelo = Duelos::find($id);

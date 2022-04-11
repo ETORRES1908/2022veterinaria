@@ -40,9 +40,9 @@
                                             <li class="list-group-item">
                                                 <div><strong>{{ __('Birthday') }}:</strong> {{ $mascota->fnac }}</div>
                                             </li>
-                                            <li class="list-group-item">
+                                            {{-- <li class="list-group-item">
                                                 <div><strong>{{ __('Weight') }}:</strong> {{ $mascota->sss }}</div>
-                                            </li>
+                                            </li> --}}
                                             <li class="list-group-item text-capitalize">
                                                 <div><strong>{{ __('gender') }}:</strong> {{ __($mascota->gender) }}
                                                 </div>

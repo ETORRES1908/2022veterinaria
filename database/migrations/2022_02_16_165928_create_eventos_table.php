@@ -89,11 +89,11 @@ class CreateEventosTable extends Migration
             $table->string('bs')->nullable();
             //INSCRIPCIÓNES
             //FRENTE
-            $table->string('ift');
+            $table->string('ift')->nullable();
             //GALLO
-            $table->string('gll');
+            $table->string('gll')->nullable();
             //GALPON
-            $table->string('glp');
+            $table->string('glp')->nullable();
             //CHALLENGE1
             /* $table->string('fchll1')->nullable(); */
             /* $table->string('chll1')->nullable(); */

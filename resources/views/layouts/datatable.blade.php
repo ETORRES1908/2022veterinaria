@@ -13,3 +13,5 @@
     <script src="{{ asset('js/datatable/buttons.print.min.js') }}"></script>
     <script src="{{ asset('js/datatable/buttons.print.min.js') }}"></script>
     <script src="{{ asset('js/datatable/sorting/date-eu.js') }}"></script>
+    <script src="{{ asset('js/datatable/sorting/datetime-moment.js') }}"></script>
+    <script src="{{ asset('js/datatable/sorting/moment.min.js') }}"></script>

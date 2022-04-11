@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('nombre', 20); //NOMBRE
             $table->string('apellido', 40); //APELLIDO
             $table->string('foto')->default('user.png'); //FOTO
-            $table->string('dni', 8); //DNI
+            $table->string('dni', 8)->unique(); //DNI
             $table->string('discapacidad'); //DISABILITY
             $table->string('galpon')->nullable(); //GALPON
             $table->string('prepa')->nullable(); //Preparer
@@ -34,7 +34,6 @@ class CreateUsersTable extends Migration
             $table->string('job'); //TRABAJO
             $table->string('password'); //CONTRASEÑA
             $table->string('status')->default('0'); //estado
-
             $table->string('answer'); //ANSWER
             $table->string('fdpt')->nullable(); //FOTO
             $table->string('sdpt')->nullable(); //FOTO

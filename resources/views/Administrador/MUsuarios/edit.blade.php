@@ -20,8 +20,8 @@
                     <div class="mb">
                         <img width="100%" src="{{ asset($user->foto) }}"><br>
                     </div>
-                    <div class="mb">{{ $user->name }}
-                        (
+                    <div class="mb">
+                        {{ $user->name }} -
                         <?php switch ($user->usert) {
                             case 'own':
                                 echo __('Owner');
@@ -48,7 +48,9 @@
                             default:
                                 # code...
                                 break;
-                        } ?>)
+                        } ?>@if ($user->discapacidad != 'No')
+                            - <i class="fas fa-wheelchair"></i>
+                        @endif
                     </div>
                     <div class="mb">{{ $user->email }}</div>
                     @can('chngs')
@@ -127,7 +129,8 @@
                     </div>
                     <div class="col-xs-6">
                         <label>{{ __('Disability') }}</label>
-                        <select id="discapacidad" class="form-control mb text-capitalize" style="-webkit-appearance: none;" disabled>
+                        <select id="discapacidad" class="form-control mb text-capitalize" style="-webkit-appearance: none;"
+                            disabled>
                             <option value="No" @if ($user->discapacidad == 'No') selected @endif>
                                 {{ __('No') }}
                             </option>
@@ -150,41 +153,43 @@
                     <div class="col-xs-6 mb"><label>{{ __('DNI') }}</label>
                         <input type="text" class="form-control" value="{{ $user->dni }}" readonly>
                     </div>
-                    {{-- FOTOS DE DISABILITY --}}
-                    <div class="row" id="fdb" style="display: none">
-                        {{-- FOTO DE DISABILITY --}}
-                        <div class="col-xs-6 mb">
-                            <a for="fdpt" class="col-form-label fw-bold" href="{{asset($user->fdpt)}}">
-                                {{ __('document') }} {{ __('Disability') }}
-                            </a>
-                            <div class="col-auto bg-black rounded">
-                                <div style="clear:both">
-                                    <iframe id="viewer"
-                                        src="@if (isset($user->fdpt)) {{ asset($user->fdpt) }}@else @endif"
-                                        frameborder="0" scrolling="no" height="200" width="100%"></iframe>
+                    @if ($user->fdpt != null)
+                        {{-- FOTOS DE DISABILITY --}}
+                        <div class="row" id="fdb" style="display: none">
+                            {{-- FOTO DE DISABILITY --}}
+                            <div class="col-xs-6 mb">
+                                <a for="fdpt" class="col-form-label fw-bold" href="{{ asset($user->fdpt) }}"
+                                    target="_blank">
+                                    {{ __('document') }} {{ __('Disability') }}
+                                </a>
+                                <div class="col-auto bg-black rounded">
+                                    <div style="clear:both">
+                                        <iframe id="viewer"
+                                            src="@if (isset($user->fdpt)) {{ asset($user->fdpt) }}@else @endif"
+                                            frameborder="0" scrolling="no" height="200" width="100%"></iframe>
+                                    </div>
                                 </div>
-                                <input type="file" id="fdpt" class="form-control" value="{{ old('fdpt') }}"
-                                    accept=".pdf">
+                                @if ($errors->has('fdpt'))
+                                    <span class="text-danger fs-6">
+                                        {{ $errors->first('fdpt') }}
+                                    </span>
+                                @endif
                             </div>
-                            @if ($errors->has('fdpt'))
-                                <span class="text-danger fs-6">
-                                    {{ $errors->first('fdpt') }}
-                                </span>
-                            @endif
-                        </div>
-                        {{-- FOTO DE DISABILITY 2 --}}
-                        <div class="col-xs-6 mb">
-                            <label for="sdpt" class="col-form-label fw-bold">
-                                {{ __('Photo') }} {{ __('Disability') }}
-                            </label>
-                            <div class="col-auto m-1 bg-black rounded">
-                                <img id="sdview"
-                                    src="@if (isset($user->sdpt)) {{ asset($user->sdpt) }}@else @endif"
-                                    class="mx-auto d-block" height="200" width="180" />
-                                <input id="sdpt" type="file" class="form-control" accept="image/*">
+                            {{-- FOTO DE DISABILITY 2 --}}
+                            <div class="col-xs-6 mb">
+                                <label for="sdpt" class="col-form-label fw-bold">
+                                    {{ __('Photo') }} {{ __('Disability') }}
+                                </label>
+                                <div class="col-auto m-1 bg-black rounded">
+                                    <a href="{{ asset($user->sdpt) }}" target="_blank">
+                                        <img id="sdview"
+                                            src="@if (isset($user->sdpt)) {{ asset($user->sdpt) }}@else @endif"
+                                            class="img-responsive center-block" height="200">
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                     @if ($user->usert == 'own')
                         <div class="col-xs-6 mb"><label>{{ __('Shed') }}</label>
                             <input type="text" class="form-control" value="{{ $user->galpon }}" readonly>
@@ -193,11 +198,15 @@
                             <input type="text" class="form-control" value="{{ $user->prepa }}" readonly>
                         </div>
                     @endif
-                    <div class="col-xs-6 mb"><label> {{ __('Operator') }}</label>
+                    <br>
+                    <div class="col-xs-6 col-md-4 mb"><label> {{ __('Operator') }}</label>
                         <input type="text" class="form-control" value="{{ $user->company }}" readonly>
                     </div>
-                    <div class="col-xs-6 mb"><label> {{ __('Phone') }}</label>
+                    <div class="col-xs-6 col-md-4 mb"><label> {{ __('Phone') }}</label>
                         <input type="number" class="form-control" value="{{ $user->celular }}" readonly>
+                    </div>
+                    <div class="col-xs-12 col-md-4 mb text-capitalize"><label> {{ __('secrect answer') }}</label>
+                        <input type="number" class="form-control" value="{{ $user->answer }}" readonly>
                     </div>
                     <div class="col-xs-4 mb"><label> {{ __('Country') }}</label>
                         <select class="select2 form-control form-select text-danger fw-bold" id="country"
@@ -220,7 +229,7 @@
                             </option>
                             <option class="text-danger fw-bold" value="MEX"
                                 @if ($user->country == 'MEX') selected @endif>
-                                MEX - Mexico
+                                MEX - México
                             </option>
                             <option class="text-danger fw-bold" value="PRI"
                                 @if ($user->country == 'PRI') selected @endif>
@@ -238,7 +247,7 @@
                     </div>
                     <div class="col-xs-8 col-lg-4 mb"><label> {{ __('State') }}</label>
                         <select class="form-control text-danger fw-bold text-uppercase" id="state"
-                            value="{{ $user->state }}"  disabled>
+                            value="{{ $user->state }}" disabled>
                             {{-- PERÚ --}}
                             <option data="PER" class="text-danger fw-bold" value="LM"
                                 @if ($user->state == 'LM') selected @endif>
@@ -869,10 +878,10 @@
                         </select>
                     </div>
                     <div class=" col-lg-4 mb"><label> {{ __('District') }}</label>
-                        <input type="text" class="form-control" value="{{ $user->district }}"readonly >
+                        <input type="text" class="form-control" value="{{ $user->district }}" readonly>
                     </div>
                     <div class="col-lg-7 mb"><label> {{ __('Direction') }}</label>
-                        <input type="text" class="form-control" value="{{ $user->direction }}" >
+                        <input type="text" class="form-control" value="{{ $user->direction }}">
                     </div>
                     <div class="col-lg-5 mb"><label> {{ __('Profession or Trade') }}</label>
                         <input type="text" class="form-control" value="{{ $user->job }}" readonly>
@@ -908,6 +917,7 @@
         }
 
     </style>
+
     <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
     {{-- COLISEO --}}
     <script>

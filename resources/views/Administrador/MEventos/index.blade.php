@@ -8,12 +8,17 @@
 
 @section('content')
     <div class="container-fluid">
+        @if (session('mensaje'))
+            <div class="alert alert-success">
+                {{ session('mensaje') }}
+            </div>
+        @endif
         <div class="table-responsive">
             <table id="datatable" class="table table-hover nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        <th>{{ __('Organizer') }}</th>
                         <th>{{ __('Date') }}</th>
+                        <th>{{ __('Organizer') }}</th>
                         <th>{{ __('Coliseum') }}</th>
                         <th>{{ __('Control desk') }}</th>
                         <th>{{ __('Judge') }} A</th>
@@ -26,8 +31,8 @@
                 <tbody>
                     @foreach ($eventos as $evento)
                         <tr>
+                            <td>{{ Carbon\Carbon::parse($evento->fechas[0])->format('Y/m/d') }}</td>
                             <td>{{ $evento->organizador->nombre . ' ' . $evento->organizador->apellido }}</td>
-                            <td>{{ $evento->fechas[0] }}</td>
                             <td>{{ $evento->coliseum->nombre }}</td>
                             <td>{{ $evento->mcontrol->nombre . ' ' . $evento->mcontrol->apellido }}</td>
                             <td>{{ $evento->judge->nombre . ' ' . $evento->judge->apellido }}</td>
@@ -85,7 +90,6 @@
     <script src="{{ asset('js/datatable/buttons.print.min.js') }}"></script>
     <script src="{{ asset('js/datatable/sorting/date-eu.js') }}"></script>
 
-
     {{-- SCRIPTS --}}
     <script type="text/javascript">
         $(document).ready(function() {
@@ -101,11 +105,13 @@
                 result = path + lng + ".json";
                 return result;
             }
+
             // Build Datatable
             $('#datatable').DataTable({
+                "order": [0, 'desc'],
                 columnDefs: [{
                     type: 'date-eu',
-                    targets: 1
+                    targets: 0
                 }],
                 language: {
                     "url": getLanguage()

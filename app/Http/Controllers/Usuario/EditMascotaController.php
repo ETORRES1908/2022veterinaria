@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Usuario;
 
+use App\Duelos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Mascota;
@@ -24,5 +25,21 @@ class EditMascotaController extends Controller
             'time' => $request->spmttime,
         ]);
         return redirect()->route('mascotas.show', $request->mascota_id)->with('mensaje', __('Successfully created'));
+    }
+
+    public function url1(Request $request)
+    {
+        $duel = Duelos::find($request->duelo_id);
+        $duel->update(['url1' => $request->url1]);
+
+        return redirect()->route('mascotas.show', $request->mascota_id)->with('mensaje', __('Successfully edited'));
+    }
+
+    public function url2(Request $request)
+    {
+        $duel = Duelos::find($request->duelo_id);
+        $duel->update(['url2' => $request->url2]);
+
+        return redirect()->route('mascotas.show', $request->mascota_id)->with('mensaje', __('Successfully edited'));
     }
 }

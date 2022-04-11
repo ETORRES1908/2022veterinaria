@@ -153,8 +153,10 @@ class MascotasController extends Controller
     public function show($id)
     {
         $mascota = Mascota::find($id);
-        $pad = Mascota::find($mascota->pad);
-        $mad = Mascota::find($mascota->mad);
+
+        $pad = Mascota::find($mascota->id);
+        $mad = Mascota::find($mascota->id);
+
         $duelos = Duelos::orWhere(['pmascota_id' => $id, 'smascota_id' => $id])->latest()->take(20)->get();
         return view('Usuario.Mascotas.show', compact('mascota', 'duelos', 'pad', 'mad'));
     }

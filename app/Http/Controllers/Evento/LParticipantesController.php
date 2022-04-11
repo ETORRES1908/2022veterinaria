@@ -66,7 +66,7 @@ class LParticipantesController extends Controller
 
     public function show($id)
     {
-        $mascota = LParticipantes::find($id)->mascota;
+        $mascota = Mascota::find($id);
         return response()->json(array('success' => true, 'mascota' => $mascota));
     }
 

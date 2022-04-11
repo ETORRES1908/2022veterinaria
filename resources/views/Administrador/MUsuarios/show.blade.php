@@ -3,7 +3,8 @@
 @section('title')
 
 @section('content_header')
-    <h1 class="text-uppercase">{{ $user->nombre }} {{ $user->apellido }}</h1>
+    <h1 class="text-uppercase">
+        {{ $user->nombre }} {{ $user->apellido }}</h1>
 @stop
 
 @section('content')
@@ -23,7 +24,7 @@
                     <div class="mb">
                         <img width="100%" src="{{ asset($user->foto) }}"><br>
                     </div>
-                    <div class="mb">{{ $user->name }} (
+                    <div class="mb">{{ $user->name }} -
                         <?php switch ($user->usert) {
                             case 'own':
                                 echo __('Owner');
@@ -50,7 +51,10 @@
                             default:
                                 # code...
                                 break;
-                        } ?>)</div>
+                        } ?>@if ($user->discapacidad != 'No')
+                            - <i class="fas fa-wheelchair"></i>
+                        @endif
+                    </div>
                     <div class="mb">{{ $user->email }}</div><br>
                     <div class="form-group mb">
                         <label class="col-xs-4 col-md-7 control-label">{{ __('Status') . ' ' . __('Account') }}:</label>
@@ -105,24 +109,30 @@
                             </option>
                         </select>
                     </div>
-                    <div class="col-xs-6 mb"><label>{{ __('DNI') }}</label>
-                        <input type="text" class="form-control" value="{{ $user->dni }}" readonly>
+                    <div class="row">
+                        <div class="col-xs-6 mb"><label>{{ __('DNI') }}</label>
+                            <input type="text" class="form-control" value="{{ $user->dni }}" readonly>
+                        </div>
+                        @if (isset($user->fdpt))
+                            <div class="col-xs-6 mb text-capitalize text-center center-block">
+                                <a target="_blank" class="col-form-label text-decoration-none"
+                                    href="{{ asset($user->fdpt) }}">{{ __('document') . ' ' . __('Disability') }}
+                                </a>
+                                <iframe id="viewer" src="{{ asset($user->fdpt) }}" frameborder="0" scrolling="no"
+                                    height="200" width="100%"></iframe>
+                            </div>
+                        @endif
+                        @if (isset($user->sdpt))
+                            <div class="col-xs-6 mb text-center">
+                                <label>{{ __('Photo') . ' ' . __('Disability') }}</label>
+                                <a target="_blank" class="col-form-label text-decoration-none"
+                                    href="{{ asset($user->sdpt) }}">
+                                    <img class="img-responsive center-block" src="{{ asset($user->sdpt) }}" width="100%">
+
+                                </a>
+                            </div>
+                        @endif
                     </div>
-                    @if (isset($user->fdpt))
-                        <div class="col-xs-6 mb text-capitalize text-center center-block">
-                            <a target="blank" class="col-form-label text-decoration-none"
-                                href="{{ asset($user->fdpt) }}">{{ __('document') . ' ' . __('Disability') }}
-                            </a>
-                            <iframe id="viewer" src="{{ asset($user->fdpt) }}" frameborder="0" scrolling="no"
-                                height="200" width="100%"></iframe>
-                        </div>
-                    @endif
-                    @if (isset($user->sdpt))
-                        <div class="col-xs-6 mb text-center">
-                            <label>{{ __('Photo') . ' ' . __('Disability') }}</label>
-                            <img class="img-responsive center-block" src="{{ asset($user->sdpt) }}" width="100%">
-                        </div>
-                    @endif
                     @if ($user->usert == 'own')
                         <div class="col-xs-6 mb"><label>{{ __('Shed') }}</label>
                             <input type="text" class="form-control" value="{{ $user->galpon }}" readonly>
@@ -131,11 +141,14 @@
                             <input type="text" class="form-control" value="{{ $user->prepa }}" readonly>
                         </div>
                     @endif
-                    <div class="col-xs-6 mb"><label> {{ __('Operator') }}</label>
+                    <div class="col-xs-6 col-md-4 mb"><label> {{ __('Operator') }}</label>
                         <input type="text" class="form-control" value="{{ $user->company }}" readonly>
                     </div>
-                    <div class="col-xs-6 mb"><label> {{ __('Phone') }}</label>
-                        <input type="text" class="form-control" value="{{ $user->celular }}" readonly>
+                    <div class="col-xs-6 col-md-4 mb"><label> {{ __('Phone') }}</label>
+                        <input type="number" class="form-control" value="{{ $user->celular }}" readonly>
+                    </div>
+                    <div class="col-xs-12 col-md-4 mb text-capitalize"><label> {{ __('secrect answer') }}</label>
+                        <input type="number" class="form-control" value="{{ $user->answer }}" readonly>
                     </div>
                     <div class="col-xs-4 mb"><label> {{ __('Country') }}</label>
                         <input type="text" class="form-control" value="{{ $user->country }}" readonly>

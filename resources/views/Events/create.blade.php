@@ -354,7 +354,7 @@
                                             </option>
                                             <option class="text-danger fw-bold" value="ECU">ECU - Ecuador
                                             </option>
-                                            <option class="text-danger fw-bold" value="MEX">MEX - Mexico
+                                            <option class="text-danger fw-bold" value="MEX">MEX - México
                                             </option>
                                             <option class="text-danger fw-bold" value="PRI">PRI - Puerto Rico
                                             </option>
@@ -1689,7 +1689,7 @@
                 {{-- BOTON DE REGISTRO --}}
                 <div class="col-md-12 ">
                     <div class="mx-auto">
-                        <button type="submit" class="btn btn-primary" id="submit">
+                        <button type="submit" class="btn btn-success text-uppercase" id="submit">
                             {{ __('Create your event') }}
                         </button>
                     </div>
