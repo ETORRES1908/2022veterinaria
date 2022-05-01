@@ -63,14 +63,13 @@
         <div class="card-header border border-danger">
             @can('addanimal')
                 @if (count($listps) < 300)
-                    <button type="button" class="btn btn-success text-uppercase" data-bs-toggle="modal"
-                        data-bs-target="#AddPet">
+                    <button type="button" class="btn btn-success text-uppercase" data-bs-toggle="modal" data-bs-target="#AddPet">
                         {{ __('Add cock') }}
                     </button>
                 @endif
             @endcan
             @if ($errors->has('mascota_id'))
-                <button class="alert fs-6 text-black bg-white" id="Message">
+                <button class="alert fs-6 text-black bg-white pe-none" id="Message">
                     {{ __('Choose other pet') }}
                 </button>
             @endif
@@ -79,18 +78,20 @@
                 {{ __('Deal') }}s
             </a>
 
-            <button type="button" class="btn btn-warning text-white text-uppercase" data-bs-toggle="modal" data-bs-target="#Event">
+            <button type="button" class="btn btn-warning text-white text-uppercase" data-bs-toggle="modal"
+                data-bs-target="#Event">
                 {{ __('Details') }}
             </button>
 
-            <button type="button" class="btn btn-secondary text-white text-uppercase" data-bs-toggle="modal" data-bs-target="#Tickets">
+            <button type="button" class="btn btn-secondary text-white text-uppercase" data-bs-toggle="modal"
+                data-bs-target="#Tickets">
                 {{ __('Tickets and Insc.') }}
             </button>
 
             @if (session('mensaje'))
-                <div class="alert btn btn-warning">
+                <button class="alert fs-6 text-black bg-warning pe-none">
                     {{ session('mensaje') }}
-                </div>
+                </button>
             @endif
         </div>
         <div class="card-body border border-danger table-responsive">
@@ -191,8 +192,8 @@
                                         </div>
                                     </div>
                                 @endif
-                                <a href="#listp{{ $listp->id }}" class="html5lightbox btn btn-danger" data-group="fotos"
-                                    data-width="800" data-height="800">
+                                <a href="#listp{{ $listp->id }}" class="html5lightbox btn btn-danger"
+                                    data-group="fotos">
                                     {{ __('View') }}
                                 </a>
                                 <div id="listp{{ $listp->id }}" style="display:none;">
@@ -312,9 +313,21 @@
                                 <div class="card-header border border-danger fw-bold"> {{ __('EVENT') }}</div>
                                 <div class="card-body border border-danger">
                                     <div class="row">
+                                        <div class="col-12 mb-3">
+                                            <label for="dates" class="form-label">{{ __('Dates') }}</label>
+                                            <div class="row">
+                                                @foreach ($evento->fechas as $fecha)
+                                                    <div class="col-6 mb-1">
+                                                        <label type="text" class="form-control text-danger">
+                                                            {{ $fecha }}
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
                                         <div class="col-6 mb-3">
-                                            <label for="title" class="form-label">{{ __('Type Event') }}</label>
-                                            <select class="form-control text-danger fw-bold" disabled
+                                            <label for="title" class="form-label">{{ __('Event') }}</label>
+                                            <select class="form-control text-danger" disabled
                                                 style="-webkit-appearance: none;">
                                                 <option value="cmp" @if ($evento->tevent == 'cmp') selected @endif>
                                                     {{ __('Championship') }}
@@ -337,24 +350,12 @@
                                             </select>
                                         </div>
                                         <div class="col-6 mb-3">
-                                            <label for="hours" class="form-label">{{ __('Coliseum') }}</label>
-                                            <input type="text" class="form-control text-danger" id="hours"
+                                            <label for="cls" class="form-label">{{ __('Coliseum') }}</label>
+                                            <input type="text" class="form-control text-danger" id="cls"
                                                 value="{{ $evento->coliseum->nombre }}" readonly>
                                         </div>
-                                        <div class="col-12 mb-3">
-                                            <label for="dates" class="form-label">{{ __('Dates') }}</label>
-                                            <div class="row">
-                                                @foreach ($evento->fechas as $fecha)
-                                                    <div class="col-6 mb-1">
-                                                        <label type="text" class="form-control text-danger">
-                                                            {{ $fecha }}
-                                                        </label>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
                                         <div class="col-6 mb-3">
-                                            <label for="title" class="form-label">{{ __('Weight') }}</label>
+                                            <label for="weight" class="form-label">{{ __('Weight') }}</label>
                                             <div class="col-auto input-group-text">
                                                 Min
                                                 <div class="form-control form-control-sm m-0 text-danger">
@@ -365,75 +366,18 @@
                                             </div>
                                         </div>
                                         <div class="col-6 mb-3">
-                                            <label for="hours" class="form-label">{{ __('Start') }}</label>
-                                            <input type="time" class="form-control text-danger" id="hours"
+                                            <label for="hstart" class="form-label">{{ __('Start') }}</label>
+                                            <input type="time" class="form-control text-danger" id="hstart"
                                                 value="{{ $evento->hstart }}" readonly>
                                         </div>
-                                        <div class="col-3 mb-3">
-                                            <label for="title" class="form-label">{{ __('Size') }}</label>
-                                            <div class="col-auto ">
-                                                <input type="text" class="form-control text-danger" id="hours"
-                                                    value="{{ $evento->sz }}" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-3 mb-3">
-                                            <label for="title" class="form-label">{{ __('Time') }}</label>
-                                            <div class="col-auto ">
-                                                <input type="text" class="form-control text-danger" id="hours"
-                                                    value="{{ $evento->time }}" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 mb-3">
-                                            <label for="title" class="form-label">{{ __('Regulation') }}</label>
-                                            <div class="col-auto ">
-                                                <select class="form-control text-danger" disabled>
-                                                    <option @if ($evento->trl == 'cls') selected @endif>
-                                                        {{ __('Coliseum') }}</option>
-                                                    <option @if ($evento->trl == 'dpt') selected @endif>
-                                                        {{ __('Departmental') }}</option>
-                                                    <option @if ($evento->trl == 'nac') selected @endif>
-                                                        {{ __('National') }} </option>
-                                                    <option @if ($evento->trl == 'inc') selected @endif>
-                                                        {{ __('International') }}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4 mb-3">
-                                            <label for="title"
-                                                class="form-label">{{ __('Judge') . ' ' . __('Field') }}
-                                                A</label>
-                                            <div class="col-auto ">
-                                                <input type="text" class="form-control text-danger" id="hours"
-                                                    value="{{ $evento->judge->nombre }}" readonly>
-                                            </div>
-                                        </div>
-                                        @if (isset($evento->assistent))
-                                            <div class="col-sm-4 mb-3">
-                                                <label for="title"
-                                                    class="form-label">{{ __('Judge') . ' ' . __('Field') }}
-                                                    B</label>
-                                                <div class="col-auto ">
-                                                    <input type="text" class="form-control text-danger" id="hours"
-                                                        value="{{ $evento->assistent->nombre }}" readonly>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        <div class="col-sm-4 mb-3">
-                                            <label for="title" class="form-label">{{ __('Control desk') }}</label>
-                                            <div class="col-auto ">
-                                                <input type="text" class="form-control text-danger" id="hours"
-                                                    value="{{ $evento->mcontrol->nombre }}" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 mb-3">
+                                        <div class="col-7 mb-3">
                                             <label class="form-label">{{ __('Spurs') }}</label>
                                             <div class="row">
                                                 @foreach ($evento->spl as $spl)
                                                     @if ($spl == 'lbr')
                                                         <div class="col-auto">
                                                             <label class="form-control text-danger">
-                                                                Libre</label>
+                                                                {{ __('Free') }}</label>
                                                         </div>
                                                     @elseif($spl == 'fbr')
                                                         <div class="col-auto">
@@ -455,6 +399,63 @@
                                                 @endforeach
                                             </div>
                                         </div>
+                                        <div class="col-5 mb-3">
+                                            <label for="title" class="form-label">{{ __('Size') }}</label>
+                                            <div class="col-auto ">
+                                                <input type="text" class="form-control text-danger" id="size"
+                                                    value="{{ $evento->sz }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-8 mb-3">
+                                            <label for="title" class="form-label">{{ __('Regulation') }}</label>
+                                            <div class="col-auto ">
+                                                <select class="form-control text-danger" disabled>
+                                                    <option @if ($evento->trl == 'cls') selected @endif>
+                                                        {{ __('Coliseum') }}</option>
+                                                    <option @if ($evento->trl == 'dpt') selected @endif>
+                                                        {{ __('Departmental') }}</option>
+                                                    <option @if ($evento->trl == 'nac') selected @endif>
+                                                        {{ __('National') }} </option>
+                                                    <option @if ($evento->trl == 'inc') selected @endif>
+                                                        {{ __('International') }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 mb-3">
+                                            <label for="title" class="form-label">{{ __('Control desk') }}</label>
+                                            <div class="col-auto ">
+                                                <input type="text" class="form-control text-danger" id="hours"
+                                                    value="{{ $evento->mcontrol->nombre }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 mb-3">
+                                            <label for="title"
+                                                class="form-label">{{ __('Judge') . ' ' . __('Field') }}
+                                                A</label>
+                                            <div class="col-auto ">
+                                                <input type="text" class="form-control text-danger" id="hours"
+                                                    value="{{ $evento->judge->nombre }}" readonly>
+                                            </div>
+                                        </div>
+                                        @if (isset($evento->assistent) && $evento->assisstent_id != $evento->judge_id)
+                                            <div class="col-sm-4 mb-3">
+                                                <label for="title"
+                                                    class="form-label">{{ __('Judge') . ' ' . __('Field') }}
+                                                    B</label>
+                                                <div class="col-auto ">
+                                                    <input type="text" class="form-control text-danger" id="hours"
+                                                        value="{{ $evento->assistent->nombre }}" readonly>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <div class="col-4 mb-3">
+                                            <label for="time" class="form-label">{{ __('Time') }}</label>
+                                            <div class="col-auto ">
+                                                <input type="text" class="form-control text-danger" id="time"
+                                                    value="{{ $evento->time }}" readonly>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -467,15 +468,14 @@
                                     <div class="row">
                                         <div class="col-12 col-lg-4 mb-3 my-auto">
                                             <label for="TROPHY" class="form-label">{{ __('TROPHYS') }}</label>
-                                            <div class="input-group">
-                                                <div class="input-group-text">S/.</div>
-                                                <input type="text" class="form-control text-danger" id="trophy"
-                                                    value="{{ $evento->trophys }}" readonly>
-                                            </div>
+
+                                            <input type="text" class="form-control text-danger" id="trophy"
+                                                value="{{ $evento->trophys }}" readonly>
+
                                         </div>
                                         <div class="col-6 col-lg-4 mb-3">
                                             <label for="ROOSTER"
-                                                class="form-label">{{ __('ROOSTER') . ' ' . $evento->trooster . ' ' . __('seconds') }}</label>
+                                                class="form-label">{{ __('ROOSTER') . ' ' . $evento->trooster . ' ' . __('sec.') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-text">S/.</div>
                                                 <input type="text" class="form-control text-danger" id="rooster"
@@ -484,12 +484,12 @@
                                         </div>
                                         <div class="col-6 col-lg-4 mb-3">
                                             <label for="ROOSTER"
-                                                class="form-label">{{ __('ROOSTER') . ' 10 ' . __('seconds') }}
+                                                class="form-label">{{ __('ROOSTER') . ' 10 ' . __('sec.') }}
                                             </label>
                                             <div class="input-group">
                                                 <div class="input-group-text">S/.</div>
                                                 <input type="text" class="form-control text-danger" id="rooster"
-                                                    value="{{ $evento->rooster }}" readonly>
+                                                    value="{{ $evento->rten }}" readonly>
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-4 mb-3">

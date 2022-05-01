@@ -95,24 +95,26 @@
                                             </span>
                                         @endif
                                     </div>
-
                                 </div>
                             </div>
 
                             {{-- LOGIN --}}
-                            <div class="text-end mb-3">
+                            <div class="text-end">
                                 <input type="submit" class="btn btn-primary mb-3 text-uppercase"
                                     value="{{ __('Enter') }}">
                                 <a class="btn btn-success mb-3"
                                     href="{{ route('register') }}">{{ __('Create your account') }}</a>
-                                <a class="btn btn-warning mb-3"
+
+                            </div>
+                            <div class="text-end">
+                                <a class="btn btn-secondary mb-3"
                                     href="{{ route('contact') }}">{{ __('Contact us') }}</a>
+                                <a class="text-end btn btn-light mb-3 text-uppercase"
+                                    href="{{ route('password.request') }}">
+                                    {{ __('Forgot Your Password?') }}
+                                </a>
                             </div>
                         </form>
-
-                        <a class="btn btn-secondary mb-3 text-uppercase" href="{{ route('password.request') }}">
-                            {{ __('Forgot Your Password?') }}
-                        </a>
 
                     </div>
                 </div>

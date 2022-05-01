@@ -24,7 +24,6 @@
                                     <div class="col-auto">
                                         <input id="nombre" type="text" class="form-control text-danger" name="nombre"
                                             value="{{ old('nombre') }}" maxlength="18" required autofocus}>
-
                                         @if ($errors->has('nombre'))
                                             <span class="text-danger text-fs6">
                                                 {{ $errors->first('nombre') }}
@@ -128,8 +127,24 @@
                                         @endif
                                     </div>
                                 </div>
+                                {{-- RAZA - RACE --}}
+                                <div class="col-6 mb-3 form-group{{ $errors->has('race') ? ' has-error' : '' }}">
+                                    <label for="race" class="col-form-label fw-bold text-capitalize">
+                                        {{ __('race') }}
+                                    </label>
+                                    <div class="col-auto">
+                                        <input id="race" type="text" class="form-control text-danger" name="race"
+                                            value="{{ old('race') }}" required autofocus maxlength="18">
+
+                                        @if ($errors->has('race'))
+                                            <span class="text-danger text-fs6">
+                                                {{ $errors->first('race') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
                                 {{-- PLU --}}
-                                <div class="col-12 mb-3 form-group{{ $errors->has('plu') ? ' has-error' : '' }}">
+                                <div class="col-6 mb-3 form-group{{ $errors->has('plu') ? ' has-error' : '' }}">
                                     <label for="plu" class="col-form-label fw-bold">
                                         {{ __('Colour') }}
                                     </label>
@@ -152,12 +167,12 @@
                                     </label>
                                     <div class="col-auto">
                                         <select class="select2 form-select" name="pad" autofocus>
-                                            <option value="" hidden>
+                                            <option hidden value="">
                                                 {{ __('Choose pet') }}...
                                             </option>
-                                            @foreach ($pads as $mascota)
-                                                <option @if (old('pad') == $mascota->id) selected @endif
-                                                    value="{{ $mascota->id }}">{{ $mascota->nombre }}
+                                            @foreach ($pads as $pet)
+                                                <option @if (old('pad') == $pet->id) selected @endif
+                                                    value="{{ $pet->id }}">{{ $pet->nombre }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -175,12 +190,12 @@
                                     </label>
                                     <div class="col-auto">
                                         <select class="select2 form-select" name="mad" autofocus>
-                                            <option value="" hidden>
+                                            <option hidden value="">
                                                 {{ __('Choose pet') }}...
                                             </option>
-                                            @foreach ($mads as $mascota)
-                                                <option @if (old('mad') == $mascota->id) selected @endif
-                                                    value="{{ $mascota->id }}">{{ $mascota->nombre }}
+                                            @foreach ($mads as $pet)
+                                                <option @if (old('mad') == $pet->id) selected @endif
+                                                    value="{{ $pet->id }}">{{ $pet->nombre }}
                                                 </option>
                                             @endforeach
                                         </select>

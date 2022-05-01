@@ -86,6 +86,7 @@
                                 </div>
 
                             </form>
+
                             <form class="form-horizontal text-uppercase" method="POST"
                                 action="{{ route('usuarios.update', ['id' => $user->id]) }}">
                                 {!! csrf_field() !!}
@@ -917,17 +918,13 @@
         }
 
     </style>
-
+    {{-- SCRIPTS --}}
     <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
-    {{-- COLISEO --}}
     <script>
         /* ALERT */
         setTimeout(function() {
             $('.alert').fadeOut('slow');
         }, 5000);
-    </script>
-    {{-- FORMULARIO ELIMINAR docente --}}
-    <script>
         /* STATE -  */
         var $select1 = $('#country'),
             $select2 = $('#state'),
@@ -959,8 +956,8 @@
                 $('#viewer').attr('src', pdffile_url);
             };
         }).change();
-
-
+    </script>
+    <script>
         /* FORMULARIO ELIMINAR */
         $('.formulario-eliminar').submit(function(e) {
             e.preventDefault();

@@ -294,13 +294,13 @@
 
     </style>
     <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
-    {{-- COLISEO --}}
     <script>
         /* ALERT */
         setTimeout(function() {
             $('.alert').fadeOut('slow');
         }, 5000);
 
+        /* COLISEO */
         function displayVals1() {
             var id = $('#coliseo_id').val();
             $.ajax({

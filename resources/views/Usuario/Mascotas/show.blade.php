@@ -45,6 +45,11 @@
                                 <div><strong>{{ __('Name') }}:</strong> {{ $mascota->nombre }}</div>
                             </li>
                             <li class="list-group-item bg-black text-white">
+                                <div class="text-capitalize"><strong>{{ __('race') }}:</strong>
+                                    {{ __($mascota->raza) }}
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-black text-white">
                                 <div class="text-capitalize"><strong>{{ __('gender') }}:</strong>
                                     {{ __($mascota->gender) }}
                                 </div>
@@ -133,6 +138,7 @@
                                                 <th>{{ __('Type') }}</th>
                                                 <th>{{ __('Brand') }}</th>
                                                 <th>{{ __('Dose') }}</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -150,11 +156,47 @@
                                                     <td>
                                                         {{ $vacuna->vcnsd }}
                                                     </td>
+                                                    <td>
+                                                        <form method="POST" class="text-uppercase"
+                                                            action="{{ route('delete_vcns', $vacuna->id) }}">
+                                                            {{ csrf_field() }}
+                                                            <input type="submit" class="col btn btn-danger" value="-">
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
+                                <form method="POST" action="{{ route('create_vcns') }}" autocomplete="off">
+                                    {!! csrf_field() !!}
+                                    <div class="row">
+                                        <input type="hidden" name="mascota_id" value="{{ $mascota->id }}">
+                                        <div class="col-5">
+                                            <input class=" form-control" type="date" name="vcnsf"
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
+                                        </div>
+                                        <div class="col-6 mb-2">
+                                            <input class=" form-control" type="text" name="vcnst" pattern="[A-zÀ-ú1-9\S]+"
+                                                maxlength="10" required placeholder="{{ __('Type') }}"
+                                                onkeydown="return /[A-zÀ-ú1-9\S]/i.test(event.key)">
+                                        </div>
+                                        <div class="col-5 mb-2">
+                                            <input class=" form-control" type="text" name="vcnsm" pattern="[A-zÀ-ú\s]+"
+                                                maxlength="10" required placeholder="{{ __('Brand') }}"
+                                                onkeydown="return /[A-zÀ-ú\s]/i.test(event.key)">
+                                        </div>
+                                        <div class="col-5 mb-2">
+                                            <input class=" form-control" type="number" name="vcnsd" required
+                                                placeholder="{{ __('Dose') }}"
+                                                onKeyPress="if(this.value.length==2) return false;"
+                                                onkeydown="return event.keyCode !== 69 && event.keyCode !== 189">
+                                        </div>
+                                        <div class="col-1">
+                                            <input type="submit" class="btn btn-success" value="+">
+                                        </div>
+                                    </div>
+                                </form>
                             </li>
                             <li class="list-group-item bg-black mb-3 text-white  border border-danger rounded">
                                 <label class="form-label"><strong>{{ __('Moves') }}</strong></label>
@@ -166,6 +208,7 @@
                                                 <th>{{ __('Time') }}</th>
                                                 <th>{{ __('Type') }}</th>
                                                 <th>{{ __('Result') }}</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -183,11 +226,51 @@
                                                     <td>
                                                         {{ __($movida->mvr) }}
                                                     </td>
+                                                    <td>
+                                                        <form method="POST" class="text-uppercase"
+                                                            action="{{ route('delete_mvds', $movida->id) }}">
+                                                            {{ csrf_field() }}
+                                                            <input type="submit" class="col btn btn-danger" value="-">
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
+                                <form method="POST" action="{{ route('create_mvds') }}" autocomplete="off">
+                                    {!! csrf_field() !!}
+                                    <div class="row">
+                                        <input type="hidden" name="mascota_id" value="{{ $mascota->id }}">
+                                        <div class="col-6">
+                                            <input class="form-control" type="date" name="mvf"
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
+                                        </div>
+                                        <div class="col-5 mb-2">
+                                            <input class="form-control" type="number" name="mm" required
+                                                placeholder="{{ __('00 min') }}"
+                                                onKeyPress="if(this.value.length==2) return false;"
+                                                onkeydown="return event.keyCode !== 69 && event.keyCode !== 189">
+                                        </div>
+                                        <div class="col-5 mb-2">
+                                            <input class="form-control" type="text" name="mvtp" pattern="[A-zÀ-ú1-9\s]+"
+                                                required placeholder="{{ __('Type') }}">
+                                        </div>
+                                        <div class="col-5 mb-2">
+                                            <select name="mvr" class="form-select text-capitalize">
+                                                <option value="good">
+                                                    {{ __('good') }}</option>
+                                                <option value="regular">
+                                                    {{ __('regular') }}</option>
+                                                <option value="bad">
+                                                    {{ __('bad') }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-1">
+                                            <input type="submit" class="btn btn-success" value="+">
+                                        </div>
+                                    </div>
+                                </form>
                             </li>
                             <li class="list-group-item bg-black mb-3 text-white  border border-danger rounded">
                                 <div><strong>{{ __('Supplement') }}s:</strong></div>
@@ -225,7 +308,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <form method="POST" action="{{ route('create_smpt') }}">
+                                <form method="POST" action="{{ route('create_smpt') }}" autocomplete="off">
                                     {!! csrf_field() !!}
                                     <div class="row">
                                         <input type="hidden" name="mascota_id" value="{{ $mascota->id }}">
@@ -236,11 +319,11 @@
                                                 onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)">
                                         </div>
                                         <div class="col-6">
-                                            <input class=" form-control" type="date" name="spmtfecha"
+                                            <input class="form-control" type="date" name="spmtfecha"
                                                 max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
                                         </div>
                                         <div class="col-4">
-                                            <input class=" form-control" type="time" name="spmttime" required>
+                                            <input class="form-control" type="time" name="spmttime" required>
                                         </div>
                                         <div class="col-1">
                                             <input type="submit" class="btn btn-success" value="+">
@@ -249,7 +332,7 @@
                                 </form>
                             </li>
                             <form class="text-uppercase" action="{{ route('mascotas.update', $mascota->id) }}"
-                                method="POST">
+                                method="POST" autocomplete="off">
                                 {!! csrf_field() !!}
                                 {{ method_field('PUT') }}
 
@@ -278,8 +361,7 @@
                             <div for="nombre" class="form-label fw-bold text-white">
                                 {{ __('Photo Profile') }} {{ __('Pet') }}
                             </div>
-                            <a href="#foto1" class="html5lightbox btn border border-danger" data-group="fotos"
-                                data-width="800" data-height="800">
+                            <a href="#foto1" class="html5lightbox btn border border-danger" data-group="fotos">
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 1)->first())) {{ asset($mascota->fotos->where('nfoto', 1)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif"
@@ -335,8 +417,7 @@
                             {{ __('Photo') }}s
                         </div>
                         <div class="col-6">
-                            <a href="#foto2" class="html5lightbox btn" data-group="fotos" data-width="800"
-                                data-height="800">
+                            <a href="#foto2" class="html5lightbox btn" data-group="fotos">
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 2)->first())) {{ asset($mascota->fotos->where('nfoto', 2)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif"
@@ -351,7 +432,8 @@
                                                 method="post">
                                                 {!! method_field('delete') !!}
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Delete') }}</button>
                                             </form>
                                         @else
                                             {{-- AGREGAR FOTO --}}
@@ -369,7 +451,8 @@
                                                     accept="image/*">
 
 
-                                                <button type="submit" class="btn btn-danger">{{ __('Upload') }}</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Upload') }}</button>
                                             </form>
                                             @if ($errors->has('foto'))
                                                 <span class="text-danger fs-6">
@@ -391,8 +474,7 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <a href="#foto3" class="html5lightbox btn" data-group="fotos" data-width="800"
-                                data-height="800">
+                            <a href="#foto3" class="html5lightbox btn" data-group="fotos">
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 3)->first())) {{ asset($mascota->fotos->where('nfoto', 3)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif"
@@ -407,7 +489,8 @@
                                                 method="post">
                                                 {!! method_field('delete') !!}
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Delete') }}</button>
                                             </form>
                                         @else
                                             {{-- AGREGAR FOTO --}}
@@ -423,7 +506,8 @@
                                                 <input id="foto" type="file" class="form-control form-control-sm"
                                                     name="foto" value="{{ old('foto') }}" required autofocus
                                                     accept="image/*">
-                                                <button type="submit" class="btn btn-danger">{{ __('Upload') }}</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Upload') }}</button>
                                             </form>
                                             @if ($errors->has('foto'))
                                                 <span class="text-danger fs-6">
@@ -445,8 +529,7 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <a href="#foto4" class="html5lightbox btn" data-group="fotos" data-width="800"
-                                data-height="800">
+                            <a href="#foto4" class="html5lightbox btn" data-group="fotos">
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 4)->first())) {{ asset($mascota->fotos->where('nfoto', 4)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif"
@@ -461,7 +544,8 @@
                                                 method="post">
                                                 {!! method_field('delete') !!}
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('Delete') }}</button>
                                             </form>
                                         @else
                                             {{-- AGREGAR FOTO --}}
@@ -500,8 +584,7 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <a href="#foto5" class="html5lightbox btn" data-group="fotos" data-width="800"
-                                data-height="800">
+                            <a href="#foto5" class="html5lightbox btn" data-group="fotos">
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 5)->first())) {{ asset($mascota->fotos->where('nfoto', 5)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif"
@@ -556,8 +639,7 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <a href="#foto6" class="html5lightbox btn" data-group="fotos" data-width="800"
-                                data-height="800">
+                            <a href="#foto6" class="html5lightbox btn" data-group="fotos">
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 6)->first())) {{ asset($mascota->fotos->where('nfoto', 6)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif"
@@ -612,8 +694,7 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <a href="#foto7" class="html5lightbox btn" data-group="fotos" data-width="800"
-                                data-height="800">
+                            <a href="#foto7" class="html5lightbox btn" data-group="fotos">
                                 <img src="@if (!empty($mascota->fotos->where('nfoto', 7)->first())) {{ asset($mascota->fotos->where('nfoto', 7)->first()->ruta) }}
                             @else
                             {{ asset('storage/img/pata.jpg') }} @endif"
@@ -672,8 +753,7 @@
                         </div>
                         <div class="col-6">
                             {{-- VIDEO 1 --}}
-                            <a href="#video1" class="html5lightbox btn" data-group="fotos" data-width="800"
-                                data-height="800">
+                            <a href="#video1" class="html5lightbox btn" data-group="fotos">
                                 @if (!empty($mascota->videos->where('nvideo', 1)->first()))
                                     <video class="rounded img-fluid" style="height: 10em;">
                                         <source src="{{ asset($mascota->videos->where('nvideo', 1)->first()->ruta) }}"
@@ -739,8 +819,7 @@
                         </div>
                         <div class="col-6">
                             {{-- VIDEO 2 --}}
-                            <a href="#video2" class="html5lightbox btn" data-group="fotos" data-width="800"
-                                data-height="800">
+                            <a href="#video2" class="html5lightbox btn" data-group="fotos">
                                 @if (!empty($mascota->videos->where('nvideo', 2)->first()))
                                     <video class="rounded img-fluid" style="height: 10em;">
                                         <source src="{{ asset($mascota->videos->where('nvideo', 2)->first()->ruta) }}"
@@ -866,8 +945,8 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route('url1') }}" method="post"
-                                                    class="text-black">
+                                                <form action="{{ route('url1') }}" method="post" class="text-black"
+                                                    autocomplete="off">
                                                     {!! csrf_field() !!}
                                                     <div class="mb-3">
                                                         <h4 class="text-uppercase">{{ __('put your link') }}</h4>
@@ -906,8 +985,8 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route('url2') }}" method="post"
-                                                    class="text-black">
+                                                <form action="{{ route('url2') }}" method="post" class="text-black"
+                                                    autocomplete="off">
                                                     {!! csrf_field() !!}
                                                     <div class="mb-3">
                                                         <h4 class="text-uppercase">{{ __('put your link') }}</h4>

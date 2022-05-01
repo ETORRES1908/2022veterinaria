@@ -11,42 +11,13 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    /* protected $redirectTo = 'profile'; */
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -56,40 +27,38 @@ class RegisterController extends Controller
             'apellido' => 'required|string|between:3,20|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
             'foto' => 'required|image|max:2048',
             'discapacidad' => 'required|string',
-            'dni' => 'required|numeric|digits:8|unique:users',
+            'dni' => 'required|numeric|unique:users',
             'galpon' => '',
             'prepa' => '',
             'email' => 'required|string|email|max:255|unique:users',
-            'company' => 'required|string',
+            'company' => '',
             'celular' => 'required|unique:users|digits:9',
             'country' => 'required|string',
             'state' => 'required|string',
-            'district' => 'required|string',
-            'direction' => 'required|string',
-            'job' => 'required|string',
+            'district' => '',
+            'direction' => '',
+            'job' => '',
             'password' => 'required|string|confirmed',
             'answer' => 'required|string',
             'captcha' => 'required|captcha',
-            'foto' => 'required',
+            'foto' => 'image',
             'fdpt' => 'mimes:pdf',
             'sdpt' => 'image'
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
     protected function create(array $data)
     {
 
         //FOTO PROFILE
-        $pph = $data['foto'];
-        $nombre = $data['dni'] . "profile.jpg";
-        $ruta = 'storage/images/users/' . $nombre;
-        Image::make($pph->getRealPath())->resize(400, 400)->save($ruta, 72, 'jpg');
+        $ruta = 'user.png';
+        if (isset($data['foto'])) {
+            $pph = $data['foto'];
+            $nombre = $data['dni'] . "profile.jpg";
+
+            $ruta = 'storage/images/users/' . $nombre;
+            Image::make($pph->getRealPath())->resize(400, 400)->save($ruta, 72, 'jpg');
+        }
         //FOTO DISABILITY 1
         $rutaf = null;
         if (isset($data['fdpt'])) {
@@ -129,8 +98,7 @@ class RegisterController extends Controller
             'job' => $data['job'],
             'password' => bcrypt($data['password']),
             'answer' => $data['answer'],
-            // ESTADO DE USUARIO 0 = PENDIENTE, 1 = ACTIVADO
-            'status' => '1',
+            'status' => '1', // ESTADO DE USUARIO 0 = PENDIENTE, 1 = ACTIVADO
             'fdpt' =>  $rutaf,
             'sdpt' =>  $rutas
         ])->assignRole($data['usert']);

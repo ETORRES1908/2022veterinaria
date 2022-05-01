@@ -49,12 +49,6 @@ class MascotasController extends Controller
         return view('Usuario.Mascotas.create', compact('pads', 'mads'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -73,22 +67,23 @@ class MascotasController extends Controller
             'ncr' => $request->ncr,
             'sena' => $request->sena,
             'plc' => $request->plc,
+            'raza' => $request->race,
             'plu' => $request->plu,
-            'pad' => $request->pad,
-            'mad' => $request->mad,
+            'pad' => $request->pad, //PADRILLO
+            'mad' => $request->mad, //MADRILLA
             'des' => $request->des,
             'obs' => $request->obs,
         ]);
 
         $user = User::Find($request->user_id);
+        $nmascotas = count($user->mascotas);
         $REGANI =
             str_replace('-', '', Carbon::now()->format('Y-m-d')) .
             $user->country .
             $user->state .
-            '000' .
-            $user->id .
-            '00' .
-            $nmascota->id;
+            str_pad($user->id, 5, "0", STR_PAD_LEFT) .
+            str_pad($nmascotas, 3, "0", STR_PAD_LEFT);
+
         $nmascota->update(['REGANI' => $REGANI]);
 
         if ($request->vcnsf) {
@@ -154,32 +149,19 @@ class MascotasController extends Controller
     {
         $mascota = Mascota::find($id);
 
-        $pad = Mascota::find($mascota->id);
-        $mad = Mascota::find($mascota->id);
+        $pad = Mascota::find($mascota->pad);
+        $mad = Mascota::find($mascota->mad);
 
         $duelos = Duelos::orWhere(['pmascota_id' => $id, 'smascota_id' => $id])->latest()->take(20)->get();
         return view('Usuario.Mascotas.show', compact('mascota', 'duelos', 'pad', 'mad'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Mascota  $mascota
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $mascota = Mascota::find($id);
         return response()->json(array('success' => true, 'mascota' => $mascota));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Mascota  $mascota
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $mascota = Mascota::find($id);
@@ -187,12 +169,6 @@ class MascotasController extends Controller
         return redirect()->route('mascotas.show', $id)->with('mensaje', __('Successfully edited'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Mascota  $mascota
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Mascota $mascota)
     {
         //

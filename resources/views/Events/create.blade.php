@@ -3,7 +3,7 @@
     <form class="text-uppercase" method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data"
         autocomplete="off">
         {!! csrf_field() !!}
-        <div class="card bg-black text-white mx-auto border border-danger mb-3">
+        {{-- <div class="card bg-black text-white mx-auto border border-danger mb-3">
             <div class="card-body border border-danger">
                 <div class="row g-1 mx-auto">
                     <div class="col-6 m-auto">
@@ -27,81 +27,9 @@
                             </li>
                         </ul>
                     </div>
-                    {{-- <div class="col-lg-6">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-control h-100">
-                                    <img id="previewf" src="{{ asset('storage/img/perro.jpg') }}"
-                                        class="img-fluid mx-auto d-block bg-danger" />
-                                    <div for="fotof" onclick="getFile()" id="v1" class="btn btn-white bg-white d-flex">
-                                        <i class="bi bi-cloud-upload"></i>{{ __('Upload') }}
-                                        <div id="yourBtnf" class="mx-2">...{{ __('there is no picture') }}
-                                        </div>
-                                    </div>
-                                    <input id="fotof" type="file" name="fotof" value="{{ old('fotof') }}" required
-                                        autofocus accept="image/*" onchange="sub(this)" hidden>
-                                    <script>
-                                        function getFile() {
-                                            document.getElementById("fotof").click();
-                                        }
-
-                                        function sub(obj) {
-                                            var file = obj.value;
-                                            var fileName = file.split("\\");
-                                            document.getElementById("yourBtnf").innerHTML = fileName[fileName.length - 1];
-                                            event.preventDefault();
-                                            /* fotof */
-                                            if (fotof.files) {
-                                                previewf.src = URL.createObjectURL(fotof.files[0])
-                                            }
-                                        }
-                                    </script>
-
-                                    <label class="form-label">{{ __('Challenge') }}:</label>
-                                    <input class="form-control text-danger" type="number" name="chll1"
-                                        value="{{ old('chll1') }}" onKeyPress="if(this.value.length==4) return false;"
-                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" autofocus>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-control">
-                                    <img id="previews" src="{{ asset('storage/img/perro.jpg') }}"
-                                        class="img-fluid mx-auto d-block bg-danger" />
-                                    <div for="fotos" onclick="getFile()" id="v2" class="btn btn-white bg-white d-flex">
-                                        <i class="bi bi-cloud-upload"></i>{{ __('Upload') }}
-                                        <div id="yourBtn2" class="mx-2">...{{ __('there is no picture') }}
-                                        </div>
-                                    </div>
-                                    <input id="fotos" type="file" name="fotos" value="{{ old('fotos') }}" required
-                                        autofocus accept="image/*" onchange="sub(this)" hidden>
-                                    <script>
-                                        function getFile() {
-                                            document.getElementById("fotos").click();
-                                        }
-
-                                        function sub(obj) {
-                                            var file = obj.value;
-                                            var fileName = file.split("\\");
-                                            document.getElementById("yourBtn2").innerHTML = fileName[fileName.length - 1];
-                                            event.preventDefault();
-                                            /* fotos */
-                                            if (fotos.files) {
-                                                previews.src = URL.createObjectURL(fotos.files[0])
-                                            }
-                                        }
-                                    </script>
-                                    <label class="form-label">{{ __('Challenge') }}:</label>
-                                    <input class="form-control text-danger" type="number" name="chll2"
-                                        value="{{ old('chll2') }}" onKeyPress="if(this.value.length==4) return false;"
-                                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" autofocus>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div> --}}
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="card mx-auto bg-black text-white border border-danger mb-3">
             <div class="card-body border border-danger">
                 <div class="fw-bold text-center">
@@ -1584,7 +1512,7 @@
                         <div class="col-auto">
 
                             <textarea name="invi" class="form-control" maxlength="2000" autofocus pattern="[A-zÀ-ú\s]+"
-                                style="text-transform:uppercase" onkeydown="return /[A-zÀ-ú,-\s]/i.test(event.key)"
+                                style="text-transform:uppercase" onkeydown="return /[A-zÀ-ú\s]/i.test(event.key)"
                                 placeholder="JUAN PEREZ GLP CHATIN - LIMA PERU, CARLOS VELASCO GLP TRUENO - QUITO ECUADOR,"></textarea>
 
                             @if ($errors->has('invi'))

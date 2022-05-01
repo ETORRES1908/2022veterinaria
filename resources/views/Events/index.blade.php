@@ -11,8 +11,18 @@
     <div class="card bg-black border border-danger">
         @can('addevent')
             <div class="card-header border border-danger">
-                <a href="{{ route('events.create') }}" class="btn btn-success text-uppercase" style="font-size: 95%">
-                    {{ __('Create your event') }}</a>
+                <div class="row">
+                    <div class="col-auto">
+                        <a href="{{ route('events.create') }}" class="btn btn-success text-uppercase" style="font-size: 95%">
+                            {{ __('Create your event') }}</a>
+                    </div>
+                    <div class="col-auto my-auto">
+                        <span class="fs-bold text-danger ms-1">
+                            *
+                            {{ __('Before creating your event there must be a record as Colosseum, Control table and Judge') }}
+                        </span>
+                    </div>
+                </div>
             </div>
         @endcan
         <div class="card-body table-responsive border border-danger text-uppercase">
@@ -40,23 +50,23 @@
                                 <?php
                                 switch ($evento->tevent) {
                                     case 'cmp':
-                                        echo __('Championship');
+                                        echo e(__('Championship'));
                                         break;
 
                                     case 'cct':
-                                        echo __('Concentration');
+                                        echo e(__('Concentration'));
                                         break;
 
                                     case 'drb':
-                                        echo __('Derby');
+                                        echo e(__('Derby'));
                                         break;
 
                                     case 'prt':
-                                        echo__('Party');
+                                        echo e(__('Party'));
                                         break;
 
                                     case 'thr':
-                                        echo __('Other');
+                                        echo e(__('Other'));
                                         break;
                                 }
                                 ?>

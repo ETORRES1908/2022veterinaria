@@ -51,6 +51,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Izquierdo Side Of Navbar -->
                     <ul class="navbar-nav bg-black me-auto mb-2 mb-2">
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -133,16 +134,15 @@
                             @endcan
 
                             <li class="nav-item">
-                                {{-- LOGOUT --}}
-                                <a class="nav-link link-light" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                    {!! csrf_field() !!}
+                                    {{-- LOGOUT --}}
+                                    <a class="nav-link link-light" href="{{ route('logout') }}" onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
+                                        {{ __('Logout') }}
+                                    </a>
+                                </form>
                             </li>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                style="display: none;">
-                                {!! csrf_field() !!}
-                            </form>
 
                             {{-- USERMENU --}}
                             <li class="nav-item">
@@ -174,7 +174,7 @@
         <div class="row">
             <div class="col">
                 <p class="text-center">
-                    <img src="{{ asset('') }}" width="250" height="100">
+                    <img src="{{ asset('storage/img/dog.jpg') }}" width="250" height="100">
                 </p>
                 <p class="h6">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor pelican incididunt ut

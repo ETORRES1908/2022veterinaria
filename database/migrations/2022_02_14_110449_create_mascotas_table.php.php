@@ -22,11 +22,12 @@ class CreateMascotasTable extends Migration
             $table->string('REGANI')->nullable();
             $table->string('fnac');
             $table->string('sss')->nullable(); //PESO
+            $table->string('raza')->nullable(); //RAZA
             $table->string('size');
             $table->string('nombre');
             $table->string('gender');
-            $table->string('plc'); //PLACA
-            $table->string('lck'); //CASILLERO
+            $table->string('plc')->nullable();; //PLACA
+            $table->string('lck')->nullable();; //CASILLERO
             $table->string('plu'); //COLOR
             $table->string('pad')->nullable(); //PADRE
             $table->string('mad')->nullable(); //MADRE

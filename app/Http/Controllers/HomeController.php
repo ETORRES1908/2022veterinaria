@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,22 +32,23 @@ class HomeController extends Controller
 
     public function findperson(Request $request)
     {
-        /* return $request->all(); */
         $users = User::where('name', 'LIKE', '%' . $request->username . '%')
             ->where('galpon', 'LIKE', '%' . $request->shed . '%')
+            ->where('id', '!=', Auth::user()->id)
+            ->where('usert', 'LIKE', '%' . $request->type . '%')
             ->where('country', 'LIKE', '%' . $request->country . '%')
+            ->where('state', 'LIKE', '%' . $request->state . '%')
             ->where('usert', '!=', 'admin')
             ->where('usert', '!=', 'webmaster')
             ->paginate(10);
-
-        /* return $users->links(); */
         return view('Users.findusers', compact('users'));
     }
 
     public function person(Request $request, $id)
     {
         $user = User::find($request->id);
-        return view('Users.user', compact('user'));
+        $mascotas = User::find($request->id)->mascotas()->paginate(10);
+        return view('Users.user', compact('user', 'mascotas'));
     }
 
     public function reset(Request $request)

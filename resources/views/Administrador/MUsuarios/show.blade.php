@@ -47,7 +47,7 @@
                             case 'amt':
                                 echo __('Amateur');
                                 break;
-
+                        
                             default:
                                 # code...
                                 break;

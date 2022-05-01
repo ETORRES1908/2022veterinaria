@@ -13,11 +13,13 @@
                         {{-- USERNAME --}}
                         <div class="col-sm-8 mb-3 form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-form-label fw-bold">
-                                {{ __('User') }} / {{ __('Name Social') }}
+                                * {{ __('User') }} / {{ __('Name Social') }}
                             </label>
                             <div class="col-auto">
                                 <input id="name" type="text" class="form-control text-danger" name="name"
-                                    value="{{ old('name') }}" required autofocus maxlength="12">
+                                    style="text-transform:lowercase" value="{{ old('name') }}" required autofocus
+                                    maxlength="12" onkeydown="return /[A-z1-9]/i.test(event.key)"
+                                    oninput="this.value = this.value.replace(/[^A-z0-9]/g, '')">
 
                                 @if ($errors->has('name'))
                                     <span class="text-danger fs-6">
@@ -30,18 +32,25 @@
                         {{-- SIGN UP AS --}}
                         <div class="col-sm-4 mb-3 form-group{{ $errors->has('usert') ? ' has-error' : '' }}">
                             <label for="usert" class="col-form-label fw-bold">
-                                {{ __('Sign Up as') }}
+                                * {{ __('Sign Up as') }}
                             </label>
                             <div class="col-auto">
                                 <select id="usert" name="usert" class="form-select text-danger" required autofocus>
                                     <option value="" selected hidden>{{ __('') }}</option>
-                                    <option value="own">{{ __('Owner') }}</option>
-                                    <option value="ppr">{{ __('Preparer') }}</option>
-                                    <option value="cls">{{ __('Coliseum') }}</option>
-                                    <option value="cdk">{{ __('Control desk') }}</option>
-                                    <option value="jdg">{{ __('Judge') }}</option>
-                                    <option value="asst">{{ __('Assistant') }}</option>
-                                    <option value="amt">{{ __('Amateur') }}</option>
+                                    <option value="own" @if (old('usert') == 'own') selected @endif>
+                                        {{ __('Owner') }}</option>
+                                    <option value="ppr" @if (old('usert') == 'ppr') selected @endif>
+                                        {{ __('Preparer') }}</option>
+                                    <option value="cls" @if (old('usert') == 'cls') selected @endif>
+                                        {{ __('Coliseum') }}</option>
+                                    <option value="cdk" @if (old('usert') == 'cdk') selected @endif>
+                                        {{ __('Control desk') }}</option>
+                                    <option value="jdg" @if (old('usert') == 'jdg') selected @endif>
+                                        {{ __('Judge') }}</option>
+                                    <option value="asst" @if (old('usert') == 'asst') selected @endif>
+                                        {{ __('Assistant') }}</option>
+                                    <option value="amt" @if (old('usert') == 'amt') selected @endif>
+                                        {{ __('Amateur') }}</option>
                                 </select>
                                 @if ($errors->has('usert'))
                                     <span class="text-da nger fs-6">
@@ -53,12 +62,12 @@
                         {{-- NOMBRE --}}
                         <div class="col-6 mb-3 form-group{{ $errors->has('nombre') ? 'has-error' : '' }}">
                             <label for="nombre" class="col-form-label fw-bold">
-                                {{ __('First name') }}
+                                * {{ __('First name') }}
                             </label>
                             <div class="col-auto">
-                                <input type="text" class="form-control text-danger" name="nombre"
-                                    value="{{ old('nombre') }}" required autofocus maxlength="10" pattern="[A-zÀ-ú]+"
-                                    onkeydown="return /[A-zÀ-ú]/i.test(event.key)" />
+                                <input type="text" class="uppert form-control text-danger" name="nombre"
+                                    style="text-transform: uppercase" value="{{ old('nombre') }}" required autofocus
+                                    maxlength="12" onkeydown="return /[A-Z\s]/i.test(event.key)" />
                                 @if ($errors->has('nombre'))
                                     <span class="text-danger text-fs6">
                                         {{ $errors->first('nombre') }}
@@ -69,13 +78,13 @@
                         {{-- APELLIDO --}}
                         <div class="col-6 mb-3 form-group{{ $errors->has('apellido') ? ' has-error' : '' }}">
                             <label for="apellido" class="col-form-label fw-bold">
-                                {{ __('First surname') }}
+                                * {{ __('First surname') }}
                             </label>
 
                             <div class="col-auto">
-                                <input id="apellido" type="text" class="form-control  text-danger" name="apellido"
-                                    value="{{ old('apellido') }}" autofocus required pattern="[A-zÀ-ú]+" maxlength="10"
-                                    onkeydown="return /[A-zÀ-ú]/i.test(event.key)">
+                                <input type="text" class="uppert form-control  text-danger" name="apellido"
+                                    style="text-transform: uppercase" value="{{ old('apellido') }}" autofocus required
+                                    maxlength="12" onkeydown="return /[A-Z\s]/i.test(event.key)">
 
                                 @if ($errors->has('apellido'))
                                     <span class="text-danger text-fs6">
@@ -87,10 +96,11 @@
                         {{-- COLISEO NAME --}}
                         <div id="clsname" class="col-12 mb-3">
                             <label for="nombre" class="col-form-label fw-bold">
-                                {{ __('Name') . ' ' . __('Coliseum') }}
+                                * {{ __('Name') . ' ' . __('Coliseum') }}
                             </label>
                             <input type="text" class="form-control text-danger" name="clsname"
-                                value="{{ old('clsname') }}" autofocus pattern="[A-zÀ-ú1-9\s]+" maxlength="30"
+                                style="text-transform:uppercase" value="{{ old('clsname') }}" autofocus
+                                pattern="[A-zÀ-ú1-9\s]+" maxlength="30"
                                 onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)" />
 
                             @if ($errors->has('clsname'))
@@ -132,15 +142,15 @@
                         </div>
                         {{-- NÚMERO DE DNI --}}
                         <div class="col-6 mb-3 form-group{{ $errors->has('dni') ? ' has-error' : '' }}">
-                            <label for="dni" class="col-form-label fw-bold">
-                                {{ __('DNI') }}
+                            <label for="dni" class="col-form-label fw-bold text-uppercase">
+                                * {{ __('DNI') }} / {{ __('identification card') }}
                             </label>
 
                             <div class="col-auto">
                                 <input id="dni" type="number" class="form-control  text-danger" name="dni"
-                                    value="{{ old('dni') }}" onKeyPress="if(this.value.length==8) return false;"
+                                    value="{{ old('dni') }}" onKeyPress="if(this.value.length==15) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required autofocus
-                                    minlength="8" maxlength="8">
+                                    minlength="8" maxlength="15">
 
                                 @if ($errors->has('dni'))
                                     <span class="text-danger text-fs6">
@@ -156,9 +166,9 @@
                         <label for="foto" class="col-form-label fw-bold text-uppercase">
                             {{ __('upload photo to your profile') }}
                         </label>
-                        <label class="rounded border p-1 m-1 bg-danger text-white">
+                        {{-- <label class="rounded border p-1 m-1 bg-danger text-white">
                             {{ __('put a photo is required') }}
-                        </label>
+                        </label> --}}
                         <div class="col-auto m-1 bg-black rounded">
                             <img id="preview" src="{{ asset('storage/img/defaultuser.png') }}"
                                 class="img-fluid mx-auto d-block" height="240" />
@@ -167,8 +177,8 @@
                                 <div id="yourBtn" class="mx-2">...{{ __('there is no picture') }}
                                 </div>
                             </div>
-                            <input id="foto" type="file" name="foto" value="{{ old('foto') }}" required autofocus
-                                accept="image/*" onchange="sub(this)" hidden>
+                            <input id="foto" type="file" name="foto" value="{{ old('foto') }}" autofocus accept="image/*"
+                                onchange="sub(this)" hidden>
                             <script>
                                 function getFile() {
                                     document.getElementById("foto").click();
@@ -269,8 +279,8 @@
                         </label>
                         <div class="col-auto">
                             <input id="galpon" type="text" class="form-control  text-danger" name="galpon"
-                                value="{{ old('galpon') }}" maxlength="14" autofocus>
-
+                                style="text-transform:uppercase" value="{{ old('galpon') }}" maxlength="20" autofocus
+                                onkeydown="return /[A-zÀ-ú1-9\s]/i.test(event.key)">
                             @if ($errors->has('galpon'))
                                 <span class="text-danger text-fs6">
                                     {{ $errors->first('galpon') }}
@@ -302,12 +312,13 @@
                     {{-- EMAIL --}}
                     <div class="col-sm-6 mb-3 form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <label for="email" class="col-form-label fw-bold">
-                            {{ __('Email') }}
+                            * {{ __('email') }}
                         </label>
 
                         <div class="col">
-                            <input id="email" type="email" class="form-control  text-danger" name="email"
-                                value="{{ old('email') }}" maxlength="30" required autofocus>
+                            <input id="email" type="email" class="lowert form-control  text-danger" name="email"
+                                style="text-transform: lowercase" value="{{ old('email') }}" maxlength="30" required
+                                autofocus onkeydown="return /[A-zÁ-ú1-9._-@]/i.test(event.key)">
 
                             @if ($errors->has('email'))
                                 <span class="text-danger text-fs6">
@@ -319,7 +330,7 @@
                     {{-- CELULAR --}}
                     <div class="col-sm-3 mb-3 form-group{{ $errors->has('celular') ? ' has-error' : '' }}">
                         <label for="celular" class="col-form-label fw-bold">
-                            {{ __('Phone') }}
+                            * {{ __('Phone') }}
                         </label>
                         <div class="col-auto">
                             <input id="celular" type="number" class="form-control  text-danger" name="celular" minlength="9"
@@ -341,7 +352,7 @@
                         </label>
 
                         <div class="col-auto">
-                            <select class="form-select text-danger text-uppercase" name="company" required autofocus>
+                            <select class="form-select text-danger text-uppercase" name="company" autofocus>
                                 <option value="" hidden @if (old('company') == '') selected @endif></option>
                                 <option value="bitel" @if (old('company') == 'bitel') selected @endif>BITEL</option>
                                 <option value="claro" @if (old('company') == 'claro') selected @endif>CLARO</option>
@@ -365,7 +376,7 @@
                     {{-- PAIS --}}
                     <div class="col-md-4 mb-3 form-group{{ $errors->has('country') ? ' has-error' : '' }}">
                         <label for="country" class="col-form-label fw-bold">
-                            {{ __('Country') }}
+                            * {{ __('Country') }}
                         </label>
 
                         <div class="col">
@@ -404,9 +415,9 @@
                         </div>
                     </div>
                     {{-- DEPARTAMENTO --}}
-                    <div class="col-sm-4 mb-3 form-group{{ $errors->has('state') ? ' has-error' : '' }}">
+                    <div class="col-6 col-md-4 mb-3 form-group{{ $errors->has('state') ? ' has-error' : '' }}">
                         <label for="state" class="col-form-label fw-bold">
-                            {{ __('State') }}
+                            * {{ __('State') }}
                         </label>
 
                         <div class="col-auto">
@@ -1049,13 +1060,13 @@
                         </div>
                     </div>
                     {{-- DISTRITO --}}
-                    <div class="col-sm-4 mb-3 form-group{{ $errors->has('district') ? ' has-error' : '' }}">
+                    <div class="col-6 col-md-4 mb-3 form-group{{ $errors->has('district') ? ' has-error' : '' }}">
                         <label for="district" class="col-form-label fw-bold">
                             {{ __('District') }}
                         </label>
                         <div class="col-auto">
                             <input id="district" type="text" class="form-control  text-danger" name="district"
-                                value="{{ old('district') }}" maxlength="18" required autofocus pattern="[A-zÀ-ú\s]+"
+                                value="{{ old('district') }}" maxlength="18" autofocus pattern="[A-zÀ-ú\s]+"
                                 onkeydown="return /[A-zÀ-ú\s]/i.test(event.key)">
 
                             @if ($errors->has('district'))
@@ -1075,7 +1086,7 @@
                         </label>
                         <div class="col-auto">
                             <input id="direction" type="text" class="form-control  text-danger" name="direction"
-                                value="{{ old('direction') }}" maxlength="50" required autofocus
+                                value="{{ old('direction') }}" maxlength="50" autofocus
                                 placeholder="{{ __('Include ref or alt.') }}">
 
                             @if ($errors->has('direction'))
@@ -1092,7 +1103,7 @@
                         </label>
                         <div class="col-auto">
                             <input id="job" type="text" class="form-control  text-danger" name="job"
-                                value="{{ old('job') }}" maxlength="36" required autofocus
+                                value="{{ old('job') }}" maxlength="36" autofocus
                                 placeholder="{{ __('Architect, Carpenter') }}" pattern="[A-zÀ-ú\s]+"
                                 onkeydown="return /[A-zÀ-ú\s]/i.test(event.key)">
 
@@ -1110,7 +1121,7 @@
                     <div class="col-sm-6 mb-3 form-group{{ $errors->has('password') ? 'has-error' : '' }}">
                         <label for="password" class="col-form-label fw-bold"
                             onKeyPress="if(this.value.length==8) return false;">
-                            {{ __('Password') }}
+                            * {{ __('Password') }}
                         </label>
 
                         <div class="col-auto">
@@ -1127,7 +1138,7 @@
                     {{-- CONFIRMAR CONTRASEÑA --}}
                     <div class="col-sm-6 mb-3 form-group">
                         <label for="password-confirm" class="col-form-label fw-bold">
-                            {{ __('Confirm Password') }}
+                            * {{ __('Confirm Password') }}
                             {{-- ? --}}
                         </label>
                         <div class="col-auto">
@@ -1142,52 +1153,58 @@
                         @endif
                     </div>
                 </div>
+
                 {{-- ELEGIR RESPUESTA --}}
-                <div class="col-sm-12 mb-3 form-group{{ $errors->has('question') ? ' has-error' : '' }}">
+                <div class="col-12 mb-3 form-group{{ $errors->has('question') ? ' has-error' : '' }}">
                     <label for="answer" class="col-auto col-form-label fw-bold">
-                        {{ __('secrect answer') }}
+                        * {{ __('secrect answer') }}
                     </label>
-                    <input id="answer" type="text" class="form-control text-danger" name="answer" maxlength="10"
-                        value="{{ old('answer') }}" required autofocus
-                        placeholder="{{ __('To recover your account') }}">
+                    <input id="answer" type="text" class="form-control text-danger" name="answer" maxlength="12"
+                        value="{{ old('answer') }}" required autofocus style="text-transform: lowercase"
+                        placeholder="{{ __('To recover your account') }}"
+                        onkeydown="return /[A-z1-9\s]/i.test(event.key)">
                     @if ($errors->has('answer'))
                         <span class="text-danger text-fs6">
                             {{ $errors->first('answer') }}
                         </span>
                     @endif
                 </div>
-                {{-- CAPTCHAT AND INPUT CAPCHAT --}}
-                <div class="col-sm-6 mx-auto mb-3 form-group{{ $errors->has('captcha') ? ' has-error' : '' }}">
-                    <div class="row">
-                        {{-- CAPTCHAT --}}
-                        <div for="Captcha" class="col-xl-6 col-form-label mx-auto text-center">
+                <div class="row">
+                    {{-- CAPTCHAT AND INPUT CAPCHAT --}}
+                    <div class="col-auto form-group{{ $errors->has('captcha') ? ' has-error' : '' }}">
+                        <div class="row mb-3">
+                            {{-- CAPTCHAT --}}
+                            <div for="Captcha" class="col-lg-6 col-form-label my-auto text-start">
+                                {!! captcha_img() !!}
+                            </div>
+                            {{-- INPUT CAPTCHAT --}}
+                            <div class="col-7 col-lg-6 my-auto text-start">
+                                <input id="captcha" type="text" class="form-control text-danger fw-bold" name="captcha"
+                                    required autofocus placeholder="{{ __('Result of blast') }}">
 
-                            {!! captcha_img() !!}
-
+                                @if ($errors->has('captcha'))
+                                    <span class="fs-6 text-danger">
+                                        {{ $errors->first('captcha') }}
+                                    </span>
+                                @endif
+                            </div>
                         </div>
-                        {{-- INPUT CAPTCHAT --}}
-                        <div class="col-7 col-xl-6 m-auto mb-3">
-                            <input id="captcha" type="text" class="form-control text-danger fw-bold" name="captcha"
-                                required autofocus placeholder="{{ __('Result of blast') }}">
-
-                            @if ($errors->has('captcha'))
-                                <span class="fs-6 text-danger">
-                                    {{ $errors->first('captcha') }}
-                                </span>
-                            @endif
-                        </div>
-
                     </div>
-                </div>
-                {{-- BOTON DE REGISTRO --}}
-                <div class="text-end">
-                    <button type="submit" class="col-auto btn btn-success text-uppercase">
-                        {{ __('Create your account') }}
-                    </button>
-                    <a type="" class="col-auto btn btn-warning" href="{{ route('contact') }}">
-                        {{ __('Contact us') }}
-                    </a>
-
+                    {{-- BOTON DE REGISTRO --}}
+                    <div class="col-lg-5 my-auto text-start">
+                        <div class="row mb-3">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-success text-uppercase">
+                                    {{ __('Create your account') }}
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <a type="" class="btn btn-secondary" href="{{ route('contact') }}">
+                                    {{ __('Contact us') }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -1232,6 +1249,7 @@
                 e.preventDefault();
             });
         });
+
         /* DISABILITY DOCUMENT */
         fdpt.onchange = evt => {
             pdffile = document.getElementById("fdpt").files[0];
@@ -1291,5 +1309,17 @@
                     break;
             }
         }).change();
+    </script>
+    <script>
+        $(function() {
+            $('.uppert').keyup(function() {
+                this.value = this.value.toLocaleUpperCase();
+            });
+        });
+        $(function() {
+            $('.lowert').keyup(function() {
+                this.value = this.value.toLocaleLowerCase();
+            });
+        });
     </script>
 @endsection

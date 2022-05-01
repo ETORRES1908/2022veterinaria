@@ -3,7 +3,7 @@
 @section('content')
     <div class="text-center text-uppercase">
         <h1>
-            @if ($evento->judge_id == Auth::user()->id)
+            @if ($evento->judge_id == Auth::user()->id || $evento->assistent_id == Auth::user()->id)
                 {{ __('LIST FIGHTS') }} - {{ __('Judge') }}
             @elseif ($evento->mcontrol_id == Auth::user()->id)
                 {{ __('Control Desk') }} - {{ __('Deal') }}s
@@ -18,7 +18,7 @@
                 </a>
             @endcan
             @if ($evento->mcontrol_id == Auth::user()->id)
-                @if (count($duelos) <= 150 && $evento->mcontrol_id == Auth::user()->id)
+                @if (count($duelos) < 150 && $evento->mcontrol_id == Auth::user()->id)
                     <button type="button" class="btn btn-danger text-uppercase" data-bs-toggle="modal"
                         data-bs-target="#AddDeal">
                         {{ __('Add Deal') }}s
@@ -371,7 +371,7 @@
                                             {{ __('Draw') }}</option>
                                     </select>
                                 </td>
-                                @can('sentence')
+                                @if ($evento->judge_id == Auth::user()->id || $evento->assistent_id == Auth::user()->id)
                                     <td>
                                         @if ($duel->result == '')
                                             <input type="submit" class="btn btn-warning text-uppercase"
@@ -381,7 +381,7 @@
                                                 value="{{ __('sentenced') }}" disabled>
                                         @endif
                                     </td>
-                                @endcan
+                                @endif
                                 @if ($evento->mcontrol_id == Auth::user()->id)
                                     <td>
                                         @if ($duel->result == '')
