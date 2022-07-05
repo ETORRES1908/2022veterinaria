@@ -1,14 +1,12 @@
 <?php
 
+namespace Database\Seeders;
+
+use App\Coliseos;
+use App\User;
 use Illuminate\Database\Seeder;
 
-use App\User;
-use App\Mascota;
-use App\Coliseos;
-use App\Eventos;
-use App\LParticipantes;
-
-class TestSeedeer extends Seeder
+class TestSeeder extends Seeder
 {
     /**
      * Run the database seeds.

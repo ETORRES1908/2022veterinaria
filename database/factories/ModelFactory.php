@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Str;
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -37,6 +37,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'job' => $faker->jobTitle(),
         'password' => $password ?: $password = bcrypt('123'),
         'answer' => '123',
-        'remember_token' => str_random(10),
+        'remember_token' => Str::random(10),
     ];
 });

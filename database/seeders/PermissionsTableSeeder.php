@@ -1,5 +1,6 @@
-base/seeds/PermissionsTableSeeder.phpPHP
 <?php
+
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;

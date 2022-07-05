@@ -35,6 +35,13 @@
       0 => 'JeroenNoten\\LaravelAdminLte\\AdminLteServiceProvider',
     ),
   ),
+  'laravel/legacy-factories' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Illuminate\\Database\\Eloquent\\LegacyFactoryServiceProvider',
+    ),
+  ),
   'laravel/sanctum' => 
   array (
     'providers' => 

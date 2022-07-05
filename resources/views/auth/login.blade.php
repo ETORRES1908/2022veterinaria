@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            @if (isset($banners[0]))
+                            {{-- @if (isset($banners[0]))
                                 <div class="carousel-item @if ($banners[0]->nombre = 'blogin1.jpeg') active @endif"
                                     data-bs-interval="4000">
                                     <a href="{{ $banners[0]->url }}" target="__blank">
@@ -27,7 +27,7 @@
                                         <img src="{{ asset($banner->ruta) }}" class="img-fluid mx-auto d-block">
                                     </a>
                                 </div>
-                            @endforeach
+                            @endforeach --}}
                         </div>
                     </div>
                 </div>

@@ -12,9 +12,9 @@ class Handler extends ExceptionHandler
      *
      * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
      */
-    protected $levels = [
-        //
-    ];
+    // protected $levels = [
+    //     //
+    // ];
 
     /**
      * A list of the exception types that are not reported.
