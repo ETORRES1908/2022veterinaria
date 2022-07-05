@@ -26,7 +26,6 @@
                                         {{ $errors->first('name') }}
                                     </span>
                                 @endif
-
                             </div>
                         </div>
                         {{-- SIGN UP AS --}}
@@ -60,7 +59,7 @@
                             </div>
                         </div>
                         {{-- NOMBRE --}}
-                        <div class="col-6 mb-3 form-group{{ $errors->has('nombre') ? 'has-error' : '' }}">
+                        <div class="col-4 mb-3 form-group{{ $errors->has('nombre') ? 'has-error' : '' }}">
                             <label for="nombre" class="col-form-label fw-bold">
                                 * {{ __('First name') }}
                             </label>
@@ -75,8 +74,24 @@
                                 @endif
                             </div>
                         </div>
+                         {{-- PRUEBA --}}
+                         <div class="col-4 mb-3 form-group{{ $errors->has('prueba') ? 'has-error' : '' }}">
+                            <label for="prueba" class="col-form-label fw-bold">
+                                * {{ __('prueba') }}
+                            </label>
+                            <div class="col-auto">
+                                <input type="text" class="uppert form-control text-danger" name="prueba"
+                                    style="text-transform: uppercase" value="{{ old('prueba') }}" required autofocus
+                                    maxlength="12" onkeydown="return /[A-Z\s]/i.test(event.key)" />
+                                @if ($errors->has('prueba'))
+                                    <span class="text-danger text-fs6">
+                                        {{ $errors->first('prueba') }}
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         {{-- APELLIDO --}}
-                        <div class="col-6 mb-3 form-group{{ $errors->has('apellido') ? ' has-error' : '' }}">
+                        <div class="col-4 mb-3 form-group{{ $errors->has('apellido') ? ' has-error' : '' }}">
                             <label for="apellido" class="col-form-label fw-bold">
                                 * {{ __('First surname') }}
                             </label>
@@ -148,9 +163,9 @@
 
                             <div class="col-auto">
                                 <input id="dni" type="number" class="form-control  text-danger" name="dni"
-                                    value="{{ old('dni') }}" onKeyPress="if(this.value.length==15) return false;"
+                                    value="{{ old('dni') }}" onKeyPress="if(this.value.length==12) return false;"
                                     onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required autofocus
-                                    minlength="8" maxlength="15">
+                                    minlength="8" maxlength="12">
 
                                 @if ($errors->has('dni'))
                                     <span class="text-danger text-fs6">

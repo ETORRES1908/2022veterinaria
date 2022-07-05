@@ -169,8 +169,20 @@ class MascotasController extends Controller
         return redirect()->route('mascotas.show', $id)->with('mensaje', __('Successfully edited'));
     }
 
-    public function destroy(Mascota $mascota)
+    public function destroy($id)
     {
-        //
+        $mascota = Mascota::find($id);
+
+        if (!empty($mascota->fotos)) {
+            foreach ($mascota->fotos as $foto) {
+                $mfoto = MFotos::Find($foto->id);
+                unlink($mfoto->ruta);
+                $mfoto->delete();
+            }
+        }
+
+        $mascota->delete();
+
+        return redirect()->route('mascotas.index')->with('mensaje',  __('deleted'));
     }
 }

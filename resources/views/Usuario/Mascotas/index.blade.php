@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+
+    @if (session('mensaje'))
+        <div class="alert alert-success text-uppercase">
+            {{ session('mensaje') }}
+        </div>
+    @endif
+
     <div class="card bg-black">
         @can('addanimal')
             @if (count(Auth::user()->mascotas) < 200)

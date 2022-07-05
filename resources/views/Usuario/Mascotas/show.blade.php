@@ -37,6 +37,11 @@
             <h5 class="card-title fw-bold text-uppercase pe-none text-danger">
                 REGANI: {{ $mascota->REGANI }}
             </h5>
+            <form method="POST" class="text-uppercase" action="{{ route('mascotas.destroy', $mascota->id) }}">
+                {!! method_field('delete') !!}
+                {!! csrf_field() !!}
+                <button type="submit" class="col btn btn-danger">{{ __('Delete') }}</button>
+            </form>
             <div class="row">
                 <div class="col-lg-6  mb-3">
                     <div class="card-text">
@@ -906,7 +911,7 @@
             <tbody>
                 @foreach ($duelos as $duelo)
                     <tr class="my-auto">
-                        <td>{{ str_replace('-', '', $duelo->evento->fechas[0]) .$duelo->evento->coliseum->country .$duelo->evento->coliseum->state .'JUEZ' .$duelo->evento->judge->id }}
+                        <td>{{ str_replace('-', '', $duelo->evento->fechas[0]) . $duelo->evento->coliseum->country . $duelo->evento->coliseum->state . 'JUEZ' . $duelo->evento->judge->id }}
                         </td>
                         <td>
                             @if ($duelo->pmascota_id == $mascota->id)

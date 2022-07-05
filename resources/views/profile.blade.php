@@ -80,6 +80,10 @@
                         <input type="hidden" name="type" value="b">
                         <div class="row mb-3">
                             <div class="col-6 mb-3">
+                                <label class="col-form-label fw-bold">{{ __('PRUEBA') }}</label>
+                                <input type="text" class="form-control" value="{{ Auth::user()->prueba }}" readonly>
+                            </div>
+                            <div class="col-6 mb-3">
                                 <label class="col-form-label fw-bold">{{ __('First name') }}</label>
                                 <input type="text" class="form-control" value="{{ Auth::user()->nombre }}" readonly>
                             </div>
