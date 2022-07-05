@@ -52,6 +52,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'asset_url' => env('ASSET_URL', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -165,7 +166,6 @@ return [
         Laraveles\Spanish\SpanishServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
-        JeroenNoten\LaravelAdminLte\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -180,7 +180,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
