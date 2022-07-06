@@ -12,7 +12,7 @@ class User extends Authenticatable
     use Notifiable;
 
     use HasRoles;
-
+    protected $primaryKey = 'id';
     protected $guarded = [];
 
     protected $fillable = [

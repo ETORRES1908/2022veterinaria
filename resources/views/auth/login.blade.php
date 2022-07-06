@@ -13,27 +13,39 @@
                 <div class="card-body">
                     <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            {{-- @if (isset($banners[0]))
+
+                            {{-- @if (isset($banners))
                                 <div class="carousel-item @if ($banners[0]->nombre = 'blogin1.jpeg') active @endif"
                                     data-bs-interval="4000">
                                     <a href="{{ $banners[0]->url }}" target="__blank">
                                         <img src="{{ asset($banners[0]->ruta) }}" class="img-fluid mx-auto d-block">
                                     </a>
                                 </div>
-                            @endif
+                            @else
                             @foreach ($banners as $banner)
                                 <div class="carousel-item" data-bs-interval="4000">
                                     <a href="{{ $banner->url }}" target="_blank">
                                         <img src="{{ asset($banner->ruta) }}" class="img-fluid mx-auto d-block">
                                     </a>
                                 </div>
-                            @endforeach --}}
+                            @endforeach
+                            @endif --}}
                         </div>
                     </div>
                 </div>
             </div>
             {{-- FORM LOGIN --}}
+
             <div class="col-lg-5 my-auto border border-danger">
+                @if (count($errors) > 0)
+                    <div class="text-danger">
+
+                        @foreach ($errors->all() as $message)
+                            <li>{{ $message }}</li>
+                        @endforeach
+
+                    </div>
+                @endif
                 <div class="card bg-black">
                     <div class="card-header fw-bold fs-4">
                         {{ __('Log in') }}
@@ -48,20 +60,21 @@
                         </div>
                         {{-- Formulario de Inicio de Sesi贸n --}}
                         <form class="text-uppercase" method="POST" action="{{ route('login') }}">
-                            {!! csrf_field() !!}
+                            {{-- {!! csrf_field() !!} --}}
+                            @csrf
                             <div class="row mb-3 form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label for="name" class="col-sm-5 col-form-label">{{ __('Username') }}</label>
                                 {{-- USERNAME --}}
                                 <div class="col-md-7">
-                                    <input id="name" type="text" class="form-control text-danger" name="name"
+                                    <input id="email" type="text" class="form-control text-danger" name="email"
                                         value="{{ old('name') }}" required autofocus
                                         onKeyPress="if(this.value.length==15) return false;">
 
-                                    @if ($errors->has('name'))
-                                        <span class="fs-6 text-danger">
+                                    {{-- @if ($errors->has('name')) --}}
+                                    {{-- <span class="fs-6 text-danger">
                                             {{ $errors->first('name') }}
-                                        </span>
-                                    @endif
+                                        </span> --}}
+                                    {{-- @endif --}}
                                 </div>
                             </div>
                             {{-- PASSWORD --}}
@@ -72,11 +85,11 @@
                                     <input id="password" type="password" class="form-control text-danger" name="password"
                                         required autofocus onKeyPress="if(this.value.length==8) return false;">
 
-                                    @if ($errors->has('password'))
-                                        <span class="fs-6 text-danger">
+                                    {{-- @if ($errors->has('password')) --}}
+                                    {{-- <span class="fs-6 text-danger">
                                             {{ $errors->first('password') }}
-                                        </span>
-                                    @endif
+                                        </span> --}}
+                                    {{-- @endif --}}
                                 </div>
                             </div>
                             {{-- CAPTCHAT --}}
