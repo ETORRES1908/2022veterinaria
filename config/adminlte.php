@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logo' => '<b>Veterianaria</b>Vega',
+    'logo' => '<b>Veterianaria</b>',
 
     'logo_mini' => '<b>VV</b>',
 

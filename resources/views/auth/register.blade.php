@@ -1186,13 +1186,13 @@
                 </div>
                 <div class="row">
                     {{-- CAPTCHAT AND INPUT CAPCHAT --}}
-                    <div class="col-auto form-group{{ $errors->has('captcha') ? ' has-error' : '' }}">
+                    {{-- <div class="col-auto form-group{{ $errors->has('captcha') ? ' has-error' : '' }}">
                         <div class="row mb-3">
-                            {{-- CAPTCHAT --}}
+
                             <div for="Captcha" class="col-lg-6 col-form-label my-auto text-start">
                                 {!! captcha_img() !!}
                             </div>
-                            {{-- INPUT CAPTCHAT --}}
+
                             <div class="col-7 col-lg-6 my-auto text-start">
                                 <input id="captcha" type="text" class="form-control text-danger fw-bold" name="captcha"
                                     required autofocus placeholder="{{ __('Result of blast') }}">
@@ -1204,7 +1204,7 @@
                                 @endif
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- BOTON DE REGISTRO --}}
                     <div class="col-lg-5 my-auto text-start">
                         <div class="row mb-3">

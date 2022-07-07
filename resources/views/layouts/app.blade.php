@@ -38,7 +38,7 @@
                 <a class="navbar-brand link-light fs-4" href="{{ url('/') }}">
                     <img src="{{ asset('storage/img/pata.jpg') }}" width="50"
                         class="d-inline-block align-text-middle rounded-circle border border-light">
-                    Vet<strong>Vega De Villa</strong>
+                    <strong>Veterinaria</strong>
                 </a>
 
                 <!-- Collapsed Hamburger -->
@@ -218,7 +218,7 @@
         </div>
         <div class="py-4 my-4 border-top border-light text-center">
             <p>© 2021 Company, Inc. Todos los derechos reservados.</p>
-            <ul class="list-unstyled d-flex">
+            {{-- <ul class="list-unstyled d-flex">
                 <li class="ms-0 mx-auto">
                     <a class="link-light nav-link" href="#">
                         Authentication
@@ -234,7 +234,7 @@
                         Authentication
                     </a>
                 </li>
-            </ul>
+            </ul> --}}
     </footer>
 
 </body>

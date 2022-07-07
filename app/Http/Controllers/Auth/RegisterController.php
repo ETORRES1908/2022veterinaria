@@ -41,7 +41,7 @@ class RegisterController extends Controller
             'job' => '',
             'password' => 'required|string|confirmed',
             'answer' => 'required|string',
-            'captcha' => 'required|captcha',
+            //'captcha' => 'required|captcha',
             'foto' => 'image',
             'fdpt' => 'mimes:pdf',
             'sdpt' => 'image'

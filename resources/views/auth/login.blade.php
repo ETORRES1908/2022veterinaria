@@ -93,7 +93,7 @@
                                 </div>
                             </div>
                             {{-- CAPTCHAT --}}
-                            <div class="mb-3 form-group{{ $errors->has('captcha') ? ' has-error' : '' }}">
+                            {{-- <div class="mb-3 form-group{{ $errors->has('captcha') ? ' has-error' : '' }}">
                                 <div class="row">
                                     <label for="Captcha" class="col-xl-12 col-form-label mx-auto text-end">
                                         {!! captcha_img() !!}
@@ -109,7 +109,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             {{-- LOGIN --}}
                             <div class="text-end">
